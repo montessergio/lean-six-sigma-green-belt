@@ -1,0 +1,162 @@
+{
+  "_ayuda": "Datos del caso continuo de la guía (línea de arneses). Los laboratorios los leen con ctx.caso; para actualizar un ejemplo basta editar este archivo. Cada bloque cita la sección de la guía de donde sale.",
+
+  "titulo": "Línea de ensamble de arneses eléctricos para material rodante ferroviario",
+  "resumen": "Cada arnés terminado pasa cinco verificaciones: continuidad eléctrica, torque de las terminales, asentamiento del conector, etiquetado y ruteo según el plano.",
+
+  "defectos": {
+    "_fuente": "Guía M1 §7 (línea base), M10 §3 y §5 (resultado final) · plantilla Excel «DPMO y Sigma».",
+    "antes": {
+      "etiqueta": "Semana de referencia (M1)",
+      "unidades": 2000,
+      "oportunidades": 5,
+      "defectos": 3
+    },
+    "despues": {
+      "etiqueta": "8 semanas tras la mejora (M10)",
+      "unidades": 16000,
+      "oportunidades": 5,
+      "defectos": 13,
+      "nota": "La guía reporta 162 DPMO (8 semanas × 2,000 arneses × 5 oportunidades). El conteo entero de defectos compatible con esa cifra es 13, que da 162.5 DPMO sin redondear."
+    },
+    "plantillaExcel": {
+      "antes": { "unidades": 2000, "oportunidades": 25, "defectos": 15 },
+      "despues": { "unidades": 4000, "oportunidades": 25, "defectos": 16 }
+    },
+    "metaDpmo": 100,
+    "estandarDpmo": 3.4
+  },
+
+  "torque": {
+    "_fuente": "Guía M5 §1: diez mediciones de torque con la llave del plan de recolección del M4.",
+    "unidad": "N·m",
+    "lsl": 1.2,
+    "usl": 1.5,
+    "valores": [1.32, 1.35, 1.38, 1.30, 1.41, 1.36, 1.33, 1.39, 1.34, 1.37]
+  },
+
+  "fuerza": {
+    "_fuente": "Plantilla Excel «Estadistica Descriptiva»: ejemplo de 40 fuerzas de engarzado (N). El poka-yoke del M9/M10 rechaza todo lo que quede por debajo de 173 N.",
+    "unidad": "N",
+    "minimo": 173,
+    "valores": [171.1, 179.9, 183.3, 175, 170.5, 177.5, 180.5, 183.9, 171.1, 170.7, 181.7, 180.5, 186.3, 183.3, 177.3, 176.3, 192.1, 176.2, 173.5, 171.5, 178.4, 178.6, 175.9, 177.5, 179.4, 181.7, 183.9, 179, 167.9, 181.7, 170, 176.9, 169.7, 177.9, 173.5, 179, 196.1, 177.6, 182.5, 170.5]
+  },
+
+  "pelado": { "_fuente": "Guía M10 §4 (plan de control).", "nominal": 7, "tolerancia": 0.5, "unidad": "mm" },
+
+  "pce": { "_fuente": "Guía M4: 15 min de valor agregado sobre 55 min de lead time.", "valorAgregadoMin": 15, "leadTimeMin": 55, "pce": 0.273 },
+
+  "copq": {
+    "_fuente": "Plantilla Excel «COPQ (PAF)»: costos mensuales en pesos mexicanos (MXN).",
+    "moneda": "MXN",
+    "periodo": "Mensual",
+    "ventas": 1500000,
+    "conceptos": [
+      { "categoria": "prevencion", "concepto": "Capacitación en torque y calibración", "costo": 18000 },
+      { "categoria": "prevencion", "concepto": "Mantenimiento preventivo de herramientas", "costo": 12000 },
+      { "categoria": "prevencion", "concepto": "Diseño e instalación de poka-yoke", "costo": 9000 },
+      { "categoria": "evaluacion", "concepto": "Inspección final y prueba eléctrica", "costo": 42000 },
+      { "categoria": "evaluacion", "concepto": "Calibración de instrumentos", "costo": 8000 },
+      { "categoria": "evaluacion", "concepto": "Auditorías de proceso", "costo": 6000 },
+      { "categoria": "fallaInterna", "concepto": "Retrabajo de arneses", "costo": 55000 },
+      { "categoria": "fallaInterna", "concepto": "Scrap de cable y terminales", "costo": 23000 },
+      { "categoria": "fallaInterna", "concepto": "Paros de línea por defectos", "costo": 17000 },
+      { "categoria": "fallaExterna", "concepto": "Garantías y reparaciones", "costo": 38000 },
+      { "categoria": "fallaExterna", "concepto": "Devoluciones y reclamos", "costo": 21000 }
+    ]
+  },
+
+  "charter": {
+    "_fuente": "Guía M2 §6 (planteamiento y meta). Beneficio y costo: ejemplo de la plantilla Excel «Project Charter» (MXN).",
+    "nombre": "Reducir el DPMO de la línea de arneses",
+    "problema": "En las últimas 4 semanas, la línea de ensamble de arneses para material rodante ha operado en un nivel cercano a 5σ (300 DPMO), muy por encima del estándar Six Sigma de 3.4 DPMO, generando retrabajo en el 0.15 % de las unidades y dos incidencias de falla externa reportadas por el cliente en el último trimestre.",
+    "metrica": "DPMO de arnés",
+    "unidadMetrica": "DPMO",
+    "lineaBase": 300,
+    "meta": 100,
+    "plazoMeses": 4,
+    "beneficioAnual": 450000,
+    "costoProyecto": 80000,
+    "dentro": "Estaciones de apriete y verificación de conectores; los 3 turnos.",
+    "fuera": "Rediseño del arnés; proveedores de terminales."
+  },
+
+  "ctq": {
+    "_fuente": "Guía M2 §6 (árbol CTQ) y plantilla Excel «Arbol CTQ».",
+    "libro": [
+      { "necesidad": "Arnés funcional en la primera prueba, sin excepción", "impulsor": "Continuidad eléctrica", "ctq": "Fallas de continuidad por lote entregado", "unidad": "fallas", "lsl": null, "objetivo": null, "usl": 0, "metodo": "Probador de continuidad, 100 %" },
+      { "necesidad": "Arnés funcional en la primera prueba, sin excepción", "impulsor": "Integridad de terminales", "ctq": "Torque de terminal", "unidad": "N·m", "lsl": 1.2, "objetivo": null, "usl": 1.5, "metodo": "Llave de torque calibrada" }
+    ],
+    "excel": [
+      { "necesidad": "Conexión eléctrica confiable", "impulsor": "Fijación del conector", "ctq": "Fuerza de retención del conector", "unidad": "N", "lsl": 173, "objetivo": null, "usl": null, "metodo": "Dinamómetro calibrado" },
+      { "necesidad": "Conexión eléctrica confiable", "impulsor": "Crimpado del terminal", "ctq": "Fuerza de jalón del crimpado", "unidad": "N", "lsl": null, "objetivo": null, "usl": null, "metodo": "Prueba de jalón por muestreo" },
+      { "necesidad": "Cumplimiento de entrega", "impulsor": "Retrabajo en línea", "ctq": "Arneses sin retrabajo (FTY)", "unidad": "%", "lsl": 95, "objetivo": 98, "usl": null, "metodo": "Registro de producción" },
+      { "necesidad": "Identificación correcta", "impulsor": "Etiquetado", "ctq": "Etiquetas correctas por lote", "unidad": "%", "lsl": 100, "objetivo": null, "usl": null, "metodo": "Verificación 100 % al empaque" }
+    ]
+  },
+
+  "matriz": {
+    "_fuente": "Guía M2 §6 (tres proyectos candidatos, pesos 40/35/25) y plantilla Excel «Matriz de Seleccion».",
+    "libro": {
+      "criterios": [
+        { "nombre": "Impacto en el cliente", "peso": 0.40 },
+        { "nombre": "Beneficio financiero", "peso": 0.35 },
+        { "nombre": "Factibilidad", "peso": 0.25 }
+      ],
+      "opciones": [
+        { "nombre": "A. Línea de arneses", "calificaciones": [5, 4, 4] },
+        { "nombre": "B. Cambio de modelo (gabinetes)", "calificaciones": [3, 3, 3] },
+        { "nombre": "C. Facturación a proveedores", "calificaciones": [2, 2, 5] }
+      ]
+    },
+    "excel": {
+      "criterios": [
+        { "nombre": "Impacto en el cliente", "peso": 0.40 },
+        { "nombre": "Ahorro económico", "peso": 0.25 },
+        { "nombre": "Facilidad de implementación", "peso": 0.20 },
+        { "nombre": "Tiempo", "peso": 0.15 }
+      ],
+      "opciones": [
+        { "nombre": "Reducir fallas de torque", "calificaciones": [5, 4, 3, 4] },
+        { "nombre": "Reducir retrabajo de etiquetado", "calificaciones": [3, 3, 5, 5] },
+        { "nombre": "Rediseñar fixture", "calificaciones": [4, 2, 1, 2] }
+      ]
+    }
+  },
+
+  "ahp": {
+    "_fuente": "Guía M2 §5: comparación por pares ilustrativa de cuatro criterios (escala de Saaty 1–9). Se capturan las seis comparaciones de la mitad superior, fila por fila.",
+    "criterios": ["Impacto cliente", "Beneficio financiero", "Objetivos operativos", "Factibilidad"],
+    "triangulo": [3, 4, 7, 2, 5, 4]
+  },
+
+  "sipoc": {
+    "_fuente": "Guía M3A §1 (cinco pasos) y plantilla Excel «SIPOC» (siete pasos).",
+    "libro": {
+      "proceso": "Ensamble de arneses eléctricos",
+      "inicio": "Recepción de materiales",
+      "fin": "Embarque al cliente",
+      "filas": [
+        { "proveedor": "Proveedor de terminales y conectores", "entrada": "Cable, terminales, conectores", "paso": "Corte y pelado", "salida": "Arnés terminado y etiquetado", "cliente": "Montaje final del vehículo (interno)", "requisito": "" },
+        { "proveedor": "Proveedor de cable", "entrada": "Plano de ruteo", "paso": "Engarzado de terminales", "salida": "Registro de inspección", "cliente": "Operador ferroviario (externo)", "requisito": "" },
+        { "proveedor": "", "entrada": "Instrucción de trabajo", "paso": "Ensamble de conectores", "salida": "", "cliente": "", "requisito": "" },
+        { "proveedor": "", "entrada": "", "paso": "Ruteo y amarre", "salida": "", "cliente": "", "requisito": "" },
+        { "proveedor": "", "entrada": "", "paso": "Inspección final", "salida": "", "cliente": "", "requisito": "" }
+      ]
+    },
+    "excel": {
+      "proceso": "Ensamble de arneses eléctricos",
+      "inicio": "Recepción de materiales",
+      "fin": "Embarque al cliente",
+      "filas": [
+        { "proveedor": "Proveedor de cable", "entrada": "Cable y terminales", "paso": "Recibir y liberar materiales", "salida": "Materiales liberados", "cliente": "Línea de ensamble", "requisito": "Certificado de material" },
+        { "proveedor": "Proveedor de conectores", "entrada": "Conectores y sellos", "paso": "Cortar y pelar cable", "salida": "Cables cortados", "cliente": "Estación de crimpado", "requisito": "Longitud y pelado en tolerancia" },
+        { "proveedor": "Almacén", "entrada": "Planos y hojas de ruta", "paso": "Crimpar terminales", "salida": "Cables crimpados", "cliente": "Estación de ensamble", "requisito": "Altura y jalón de crimpado" },
+        { "proveedor": "Ingeniería", "entrada": "Instrucciones de trabajo", "paso": "Armar y rutear en tablero", "salida": "Arnés armado", "cliente": "Verificación", "requisito": "Ruteo conforme al plano" },
+        { "proveedor": "Mantenimiento", "entrada": "Herramientas calibradas", "paso": "Apretar y verificar torque", "salida": "Arnés verificado", "cliente": "Prueba eléctrica", "requisito": "Fuerza de retención ≥ límite" },
+        { "proveedor": "", "entrada": "", "paso": "Prueba eléctrica final", "salida": "Arnés aprobado", "cliente": "Empaque", "requisito": "Continuidad al 100 %" },
+        { "proveedor": "Proveedor de empaque", "entrada": "Material de empaque", "paso": "Empacar y embarcar", "salida": "Embarque", "cliente": "Cliente ferroviario", "requisito": "Entrega completa y a tiempo" }
+      ]
+    }
+  }
+}

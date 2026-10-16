@@ -1,0 +1,200 @@
+/*
+ * labs.css — Diseño de los laboratorios: panel de control a la izquierda y
+ * gráficas / tablas a la derecha. Los estilos de campos distinguen el código de
+ * color de las plantillas Excel:
+ *   amarillo = ejemplo · blanco = captura · azul claro = fórmula (calculado).
+ */
+
+.slide--lab { padding: 0; overflow: hidden; }
+.slide--lab.is-activa { display: block; }
+
+.lab {
+  --valor-color: var(--teal);
+  display: grid;
+  grid-template-columns: minmax(330px, 470px) minmax(0, 1fr);
+  height: 100%;
+}
+/* Laboratorios con tablas anchas (CTQ, SIPOC, matriz): `panelAncho: true` en la definición. */
+.lab--panel-ancho { grid-template-columns: minmax(420px, 660px) minmax(0, 1fr); }
+
+/* ---------- Panel de control ---------- */
+.lab__panel {
+  overflow-y: auto;
+  padding: 2rem 1.8rem calc(var(--alto-pie) + 0.6rem);
+  border-right: 1px solid var(--linea);
+  background: var(--bg-deck);
+  display: flex; flex-direction: column; gap: 1.25rem;
+}
+.lab__cabecera { display: grid; gap: 0.55rem; }
+.lab__antetitulo { font-family: var(--f-sub); font-weight: 300; font-size: 1.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--txt-2); line-height: 1.1; margin-top: 0.4rem; }
+.lab__titulo { font-family: var(--f-titulo); font-weight: 900; font-size: clamp(1.5rem, 2.1vw, 1.95rem); letter-spacing: 0.07em; text-transform: uppercase; color: #fff; line-height: 1.12; }
+.lab__desc { font-size: 0.84rem; line-height: 1.6; color: var(--txt-2); }
+.lab__seccion { display: grid; gap: 0.9rem; padding-top: 1.1rem; border-top: 1px solid var(--linea); }
+.lab__seccion > .etiqueta { color: var(--txt-gris); }
+
+.lab__acciones { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.lab__acciones .btn { flex: 1 1 auto; }
+
+/* ---------- Campos ---------- */
+.campo { display: grid; gap: 0.35rem; }
+.campo__fila { display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem; }
+.campo__etiqueta { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--txt-gris); }
+.campo__etiqueta small { font-weight: 500; letter-spacing: 0.06em; text-transform: none; color: var(--txt-3); margin-left: 0.4em; }
+.campo__valor {
+  font-family: var(--f-mono); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--valor-color);
+  background: transparent; border: 0; border-bottom: 1px dashed transparent;
+  text-align: right; width: 9.5em; padding: 0 0 1px;
+}
+.campo__valor:hover, .campo__valor:focus { border-bottom-color: var(--linea-2); outline: none; }
+.campo__ayuda { font-size: 0.74rem; color: var(--txt-3); line-height: 1.45; }
+.campo__ayuda--alerta { color: var(--ambar); }
+
+.campo--c-teal { --valor-color: var(--teal); }
+.campo--c-violeta { --valor-color: var(--violeta); }
+.campo--c-coral { --valor-color: var(--coral); }
+.campo--c-ambar { --valor-color: var(--ambar); }
+.campo--c-azul { --valor-color: var(--azul); }
+.campo--c-blanco { --valor-color: #fff; }
+
+/* Deslizador */
+.slider { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; cursor: pointer; margin: 0; }
+.slider::-webkit-slider-runnable-track { height: 3px; background: var(--linea-2); border-radius: 2px; }
+.slider::-moz-range-track { height: 3px; background: var(--linea-2); border-radius: 2px; }
+.slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7.5px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08); }
+.slider::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08); }
+.slider:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px color-mix(in srgb, var(--teal) 55%, transparent); }
+.slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px color-mix(in srgb, var(--teal) 55%, transparent); }
+
+/* Entradas de captura (número, texto, área, lista) con el código de color de Excel */
+.entrada {
+  width: 100%;
+  padding: 0.5em 0.7em;
+  background: var(--bg-campo);
+  border: 1px solid var(--linea-2);
+  border-radius: var(--radio-s);
+  font-family: var(--f-mono); font-size: 0.85rem;
+  color: var(--txt-titulo);
+  transition: border-color var(--t-rapida), background var(--t-rapida);
+}
+.entrada:focus { outline: none; border-color: var(--teal); }
+textarea.entrada { min-height: 7.5rem; resize: vertical; line-height: 1.5; }
+select.entrada { cursor: pointer; font-family: var(--f-cuerpo); }
+select.entrada option { background: #101a1b; color: var(--txt); }
+.entrada::placeholder { color: var(--txt-4); }
+
+.celda--ejemplo { background: color-mix(in srgb, var(--celda-ejemplo) 13%, var(--bg-campo)); border-color: color-mix(in srgb, var(--celda-ejemplo) 48%, transparent); color: var(--celda-ejemplo); }
+.celda--captura { background: color-mix(in srgb, var(--celda-captura) 7%, var(--bg-campo)); border-color: color-mix(in srgb, var(--celda-captura) 42%, transparent); color: var(--celda-captura); }
+.celda--formula { background: color-mix(in srgb, var(--celda-formula) 12%, var(--bg-campo)); border-color: color-mix(in srgb, var(--celda-formula) 38%, transparent); color: var(--celda-formula); }
+
+.casilla { display: flex; gap: 0.6rem; align-items: center; font-size: 0.85rem; color: var(--txt); cursor: pointer; }
+.casilla input { width: 1.05rem; height: 1.05rem; accent-color: var(--teal); }
+
+.campo__resumen { font-family: var(--f-mono); font-size: 0.7rem; color: var(--txt-3); }
+.campo__resumen b { color: var(--teal); font-weight: 600; }
+
+/* Segmentos (opción con pocas alternativas) */
+.segmentos { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.segmentos .btn { flex: 1 1 auto; padding: 0.45em 0.7em; }
+
+/* Presets */
+.presets { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.presets .btn { flex: 1 1 auto; }
+
+/* Leyenda del código de color */
+.codigo-color { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; font-size: 0.68rem; color: var(--txt-3); }
+.codigo-color span { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+/* ---------- Tabla editable ---------- */
+.tabla-edit-wrap { overflow-x: auto; border: 1px solid var(--linea); border-radius: var(--radio-s); }
+.tabla-edit { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.tabla-edit th { padding: 0.45em 0.5em; text-align: left; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--txt-3); border-bottom: 1px solid var(--linea-2); white-space: nowrap; }
+.tabla-edit td { padding: 2px; border-bottom: 1px solid var(--linea); }
+.tabla-edit .entrada { padding: 0.35em 0.45em; font-size: 0.78rem; border-radius: 4px; min-width: 4.5em; }
+.tabla-edit td.col-n { width: 2.2em; text-align: center; font-family: var(--f-mono); color: var(--txt-3); }
+.tabla-edit td.col-x { width: 2em; text-align: center; }
+.tabla-edit .btn-x { background: none; border: 0; color: var(--txt-4); cursor: pointer; font-size: 1rem; line-height: 1; padding: 0.2em 0.4em; }
+.tabla-edit .btn-x:hover { color: var(--coral); }
+.tabla-edit-pie { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.celda-fija { display: block; min-width: 4.5em; padding: 0.4em 0.5em; border-radius: 4px; font-family: var(--f-mono); font-size: 0.78rem; font-variant-numeric: tabular-nums; color: var(--celda-formula); background: color-mix(in srgb, var(--celda-formula) 12%, var(--bg-campo)); }
+
+/* ---------- Salidas (cálculos: celdas de fórmula) ---------- */
+.lab__salidas { display: grid; gap: 1.05rem; }
+.salida { display: grid; gap: 0.2rem; }
+.salida__etiqueta { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--txt-gris); }
+.salida__etiqueta small { text-transform: none; letter-spacing: 0.04em; font-weight: 500; color: var(--txt-3); margin-left: 0.4em; }
+.salida__valor { font-family: var(--f-mono); font-size: 1.7rem; font-weight: 500; line-height: 1.2; color: #fff; font-variant-numeric: tabular-nums; word-break: break-word; }
+.salida__valor--s { font-size: 1.25rem; }
+.salida__nota { font-size: 0.74rem; color: var(--txt-3); }
+.salida--c-teal .salida__valor { color: var(--teal); }
+.salida--c-coral .salida__valor { color: var(--coral); }
+.salida--c-violeta .salida__valor { color: var(--violeta); }
+.salida--c-ambar .salida__valor { color: var(--ambar); }
+.salida--c-azul .salida__valor { color: var(--azul); }
+.salida--c-verde .salida__valor { color: var(--verde); }
+.salida--vacia .salida__valor { color: var(--txt-4); }
+.salida--ancha { grid-column: 1 / -1; }
+.salidas-rejilla { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.05rem 1rem; }
+
+/* ---------- Semáforos, umbral y supuesto ---------- */
+.lab__semaforos { display: grid; gap: 0.5rem; }
+.semaforo { display: grid; grid-template-columns: auto 1fr; gap: 0.2rem 0.7rem; align-items: baseline; }
+.semaforo__nombre { grid-column: 1 / -1; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--txt-gris); }
+.semaforo__texto { font-size: 0.78rem; color: var(--txt-2); line-height: 1.45; }
+
+.criterio { display: grid; gap: 0.5rem; padding: 0.9rem 1rem; border: 1px solid var(--linea); border-left: 3px solid var(--azul); border-radius: var(--radio-s); background: var(--bg-card); }
+.criterio--supuesto { border-left-color: var(--violeta); }
+.criterio__titulo { font-size: 0.64rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--txt-gris); }
+.criterio__texto { font-size: 0.8rem; line-height: 1.5; color: var(--txt); }
+.criterio__texto + .criterio__texto { color: var(--txt-2); }
+.criterio table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.criterio td { padding: 0.3em 0.5em; border-top: 1px solid var(--linea); color: var(--txt-2); vertical-align: top; }
+.criterio td:first-child { font-family: var(--f-mono); white-space: nowrap; color: var(--txt); padding-left: 0; }
+.criterio tr.is-activa td { background: color-mix(in srgb, var(--teal) 12%, transparent); color: var(--txt-titulo); }
+.criterio tr.is-activa td:first-child { padding-left: 0.5em; }
+
+.lab__pregunta { display: grid; gap: 0.35rem; padding-top: 1.1rem; border-top: 1px solid var(--linea); }
+.lab__pregunta p { font-size: 0.8rem; color: var(--txt-2); line-height: 1.55; }
+
+/* ---------- Área de gráficas y tablas ---------- */
+.lab__area {
+  overflow-y: auto;
+  padding: 1.4rem 1.6rem calc(var(--alto-pie) + 0.6rem);
+  display: grid; gap: 1.2rem; align-content: start;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.lab__area > * { min-width: 0; }
+.lab__avisos { grid-column: 1 / -1; display: grid; gap: 0.6rem; }
+.lab__avisos:empty { display: none; }
+.lab__avisos .aviso { margin: 0; }
+.grafica { position: relative; min-height: 330px; }
+.grafica--ancha { grid-column: 1 / -1; }
+.grafica--alta { min-height: 440px; }
+.grafica__titulo { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--txt-3); margin: 0 0 0.3rem 0.4rem; }
+.grafica__lienzo { width: 100%; height: 100%; min-height: inherit; }
+.grafica__lienzo.js-plotly-plot { min-height: inherit; }
+.grafica__aviso { margin: 0.6rem 0; }
+.grafica__respaldo { overflow-x: auto; }
+.grafica__respaldo .tabla { font-size: 0.8rem; }
+
+.lab__tabla { grid-column: 1 / -1; background: var(--bg-card); border: 1px solid var(--linea); border-radius: 8px; padding: 0.4rem 0.9rem 0.7rem; }
+.lab__tabla .grafica__titulo { margin: 0.6rem 0 0.2rem; }
+.lab__tabla .tabla td, .lab__tabla .tabla th { padding: 0.38em 0.7em; font-size: 0.82rem; }
+.lab__tabla .tabla td { color: var(--txt); }
+.lab__tabla td.celda-formula { background: color-mix(in srgb, var(--celda-formula) 8%, transparent); }
+
+.lab__vacio { grid-column: 1 / -1; padding: 2rem; text-align: center; color: var(--txt-3); border: 1px dashed var(--linea-2); border-radius: 8px; }
+
+/* ---------- Adaptación a pantallas pequeñas ---------- */
+@media (max-width: 1100px) {
+  .lab { grid-template-columns: minmax(300px, 400px) minmax(0, 1fr); }
+  .lab--panel-ancho { grid-template-columns: minmax(340px, 520px) minmax(0, 1fr); }
+  .lab__area { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 860px) {
+  .slide--lab { overflow-y: auto; }
+  .lab { display: block; height: auto; }
+  .lab__panel { overflow: visible; border-right: 0; border-bottom: 1px solid var(--linea); padding-bottom: 1.6rem; }
+  .lab__area { overflow: visible; padding-bottom: calc(var(--alto-pie) + 1rem); }
+  .grafica { min-height: 300px; }
+}

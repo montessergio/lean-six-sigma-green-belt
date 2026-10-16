@@ -1,0 +1,101 @@
+/*
+ * index.css — Página de inicio (índice de sesiones por fase DMAIC).
+ */
+
+.indice { width: min(var(--ancho-indice), calc(100% - 2 * var(--gutter))); margin: 0 auto; padding: 3.6rem 0 4rem; }
+
+/* ---------- Encabezado ---------- */
+.portada-indice { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; align-items: center; }
+.portada-indice__marca { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--oro-claro); margin-bottom: 0.9rem; }
+.portada-indice h1 {
+  font-size: clamp(2.2rem, 5.2vw, 3.7rem); font-weight: 900; letter-spacing: 0.01em; text-transform: uppercase; line-height: 1.02;
+  color: var(--txt-gris); text-shadow: 3px 4px 0 #000;
+}
+.portada-indice__sub { margin-top: 1.1rem; font-family: var(--f-sub); font-weight: 300; font-size: clamp(1rem, 1.7vw, 1.3rem); color: var(--txt-2); max-width: 36em; }
+.portada-indice__rueda { width: clamp(150px, 20vw, 230px); }
+.portada-indice__rueda svg { width: 100%; height: auto; display: block; }
+
+/* ---------- Secciones ---------- */
+.seccion { margin-top: 2.9rem; }
+.seccion__titulo { font-family: var(--f-titulo); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--txt-gris); margin-bottom: 0.9rem; }
+.seccion__titulo b { color: var(--txt-titulo); }
+
+/* ---------- Cómo usar este material ---------- */
+.uso { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.uso__item { padding: 1.05rem 1.25rem 1.2rem; background: var(--bg-card); border: 1px solid var(--linea); border-radius: 8px; }
+.uso__etiqueta { display: block; margin-bottom: 0.6rem; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--txt-3); }
+.uso__texto { font-size: 0.95rem; line-height: 1.65; color: var(--txt); }
+.uso__texto kbd { display: inline-block; min-width: 1.7em; padding: 0 0.4em; text-align: center; background: #16222a; border: 1px solid var(--linea-2); border-radius: 4px; color: var(--azul); font-size: 0.82em; }
+
+/* ---------- Ruta DMAIC ---------- */
+.ruta { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.6rem; }
+.ruta__fase {
+  display: grid; gap: 0.15rem; padding: 0.7rem 0.8rem 0.75rem;
+  background: var(--bg-card); border: 1px solid var(--linea); border-top: 3px solid var(--fase, var(--linea-2)); border-radius: 6px;
+  color: inherit; transition: border-color var(--t-rapida), background var(--t-rapida);
+}
+a.ruta__fase:hover { background: var(--bg-card-2); text-decoration: none; border-color: var(--fase, var(--linea-2)); }
+.ruta__nombre { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: var(--txt-titulo); }
+.ruta__sesion { font-family: var(--f-mono); font-size: 0.72rem; color: var(--txt-3); }
+.ruta__sesion b { color: var(--verde); font-weight: 600; }
+.ruta__fase--general { --fase: var(--fase-general); }
+.ruta__fase--definir { --fase: color-mix(in srgb, var(--fase-definir) 70%, #5b8bd8); }
+.ruta__fase--medir { --fase: var(--fase-medir); }
+.ruta__fase--analizar { --fase: var(--fase-analizar); }
+.ruta__fase--mejorar { --fase: var(--fase-mejorar); }
+.ruta__fase--controlar { --fase: var(--fase-controlar); }
+
+/* ---------- Tarjetas de sesión ---------- */
+.sesion-bloque { margin-top: 2.2rem; }
+.sesion-bloque__encabezado { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 1rem; margin-bottom: 0.8rem; }
+.sesion-bloque__titulo { font-family: var(--f-titulo); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--txt-gris); }
+.sesion-bloque__duracion { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--txt-3); }
+
+.sesion {
+  position: relative;
+  display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 0.5rem 1.2rem;
+  padding: 1.35rem 1.6rem 1.4rem;
+  background: var(--bg-card); border: 1px solid var(--linea); border-radius: 8px;
+  transition: border-color var(--t-rapida), background var(--t-rapida);
+}
+.sesion:hover, .sesion:focus-within { border-color: var(--azul); background: var(--bg-card-2); }
+.sesion__num { font-family: var(--f-mono); font-size: 1.1rem; font-weight: 700; color: var(--verde); padding-top: 0.15rem; }
+.sesion__titulo { font-size: clamp(1.05rem, 1.9vw, 1.35rem); font-weight: 600; color: var(--txt-titulo); }
+.sesion__titulo a { color: inherit; }
+.sesion__titulo a::after { content: ""; position: absolute; inset: 0; border-radius: 8px; } /* toda la tarjeta es clicable */
+.sesion__titulo a:hover { text-decoration: none; }
+.sesion__cuerpo { min-width: 0; }
+.sesiones-lista { display: grid; gap: 0.9rem; }
+.sesion__desc { margin-top: 0.5rem; font-size: 0.95rem; line-height: 1.7; color: var(--txt-2); }
+.sesion__meta { margin-top: 0.5rem; font-family: var(--f-mono); font-size: 0.76rem; color: var(--txt-3); line-height: 1.9; }
+.sesion__modulos { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; margin-right: 0.6rem; vertical-align: middle; }
+.modulo-chip { font-family: var(--f-mono); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.06em; padding: 0.05em 0.6em; border-radius: 3px; color: #fff; background: var(--fase, var(--linea-2)); }
+.modulo-chip--general { --fase: var(--fase-general); }
+.modulo-chip--definir { --fase: var(--fase-definir); }
+.modulo-chip--medir { --fase: var(--fase-medir); }
+.modulo-chip--analizar { --fase: var(--fase-analizar); }
+.modulo-chip--mejorar { --fase: var(--fase-mejorar); }
+.modulo-chip--controlar { --fase: var(--fase-controlar); }
+
+.sesion__labs { margin-top: 0.15rem; display: flex; flex-wrap: wrap; gap: 0.1rem 1.5rem; font-family: var(--f-mono); font-size: 0.78rem; line-height: 1.9; color: var(--txt-3); }
+.sesion__lab { position: relative; z-index: 1; color: var(--txt-3); }
+.sesion__lab b { color: var(--azul); font-weight: 600; margin: 0 0.2em; }
+a.sesion__lab:hover { color: var(--txt-titulo); text-decoration: none; }
+a.sesion__lab:hover b { color: #8cc4ff; }
+.sesion__lab--planeado { opacity: 0.55; }
+
+.sesion--planeada { border-style: dashed; }
+.sesion--planeada .sesion__titulo, .sesion--planeada .sesion__num { opacity: 0.8; }
+.sesion__estado { display: inline-block; margin-left: 0.7rem; font-family: var(--f-mono); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ambar); border: 1px solid color-mix(in srgb, var(--ambar) 45%, transparent); border-radius: 999px; padding: 0.15em 0.8em; vertical-align: middle; }
+
+/* ---------- Pie ---------- */
+.indice__pie { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--linea); display: grid; gap: 0.5rem; font-size: 0.86rem; color: var(--txt-3); }
+.indice__pie a { color: var(--azul); }
+
+@media (max-width: 860px) {
+  .uso { grid-template-columns: minmax(0, 1fr); }
+  .ruta { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .portada-indice { grid-template-columns: minmax(0, 1fr); }
+  .portada-indice__rueda { display: none; }
+  .sesion { grid-template-columns: minmax(0, 1fr); padding: 1.1rem 1.1rem 1.2rem; }
+}

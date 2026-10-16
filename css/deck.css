@@ -1,0 +1,277 @@
+/*
+ * deck.css — Visor de diapositivas (sesion.html) y bloques de contenido.
+ * Un bloque nuevo solo necesita su clase aquí y su función en js/core/blocks.js.
+ */
+
+body.deck-page {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--bg-deck);
+}
+
+/* ---------- Barra de progreso superior ---------- */
+.progreso { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 60; background: transparent; }
+.progreso__barra { height: 100%; width: 0; background: var(--teal); transition: width var(--t-media) ease; }
+
+/* ---------- Escenario y diapositivas ---------- */
+.deck { position: fixed; inset: 0; outline: none; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: none;
+  overflow-x: hidden; overflow-y: auto;
+  background: var(--bg-deck);
+}
+.slide:focus { outline: none; }
+.slide.is-activa { display: flex; flex-direction: column; animation: slide-entra var(--t-media) ease both; }
+
+@keyframes slide-entra { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.slide__contenido {
+  width: min(var(--ancho-slide), calc(100% - 2 * var(--gutter)));
+  margin: auto;
+  padding: 3.5rem 0 calc(var(--alto-pie) + 1.2rem);
+}
+
+.slide__titulo { font-size: clamp(1.9rem, 3.3vw, 3rem); font-weight: 800; letter-spacing: -0.012em; }
+.slide__etiqueta { display: block; margin-bottom: 0.75rem; color: var(--verde); }
+.slide__subtitulo { margin-top: 0.55rem; font-size: clamp(1rem, 1.35vw, 1.2rem); color: var(--txt-2); }
+.slide__cuerpo { margin-top: 1.7rem; display: grid; gap: 1.2rem; }
+.slide__cuerpo > * { min-width: 0; }
+
+/* ---------- Portada ---------- */
+.slide--portada {
+  background:
+    radial-gradient(1100px 720px at 50% 40%, #1b2526 0%, #121a1b 58%, #0a1011 100%);
+  overflow-x: hidden; overflow-y: auto;
+}
+.slide--portada::before { /* puntos tenues, como la portada del libro */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(178, 184, 184, 0.16) 1px, transparent 1.7px);
+  background-size: 52px 52px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 45%, #000 20%, transparent 78%);
+          mask-image: radial-gradient(ellipse at 50% 45%, #000 20%, transparent 78%);
+}
+.slide--portada::after { /* diagonales finas */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(142deg, transparent 58%, rgba(178, 184, 184, 0.11) 58.1%, transparent 58.35%),
+    linear-gradient(142deg, transparent 69%, rgba(178, 184, 184, 0.07) 69.1%, transparent 69.3%);
+}
+.slide--portada .slide__contenido {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding-top: 2rem;
+}
+.portada__rueda {
+  position: absolute; z-index: 0; pointer-events: none;
+  right: max(-6vw, -120px); top: 50%; transform: translateY(-50%);
+  width: min(52vw, 700px); opacity: 0.2;
+}
+.portada__titulo {
+  margin-top: 1.6rem;
+  font-size: clamp(2.8rem, 9.2vw, 8rem);
+  font-weight: 900;
+  letter-spacing: 0.015em;
+  color: var(--txt-gris);
+  text-transform: uppercase;
+  text-shadow: 4px 5px 0 #000, 0 0 60px rgba(178, 184, 184, 0.1);
+  line-height: 1;
+}
+.portada__subtitulo {
+  margin-top: 1.5rem;
+  font-family: var(--f-sub); font-weight: 300;
+  font-size: clamp(0.9rem, 2vw, 1.65rem);
+  letter-spacing: 0.38em; text-transform: uppercase;
+  color: var(--txt-2);
+}
+.portada__barra { width: 80px; height: 4px; margin: 2.2rem auto 2rem; background: var(--teal); border-radius: 2px; }
+.portada__curso { font-family: var(--f-titulo); font-weight: 600; font-size: clamp(1.1rem, 1.8vw, 1.55rem); color: var(--txt-titulo); }
+.portada__linea { margin-top: 0.7rem; font-family: var(--f-sub); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--txt-3); }
+.portada__linea--fina { margin-top: 0.45rem; font-weight: 400; font-size: 0.78rem; color: var(--txt-3); }
+.portada__autor { margin-top: 2.2rem; font-family: var(--f-sub); font-size: 0.95rem; letter-spacing: 0.06em; color: var(--txt-2); }
+.portada__sello { position: absolute; z-index: 1; right: clamp(24px, 6vw, 110px); bottom: calc(var(--alto-pie) + 12px); width: clamp(84px, 9vw, 130px); opacity: 0.92; }
+
+/* ---------- Pie del visor ---------- */
+.deck-pie {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  height: var(--alto-pie);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(18px, 3vw, 46px);
+  pointer-events: none;
+}
+.deck-pie > * { pointer-events: auto; }
+.deck-pie__indice {
+  font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--txt-3);
+}
+.deck-pie__indice:hover { color: var(--txt-titulo); text-decoration: none; }
+.deck-pie__nav { display: flex; align-items: center; gap: 0.9rem; }
+.deck-pie__contador { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.12em; color: var(--txt-3); margin-right: 0.7rem; }
+.deck-pie__estado {
+  font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ambar); border: 1px solid color-mix(in srgb, var(--ambar) 45%, transparent);
+  border-radius: 999px; padding: 0.25em 0.9em;
+}
+.deck-pie__estado[hidden] { display: none; }
+
+/* ---------- Bloques: tarjetas ---------- */
+.tarjeta {
+  padding: 1.15rem 1.6rem 1.3rem;
+  background: var(--bg-card);
+  border: 1px solid var(--linea);
+  border-radius: 8px;
+}
+.tarjeta__etiqueta { display: block; margin-bottom: 0.65rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--txt-3); }
+.tarjeta__titulo { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.45rem; }
+.tarjeta__texto { font-size: 1.02rem; color: var(--txt); }
+.tarjeta__texto + .tarjeta__texto { margin-top: 0.6rem; }
+.tarjeta--grande .tarjeta__texto { font-size: clamp(1.1rem, 1.5vw, 1.32rem); line-height: 1.55; }
+.tarjeta--sutil { background: transparent; }
+.tarjeta--acento { border-color: color-mix(in srgb, var(--teal) 55%, var(--linea)); }
+.tarjeta--acento .tarjeta__etiqueta { color: var(--teal); }
+.tarjeta--aviso { border-color: color-mix(in srgb, var(--ambar) 50%, var(--linea)); }
+.tarjeta--aviso .tarjeta__etiqueta { color: var(--ambar); }
+.tarjeta--coral { border-color: color-mix(in srgb, var(--coral) 50%, var(--linea)); }
+.tarjeta--coral .tarjeta__etiqueta { color: var(--coral); }
+.tarjeta .lista { margin-top: 0.2rem; }
+
+.rejilla { display: grid; gap: 1.2rem; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); }
+.rejilla > .tarjeta { height: 100%; }
+
+.columnas { display: grid; gap: 2rem; align-items: center; grid-template-columns: minmax(0, var(--izq, 1fr)) minmax(0, var(--der, 1fr)); }
+.columnas__col { display: grid; gap: 1rem; min-width: 0; align-content: start; }
+
+/* ---------- Bloques: listas, texto ---------- */
+.texto { font-size: 1.08rem; color: var(--txt); max-width: 80ch; }
+.texto--ancho { max-width: none; }
+.texto--tenue { color: var(--txt-2); }
+.texto code, .tarjeta code { color: var(--teal); background: transparent; }
+
+.lista { padding-left: 1.2rem; display: grid; gap: 0.45rem; font-size: 1.02rem; }
+.lista li::marker { color: var(--teal); }
+ol.lista { padding-left: 1.5rem; }
+ol.lista li::marker { color: var(--txt-2); font-family: var(--f-mono); }
+.lista--limpia { list-style: none; padding-left: 0; }
+
+.bloque__titulo { font-family: var(--f-titulo); font-weight: 800; font-size: 1.05rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--txt-titulo); }
+
+/* ---------- Bloques: pasos numerados (botones rectangulares con numeral verde) ---------- */
+.pasos-bloque { display: grid; gap: 0.9rem; }
+.pasos { display: grid; gap: 0.7rem; grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); list-style: none; }
+.paso {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15rem;
+  min-height: 86px; padding: 0.7rem 0.5rem;
+  text-align: center;
+  background: var(--bg-card); border: 1px solid var(--linea); border-radius: 6px;
+}
+.paso__num { font-family: var(--f-sub); font-size: 1.55rem; font-weight: 500; line-height: 1.2; color: var(--teal); }
+.paso__txt { font-size: 0.82rem; color: var(--txt-2); line-height: 1.3; }
+
+/* ---------- Bloques: fórmulas (KaTeX con respaldo en texto) ---------- */
+.formula { text-align: center; padding: 0.6rem 0.5rem; overflow-x: auto; }
+.formula__etiqueta { display: block; margin-bottom: 0.4rem; }
+.formula__texto { font-family: var(--f-formula); font-size: clamp(1.25rem, 2vw, 1.7rem); color: var(--txt-titulo); font-style: italic; }
+.formula__tex { display: none; font-size: clamp(1.2rem, 1.9vw, 1.7rem); }
+.formula.is-katex .formula__texto { display: none; }
+.formula.is-katex .formula__tex { display: block; }
+.formula .katex { color: var(--txt-titulo); }
+
+/* ---------- Bloques: tablas y leyendas ---------- */
+.bloque-tabla { background: var(--bg-card); border: 1px solid var(--linea); border-radius: 8px; padding: 0.5rem 0.9rem 0.8rem; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; align-items: center; }
+.leyenda__item { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.92rem; color: var(--txt-2); }
+.muestra { display: inline-block; width: 1.4em; height: 1.1em; border-radius: 3px; border: 1px solid var(--linea-2); vertical-align: -0.15em; }
+.muestra--ejemplo { background: var(--celda-ejemplo); }
+.muestra--captura { background: var(--celda-captura); }
+.muestra--formula { background: var(--celda-formula); }
+
+/* ---------- Figuras SVG ---------- */
+.figura { display: grid; place-items: center; }
+.figura svg { width: 100%; height: auto; max-height: 56vh; }
+.figura__pie { margin-top: 0.4rem; text-align: center; font-size: 0.82rem; color: var(--txt-3); }
+
+/* ---------- Ejercicios ---------- */
+.ejercicio { display: flex; flex-direction: column; gap: 0.35rem; padding: 1.1rem 1.5rem 1.2rem; background: var(--bg-card); border: 1px solid var(--linea); border-radius: 8px; }
+.ejercicio__titulo { font-size: 1.08rem; font-weight: 700; }
+.ejercicio__texto { font-size: 0.95rem; color: var(--txt-2); }
+.ejercicio__pie { margin-top: auto; padding-top: 0.7rem; display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.ejercicio__tag { font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ambar); border: 1px solid color-mix(in srgb, var(--ambar) 40%, transparent); border-radius: 999px; padding: 0.15em 0.8em; }
+
+/* ---------- Cierre y referencias ---------- */
+.cierre__lista { counter-reset: punto; list-style: none; display: grid; gap: 0.55rem; }
+.cierre__lista li { counter-increment: punto; font-size: 1.1rem; }
+.cierre__lista li::before { content: counter(punto) ". "; color: var(--txt-2); }
+.referencias { display: grid; gap: 0.55rem; }
+.referencias p { font-size: 0.88rem; color: var(--txt-3); line-height: 1.5; }
+.referencias p em { color: var(--txt-2); }
+
+/* ---------- Sesión planeada ---------- */
+.planeada-lista { display: grid; gap: 0.5rem; list-style: none; }
+.planeada-lista li { display: flex; gap: 0.8rem; align-items: baseline; font-size: 1rem; color: var(--txt-2); }
+.planeada-lista b { font-family: var(--f-mono); font-weight: 600; font-size: 0.8rem; color: var(--azul); }
+
+/* ---------- Adaptación a pantallas pequeñas ---------- */
+@media (max-width: 980px) {
+  :root { --alto-pie: 72px; }
+  .rejilla { grid-template-columns: repeat(min(var(--cols, 3), 2), minmax(0, 1fr)); }
+  .columnas { grid-template-columns: minmax(0, 1fr); }
+  .pasos { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+  .portada__rueda { opacity: 0.12; width: 90vw; right: -20vw; }
+  .portada__sello { display: none; }
+}
+@media (max-width: 640px) {
+  .rejilla { grid-template-columns: minmax(0, 1fr); }
+  .btn-redondo { width: 44px; height: 44px; }
+  .deck-pie__contador { margin-right: 0.2rem; }
+  .slide__contenido { padding-top: 2.2rem; }
+}
+
+/* ---------- Impresión: una diapositiva por página, todas visibles ---------- */
+@media print {
+  body.deck-page { height: auto; overflow: visible; background: #fff; }
+  .deck { position: static; }
+  .slide { position: static; display: block !important; min-height: 0; page-break-after: always; background: #fff; color: #111; animation: none; overflow: visible; }
+  .slide--lab { display: none !important; }
+  .deck-pie, .progreso { display: none !important; }
+  .tarjeta, .ejercicio, .paso { background: #fff; border-color: #bbb; }
+  .slide__titulo, .tarjeta__titulo, strong { color: #000; }
+}
+
+/* ---------- Bloques: métricas (cifras grandes) ---------- */
+.metricas { display: grid; gap: 0.9rem; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); }
+.metrica { --c: var(--txt-titulo); display: grid; gap: 0.2rem; align-content: start; padding: 1rem 1.2rem 1.1rem; background: var(--bg-card); border: 1px solid var(--linea); border-radius: 8px; }
+.metrica__valor { font-family: var(--f-mono); font-size: clamp(1.5rem, 2.7vw, 2.3rem); font-weight: 500; line-height: 1.15; color: var(--c); font-variant-numeric: tabular-nums; }
+.metrica__etiqueta { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--txt-gris); }
+.metrica__nota { font-size: 0.82rem; color: var(--txt-3); line-height: 1.4; }
+.metrica--teal { --c: var(--teal); }
+.metrica--azul { --c: var(--azul); }
+.metrica--coral { --c: var(--coral); }
+.metrica--ambar { --c: var(--ambar); }
+.metrica--verde { --c: var(--verde); }
+.metrica--violeta { --c: var(--violeta); }
+
+/* ---------- Bloques: pasos con color de fase, subtexto ---------- */
+.paso__sub { font-size: 0.72rem; color: var(--txt-3); line-height: 1.3; }
+.paso--general { border-top: 3px solid var(--fase-general); }
+.paso--definir { border-top: 3px solid color-mix(in srgb, var(--fase-definir) 70%, #5b8bd8); }
+.paso--medir { border-top: 3px solid var(--fase-medir); }
+.paso--analizar { border-top: 3px solid var(--fase-analizar); }
+.paso--mejorar { border-top: 3px solid var(--fase-mejorar); }
+.paso--controlar { border-top: 3px solid var(--fase-controlar); }
+
+/* ---------- Bloques: enlaces a laboratorios y verificación de ejercicios ---------- */
+.enlace-lab { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.verificacion { margin-top: 0.45rem; padding-top: 0.5rem; border-top: 1px dashed var(--linea-2); }
+.verificacion summary { cursor: pointer; font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--azul); }
+.verificacion[open] summary { color: var(--teal); }
+.verificacion p { margin-top: 0.55rem; font-size: 0.9rem; line-height: 1.55; color: var(--txt); }
+.enlaces li { font-size: 1.02rem; }
+
+/* ---------- Sesión planeada ---------- */
+.planeada { display: grid; gap: 1.2rem; }
+
+/* ---------- Pantalla de error del visor y carga de laboratorios ---------- */
+.deck-error { position: fixed; inset: 0; overflow: auto; display: flex; background: var(--bg-deck); }
+.lab__cargando { padding: 2.5rem 2rem; font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--txt-3); }

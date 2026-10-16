@@ -1,0 +1,84 @@
+/*
+ * tokens.css — Variables de diseño del sitio (colores, tipografía, medidas).
+ *
+ * Es el ÚNICO lugar donde se definen colores. El resto de las hojas de estilo
+ * solo usan estas variables. Para ajustar la identidad visual, edita aquí.
+ *
+ * Origen de los valores:
+ *  - Fondo, gris de títulos y dorado: muestreados de la portada del libro.
+ *  - Colores de fase (DMAIC), de celdas y de semáforos: los de las plantillas Excel.
+ */
+:root {
+  color-scheme: dark;
+
+  /* ---------- Superficies (de más profunda a más elevada) ---------- */
+  --bg: #0a1011;              /* fondo de página */
+  --bg-deck: #080d0e;         /* fondo de diapositivas */
+  --bg-portada: #192223;      /* tono de la portada del libro */
+  --bg-card: #0f1819;         /* tarjetas */
+  --bg-card-2: #131e20;       /* tarjetas elevadas / hover */
+  --bg-campo: #0b1314;        /* campos de captura */
+  --linea: #1d2b2d;           /* bordes sutiles */
+  --linea-2: #2b3c3f;         /* bordes con más presencia */
+
+  /* ---------- Texto ---------- */
+  --txt: #e4eaea;             /* cuerpo */
+  --txt-titulo: #ffffff;
+  --txt-gris: #b2b8b8;        /* gris del título de la portada */
+  --txt-2: #9aa6a7;           /* descripciones */
+  --txt-3: #6f7c7e;           /* texto auxiliar, etiquetas */
+  --txt-4: #4b5759;
+
+  /* ---------- Acentos ---------- */
+  --teal: #2cd1b6;            /* barra de progreso, números de pasos */
+  --verde: #3fcf6e;           /* número de sesión (S1, S2…) */
+  --azul: #4da3ff;            /* enlaces y números de laboratorio */
+  --coral: #ff6f85;           /* valores negativos / contraste */
+  --violeta: #a78bfa;
+  --ambar: #f2bf4a;
+  --oro: #917843;             /* sello de la portada */
+  --oro-claro: #c2a35f;
+
+  /* ---------- Fases DMAIC (idénticas a las plantillas Excel) ---------- */
+  --fase-general: #6b4c9a;
+  --fase-definir: #1f3864;
+  --fase-medir: #2e75b6;
+  --fase-analizar: #c2570c;
+  --fase-mejorar: #2a8c82;
+  --fase-controlar: #7f7f7f;
+
+  /* ---------- Código de color de las celdas (Excel) ----------
+   * amarillo = ejemplo · blanco = captura · azul claro = fórmula
+   * En fondo oscuro se usan versiones translúcidas del mismo color. */
+  --celda-ejemplo: #fff2cc;
+  --celda-captura: #ffffff;
+  --celda-formula: #d9e1f2;
+
+  /* ---------- Semáforos (relleno y texto, idénticos a las plantillas Excel) ---------- */
+  --sem-cumple-bg: #c6e8d2;      --sem-cumple-fg: #145a32;
+  --sem-atencion-bg: #fce9b2;    --sem-atencion-fg: #7a5200;
+  --sem-critico-bg: #f6c9c4;     --sem-critico-fg: #8b1a12;
+  --sem-informativo-bg: #d6e4f5; --sem-informativo-fg: #1f3864;
+  --sem-sindatos-bg: #ededed;    --sem-sindatos-fg: #555555;
+
+  /* ---------- Tipografía ---------- */
+  --f-titulo: "Roboto", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-sub: "Montserrat", "Inter", system-ui, sans-serif;
+  --f-cuerpo: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --f-formula: "KaTeX_Main", "Times New Roman", Georgia, serif;
+
+  /* ---------- Medidas ---------- */
+  --radio: 10px;
+  --radio-s: 6px;
+  --ancho-indice: 1080px;
+  --ancho-slide: 1420px;
+  --alto-pie: 84px;           /* franja inferior del visor */
+  --gutter: clamp(20px, 5vw, 80px);
+  --t-rapida: 140ms;
+  --t-media: 240ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --t-rapida: 0ms; --t-media: 0ms; }
+}

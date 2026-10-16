@@ -1,0 +1,172 @@
+/*
+ * base.css — Reinicio, tipografía y componentes comunes (índice y visor).
+ * Depende solo de tokens.css.
+ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--txt);
+  font-family: var(--f-cuerpo);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 { margin: 0; font-family: var(--f-titulo); color: var(--txt-titulo); line-height: 1.15; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+img, svg { max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+code, kbd { font-family: var(--f-mono); font-size: 0.92em; }
+strong { color: var(--txt-titulo); font-weight: 600; }
+
+a { color: var(--azul); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 3px; }
+
+::selection { background: color-mix(in srgb, var(--teal) 35%, transparent); }
+
+/* Barras de desplazamiento discretas */
+* { scrollbar-width: thin; scrollbar-color: var(--linea-2) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--linea-2); border-radius: 8px; border: 2px solid var(--bg); }
+
+.solo-lectores {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Etiquetas en versalitas (NAVEGAR, EJERCICIO 1.1…) ---------- */
+.etiqueta {
+  font-family: var(--f-cuerpo);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--txt-3);
+}
+
+.mono { font-family: var(--f-mono); }
+
+/* ---------- Píldora (SESIÓN 1 DE 4, LABORATORIO 01) ---------- */
+.pildora {
+  display: inline-block;
+  padding: 0.32em 1.1em;
+  border: 1px solid var(--teal);
+  border-radius: 999px;
+  color: var(--teal);
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
+  padding: 0.5em 1em;
+  background: transparent;
+  border: 1px solid var(--linea-2);
+  border-radius: var(--radio-s);
+  color: var(--txt-2);
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color var(--t-rapida), color var(--t-rapida), background var(--t-rapida);
+}
+.btn:hover { border-color: var(--teal); color: var(--txt-titulo); text-decoration: none; }
+.btn:active { background: color-mix(in srgb, var(--teal) 12%, transparent); }
+.btn[aria-pressed="true"], .btn.is-activo { border-color: var(--teal); color: var(--teal); }
+
+.btn-redondo {
+  width: 52px; height: 52px; flex: none;
+  display: grid; place-items: center;
+  background: transparent;
+  border: 1px solid var(--linea-2);
+  border-radius: 50%;
+  color: var(--txt-2);
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: border-color var(--t-rapida), color var(--t-rapida), background var(--t-rapida);
+}
+.btn-redondo:hover:not(:disabled) { border-color: var(--teal); color: var(--teal); }
+.btn-redondo:active:not(:disabled) { background: color-mix(in srgb, var(--teal) 14%, transparent); }
+.btn-redondo:disabled { opacity: 0.3; cursor: default; }
+
+/* ---------- Avisos (sin servidor, sin conexión) ---------- */
+.aviso {
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--ambar) 45%, transparent);
+  border-left-width: 3px;
+  border-radius: var(--radio-s);
+  background: color-mix(in srgb, var(--ambar) 8%, var(--bg-card));
+  color: var(--txt);
+  font-size: 0.9rem;
+}
+.aviso strong { color: var(--ambar); }
+.aviso code { color: var(--txt-titulo); background: var(--bg-campo); padding: 0.1em 0.4em; border-radius: 4px; }
+.aviso--error { border-color: color-mix(in srgb, var(--coral) 55%, transparent); background: color-mix(in srgb, var(--coral) 8%, var(--bg-card)); }
+.aviso--error strong { color: var(--coral); }
+
+/* ---------- Semáforos: mismos colores y símbolos que las plantillas Excel ---------- */
+.chip-estado {
+  display: inline-flex; align-items: baseline; gap: 0.45em;
+  padding: 0.18em 0.7em;
+  border-radius: 4px;
+  font-family: var(--f-cuerpo);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.chip-estado--cumple { background: var(--sem-cumple-bg); color: var(--sem-cumple-fg); }
+.chip-estado--atencion { background: var(--sem-atencion-bg); color: var(--sem-atencion-fg); }
+.chip-estado--critico { background: var(--sem-critico-bg); color: var(--sem-critico-fg); }
+.chip-estado--informativo { background: var(--sem-informativo-bg); color: var(--sem-informativo-fg); }
+.chip-estado--sin-datos { background: var(--sem-sindatos-bg); color: var(--sem-sindatos-fg); }
+
+/* ---------- Tablas de contenido ---------- */
+.tabla-wrap { overflow-x: auto; }
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.tabla th, .tabla td { padding: 0.55em 0.9em; text-align: left; vertical-align: top; border-bottom: 1px solid var(--linea); }
+.tabla th {
+  font-family: var(--f-cuerpo);
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--txt-3);
+  border-bottom: 1px solid var(--linea-2);
+}
+.tabla td.num, .tabla th.num { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.tabla tr.is-resaltada td { background: color-mix(in srgb, var(--teal) 9%, transparent); color: var(--txt-titulo); }
+.tabla caption { caption-side: bottom; padding-top: 0.6em; text-align: left; font-size: 0.8rem; color: var(--txt-3); }
+
+/* ---------- Carga y apertura sin servidor ---------- */
+.cargando { padding: 4rem var(--gutter); text-align: center; font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--txt-3); }
+.banner-servidor { display: none; max-width: 46rem; margin: 3rem auto; }
+html.sin-servidor .banner-servidor { display: block; }
+html.sin-servidor .cargando { display: none; }
+.pagina-simple { width: min(40rem, calc(100% - 2 * var(--gutter))); margin: 0 auto; padding: 18vh 0 4rem; }
+.pagina-simple h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 1rem; }
+.pagina-simple p { color: var(--txt-2); margin-bottom: 1.2rem; }
+
+/* ---------- Impresión: todas las diapositivas en secuencia ---------- */
+@media print {
+  :root { color-scheme: light; }
+  body { background: #fff; color: #111; }
+  .no-imprimir { display: none !important; }
+}

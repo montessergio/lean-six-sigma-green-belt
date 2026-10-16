@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sesión · Lean Six Sigma Green Belt</title>
+  <meta name="description" content="Sesión del curso Lean Six Sigma Green Belt: teoría condensada, laboratorios interactivos y ejercicios.">
+  <meta name="theme-color" content="#080d0e">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script>
+    if (location.protocol === 'file:') document.documentElement.classList.add('sin-servidor');
+  </script>
+  <link rel="stylesheet" href="css/fuentes.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/deck.css">
+  <link rel="stylesheet" href="css/labs.css">
+</head>
+<body class="deck-page">
+  <div id="app"><p class="cargando">Cargando sesión…</p></div>
+
+  <div class="aviso aviso--error banner-servidor" role="alert">
+    <strong>Abre el sitio con un servidor web.</strong>
+    Los navegadores bloquean la lectura de archivos JSON y de módulos desde <code>file://</code>.
+    Publícalo en GitHub Pages o, en local, ejecuta <code>python -m http.server 8000</code> en esta carpeta
+    y entra a <code>http://localhost:8000</code>.
+  </div>
+  <noscript>
+    <div class="aviso aviso--error" style="max-width:46rem;margin:3rem auto">
+      <strong>Este sitio necesita JavaScript</strong> para mostrar las sesiones y los laboratorios interactivos.
+      <a href="index.html">Volver al índice</a>
+    </div>
+  </noscript>
+
+  <script type="module" src="js/sesion.js"></script>
+</body>
+</html>
