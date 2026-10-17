@@ -1,0 +1,107 @@
+{
+  "id": "s6",
+  "numero": 6,
+  "estado": "planeada",
+  "titulo": "Controlar, integrar y sostener",
+  "fase": "controlar",
+  "duracion": "3 h",
+  "duracionMin": 180,
+  "descripcion": "Plan de control y cartas de control para sostener la mejora; el caso de los arneses de principio a fin y la gestión del cambio.",
+  "portada": {
+    "pildora": "SESIÓN 6 · 3 H · MÓDULOS 10, 11 Y 12",
+    "titulo": "Controlar, integrar y sostener",
+    "subtitulo": "Cartas de control, caso integrador y gestión del cambio",
+    "curso": "LEAN SIX SIGMA GREEN BELT",
+    "lineas": [
+      "Guía de estudio para estudiantes de Ingeniería Industrial",
+      "Sesión planeada: estructura lista para completarse"
+    ],
+    "sello": {
+      "arriba": "CASO APLICADO",
+      "abajo": "LABORATORIOS INTERACTIVOS",
+      "simbolo": "σ"
+    }
+  },
+  "modulos": [
+    {
+      "id": "M10",
+      "nombre": "Control estadístico de procesos",
+      "fase": "controlar"
+    },
+    {
+      "id": "M11",
+      "nombre": "Caso integrador: la línea de arneses de principio a fin",
+      "fase": "general"
+    },
+    {
+      "id": "M12",
+      "nombre": "Sostenibilidad y gestión del cambio",
+      "fase": "general"
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab24",
+      "numero": "24",
+      "nombre": "Plan de control",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab25",
+      "numero": "25",
+      "nombre": "Carta de control X̄-R",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab26",
+      "numero": "26",
+      "nombre": "Carta de control u",
+      "estado": "planeada"
+    }
+  ],
+  "slides": [
+    {
+      "tipo": "portada"
+    },
+    {
+      "id": "plan",
+      "etiqueta": "SESIÓN 6 · CONTROLAR",
+      "titulo": "Esta sesión está planeada",
+      "subtitulo": "3 h · 3 laboratorios",
+      "bloques": [
+        {
+          "tipo": "planeada",
+          "nota": "Esta sesión ya tiene su lugar en la ruta DMAIC y su estructura lista. Se completará con el mismo patrón que las sesiones 1 y 2: teoría condensada, laboratorios, ejercicios vinculados y cierre. Mientras tanto, el libro y las plantillas de Excel cubren estos módulos completos.",
+          "modulos": [
+            {
+              "id": "M10",
+              "titulo": "Control estadístico de procesos"
+            },
+            {
+              "id": "M11",
+              "titulo": "Caso integrador: la línea de arneses de principio a fin"
+            },
+            {
+              "id": "M12",
+              "titulo": "Sostenibilidad y gestión del cambio"
+            }
+          ],
+          "labs": [
+            {
+              "id": "LAB 24",
+              "titulo": "Plan de control"
+            },
+            {
+              "id": "LAB 25",
+              "titulo": "Carta de control X̄-R"
+            },
+            {
+              "id": "LAB 26",
+              "titulo": "Carta de control u"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -102,6 +102,8 @@ body.deck-page {
   pointer-events: none;
 }
 .deck-pie > * { pointer-events: auto; }
+/* En laboratorios y diapositivas con desplazamiento, el contenido pasa por debajo del pie: se desvanece. */
+.deck:not([data-tipo="portada"]) ~ .deck-pie { background: linear-gradient(to top, var(--bg-deck) 55%, transparent); }
 .deck-pie__indice {
   font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--txt-3);
@@ -275,3 +277,8 @@ ol.lista li::marker { color: var(--txt-2); font-family: var(--f-mono); }
 /* ---------- Pantalla de error del visor y carga de laboratorios ---------- */
 .deck-error { position: fixed; inset: 0; overflow: auto; display: flex; background: var(--bg-deck); }
 .lab__cargando { padding: 2.5rem 2rem; font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--txt-3); }
+
+/* ---------- Bloque: gráfica de Plotly dentro de una diapositiva de teoría ---------- */
+.figura--grafica { display: block; }
+.grafica--bloque { background: var(--bg-card); border: 1px solid var(--linea); border-radius: 8px; padding: 0.8rem 0.6rem 0.4rem; }
+.figura--grafica .figura__pie { margin-top: 0.5rem; }

@@ -1,0 +1,33 @@
+{
+  "id": "s1",
+  "numero": 1,
+  "estado": "disponible",
+  "titulo": "Fundamentos cuantitativos y Six Sigma",
+  "fase": "general",
+  "duracion": "3 h",
+  "duracionMin": 180,
+  "descripcion": "Estadística descriptiva, distribución normal y valor p; origen de Six Sigma, DMAIC, costo de la mala calidad, DPMO y nivel sigma aplicados al caso de los arneses.",
+
+  "portada": {
+    "pildora": "SESIÓN 1 · 3 H · MÓDULOS 0 Y 1",
+    "titulo": "Fundamentos cuantitativos y Six Sigma",
+    "subtitulo": "Estadística descriptiva, normal, COPQ, DPMO y nivel sigma",
+    "curso": "LEAN SIX SIGMA GREEN BELT",
+    "lineas": ["Guía de estudio para estudiantes de Ingeniería Industrial", "4 laboratorios interactivos con el caso de la línea de arneses"],
+    "sello": { "arriba": "CASO APLICADO", "abajo": "LABORATORIOS INTERACTIVOS", "simbolo": "σ" }
+  },
+
+  "modulos": [
+    { "id": "M0", "nombre": "Fundamentos cuantitativos para Six Sigma", "fase": "general" },
+    { "id": "M1", "nombre": "Fundamentos de Six Sigma y Lean", "fase": "general" }
+  ],
+
+  "labs": [
+    { "id": "lab01", "numero": "01", "nombre": "Estadística descriptiva", "archivo": "lab01-estadistica-descriptiva.js" }
+  ],
+
+  "slides": [
+    { "tipo": "portada" },
+    { "tipo": "lab", "lab": "lab01" }
+  ]
+}

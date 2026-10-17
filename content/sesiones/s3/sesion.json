@@ -1,0 +1,118 @@
+{
+  "id": "s3",
+  "numero": 3,
+  "estado": "planeada",
+  "titulo": "Medir: proceso, datos y sistema de medición",
+  "fase": "medir",
+  "duracion": "4 h",
+  "duracionMin": 240,
+  "descripcion": "Mapa del proceso, PCE y desperdicios, plan de recolección de datos, tamaño de muestra, Gauge R&R y capacidad Cp/Cpk.",
+  "portada": {
+    "pildora": "SESIÓN 3 · 4 H · MÓDULOS 4 Y 5",
+    "titulo": "Medir: proceso, datos y sistema de medición",
+    "subtitulo": "PCE, datos, Gauge R&R y capacidad Cp/Cpk",
+    "curso": "LEAN SIX SIGMA GREEN BELT",
+    "lineas": [
+      "Guía de estudio para estudiantes de Ingeniería Industrial",
+      "Sesión planeada: estructura lista para completarse"
+    ],
+    "sello": {
+      "arriba": "CASO APLICADO",
+      "abajo": "LABORATORIOS INTERACTIVOS",
+      "simbolo": "σ"
+    }
+  },
+  "modulos": [
+    {
+      "id": "M4",
+      "nombre": "Mapeo de procesos y recolección de datos",
+      "fase": "medir"
+    },
+    {
+      "id": "M5",
+      "nombre": "Estadística y sistema de medición",
+      "fase": "medir"
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab10",
+      "numero": "10",
+      "nombre": "PCE y desperdicios (VA / SVA)",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab11",
+      "numero": "11",
+      "nombre": "Tamaño de muestra",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab12",
+      "numero": "12",
+      "nombre": "Gauge R&R (%GRR)",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab13",
+      "numero": "13",
+      "nombre": "Capacidad del proceso: Cp y Cpk",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab14",
+      "numero": "14",
+      "nombre": "Hoja de verificación",
+      "estado": "planeada"
+    }
+  ],
+  "slides": [
+    {
+      "tipo": "portada"
+    },
+    {
+      "id": "plan",
+      "etiqueta": "SESIÓN 3 · MEDIR",
+      "titulo": "Esta sesión está planeada",
+      "subtitulo": "4 h · 5 laboratorios",
+      "bloques": [
+        {
+          "tipo": "planeada",
+          "nota": "Esta sesión ya tiene su lugar en la ruta DMAIC y su estructura lista. Se completará con el mismo patrón que las sesiones 1 y 2: teoría condensada, laboratorios, ejercicios vinculados y cierre. Mientras tanto, el libro y las plantillas de Excel cubren estos módulos completos.",
+          "modulos": [
+            {
+              "id": "M4",
+              "titulo": "Mapeo de procesos y recolección de datos"
+            },
+            {
+              "id": "M5",
+              "titulo": "Estadística y sistema de medición"
+            }
+          ],
+          "labs": [
+            {
+              "id": "LAB 10",
+              "titulo": "PCE y desperdicios (VA / SVA)"
+            },
+            {
+              "id": "LAB 11",
+              "titulo": "Tamaño de muestra"
+            },
+            {
+              "id": "LAB 12",
+              "titulo": "Gauge R&R (%GRR)"
+            },
+            {
+              "id": "LAB 13",
+              "titulo": "Capacidad del proceso: Cp y Cpk"
+            },
+            {
+              "id": "LAB 14",
+              "titulo": "Hoja de verificación"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

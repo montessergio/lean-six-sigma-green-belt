@@ -1,0 +1,312 @@
+{
+  "id": "uso",
+  "titulo": "Cómo usar este material",
+  "slides": [
+    {
+      "id": "navegacion",
+      "etiqueta": "SESIÓN 0 · NAVEGAR",
+      "titulo": "Cuatro formas de moverte",
+      "subtitulo": "El contador del pie («n / N») siempre dice dónde estás dentro de la sesión.",
+      "bloques": [
+        {
+          "tipo": "pasos",
+          "columnas": 4,
+          "pasos": [
+            {
+              "texto": "Flechas del teclado"
+            },
+            {
+              "texto": "Botones redondos del pie"
+            },
+            {
+              "texto": "Deslizar en el celular"
+            },
+            {
+              "texto": "Enlace directo (#)"
+            }
+          ]
+        },
+        {
+          "tipo": "tabla",
+          "columnas": [
+            "Tecla o gesto",
+            "Qué hace"
+          ],
+          "filas": [
+            [
+              "`→` · `Espacio` · `Av Pág`",
+              "Diapositiva siguiente"
+            ],
+            [
+              "`←` · `Re Pág`",
+              "Diapositiva anterior"
+            ],
+            [
+              "`Inicio` · `Fin`",
+              "Primera y última diapositiva de la sesión"
+            ],
+            [
+              "`i`",
+              "Volver al índice de sesiones"
+            ],
+            [
+              "Botones redondos",
+              "Los mismos movimientos con el ratón o el dedo; el contador «n / N» está a su lado"
+            ],
+            [
+              "Enlace con `#`",
+              "La dirección guarda dónde estás: `sesion.html?s=s1#lab01` abre el laboratorio 01. Cópiala para compartir esa diapositiva"
+            ]
+          ]
+        },
+        {
+          "tipo": "nota",
+          "etiqueta": "TIP",
+          "texto": "Mientras escribes dentro de un campo de un laboratorio, las flechas mueven el cursor y no cambian de diapositiva. Pulsa `Esc` o haz clic fuera del campo para volver a navegar con el teclado."
+        }
+      ]
+    },
+    {
+      "id": "laboratorios",
+      "etiqueta": "SESIÓN 0 · LABORATORIOS",
+      "titulo": "Un laboratorio es una calculadora viva",
+      "subtitulo": "A la izquierda capturas datos; a la derecha ves el resultado, el criterio para interpretarlo y la gráfica.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {
+              "etiqueta": "1 · EJEMPLOS",
+              "titulo": "Un clic y ya hay datos",
+              "texto": "Cada laboratorio trae ejemplos precargados (los de la guía y los del caso de los arneses). Elige uno y modifícalo para ver qué cambia."
+            },
+            {
+              "etiqueta": "2 · RECÁLCULO",
+              "titulo": "Todo se actualiza al instante",
+              "texto": "No hay botón «Calcular»: cada vez que cambias una celda se recalculan los resultados, los semáforos y las gráficas."
+            },
+            {
+              "etiqueta": "3 · SIN TRUCOS",
+              "titulo": "Nada de respuestas ocultas",
+              "texto": "El laboratorio no te dice «correcto» o «incorrecto»: te muestra el resultado, el umbral con que se interpreta y las preguntas que debe hacerse el analista."
+            }
+          ]
+        },
+        {
+          "tipo": "titulo",
+          "texto": "Código de colores de las celdas (el mismo de las plantillas de Excel)"
+        },
+        {
+          "tipo": "leyenda",
+          "items": [
+            {
+              "muestra": "ejemplo",
+              "texto": "**Amarillo**: dato de ejemplo; puedes sobrescribirlo y la celda pasa a blanco."
+            },
+            {
+              "muestra": "captura",
+              "texto": "**Blanco**: tus datos."
+            },
+            {
+              "muestra": "formula",
+              "texto": "**Azul claro**: fórmula; se calcula sola, no se edita."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "semaforos",
+      "etiqueta": "SESIÓN 0 · INTERPRETAR",
+      "titulo": "Semáforos, umbrales y supuestos",
+      "subtitulo": "Cada laboratorio resume su veredicto con los mismos cinco estados que las plantillas de Excel.",
+      "bloques": [
+        {
+          "tipo": "leyenda",
+          "items": [
+            {
+              "muestra": "cumple",
+              "texto": "el resultado satisface el criterio"
+            },
+            {
+              "muestra": "atencion",
+              "texto": "condicional: conviene revisar antes de decidir"
+            },
+            {
+              "muestra": "critico",
+              "texto": "no cumple: requiere acción"
+            },
+            {
+              "muestra": "informativo",
+              "texto": "dato de contexto, sin juicio"
+            },
+            {
+              "muestra": "sin-datos",
+              "texto": "falta capturar información"
+            }
+          ]
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {
+              "etiqueta": "UMBRAL",
+              "titulo": "¿Con qué se compara el resultado?",
+              "texto": "Una tabla con los rangos de interpretación; la fila que corresponde a tus datos aparece resaltada. Ejemplos: %GRR < 10 % aceptable y 10–30 % condicional; RPN ≥ 200 exige acción inmediata."
+            },
+            {
+              "etiqueta": "SUPUESTO",
+              "titulo": "¿Cuándo es válido el cálculo?",
+              "texto": "Toda herramienta estadística descansa en un supuesto (normalidad, independencia, varianzas parecidas…). El laboratorio lo declara y, cuando puede, lo revisa con tus datos."
+            },
+            {
+              "etiqueta": "PREGUNTAS",
+              "titulo": "Lo que debe cuestionar el analista",
+              "texto": "Al final de cada laboratorio hay preguntas abiertas para discutir en clase o resolver por tu cuenta. Las respuestas dependen de tus datos, por eso no vienen escritas."
+            }
+          ]
+        },
+        {
+          "tipo": "nota",
+          "etiqueta": "IMPORTANTE",
+          "texto": "Los semáforos y umbrales son una **guía de lectura**, no una decisión automática. Cuando un umbral viene de la guía o de las plantillas se indica; los que son una referencia didáctica del laboratorio se marcan como tales."
+        }
+      ]
+    },
+    {
+      "id": "sin-conexion",
+      "etiqueta": "SESIÓN 0 · CONEXIÓN",
+      "titulo": "¿Qué pasa sin internet?",
+      "subtitulo": "El contenido y los cálculos viven en el propio sitio; solo dos bibliotecas se descargan de un CDN.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": [
+            "Elemento",
+            "Sin conexión",
+            "Con conexión"
+          ],
+          "filas": [
+            [
+              "Texto de las diapositivas y navegación",
+              "Funciona igual",
+              "Funciona igual"
+            ],
+            [
+              "Cálculos y semáforos de los laboratorios",
+              "Funcionan igual",
+              "Funcionan igual"
+            ],
+            [
+              "Fórmulas (KaTeX)",
+              "Se muestran como **texto plano**",
+              "Tipografía matemática"
+            ],
+            [
+              "Gráficas (Plotly)",
+              "Se sustituyen por una **tabla con los mismos datos**",
+              "Gráficas interactivas"
+            ]
+          ]
+        },
+        {
+          "tipo": "nota",
+          "etiqueta": "AVISO EN EL PIE",
+          "texto": "Si una de las dos bibliotecas no carga, aparece un indicador junto al contador de la diapositiva. Al recuperar la conexión, recarga la página."
+        },
+        {
+          "tipo": "nota",
+          "etiqueta": "ABRIR EN LOCAL",
+          "texto": "Si descargas el repositorio, no abras `index.html` con doble clic: el navegador bloquea la lectura de los archivos de datos. Usa un servidor local (`python -m http.server`) o la versión publicada en GitHub Pages."
+        }
+      ]
+    },
+    {
+      "id": "caso",
+      "etiqueta": "SESIÓN 0 · EL CASO",
+      "titulo": "Un caso continuo: la línea de arneses",
+      "subtitulo": "Línea de ensamble de arneses eléctricos para material rodante ferroviario. Sus datos son el conjunto de práctica de todos los laboratorios.",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            {
+              "valor": "300 → 162",
+              "etiqueta": "DPMO",
+              "nota": "línea base y resultado final",
+              "color": "teal"
+            },
+            {
+              "valor": "27.3 %",
+              "etiqueta": "PCE",
+              "nota": "15 min de valor agregado en 55 min",
+              "color": "azul"
+            },
+            {
+              "valor": "173 N",
+              "etiqueta": "Fuerza mínima",
+              "nota": "umbral de retención del conector",
+              "color": "ambar"
+            },
+            {
+              "valor": "7 mm",
+              "etiqueta": "Longitud de pelado",
+              "nota": "nominal, ±0.5 mm",
+              "color": "violeta"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Cada arnés terminado pasa **cinco verificaciones**: continuidad eléctrica, torque de las terminales, asentamiento del conector, etiquetado y ruteo según el plano. Con ese caso recorrerás el ciclo DMAIC completo: lo definirás en la sesión 2, lo medirás en la 3, buscarás sus causas en la 4, lo mejorarás en la 5 y lo controlarás en la 6."
+        },
+        {
+          "tipo": "pasos",
+          "columnas": 6,
+          "pasos": [
+            {
+              "numero": "S1",
+              "texto": "Fundamentos",
+              "fase": "general"
+            },
+            {
+              "numero": "S2",
+              "texto": "Definir",
+              "fase": "definir"
+            },
+            {
+              "numero": "S3",
+              "texto": "Medir",
+              "fase": "medir"
+            },
+            {
+              "numero": "S4",
+              "texto": "Analizar",
+              "fase": "analizar"
+            },
+            {
+              "numero": "S5",
+              "texto": "Mejorar",
+              "fase": "mejorar"
+            },
+            {
+              "numero": "S6",
+              "texto": "Controlar",
+              "fase": "controlar"
+            }
+          ]
+        },
+        {
+          "tipo": "cierre",
+          "puntos": [
+            "Empieza por la sesión 1: te da el lenguaje cuantitativo (media, desviación, DPMO, sigma) que usan todas las demás.",
+            "Cuando termines una diapositiva de teoría, abre el laboratorio que la acompaña y cambia los datos."
+          ]
+        }
+      ]
+    }
+  ]
+}

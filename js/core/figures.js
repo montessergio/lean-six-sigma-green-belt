@@ -286,6 +286,59 @@ function simbolosFlujo() {
 }
 
 /* ------------------------------------------------------------------ */
+/* SIPOC (M3A §1)                                                       */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Cinco columnas: proveedores → entradas → proceso (pasos numerados) → salidas → clientes.
+ * params: { proveedores:[], entradas:[], pasos:[], salidas:[], clientes:[] }  (listas de texto)
+ */
+function sipoc({ proveedores = [], entradas = [], pasos = [], salidas = [], clientes = [] } = {}) {
+  const columnas = [
+    { titulo: 'S · PROVEEDORES', items: proveedores, color: COLOR.violeta },
+    { titulo: 'I · ENTRADAS', items: entradas, color: COLOR.azul },
+    { titulo: 'P · PROCESO', items: pasos, color: COLOR.teal, numerar: true },
+    { titulo: 'O · SALIDAS', items: salidas, color: COLOR.ambar },
+    { titulo: 'C · CLIENTES', items: clientes, color: COLOR.coral },
+  ];
+  const colW = 150;
+  const hueco = 28;
+  const W = colW * 5 + hueco * 4;
+  const filaH = 48;
+  const cajaH = 40;
+  const filas = Math.max(1, ...columnas.map((c) => c.items.length));
+  const H = 38 + filas * filaH;
+  const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Diagrama SIPOC: proveedores, entradas, proceso, salidas y clientes' });
+  columnas.forEach((col, c) => {
+    const x = c * (colW + hueco);
+    svg.appendChild(s('text', { x: x + colW / 2, y: 14, 'text-anchor': 'middle', fill: col.color, 'font-size': 10.5, 'font-weight': 700, 'letter-spacing': '1.4', 'font-family': 'Inter, sans-serif', texto: col.titulo }));
+    if (!col.items.length) {
+      svg.appendChild(s('rect', { x, y: 30, width: colW, height: cajaH, rx: 6, fill: 'none', stroke: COLOR.linea2, 'stroke-dasharray': '4 4' }));
+      svg.appendChild(s('text', { x: x + colW / 2, y: 30 + cajaH / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: COLOR.gris, 'font-size': 11, 'font-family': 'Inter, sans-serif', texto: '(sin capturar)' }));
+    }
+    col.items.forEach((texto, i) => {
+      const y = 30 + i * filaH;
+      if (col.numerar && i > 0) svg.appendChild(s('path', { d: `M${x + colW / 2} ${y - (filaH - cajaH)} V${y}`, stroke: col.color, 'stroke-width': 1.4, opacity: 0.8 }));
+      svg.appendChild(s('rect', { x, y, width: colW, height: cajaH, rx: 6, fill: '#0f1819', stroke: col.color, 'stroke-width': 1.3 }));
+      const lineas = partir(texto, col.numerar ? 17 : 21).slice(0, 2);
+      const largo = partir(texto, col.numerar ? 17 : 21).length > 2;
+      if (largo) lineas[1] = `${lineas[1].slice(0, Math.max(0, lineas[1].length - 1))}…`;
+      svg.appendChild(textoMulti(x + (col.numerar ? colW / 2 + 9 : colW / 2), y + cajaH / 2, lineas, { tam: 11.5 }));
+      if (col.numerar) {
+        svg.appendChild(s('circle', { cx: x + 17, cy: y + cajaH / 2, r: 10, fill: 'none', stroke: col.color, 'stroke-width': 1.3 }));
+        svg.appendChild(s('text', { x: x + 17, y: y + cajaH / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: col.color, 'font-size': 11, 'font-weight': 700, 'font-family': 'JetBrains Mono, monospace', texto: String(i + 1) }));
+      }
+    });
+    if (c < 4) {
+      const xf = x + colW + hueco / 2;
+      const yf = 30 + (filas * filaH - (filaH - cajaH)) / 2;
+      svg.appendChild(s('path', { d: `M${xf - 4} ${yf - 7} L${xf + 4} ${yf} L${xf - 4} ${yf + 7}`, fill: 'none', stroke: COLOR.gris, 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+    }
+  });
+  return svg;
+}
+
+/* ------------------------------------------------------------------ */
 /* Registro                                                             */
 /* ------------------------------------------------------------------ */
 
@@ -296,6 +349,7 @@ export const FIGURAS = {
   'curva-sigma': curvaSigma,
   arbol,
   'simbolos-flujo': simbolosFlujo,
+  sipoc,
 };
 
 /** Crea una figura por nombre; si no existe devuelve un SVG con un aviso legible. */

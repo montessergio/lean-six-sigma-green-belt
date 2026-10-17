@@ -1,0 +1,118 @@
+{
+  "id": "s4",
+  "numero": 4,
+  "estado": "planeada",
+  "titulo": "Analizar: causas raíz e inferencia",
+  "fase": "analizar",
+  "duracion": "4 h",
+  "duracionMin": 240,
+  "descripcion": "Pareto, Ishikawa, 5 Porqués y AMEF para encontrar causas; pruebas de hipótesis, ANOVA, correlación y regresión para confirmarlas con datos.",
+  "portada": {
+    "pildora": "SESIÓN 4 · 4 H · MÓDULOS 6 Y 7",
+    "titulo": "Analizar: causas raíz e inferencia",
+    "subtitulo": "Pareto, Ishikawa, AMEF, ANOVA y regresión",
+    "curso": "LEAN SIX SIGMA GREEN BELT",
+    "lineas": [
+      "Guía de estudio para estudiantes de Ingeniería Industrial",
+      "Sesión planeada: estructura lista para completarse"
+    ],
+    "sello": {
+      "arriba": "CASO APLICADO",
+      "abajo": "LABORATORIOS INTERACTIVOS",
+      "simbolo": "σ"
+    }
+  },
+  "modulos": [
+    {
+      "id": "M6",
+      "nombre": "Análisis de causa raíz",
+      "fase": "analizar"
+    },
+    {
+      "id": "M7",
+      "nombre": "Inferencia estadística",
+      "fase": "analizar"
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab15",
+      "numero": "15",
+      "nombre": "Diagrama de Pareto",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab16",
+      "numero": "16",
+      "nombre": "Ishikawa y 5 Porqués",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab17",
+      "numero": "17",
+      "nombre": "AMEF y RPN",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab18",
+      "numero": "18",
+      "nombre": "ANOVA de un factor",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab19",
+      "numero": "19",
+      "nombre": "Correlación, regresión y chi-cuadrada",
+      "estado": "planeada"
+    }
+  ],
+  "slides": [
+    {
+      "tipo": "portada"
+    },
+    {
+      "id": "plan",
+      "etiqueta": "SESIÓN 4 · ANALIZAR",
+      "titulo": "Esta sesión está planeada",
+      "subtitulo": "4 h · 5 laboratorios",
+      "bloques": [
+        {
+          "tipo": "planeada",
+          "nota": "Esta sesión ya tiene su lugar en la ruta DMAIC y su estructura lista. Se completará con el mismo patrón que las sesiones 1 y 2: teoría condensada, laboratorios, ejercicios vinculados y cierre. Mientras tanto, el libro y las plantillas de Excel cubren estos módulos completos.",
+          "modulos": [
+            {
+              "id": "M6",
+              "titulo": "Análisis de causa raíz"
+            },
+            {
+              "id": "M7",
+              "titulo": "Inferencia estadística"
+            }
+          ],
+          "labs": [
+            {
+              "id": "LAB 15",
+              "titulo": "Diagrama de Pareto"
+            },
+            {
+              "id": "LAB 16",
+              "titulo": "Ishikawa y 5 Porqués"
+            },
+            {
+              "id": "LAB 17",
+              "titulo": "AMEF y RPN"
+            },
+            {
+              "id": "LAB 18",
+              "titulo": "ANOVA de un factor"
+            },
+            {
+              "id": "LAB 19",
+              "titulo": "Correlación, regresión y chi-cuadrada"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

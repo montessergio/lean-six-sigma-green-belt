@@ -6,11 +6,15 @@
  * nuevo: escribe su función, regístrala en BLOQUES (o con registrarBloque) y dale estilo en
  * css/deck.css. No hay que tocar la navegación.
  *
- * ctx = { irALab(idLab, valores), katex(), laboratorios: Set<string>, sesion }
+ * ctx = { irALab(idLab, valores), katex(), laboratorios: Set<string>, sesion, alActivar(fn) }
+ *   alActivar(fn): registra una función que el visor llama cada vez que la diapositiva se muestra
+ *   (las gráficas se dibujan entonces, con el contenedor ya visible y con tamaño).
  */
 import { agregar, h, inline, sinMarcas } from './dom.js';
 import { crearFigura } from './figures.js';
 import { ESTADOS, FASES } from './config.js';
+import { dibujar, redimensionar } from './plot.js';
+import { GENERADORES } from '../lib/graficas.js';
 
 export const BLOQUES = {};
 
@@ -171,7 +175,7 @@ BLOQUES.leyenda = (b) =>
       if (MUESTRAS.has(m)) muestra = h('span', { class: `muestra muestra--${m}` });
       else if (ESTADOS[m]) muestra = h('span', { class: `chip-estado chip-estado--${m}` }, h('span', { 'aria-hidden': 'true' }, ESTADOS[m].simbolo), ESTADOS[m].nombre);
       else muestra = null;
-      return h('span', { class: 'leyenda__item' }, muestra, inline(it.texto ?? ''));
+      return h('span', { class: 'leyenda__item' }, muestra, h('span', { class: 'leyenda__texto' }, inline(it.texto ?? '')));
     })
   );
 
@@ -196,6 +200,33 @@ BLOQUES.metricas = (b) =>
 
 BLOQUES.figura = (b) => {
   const fig = h('figure', { class: 'figura', style: b.anchoMax ? { maxWidth: b.anchoMax, margin: '0 auto' } : null }, crearFigura(b.figura, b.params ?? {}));
+  if (b.pie) fig.appendChild(h('figcaption', { class: 'figura__pie' }, inline(b.pie)));
+  return fig;
+};
+
+/**
+ * Gráfica de Plotly con respaldo en tabla cuando no hay conexión.
+ *   { "tipo": "grafica", "generador": "normal", "params": {...} }        → ver GENERADORES en js/lib/graficas.js
+ *   { "tipo": "grafica", "datos": [ …trazas de Plotly… ], "layout": {…}, "respaldo": { "columnas": [], "filas": [] } }
+ * Opciones: titulo, pie, alto (px), ancha (ocupa todo el ancho de la rejilla).
+ */
+BLOQUES.grafica = (b, ctx) => {
+  const generado = b.generador ? GENERADORES[b.generador]?.(b.params ?? {}) : null;
+  if (b.generador && !generado) throw new Error(`generador de gráfica desconocido: «${b.generador}»`);
+  const spec = generado ?? { datos: b.datos ?? [], layout: b.layout, respaldo: b.respaldo };
+  const lienzo = h('div', { class: 'grafica__lienzo' });
+  const caja = h('div', { class: ['grafica', 'grafica--bloque'], style: { minHeight: `${b.alto ?? 340}px` } }, b.titulo ? h('p', { class: 'grafica__titulo' }, inline(b.titulo)) : null, lienzo);
+  let dibujada = false;
+  const pintar = () => {
+    if (dibujada) redimensionar(lienzo);
+    else {
+      dibujada = true;
+      dibujar(lienzo, spec);
+    }
+  };
+  if (ctx.alActivar) ctx.alActivar(pintar);
+  else pintar();
+  const fig = h('figure', { class: 'figura figura--grafica' }, caja);
   if (b.pie) fig.appendChild(h('figcaption', { class: 'figura__pie' }, inline(b.pie)));
   return fig;
 };

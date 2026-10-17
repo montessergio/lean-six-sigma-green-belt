@@ -44,12 +44,22 @@ export function mon(x, dec = 0, simbolo = '$') {
   return `${x < 0 ? MENOS : ''}${simbolo}${t}`;
 }
 
-/** DPMO: sin decimales de 1,000 en adelante; con uno por debajo (3.4 · 162.5 · 66,807). */
+const sinCerosFinales = (t) => (t.includes('.') ? t.replace(/\.?0+$/, '') : t);
+
+/**
+ * DPMO: enteros desde 1,000 (66,807) y hasta tres decimales por debajo de 1, sin ceros sobrantes:
+ * 300 · 162.5 · 3.4 · 0.002.
+ */
 export function dpmo(x) {
   if (typeof x !== 'number' || !Number.isFinite(x)) return '—';
   if (x >= 1000) return num(x, 0);
-  if (x >= 100) return num(x, 1);
-  return num(x, x >= 10 ? 1 : 2);
+  return sinCerosFinales(num(x, x >= 10 ? 1 : x >= 1 ? 2 : 3));
+}
+
+/** DPMO redondeado como en la tabla de la guía (M1 §6): 233 en lugar de 232.6. */
+export function dpmoGuia(x) {
+  if (typeof x !== 'number' || !Number.isFinite(x)) return '—';
+  return x >= 100 ? num(x, 0) : sinCerosFinales(num(x, x >= 10 ? 1 : 2));
 }
 
 /** Cifras significativas: cifras(0.034, 2) → «0.034». */
@@ -61,13 +71,13 @@ export function cifras(x, n = 3) {
   return num(x, Math.min(dec, 12));
 }
 
-/** Rendimiento con tantos decimales como haga falta para distinguir de 100 % (99.977 %). */
+/** Rendimiento con tantos decimales como haga falta para distinguir de 100 % (30.9 · 93.32 · 99.977 · 99.99966). */
 export function rendimiento(x) {
   if (typeof x !== 'number' || !Number.isFinite(x)) return '—';
   const p = x * 100;
   if (p >= 99.999) return `${num(p, 5)} %`;
   if (p >= 99.9) return `${num(p, 3)} %`;
-  if (p >= 99) return `${num(p, 2)} %`;
+  if (p >= 90) return `${num(p, 2)} %`;
   return `${num(p, 1)} %`;
 }
 

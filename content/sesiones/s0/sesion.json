@@ -1,0 +1,27 @@
+{
+  "id": "s0",
+  "numero": 0,
+  "estado": "disponible",
+  "titulo": "Cómo usar el material",
+  "fase": "general",
+  "duracion": "5 min",
+  "duracionMin": 5,
+  "descripcion": "Navegación con teclado y botones, código de colores de los laboratorios, semáforos y qué pasa cuando no hay internet.",
+
+  "portada": {
+    "pildora": "SESIÓN 0 · 5 MIN",
+    "titulo": "Cómo usar este material",
+    "subtitulo": "Navegación, laboratorios y código de colores",
+    "curso": "LEAN SIX SIGMA GREEN BELT",
+    "lineas": ["Guía de estudio para estudiantes de Ingeniería Industrial", "Siete sesiones siguiendo el ciclo DMAIC, con laboratorios interactivos"],
+    "sello": { "arriba": "CASO APLICADO", "abajo": "LABORATORIOS INTERACTIVOS", "simbolo": "σ" }
+  },
+
+  "modulos": [],
+  "labs": [],
+
+  "slides": [
+    { "tipo": "portada" },
+    { "incluir": "uso.json" }
+  ]
+}

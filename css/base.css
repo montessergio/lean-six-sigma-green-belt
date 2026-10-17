@@ -147,8 +147,8 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .tabla th, .tabla td { padding: 0.55em 0.9em; text-align: left; vertical-align: top; border-bottom: 1px solid var(--linea); }
 .tabla th {
   font-family: var(--f-cuerpo);
-  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--txt-3);
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.03em;
+  color: var(--txt-gris);
   border-bottom: 1px solid var(--linea-2);
 }
 .tabla td.num, .tabla th.num { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }

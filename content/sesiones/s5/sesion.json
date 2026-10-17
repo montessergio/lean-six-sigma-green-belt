@@ -1,0 +1,108 @@
+{
+  "id": "s5",
+  "numero": 5,
+  "estado": "planeada",
+  "titulo": "Mejorar: Lean y diseño de experimentos",
+  "fase": "mejorar",
+  "duracion": "4 h",
+  "duracionMin": 240,
+  "descripcion": "Principios Lean, mapa de flujo de valor, takt time, OEE y diseño de experimentos 2² para generar y validar soluciones.",
+  "portada": {
+    "pildora": "SESIÓN 5 · 4 H · MÓDULOS 8 Y 9",
+    "titulo": "Mejorar: Lean y diseño de experimentos",
+    "subtitulo": "Lean, VSM, takt time, OEE y DOE",
+    "curso": "LEAN SIX SIGMA GREEN BELT",
+    "lineas": [
+      "Guía de estudio para estudiantes de Ingeniería Industrial",
+      "Sesión planeada: estructura lista para completarse"
+    ],
+    "sello": {
+      "arriba": "CASO APLICADO",
+      "abajo": "LABORATORIOS INTERACTIVOS",
+      "simbolo": "σ"
+    }
+  },
+  "modulos": [
+    {
+      "id": "M8",
+      "nombre": "Principios y herramientas Lean",
+      "fase": "mejorar"
+    },
+    {
+      "id": "M9",
+      "nombre": "Generación de soluciones y DOE",
+      "fase": "mejorar"
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab20",
+      "numero": "20",
+      "nombre": "Mapa de flujo de valor (VSM)",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab21",
+      "numero": "21",
+      "nombre": "Takt time",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab22",
+      "numero": "22",
+      "nombre": "OEE",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab23",
+      "numero": "23",
+      "nombre": "Diseño de experimentos 2²",
+      "estado": "planeada"
+    }
+  ],
+  "slides": [
+    {
+      "tipo": "portada"
+    },
+    {
+      "id": "plan",
+      "etiqueta": "SESIÓN 5 · MEJORAR",
+      "titulo": "Esta sesión está planeada",
+      "subtitulo": "4 h · 4 laboratorios",
+      "bloques": [
+        {
+          "tipo": "planeada",
+          "nota": "Esta sesión ya tiene su lugar en la ruta DMAIC y su estructura lista. Se completará con el mismo patrón que las sesiones 1 y 2: teoría condensada, laboratorios, ejercicios vinculados y cierre. Mientras tanto, el libro y las plantillas de Excel cubren estos módulos completos.",
+          "modulos": [
+            {
+              "id": "M8",
+              "titulo": "Principios y herramientas Lean"
+            },
+            {
+              "id": "M9",
+              "titulo": "Generación de soluciones y DOE"
+            }
+          ],
+          "labs": [
+            {
+              "id": "LAB 20",
+              "titulo": "Mapa de flujo de valor (VSM)"
+            },
+            {
+              "id": "LAB 21",
+              "titulo": "Takt time"
+            },
+            {
+              "id": "LAB 22",
+              "titulo": "OEE"
+            },
+            {
+              "id": "LAB 23",
+              "titulo": "Diseño de experimentos 2²"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

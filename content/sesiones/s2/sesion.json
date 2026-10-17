@@ -1,0 +1,127 @@
+{
+  "id": "s2",
+  "numero": 2,
+  "estado": "planeada",
+  "titulo": "Definir: proyecto, VOC, CTQ, mapeo y equipo",
+  "fase": "definir",
+  "duracion": "4 h",
+  "duracionMin": 240,
+  "descripcion": "Project Charter, voz del cliente y árbol CTQ, matriz de selección y AHP; SIPOC, herramientas de calidad y dinámica de equipos.",
+  "portada": {
+    "pildora": "SESIÓN 2 · 4 H · MÓDULOS 2, 3A Y 3B",
+    "titulo": "Definir: proyecto, VOC, CTQ, mapeo y equipo",
+    "subtitulo": "Charter, CTQ, matriz de selección, AHP y SIPOC",
+    "curso": "LEAN SIX SIGMA GREEN BELT",
+    "lineas": [
+      "Guía de estudio para estudiantes de Ingeniería Industrial",
+      "Sesión en preparación: estructura lista para completarse"
+    ],
+    "sello": {
+      "arriba": "CASO APLICADO",
+      "abajo": "LABORATORIOS INTERACTIVOS",
+      "simbolo": "σ"
+    }
+  },
+  "modulos": [
+    {
+      "id": "M2",
+      "nombre": "Selección y alcance del proyecto",
+      "fase": "definir"
+    },
+    {
+      "id": "M3A",
+      "nombre": "Mapeo del proceso y herramientas de planeación",
+      "fase": "definir"
+    },
+    {
+      "id": "M3B",
+      "nombre": "Herramientas de calidad y dinámica de equipos",
+      "fase": "definir"
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab05",
+      "numero": "05",
+      "nombre": "Project Charter",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab06",
+      "numero": "06",
+      "nombre": "Árbol CTQ",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab07",
+      "numero": "07",
+      "nombre": "Matriz de selección ponderada",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab08",
+      "numero": "08",
+      "nombre": "AHP (comparación por pares)",
+      "estado": "planeada"
+    },
+    {
+      "id": "lab09",
+      "numero": "09",
+      "nombre": "SIPOC",
+      "estado": "planeada"
+    }
+  ],
+  "slides": [
+    {
+      "tipo": "portada"
+    },
+    {
+      "id": "plan",
+      "etiqueta": "SESIÓN 2 · DEFINIR",
+      "titulo": "Esta sesión está en preparación",
+      "subtitulo": "4 h · 5 laboratorios",
+      "bloques": [
+        {
+          "tipo": "planeada",
+          "nota": "Esta sesión ya tiene su lugar en la ruta DMAIC y su estructura lista. Se completará con el mismo patrón que la sesión 1: teoría condensada, laboratorios, ejercicios vinculados y cierre. Mientras tanto, el libro y las plantillas de Excel cubren estos módulos completos.",
+          "modulos": [
+            {
+              "id": "M2",
+              "titulo": "Selección y alcance del proyecto"
+            },
+            {
+              "id": "M3A",
+              "titulo": "Mapeo del proceso y herramientas de planeación"
+            },
+            {
+              "id": "M3B",
+              "titulo": "Herramientas de calidad y dinámica de equipos"
+            }
+          ],
+          "labs": [
+            {
+              "id": "LAB 05",
+              "titulo": "Project Charter"
+            },
+            {
+              "id": "LAB 06",
+              "titulo": "Árbol CTQ"
+            },
+            {
+              "id": "LAB 07",
+              "titulo": "Matriz de selección ponderada"
+            },
+            {
+              "id": "LAB 08",
+              "titulo": "AHP (comparación por pares)"
+            },
+            {
+              "id": "LAB 09",
+              "titulo": "SIPOC"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

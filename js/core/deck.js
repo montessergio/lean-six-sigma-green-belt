@@ -81,6 +81,8 @@ function construirPortada(sesion) {
 }
 
 function construirContenido(def, ctx) {
+  const alActivar = []; // funciones que los bloques registran para ejecutarse cada vez que se muestra la diapositiva
+  const ctxSlide = { ...ctx, alActivar: (fn) => alActivar.push(fn) };
   const cabecera = [];
   if (def.etiqueta) cabecera.push(h('span', { class: 'etiqueta slide__etiqueta' }, inline(def.etiqueta)));
   if (def.titulo) cabecera.push(h('h2', { class: 'slide__titulo' }, inline(def.titulo)));
@@ -88,9 +90,9 @@ function construirContenido(def, ctx) {
   const el = h(
     'section',
     { class: ['slide', 'slide--contenido', def.clase] },
-    h('div', { class: 'slide__contenido' }, cabecera, h('div', { class: 'slide__cuerpo' }, construirBloques(def.bloques, ctx)))
+    h('div', { class: 'slide__contenido' }, cabecera, h('div', { class: 'slide__cuerpo' }, construirBloques(def.bloques, ctxSlide)))
   );
-  return { el, titulo: sinMarcas(def.titulo ?? 'Diapositiva') };
+  return { el, titulo: sinMarcas(def.titulo ?? 'Diapositiva'), alActivar: alActivar.length ? () => alActivar.forEach((fn) => fn()) : undefined };
 }
 
 /**
@@ -259,6 +261,7 @@ export async function iniciarVisor(raiz) {
     d.el.classList.add('is-activa');
     d.el.scrollTop = 0;
     escenario.dataset.indice = String(destino + 1);
+    escenario.dataset.tipo = d.tipo;
 
     barra.style.width = `${((destino + 1) / N) * 100}%`;
     contador.textContent = `${destino + 1} / ${N}`;
@@ -363,7 +366,7 @@ export async function iniciarVisor(raiz) {
   // y las gráficas están listas al llegar a un laboratorio. Una sesión sin laboratorios no pide Plotly.
   setTimeout(() => {
     if (JSON.stringify(sesion.slides).includes('"formula"')) cargarKatex();
-    if (labsDisponibles.size) cargarPlotly();
+    if (labsDisponibles.size || JSON.stringify(sesion.slides).includes('"grafica"')) cargarPlotly();
   }, 350);
 
   return { ir, irALab, total: N };
