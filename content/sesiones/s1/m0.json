@@ -1,0 +1,277 @@
+{
+  "id": "m0",
+  "titulo": "M0 · Fundamentos cuantitativos para Six Sigma",
+  "slides": [
+    {
+      "id": "objetivos",
+      "etiqueta": "SESIÓN 1 · OBJETIVOS",
+      "titulo": "Qué vas a poder hacer al terminar",
+      "subtitulo": "Tres horas, dos módulos y cuatro laboratorios con la línea de arneses como hilo conductor.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "MÓDULO 0",
+              "titulo": "Fundamentos cuantitativos",
+              "items": [
+                "Calcular media, mediana, moda y desviación estándar, y distinguir x̄ y s de μ y σ",
+                "Usar la regla empírica 68-95-99.7",
+                "Explicar un valor p y los errores Tipo I y II"
+              ]
+            },
+            {
+              "etiqueta": "MÓDULO 1",
+              "titulo": "Six Sigma y Lean",
+              "items": [
+                "Ubicar el origen de Six Sigma y el ciclo DMAIC",
+                "Calcular el costo de la mala calidad (COPQ)",
+                "Convertir defectos en DPMO y nivel sigma"
+              ]
+            }
+          ]
+        },
+        { "tipo": "texto", "texto": "Cada cálculo tiene su **laboratorio**: edita los datos, observa cómo cambia el resultado y revisa el umbral de interpretación y el supuesto que lo respalda.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m0-centro",
+      "etiqueta": "M0 · TENDENCIA CENTRAL",
+      "titulo": "¿Dónde está el centro de los datos?",
+      "subtitulo": "Antes de resumir con una sola cifra, separa dos preguntas: el centro y la dispersión.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            { "etiqueta": "MEDIA", "titulo": "x̄ (muestra) · μ (población)", "texto": "El promedio aritmético: la suma de los valores entre el número de valores." },
+            { "etiqueta": "MEDIANA", "titulo": "El valor de en medio", "texto": "Con los datos ordenados; si n es par, el promedio de los dos centrales. Resiste a los valores extremos." },
+            { "etiqueta": "MODA", "titulo": "El valor más frecuente", "texto": "Sirve sobre todo con datos categóricos. Puede no existir o haber varias." }
+          ]
+        },
+        { "tipo": "nota", "texto": "Reportar solo la media de un conjunto sesgado da una impresión más optimista de la que merece. Acompáñala de la mediana." }
+      ]
+    },
+    {
+      "id": "m0-ejemplo",
+      "etiqueta": "M0 · EJEMPLO",
+      "titulo": "Seis conectores, seis tiempos de inspección",
+      "subtitulo": "Tiempos en segundos: 12, 15, 11, 14, 13, 19.",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            { "valor": "14 s", "etiqueta": "Media", "nota": "84 ÷ 6", "color": "teal" },
+            { "valor": "13.5 s", "etiqueta": "Mediana", "nota": "(13 + 14) ÷ 2", "color": "azul" },
+            { "valor": "8 s", "etiqueta": "Rango", "nota": "19 − 11" },
+            { "valor": "Sin moda", "etiqueta": "Moda", "nota": "los seis son distintos" }
+          ]
+        },
+        { "tipo": "texto", "texto": "Que media y mediana queden tan cerca es una **señal, no una prueba**, de que ningún valor extremo domina. Con seis datos conviene no sacar conclusiones definitivas." },
+        { "tipo": "abrirLab", "lab": "lab01", "texto": "Abrir LAB 01 con estos datos →", "valores": { "datos": [12, 15, 11, 14, 13, 19], "unidad": "s", "tipo": "muestra", "clases": 4 } }
+      ]
+    },
+    {
+      "id": "m0-dispersion",
+      "etiqueta": "M0 · DISPERSIÓN",
+      "titulo": "Desviación estándar: del dato al cuadrado",
+      "subtitulo": "Dos procesos pueden tener la misma media y ser muy distintos en consistencia.",
+      "bloques": [
+        { "tipo": "texto", "texto": "(1) Resta la media a cada dato; (2) eleva al cuadrado para que los signos no se cancelen; (3) suma: es la **suma de cuadrados (SC)**; (4) divide; (5) saca la raíz para volver a las unidades originales." },
+        {
+          "tipo": "tabla",
+          "columnas": ["Dato (s)", { "t": "Desviación (x − x̄)", "num": true }, { "t": "Desviación²", "num": true }],
+          "filas": [["12", "−2", "4"], ["15", "1", "1"], ["11", "−3", "9"], ["14", "0", "0"], ["13", "−1", "1"], ["19", "5", "25"], ["Suma (SC)", "—", "40"]],
+          "resaltar": [6]
+        }
+      ]
+    },
+    {
+      "id": "m0-n1",
+      "etiqueta": "M0 · MUESTRA O POBLACIÓN",
+      "titulo": "¿Dividir entre n o entre n − 1?",
+      "subtitulo": "La única decisión que distingue una desviación estándar de otra.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "POBLACIÓN · SON LOS ÚNICOS SEIS", "titulo": "σ = √(SC ÷ N) ≈ 2.58 s", "texto": "√(40 ÷ 6). Solo si los datos son todo lo que existe." },
+            { "etiqueta": "MUESTRA · LO HABITUAL", "titulo": "s = √(SC ÷ (n − 1)) ≈ 2.83 s", "texto": "√(40 ÷ 5). Los seis conectores son una muestra del proceso.", "estilo": "acento" }
+          ]
+        },
+        { "tipo": "texto", "texto": "Al medir las desviaciones contra x̄ (y no contra la μ verdadera, casi siempre desconocida) salen, en promedio, un poco menores de lo real. Dividir entre n − 1 compensa ese sesgo." },
+        { "tipo": "abrirLab", "lab": "lab01", "texto": "Compara muestra y población en el LAB 01 →", "valores": { "datos": [12, 15, 11, 14, 13, 19], "unidad": "s", "tipo": "poblacion", "clases": 4 } }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab01" },
+    {
+      "id": "m0-normal",
+      "etiqueta": "M0 · DISTRIBUCIÓN NORMAL",
+      "titulo": "La campana y la regla empírica 68 – 95 – 99.7",
+      "subtitulo": "Cuántos datos caen a cierta distancia de la media, medida en desviaciones estándar.",
+      "bloques": [
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1.3],
+          "izq": [
+            {
+              "tipo": "tabla",
+              "columnas": ["Rango", { "t": "% esperado", "num": true }],
+              "filas": [["μ ± 1σ", "≈ 68 %"], ["μ ± 2σ", "≈ 95 %"], ["μ ± 3σ", "≈ 99.7 %"]]
+            },
+            { "tipo": "texto", "texto": "Supone datos continuos y simétricos, con μ y σ de un proceso ya caracterizado.", "tenue": true }
+          ],
+          "der": [
+            { "tipo": "grafica", "generador": "normal", "params": { "mu": 50, "sigma": 4, "bandas": [1, 2, 3] }, "titulo": "μ = 50 y σ = 4 (unidades arbitrarias)", "alto": 300 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m0-normal-ej",
+      "etiqueta": "M0 · REGLA EMPÍRICA",
+      "titulo": "Aplicar la regla: μ = 50, σ = 4",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "items": [
+            "μ ± 1σ → entre **46 y 54** contiene ≈ 68 % de los datos",
+            "μ ± 2σ → entre **42 y 58** contiene ≈ 95 %",
+            "μ ± 3σ → entre **38 y 62** contiene ≈ 99.7 %"
+          ]
+        },
+        { "tipo": "nota", "texto": "La regla se aplica sobre μ y σ, no sobre x̄ y s de una muestra pequeña: con seis conectores ni siquiera es razonable asumir normalidad todavía." },
+        { "tipo": "abrirLab", "lab": "lab02", "texto": "Abrir LAB 02 con μ = 50 y σ = 4 →", "valores": { "mu": 50, "sigma": 4, "lsl": 38, "usl": 62, "desplazamiento": 0, "unidad": "" } }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab02" },
+    {
+      "id": "m0-valor-p",
+      "etiqueta": "M0 · VALOR P",
+      "titulo": "Hipótesis nula, alternativa y valor p",
+      "subtitulo": "¿El patrón de mis datos es real o pudo salir solo por variación aleatoria?",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            { "etiqueta": "H₀ · NULA", "titulo": "No hay diferencia", "texto": "La postura conservadora por defecto: no hay efecto, no hay cambio." },
+            { "etiqueta": "H₁ · ALTERNATIVA", "titulo": "Sí hay diferencia", "texto": "Lo que el equipo sospecha y quiere respaldar con evidencia." },
+            { "etiqueta": "VALOR P", "titulo": "Probabilidad del resultado, si H₀ fuera cierta", "texto": "De observar un resultado tan extremo o más que el de la muestra.", "estilo": "acento" }
+          ]
+        },
+        { "tipo": "nota", "etiqueta": "ERROR FRECUENTE", "texto": "Un valor p de 0.03 **no** significa 97 % de probabilidad de que el efecto sea real. No es la probabilidad de que H₀ sea cierta." }
+      ]
+    },
+    {
+      "id": "m0-errores-tipo",
+      "etiqueta": "M0 · ERRORES TIPO I Y II",
+      "titulo": "Toda decisión con datos incompletos puede fallar de dos maneras",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Decisión \\ Realidad", "H₀ verdadera", "H₀ falsa"],
+          "filas": [["Rechazar H₀", "Error Tipo I (falso positivo) · prob. α", "Decisión correcta"], ["No rechazar H₀", "Decisión correcta", "Error Tipo II (falso negativo) · prob. β"]]
+        },
+        { "tipo": "texto", "texto": "Ejemplo: un equipo sospecha que un proveedor cambió de material. H₀ es «el material es el mismo de siempre». Un Tipo I detiene un lote bueno; un Tipo II deja pasar uno distinto." },
+        { "tipo": "texto", "texto": "No rechazar H₀ no equivale a que H₀ sea verdadera: solo significa que la evidencia no alcanzó para descartarla.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m0-gl-notacion",
+      "etiqueta": "M0 · GRADOS DE LIBERTAD Y NOTACIÓN",
+      "titulo": "Contar información independiente y leer la notación",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "GRADOS DE LIBERTAD", "texto": "Valores de un cálculo que pueden variar libremente una vez fijadas ciertas cantidades. Con tres números y su media, solo dos son libres." },
+            { "etiqueta": "SUMA DE CUADRADOS", "texto": "La variación total de los datos respecto a su media, antes de dividirla. Reaparece en el análisis de varianza del Módulo 7." }
+          ]
+        },
+        {
+          "tipo": "tabla",
+          "columnas": ["Símbolo", "Significado"],
+          "filas": [["Σ", "suma de todos los valores que siguen"], ["√", "raíz cuadrada: regresa a las unidades originales"], ["μ · σ", "media y desviación estándar de la población"], ["x̄ · s", "media y desviación estándar de la muestra"], ["n · N", "tamaño de la muestra · de la población u oportunidades"], ["α · β", "probabilidad de error Tipo I · Tipo II"]]
+        }
+      ]
+    },
+    {
+      "id": "m0-ejercicios-a",
+      "etiqueta": "M0 · EJERCICIOS RESUELTOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1", "titulo": "Media, mediana y moda",
+              "texto": "Piezas rechazadas por turno en siete días: 4, 6, 4, 9, 5, 4, 7. Calcula media, mediana y moda.",
+              "verificacion": "La guía obtiene media 5.57, mediana 5 y moda 4.", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab01", "numeroLab": "01", "valores": { "datos": [4, 6, 4, 9, 5, 4, 7], "unidad": "piezas", "tipo": "muestra", "clases": 5 }
+            },
+            {
+              "numero": "2", "titulo": "Desviación estándar muestral",
+              "texto": "Cinco diámetros (mm): 20.1, 19.8, 20.3, 19.9, 20.4. Calcula la desviación estándar muestral.",
+              "verificacion": "La guía obtiene SC = 0.26 y s ≈ 0.255 mm.", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab01", "numeroLab": "01", "valores": { "datos": [20.1, 19.8, 20.3, 19.9, 20.4], "unidad": "mm", "tipo": "muestra", "clases": 4 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m0-ejercicios-b",
+      "etiqueta": "M0 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 3,
+          "items": [
+            {
+              "numero": "3", "titulo": "Regla empírica con otros parámetros",
+              "texto": "Un proceso tiene μ = 200 y σ = 15. ¿Qué rango contiene ≈ 95 % de los datos? ¿Y 99.7 %?",
+              "verificacion": "La guía obtiene 170 a 230 (95 %) y 155 a 245 (99.7 %).", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab02", "numeroLab": "02", "valores": { "mu": 200, "sigma": 15, "lsl": 155, "usl": 245, "desplazamiento": 0, "unidad": "" }
+            },
+            {
+              "numero": "4", "titulo": "Interpretar un valor p",
+              "texto": "Un estudio compara dos proveedores: p = 0.03 con α = 0.05. ¿Se rechaza H₀? ¿Significa «97 % de probabilidad de que sean distintos»?",
+              "verificacion": "La guía: se rechaza H₀ (0.03 < 0.05); la segunda lectura es incorrecta.", "etiquetaVerificacion": "Comparar con la guía"
+            },
+            {
+              "numero": "5", "titulo": "Diez mediciones (sin resolver)",
+              "texto": "45, 48, 44, 47, 46, 49, 45, 48, 46, 47. Calcula media, s y el intervalo de ≈ 95 % si fueran μ y σ.",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.", "etiquetaVerificacion": "Clave en el libro",
+              "lab": "lab01", "numeroLab": "01", "valores": { "datos": [45, 48, 44, 47, 46, 49, 45, 48, 46, 47], "unidad": "", "tipo": "muestra", "clases": 5 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m0-errores",
+      "etiqueta": "M0 · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "ordenada": true,
+          "items": [
+            "Confundir el valor p con la probabilidad de que H₀ sea cierta",
+            "Dividir entre n en lugar de n − 1 al calcular s de una muestra: subestima la variabilidad real",
+            "Asumir normalidad sin verificar nada, sobre todo con muestras pequeñas",
+            "Leer «no rechazar H₀» como «H₀ es verdadera»",
+            "Reportar solo la media de datos sesgados, sin la mediana que revelaría el sesgo"
+          ]
+        }
+      ]
+    }
+  ]
+}

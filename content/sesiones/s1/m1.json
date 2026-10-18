@@ -1,0 +1,321 @@
+{
+  "id": "m1",
+  "titulo": "M1 · Fundamentos de Six Sigma y Lean",
+  "slides": [
+    {
+      "id": "m1-origen",
+      "etiqueta": "M1 · ORIGEN DE SIX SIGMA",
+      "titulo": "De Motorola a la adopción masiva",
+      "subtitulo": "Una metodología nacida de la presión competitiva.",
+      "bloques": [
+        {
+          "tipo": "pasos",
+          "columnas": 3,
+          "pasos": [
+            { "numero": "1986", "texto": "Nace en Motorola", "sub": "Bill Smith responde a fabricantes japoneses con mejor calidad y costos comparables." },
+            { "numero": "1988", "texto": "Premio Malcolm Baldrige", "sub": "Motorola comparte públicamente su metodología." },
+            { "numero": "1995", "texto": "General Electric", "sub": "Jack Welch la vuelve eje de su estrategia; a finales de la década, ≈ dos tercios de las Fortune 500 tenían iniciativas propias." }
+          ]
+        },
+        { "tipo": "texto", "texto": "Smith y Mikel Harry desarrollaron **MAIC** (Medir, Analizar, Mejorar, Controlar). Al añadir una fase inicial de definición nació **DMAIC**." }
+      ]
+    },
+    {
+      "id": "m1-cinturones",
+      "etiqueta": "M1 · CINTURONES Y ROLES",
+      "titulo": "Quién hace qué en un proyecto de mejora",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Nivel", "Rol típico dentro de un proyecto"],
+          "filas": [
+            ["Champion", "Patrocina y prioriza proyectos; elimina obstáculos organizacionales"],
+            ["Master Black Belt", "Forma y asesora a Black Belts y Green Belts; define las métricas del programa"],
+            ["Black Belt", "Lidera proyectos complejos de tiempo completo y guía a los equipos"],
+            ["Green Belt", "Lidera o apoya proyectos de su área junto con sus funciones habituales: el nivel de esta guía"],
+            ["Yellow Belt", "Miembro del equipo; apoya la recolección y revisión de datos"],
+            ["White Belt", "Nivel introductorio: conceptos y vocabulario básicos"]
+          ],
+          "resaltar": [3]
+        },
+        { "tipo": "nota", "texto": "El cinturón describe un rol dentro de un proyecto concreto, no un puesto fijo en el organigrama." }
+      ]
+    },
+    {
+      "id": "m1-dmaic",
+      "etiqueta": "M1 · DMAIC",
+      "titulo": "DMAIC: el esqueleto que sostiene la guía",
+      "subtitulo": "Cinco fases que ordenan cualquier proyecto de mejora de procesos.",
+      "bloques": [
+        {
+          "tipo": "columnas",
+          "proporcion": [1.1, 1],
+          "izq": [
+            {
+              "tipo": "lista",
+              "limpia": true,
+              "items": [
+                "**Definir** el problema y el alcance · módulos 2 y 3",
+                "**Medir** el desempeño actual · módulos 4 y 5",
+                "**Analizar** los datos y buscar causas raíz · módulos 6 y 7",
+                "**Mejorar** el proceso con soluciones · módulos 8 y 9",
+                "**Controlar** el nuevo estado · módulo 10"
+              ]
+            },
+            { "tipo": "texto", "texto": "El módulo 11 integra las cinco fases en un caso aplicado.", "tenue": true }
+          ],
+          "der": [{ "tipo": "figura", "figura": "rueda", "params": { "etiquetas": true, "centro": "DMAIC" }, "anchoMax": 340 }]
+        }
+      ]
+    },
+    {
+      "id": "m1-lean",
+      "etiqueta": "M1 · LEAN Y SIX SIGMA",
+      "titulo": "Dos disciplinas complementarias",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "LEAN", "titulo": "Ataca el desperdicio y la velocidad", "texto": "Heredado del Sistema de Producción Toyota, que Taiichi Ohno consolidó entre 1948 y 1975." },
+            { "etiqueta": "SIX SIGMA", "titulo": "Ataca la variabilidad y los defectos", "texto": "Nacido en Motorola; mide qué tan capaz es un proceso de cumplir al cliente.", "estilo": "acento" }
+          ]
+        },
+        { "tipo": "texto", "texto": "Los **ocho muda** (desperdicios): sobreproducción, espera, transporte, sobreprocesamiento, inventario, movimiento, defectos y talento humano no utilizado, el octavo que se sumó a los siete de Ohno." },
+        { "tipo": "nota", "texto": "Un proceso puede ser rápido y aun así generar piezas defectuosas, o muy preciso y estar lleno de desperdicio." }
+      ]
+    },
+    {
+      "id": "m1-copq",
+      "etiqueta": "M1 · COSTO DE LA MALA CALIDAD",
+      "titulo": "El modelo PAF de Juran",
+      "subtitulo": "Cuatro categorías de costos de calidad; solo dos son «mala calidad».",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 4,
+          "tarjetas": [
+            { "etiqueta": "PREVENCIÓN", "texto": "Planeación de calidad, capacitación, mantenimiento preventivo." },
+            { "etiqueta": "EVALUACIÓN", "texto": "Inspección, pruebas y auditorías." },
+            { "etiqueta": "FALLA INTERNA", "texto": "Defectos detectados antes de salir de planta: retrabajo, scrap, paros de línea.", "estilo": "coral" },
+            { "etiqueta": "FALLA EXTERNA", "texto": "Defectos que llegan al cliente: garantías, devoluciones, reclamos.", "estilo": "coral" }
+          ]
+        },
+        { "tipo": "formula", "etiqueta": "COPQ", "tex": "\\text{COPQ}=\\text{Falla interna}+\\text{Falla externa}", "texto": "COPQ = Costo de falla interna + Costo de falla externa", "nota": "Prevención + Evaluación = costo de la buena calidad (COGQ). COGQ + COPQ = costo total de calidad (COQ)." },
+        { "tipo": "texto", "texto": "En manufactura, el COPQ suele representar entre **5 % y 20 %** de las ventas.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m1-copq-ej",
+      "etiqueta": "M1 · COPQ EN NÚMEROS",
+      "titulo": "Una planta con ventas anuales de 8,000 miles de dólares",
+      "subtitulo": "Prevención 180, evaluación 220, falla interna 340 y falla externa 260 (miles).",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            { "valor": "400", "etiqueta": "COGQ", "nota": "180 + 220", "color": "azul" },
+            { "valor": "600", "etiqueta": "COPQ", "nota": "340 + 260", "color": "coral" },
+            { "valor": "1,000", "etiqueta": "COQ", "nota": "400 + 600" },
+            { "valor": "7.5 %", "etiqueta": "COPQ / ventas", "nota": "600 ÷ 8,000", "color": "teal" }
+          ]
+        },
+        { "tipo": "nota", "texto": "Sumar las cuatro categorías y llamarlo COPQ es un error frecuente: esa suma es el COQ." },
+        { "tipo": "abrirLab", "lab": "lab03", "texto": "Abrir LAB 03 con estos costos →", "valores": { "moneda": "miles de USD", "ventas": 8000, "periodo": "anual", "conceptos": [{ "categoria": "prevencion", "concepto": "Prevención", "costo": 180 }, { "categoria": "evaluacion", "concepto": "Evaluación", "costo": 220 }, { "categoria": "fallaInterna", "concepto": "Falla interna", "costo": 340 }, { "categoria": "fallaExterna", "concepto": "Falla externa", "costo": 260 }] } }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab03" },
+    {
+      "id": "m1-dpmo",
+      "etiqueta": "M1 · DPMO",
+      "titulo": "Defectos por millón de oportunidades",
+      "subtitulo": "Una sola cifra comparable entre procesos de distinto tamaño y complejidad.",
+      "bloques": [
+        { "tipo": "formula", "etiqueta": "DPMO", "tex": "\\text{DPMO}=\\frac{\\text{defectos}}{\\text{unidades}\\times\\text{oportunidades}}\\times 10^{6}", "texto": "DPMO = defectos ÷ (unidades × oportunidades por unidad) × 1,000,000", "nota": "DPU = defectos ÷ unidades · DPO = defectos ÷ oportunidades totales · DPMO = DPO × 1,000,000" },
+        {
+          "tipo": "metricas",
+          "columnas": 2,
+          "items": [
+            { "valor": "222.2", "etiqueta": "Línea A · DPMO", "nota": "4 defectos en 3,000 unidades × 6 oportunidades", "color": "teal" },
+            { "valor": "500", "etiqueta": "Línea B · DPMO", "nota": "2 defectos en 800 unidades × 5 oportunidades", "color": "coral" }
+          ]
+        },
+        { "tipo": "nota", "texto": "La línea B parece mejor por tener menos defectos, pero normalizada resulta más de dos veces peor." },
+        { "tipo": "abrirLab", "lab": "lab04", "texto": "Comparar las líneas A y B en el LAB 04 →", "valores": { "antes_unidades": 3000, "antes_oportunidades": 6, "antes_defectos": 4, "despues_unidades": 800, "despues_oportunidades": 5, "despues_defectos": 2, "desplazamiento": 1.5 } }
+      ]
+    },
+    {
+      "id": "m1-tabla-sigma",
+      "etiqueta": "M1 · NIVEL SIGMA",
+      "titulo": "Nivel sigma, DPMO y rendimiento",
+      "bloques": [
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1.2],
+          "izq": [
+            {
+              "tipo": "tabla",
+              "columnas": ["Nivel", { "t": "DPMO", "num": true }, { "t": "Rendimiento", "num": true }],
+              "filas": [["1σ", "691,462", "30.9 %"], ["2σ", "308,538", "69.1 %"], ["3σ", "66,807", "93.32 %"], ["4σ", "6,210", "99.38 %"], ["5σ", "233", "99.977 %"], ["6σ", "3.4", "99.99966 %"]]
+            },
+            { "tipo": "texto", "texto": "El DPMO decrece de forma aproximadamente exponencial: no basta promediar dos niveles vecinos.", "tenue": true }
+          ],
+          "der": [
+            { "tipo": "grafica", "generador": "sigma-dpmo", "params": { "desplazamiento": 1.5, "puntos": [{ "nombre": "Arneses (línea base)", "dpmo": 300 }] }, "titulo": "DPMO frente al nivel sigma (eje logarítmico)", "alto": 300 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m1-desplazamiento",
+      "etiqueta": "M1 · DESPLAZAMIENTO DE 1.5σ",
+      "titulo": "Por qué «6 sigma» son 3.4 DPMO y no 0.002",
+      "bloques": [
+        {
+          "tipo": "columnas",
+          "proporcion": [1.2, 1],
+          "izq": [
+            { "tipo": "texto", "texto": "Un proceso perfectamente centrado en 6σ daría 0.002 DPMO. El estándar de **3.4 DPMO** incorpora un desplazamiento de 1.5σ de la media que, en el largo plazo, ningún proceso evita." },
+            { "tipo": "formula", "tex": "\\sigma_{\\text{largo plazo}}=\\sigma_{\\text{corto plazo}}-1.5", "texto": "σ de largo plazo = σ de corto plazo − 1.5" },
+            { "tipo": "nota", "etiqueta": "HONESTIDAD ESTADÍSTICA", "texto": "Harry aclaró después que el 1.5 no es una ley física: es una forma «simplista pero efectiva» de aproximar el error de muestreo de largo plazo." }
+          ],
+          "der": [{ "tipo": "figura", "figura": "curva-sigma", "params": { "nivel": 6, "desplazamiento": 1.5 }, "anchoMax": 360 }]
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab04" },
+    {
+      "id": "m1-arneses",
+      "etiqueta": "M1 · CASO DE LOS ARNESES",
+      "titulo": "Aplicación: la línea de ensamble de arneses",
+      "subtitulo": "Cada arnés pasa cinco verificaciones: continuidad eléctrica, torque de terminales, asentamiento del conector, etiquetado y ruteo según el plano.",
+      "bloques": [
+        { "tipo": "formula", "tex": "\\text{DPMO}=\\frac{3}{2{,}000\\times 5}\\times 10^{6}=300", "texto": "DPMO = [3 ÷ (2,000 × 5)] × 1,000,000 = 300" },
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            { "valor": "300", "etiqueta": "DPMO de línea base", "nota": "3 defectos en 2,000 arneses", "color": "teal" },
+            { "valor": "4σ–5σ", "etiqueta": "Nivel", "nota": "más cerca de 5σ" },
+            { "valor": "3.4", "etiqueta": "DPMO del estándar", "nota": "distancia por cerrar", "color": "azul" },
+            { "valor": "162", "etiqueta": "DPMO al cierre", "nota": "resultado del módulo 10", "color": "verde" }
+          ]
+        },
+        { "tipo": "abrirLab", "lab": "lab04", "texto": "Abrir LAB 04 con el caso antes y después →", "valores": { "antes_unidades": 2000, "antes_oportunidades": 5, "antes_defectos": 3, "despues_unidades": 16000, "despues_oportunidades": 5, "despues_defectos": 13, "desplazamiento": 1.5, "meta": 100 } }
+      ]
+    },
+    {
+      "id": "m1-ejercicios-a",
+      "etiqueta": "M1 · EJERCICIOS RESUELTOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 3,
+          "items": [
+            {
+              "numero": "1", "titulo": "DPMO en una línea de empaque",
+              "texto": "Se inspeccionan 1,500 unidades de 8 oportunidades cada una y hay 18 defectos. Calcula el DPMO y ubícalo en la tabla.",
+              "verificacion": "La guía obtiene 1,500 DPMO, entre 4σ y 5σ.", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab04", "numeroLab": "04", "valores": { "antes_unidades": 1500, "antes_oportunidades": 8, "antes_defectos": 18, "despues_unidades": null, "despues_oportunidades": null, "despues_defectos": null, "desplazamiento": 1.5 }
+            },
+            {
+              "numero": "2", "titulo": "Costo de la mala calidad",
+              "texto": "Prevención 180, evaluación 220, falla interna 340, falla externa 260; ventas de 8,000 (miles de USD). Calcula COGQ, COPQ, COQ y COPQ / ventas.",
+              "verificacion": "La guía obtiene 400, 600, 1,000 y 7.5 % de las ventas.", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab03", "numeroLab": "03", "valores": { "moneda": "miles de USD", "ventas": 8000, "periodo": "anual", "conceptos": [{ "categoria": "prevencion", "concepto": "Prevención", "costo": 180 }, { "categoria": "evaluacion", "concepto": "Evaluación", "costo": 220 }, { "categoria": "fallaInterna", "concepto": "Falla interna", "costo": 340 }, { "categoria": "fallaExterna", "concepto": "Falla externa", "costo": 260 }] }
+            },
+            {
+              "numero": "3", "titulo": "Comparar dos líneas",
+              "texto": "Línea A: 3,000 unidades, 6 oportunidades, 4 defectos. Línea B: 800 unidades, 5 oportunidades, 2 defectos. ¿Cuál rinde mejor?",
+              "verificacion": "La guía obtiene 222.2 DPMO (A) y 500 DPMO (B).", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab04", "numeroLab": "04", "valores": { "antes_unidades": 3000, "antes_oportunidades": 6, "antes_defectos": 4, "despues_unidades": 800, "despues_oportunidades": 5, "despues_defectos": 2, "desplazamiento": 1.5 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m1-ejercicios-b",
+      "etiqueta": "M1 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "4", "titulo": "Aplicar el desplazamiento de 1.5σ",
+              "texto": "Una corrida piloto certifica 4.5σ de corto plazo. ¿Qué nivel sigma de largo plazo cabe esperar y a cuántos DPMO equivale?",
+              "verificacion": "La guía obtiene 3.0σ, equivalente a 66,807 DPMO.", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab04", "numeroLab": "04", "valores": { "antes_unidades": null, "antes_oportunidades": null, "antes_defectos": null, "despues_unidades": null, "despues_oportunidades": null, "despues_defectos": null, "desplazamiento": 1.5, "sigmaEntrada": 3 }
+            },
+            {
+              "numero": "5", "titulo": "Sin resolver",
+              "texto": "Un proceso produce 12 defectos en 3,000 unidades con 6 oportunidades por unidad. Calcula el DPMO y ubícalo en la tabla de niveles sigma.",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.", "etiquetaVerificacion": "Clave en el libro",
+              "lab": "lab04", "numeroLab": "04", "valores": { "antes_unidades": 3000, "antes_oportunidades": 6, "antes_defectos": 12, "despues_unidades": null, "despues_oportunidades": null, "despues_defectos": null, "desplazamiento": 1.5 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m1-errores",
+      "etiqueta": "M1 · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "ordenada": true,
+          "items": [
+            "Confundir el DPMO con una tasa de defectos: dividir entre unidades ignora las oportunidades",
+            "Tratar el cinturón como un puesto fijo en el organigrama",
+            "Asumir que Lean y Six Sigma resuelven el mismo problema",
+            "Sumar las cuatro categorías PAF y llamarlo COPQ: eso es el COQ",
+            "Creer que «6 sigma» significa cero defectos: siguen siendo 3.4 por millón de oportunidades"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "etiqueta": "SESIÓN 1 · CIERRE",
+      "titulo": "Lo que te llevas de esta sesión",
+      "bloques": [
+        {
+          "tipo": "cierre",
+          "puntos": [
+            "Resume una muestra con un centro (x̄, mediana) y una dispersión (s, dividiendo entre n − 1).",
+            "La regla 68-95-99.7 vale para datos aproximadamente normales con μ y σ conocidos.",
+            "Un valor p no es la probabilidad de que H₀ sea cierta.",
+            "DMAIC estructura la guía; Lean ataca el desperdicio y Six Sigma, la variabilidad.",
+            "COPQ = falla interna + falla externa; en manufactura suele ser de 5 % a 20 % de las ventas.",
+            "DPMO = defectos ÷ (unidades × oportunidades) × 1,000,000; la línea de arneses parte de 300 DPMO."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias",
+      "etiqueta": "SESIÓN 1 · REFERENCIAS",
+      "titulo": "Para profundizar",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "items": [
+            "NIST/SEMATECH. «e-Handbook of Statistical Methods — Measures of Location and Spread». itl.nist.gov.",
+            "Scribbr. «Type I & Type II Errors — Differences, Examples, Visualizations». scribbr.com.",
+            "ASQ. «Six Sigma Belts, Levels & Roles». asq.org.",
+            "Lean Sigma Corporation. «History of Six Sigma». leansigmacorporation.com (2026).",
+            "Jama Software. «What Is the Cost of Poor Quality (COPQ)? How to Calculate and Reduce COPQ». jamasoftware.com (2026).",
+            "MoreSteam. «Six Sigma Conversion Table». moresteam.com.",
+            "Symestic. «DPMO: Formula, Sigma Conversion & Quality Benchmarks». symestic.com (2026).",
+            "iSixSigma. «1.5 Sigma Process Shift: What It Means For Your Business». isixsigma.com (2025)."
+          ]
+        }
+      ]
+    }
+  ]
+}
