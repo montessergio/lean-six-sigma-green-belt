@@ -131,11 +131,11 @@
   },
 
   "sipoc": {
-    "_fuente": "Guía M3A §1 (cinco pasos) y plantilla Excel «SIPOC» (siete pasos).",
+    "_fuente": "Guía M3A §1 (cinco pasos; inicio y fin = primer y último paso) y plantilla Excel «SIPOC» (siete pasos).",
     "libro": {
       "proceso": "Ensamble de arneses eléctricos",
-      "inicio": "Recepción de materiales",
-      "fin": "Embarque al cliente",
+      "inicio": "Corte y pelado",
+      "fin": "Inspección final",
       "filas": [
         { "proveedor": "Proveedor de terminales y conectores", "entrada": "Cable, terminales, conectores", "paso": "Corte y pelado", "salida": "Arnés terminado y etiquetado", "cliente": "Montaje final del vehículo (interno)", "requisito": "" },
         { "proveedor": "Proveedor de cable", "entrada": "Plano de ruteo", "paso": "Engarzado de terminales", "salida": "Registro de inspección", "cliente": "Operador ferroviario (externo)", "requisito": "" },
