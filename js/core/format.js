@@ -62,6 +62,9 @@ export function dpmoGuia(x) {
   return x >= 100 ? num(x, 0) : sinCerosFinales(num(x, x >= 10 ? 1 : 2));
 }
 
+/** Número con hasta `dec` decimales y sin ceros sobrantes: corto(3.40) → «3.4», corto(300) → «300». */
+export const corto = (x, dec = 2) => sinCerosFinales(num(x, dec));
+
 /** Cifras significativas: cifras(0.034, 2) → «0.034». */
 export function cifras(x, n = 3) {
   if (typeof x !== 'number' || !Number.isFinite(x)) return '—';
