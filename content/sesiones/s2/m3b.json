@@ -1,0 +1,142 @@
+{
+  "id": "m3b",
+  "titulo": "M3B · Herramientas de calidad y dinámica de equipos",
+  "slides": [
+    {
+      "id": "m3b-siete-basicas",
+      "etiqueta": "M3B · SIETE HERRAMIENTAS BÁSICAS",
+      "titulo": "El panorama de las herramientas de Ishikawa",
+      "subtitulo": "Kaoru Ishikawa las compiló en 1943 para que cualquier persona en planta, sin formación estadística formal, pudiera usarlas.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Herramienta", "Para qué sirve", "Se desarrolla en"],
+          "filas": [
+            ["Diagrama de causa-efecto (Ishikawa)", "Explorar causas potenciales de un problema", "Módulo 6"],
+            ["Hoja de verificación", "Recolectar datos de forma estructurada", "Módulo 4"],
+            ["Diagrama de Pareto", "Priorizar problemas por frecuencia o impacto", "Módulo 6"],
+            ["Histograma", "Visualizar la distribución de una variable", "Módulo 5"],
+            ["Diagrama de dispersión", "Explorar la relación entre dos variables", "Módulo 7"],
+            ["Carta de control", "Monitorear si un proceso está bajo control estadístico", "Módulo 10"],
+            ["Diagrama de flujo", "Mapear la secuencia de un proceso", "Módulo 3A"]
+          ],
+          "pie": "Algunas versiones sustituyen el diagrama de flujo por la estratificación, que era la propuesta original de Ishikawa."
+        }
+      ]
+    },
+    {
+      "id": "m3b-dos-familias",
+      "etiqueta": "M3B · DOS FAMILIAS",
+      "titulo": "Dos familias de herramientas, dos propósitos",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "SIETE BÁSICAS DE CALIDAD · ISHIKAWA, 1943", "texto": "Trabajan principalmente con **datos numéricos ya recolectados**: Pareto, histograma, dispersión, carta de control, hoja de verificación…" },
+            { "etiqueta": "SIETE DE GESTIÓN Y PLANEACIÓN · JUSE, 1976", "texto": "Organizan **ideas cualitativas antes de que existan datos**: afinidad, árbol, PDPC, matriz de priorización…", "estilo": "acento" }
+          ]
+        },
+        { "tipo": "nota", "texto": "El diagrama de afinidad no es una herramienta básica de calidad, y el histograma no explora la relación entre dos variables: esa es la función del diagrama de dispersión." }
+      ]
+    },
+    {
+      "id": "m3b-tuckman",
+      "etiqueta": "M3B · DINÁMICA DE EQUIPOS",
+      "titulo": "Las cinco etapas de Tuckman",
+      "subtitulo": "Bruce Tuckman (1965; ampliado en 1977 con Mary Ann Jensen): etapas predecibles de todo equipo recién formado.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Etapa", "Qué ocurre", "Qué necesita del líder"],
+          "filas": [
+            ["Formación", "Los integrantes se conocen y buscan su rol", "Dirección clara sobre propósito y alcance"],
+            ["Conflicto", "Surgen desacuerdos al ponerse a prueba límites e ideas", "Facilitar el desacuerdo, no evitarlo"],
+            ["Normalización", "El equipo acepta roles y se siente cohesionado", "Reforzar acuerdos y normas compartidas"],
+            ["Desempeño", "El equipo alcanza consenso y actúa como unidad", "Delegar y dar autonomía"],
+            ["Disolución", "El proyecto concluye y el equipo se disuelve", "Cerrar el proyecto y capitalizar lo aprendido"]
+          ],
+          "resaltar": [1]
+        }
+      ]
+    },
+    {
+      "id": "m3b-tuckman-arneses",
+      "etiqueta": "M3B · EL CASO DE LOS ARNESES",
+      "titulo": "El equipo de los arneses apenas está en Formación",
+      "subtitulo": "El Green Belt, dos operadores de línea y un representante de mantenimiento.",
+      "bloques": [
+        { "tipo": "texto", "texto": "Es previsible que, al decidir quién implementa cada contramedida del PDPC, aparezcan fricciones propias del **Conflicto**. El trabajo del Green Belt será facilitarlas en vez de evitarlas." },
+        { "tipo": "nota", "texto": "Saltarse o suprimir la etapa de Conflicto no la elimina, solo la pospone: un líder satisfecho con la armonía superficial de la Formación puede impedir que su equipo llegue al Desempeño." },
+        { "tipo": "tarjeta", "etiqueta": "PUENTE AL MÓDULO 4", "estilo": "acento", "texto": "Cuando el equipo salga a recolectar datos con una definición operacional nueva, es probable que aparezcan resistencias a ser medido, preguntas sobre el propósito y ajustes de última hora. El líder debe facilitar esas conversaciones, no evitarlas." }
+      ]
+    },
+    {
+      "id": "m3b-ejercicios-a",
+      "etiqueta": "M3B · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1", "titulo": "Elegir la herramienta correcta",
+              "texto": "Las quejas de clientes se acumulan, pero el equipo no sabe cuáles son las causas más frecuentes entre docenas de comentarios. ¿Qué herramienta básica debe usar primero y en qué módulo se desarrolla?",
+              "verificacion": "La guía: diagrama de Pareto (módulo 6); después, Ishikawa para explorar las causas.", "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            },
+            {
+              "numero": "2", "titulo": "Diagnosticar la etapa de Tuckman",
+              "texto": "Un equipo lleva tres semanas discutiendo quién debe liderar cada tarea, sin llegar a acuerdos; algunos ya evitan las juntas. ¿En qué etapa está y qué necesita de su líder?",
+              "verificacion": "La guía: Conflicto; el líder facilita el desacuerdo en vez de evitarlo o esperar que se resuelva solo.", "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m3b-ejercicios-b",
+      "etiqueta": "M3B · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "3", "titulo": "Clasificar el origen de cada herramienta",
+              "texto": "Clasifica según su familia de origen: diagrama de Pareto, diagrama de árbol, histograma y PDPC.",
+              "verificacion": "La guía: Pareto e histograma son de Ishikawa (1943); árbol y PDPC, de JUSE (1976).", "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            },
+            {
+              "numero": "4", "titulo": "Hoja de verificación (sin resolver)",
+              "texto": "Una hoja de verificación registra: Golpes = 8, Rayones = 15, Manchas = 7 y Otros = 5. ¿Qué porcentaje del total representan juntos los dos tipos más frecuentes?",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.", "etiquetaVerificacion": "Clave en el libro"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m3b-errores",
+      "etiqueta": "M3B · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "ordenada": true,
+          "items": [
+            "Confundir las siete herramientas básicas de calidad (Ishikawa, 1943) con las siete de gestión y planeación (JUSE, 1976)",
+            "Usar el histograma para explorar la relación entre dos variables: eso es el diagrama de dispersión",
+            "Tratar la etapa de Conflicto como señal de que el equipo «no funciona»",
+            "Asumir que un equipo tranquilo desde el primer día ya está en Desempeño",
+            "Pensar que las siete herramientas básicas exigen formación estadística avanzada"
+          ]
+        }
+      ]
+    }
+  ]
+}

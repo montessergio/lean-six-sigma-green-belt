@@ -42,7 +42,8 @@ export function layoutBase(extra = {}) {
     margin: { l: 56, r: 18, t: 18, b: 48 },
     xaxis: { ...EJE_BASE },
     yaxis: { ...EJE_BASE },
-    legend: { orientation: 'h', y: -0.22, x: 0, font: { size: 11, color: COLOR.gris }, bgcolor: 'rgba(0,0,0,0)' },
+    // La leyenda va arriba: abajo chocaba con las etiquetas largas (y giradas) del eje x.
+    legend: { orientation: 'h', yanchor: 'bottom', y: 1.02, xanchor: 'left', x: 0, font: { size: 11, color: COLOR.gris }, bgcolor: 'rgba(0,0,0,0)' },
     hoverlabel: { bgcolor: '#0f1819', bordercolor: COLOR.linea2, font: { family: 'JetBrains Mono, ui-monospace, monospace', size: 12, color: '#fff' } },
     hovermode: 'closest',
     dragmode: false,

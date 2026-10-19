@@ -241,9 +241,9 @@ function arbol({ voz = '', necesidad = '', impulsores = [] } = {}) {
   const n = Math.max(impulsores.length, 1);
   const filaH = 86;
   const H = Math.max(190, n * filaH + 44);
-  const W = 820;
   const cajaW = 220;
-  const xs = [0, 300, 600].map((x) => x + 0);
+  const xs = [0, 300, 600];
+  const W = xs[2] + cajaW + 20; // cabe la última caja con su trazo y un margen a cada lado
   const svg = s('svg', { viewBox: `-10 0 ${W} ${H}`, role: 'img', 'aria-label': 'Árbol CTQ: necesidad, impulsores y CTQ medibles' });
   const cabeceras = ['NECESIDAD DEL CLIENTE', 'IMPULSOR (DRIVER)', 'CTQ MEDIBLE'];
   cabeceras.forEach((t, i) => svg.appendChild(s('text', { x: xs[i] + cajaW / 2, y: 14, 'text-anchor': 'middle', fill: COLOR.gris, 'font-size': 10.5, 'font-weight': 700, 'letter-spacing': '1.6', 'font-family': 'Inter, sans-serif', texto: t })));
@@ -304,11 +304,15 @@ function sipoc({ proveedores = [], entradas = [], pasos = [], salidas = [], clie
   const colW = 150;
   const hueco = 28;
   const W = colW * 5 + hueco * 4;
-  const filaH = 48;
-  const cajaH = 40;
+  // Cada texto se parte en líneas; si alguno necesita tres, todas las cajas crecen para no recortar nada.
+  const MAX_LINEAS = 3;
+  const partidas = columnas.map((col) => col.items.map((t) => partir(t, col.numerar ? 17 : 21)));
+  const lineasMax = Math.min(MAX_LINEAS, Math.max(2, ...partidas.flat().map((l) => l.length)));
+  const cajaH = lineasMax > 2 ? 54 : 40;
+  const filaH = cajaH + 8;
   const filas = Math.max(1, ...columnas.map((c) => c.items.length));
   const H = 38 + filas * filaH;
-  const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Diagrama SIPOC: proveedores, entradas, proceso, salidas y clientes' });
+  const svg = s('svg', { viewBox: `-2 -2 ${W + 4} ${H + 4}`, role: 'img', 'aria-label': 'Diagrama SIPOC: proveedores, entradas, proceso, salidas y clientes' });
   columnas.forEach((col, c) => {
     const x = c * (colW + hueco);
     svg.appendChild(s('text', { x: x + colW / 2, y: 14, 'text-anchor': 'middle', fill: col.color, 'font-size': 10.5, 'font-weight': 700, 'letter-spacing': '1.4', 'font-family': 'Inter, sans-serif', texto: col.titulo }));
@@ -320,9 +324,9 @@ function sipoc({ proveedores = [], entradas = [], pasos = [], salidas = [], clie
       const y = 30 + i * filaH;
       if (col.numerar && i > 0) svg.appendChild(s('path', { d: `M${x + colW / 2} ${y - (filaH - cajaH)} V${y}`, stroke: col.color, 'stroke-width': 1.4, opacity: 0.8 }));
       svg.appendChild(s('rect', { x, y, width: colW, height: cajaH, rx: 6, fill: '#0f1819', stroke: col.color, 'stroke-width': 1.3 }));
-      const lineas = partir(texto, col.numerar ? 17 : 21).slice(0, 2);
-      const largo = partir(texto, col.numerar ? 17 : 21).length > 2;
-      if (largo) lineas[1] = `${lineas[1].slice(0, Math.max(0, lineas[1].length - 1))}…`;
+      const todas = partidas[c][i];
+      const lineas = todas.slice(0, lineasMax);
+      if (todas.length > lineasMax) lineas[lineasMax - 1] = `${lineas[lineasMax - 1].slice(0, Math.max(0, lineas[lineasMax - 1].length - 1))}…`;
       svg.appendChild(textoMulti(x + (col.numerar ? colW / 2 + 9 : colW / 2), y + cajaH / 2, lineas, { tam: 11.5 }));
       if (col.numerar) {
         svg.appendChild(s('circle', { cx: x + 17, cy: y + cajaH / 2, r: 10, fill: 'none', stroke: col.color, 'stroke-width': 1.3 }));

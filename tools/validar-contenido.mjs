@@ -53,7 +53,8 @@ const IGNORAR_PALABRAS = new Set(['tipo', 'tex', 'src', 'href', 'lab', 'valores'
 const palabras = (s) => (String(s).match(/[\p{L}\p{N}]+/gu) ?? []).length;
 
 function contarPalabras(nodo, clave = '') {
-  if (typeof nodo === 'string') return IGNORAR_PALABRAS.has(clave) ? 0 : palabras(nodo);
+  if (IGNORAR_PALABRAS.has(clave)) return 0; // incluye objetos y listas completos (p. ej. «valores» de un laboratorio)
+  if (typeof nodo === 'string') return palabras(nodo);
   if (Array.isArray(nodo)) return nodo.reduce((s, x) => s + contarPalabras(x, clave), 0);
   if (nodo && typeof nodo === 'object') return Object.entries(nodo).reduce((s, [k, v]) => s + contarPalabras(v, k), 0);
   return 0;
@@ -61,8 +62,8 @@ function contarPalabras(nodo, clave = '') {
 
 /** Cada cadena visible: revisa asteriscos sueltos (cursiva accidental). */
 function revisarMarcas(nodo, donde, clave = '') {
+  if (IGNORAR_PALABRAS.has(clave)) return;
   if (typeof nodo === 'string') {
-    if (IGNORAR_PALABRAS.has(clave)) return;
     const sinNegritas = nodo.replace(/\*\*[^*]+\*\*/g, '').replace(/\*[^*\s][^*]*\*/g, '');
     if (sinNegritas.includes('*')) aviso(donde, `asterisco suelto en «${nodo.slice(0, 50)}…» (se mostraría como cursiva o negrita rota)`);
     if (/<\/?[a-z][^>]*>/i.test(nodo)) aviso(donde, `contiene HTML («${nodo.slice(0, 40)}…»): se mostrará como texto literal`);

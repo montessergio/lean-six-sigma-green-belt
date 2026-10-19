@@ -1,0 +1,443 @@
+{
+  "id": "m2",
+  "titulo": "M2 · Selección y alcance del proyecto",
+  "slides": [
+    {
+      "id": "m2-objetivos",
+      "etiqueta": "SESIÓN 2 · OBJETIVOS",
+      "titulo": "Antes de «arreglar» algo, hay que aterrizar el problema",
+      "subtitulo": "La fase Definir responde dos preguntas: ¿cuál es el problema correcto? y ¿vale la pena resolverlo?",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {
+              "etiqueta": "MÓDULO 2",
+              "titulo": "Selección y alcance",
+              "items": [
+                "Redactar un Project Charter con sus seis elementos",
+                "Traducir la voz del cliente en CTQ medibles",
+                "Cuantificar el caso de negocio y elegir entre proyectos"
+              ]
+            },
+            {
+              "etiqueta": "MÓDULO 3A",
+              "titulo": "Mapeo y planeación",
+              "items": [
+                "Delimitar un proceso con un SIPOC",
+                "Leer y dibujar un diagrama de flujo",
+                "Aplicar afinidad, árbol y PDPC"
+              ]
+            },
+            {
+              "etiqueta": "MÓDULO 3B",
+              "titulo": "Herramientas y equipo",
+              "items": [
+                "Ubicar las siete herramientas básicas de calidad",
+                "Diagnosticar la etapa de un equipo según Tuckman"
+              ]
+            }
+          ]
+        },
+        { "tipo": "nota", "texto": "Cuatro horas y cinco laboratorios (05 a 09). El hilo conductor sigue siendo la línea de arneses, que arranca en 300 DPMO." }
+      ]
+    },
+    {
+      "id": "m2-charter",
+      "etiqueta": "M2 · PROJECT CHARTER",
+      "titulo": "El Project Charter: el contrato del proyecto",
+      "subtitulo": "Un documento vivo que acuerdan el equipo y su Champion o patrocinador.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Elemento", "Qué debe responder"],
+          "filas": [
+            ["Caso de negocio", "¿Por qué merece este proyecto los recursos de la organización?"],
+            ["Planteamiento del problema", "¿Cuál es la brecha, cuantificada, entre el estado actual y el deseado?"],
+            ["Planteamiento de la meta", "¿Qué mejora específica y medible se busca (SMART)?"],
+            ["Alcance", "¿Qué queda dentro y qué queda fuera del proyecto?"],
+            ["Cronograma e hitos", "¿En qué plazos se completará cada fase de DMAIC?"],
+            ["Equipo", "¿Quién participa y con qué rol?"]
+          ]
+        },
+        { "tipo": "texto", "texto": "Se actualiza conforme el proyecto avanza; el formato exacto cambia de una organización a otra, los seis elementos no.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m2-problema-meta",
+      "etiqueta": "M2 · PROBLEMA Y META",
+      "titulo": "Dos reglas que evitan el error más común",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "PLANTEAMIENTO DEL PROBLEMA",
+              "titulo": "Describe la brecha, no su causa ni su remedio",
+              "items": [
+                "Cuantifica qué, dónde, cuándo y cuánto",
+                "Sin culpas: «el operador comete errores»",
+                "Sin soluciones: «hay que cambiar de proveedor de ERP»"
+              ]
+            },
+            {
+              "etiqueta": "PLANTEAMIENTO DE LA META",
+              "titulo": "SMART y sin explicar el «cómo»",
+              "items": [
+                "Específica y medible: métrica, unidad, línea base y meta",
+                "Alcanzable y relevante para el negocio",
+                "Con plazo definido"
+              ]
+            }
+          ]
+        },
+        { "tipo": "nota", "texto": "Si el equipo ya conoce la solución, no hace falta un proyecto Six Sigma para encontrarla." }
+      ]
+    },
+    {
+      "id": "m2-charter-arneses",
+      "etiqueta": "M2 · EL CASO DE LOS ARNESES",
+      "titulo": "El charter de la línea de arneses",
+      "subtitulo": "Problema y meta del módulo 2 de la guía, a partir de los 300 DPMO del módulo 1.",
+      "bloques": [
+        {
+          "tipo": "tarjeta",
+          "etiqueta": "PLANTEAMIENTO DEL PROBLEMA",
+          "texto": "«En las últimas 4 semanas, la línea de ensamble de arneses para material rodante ha operado en un nivel cercano a 5σ (300 DPMO), muy por encima del estándar Six Sigma de 3.4 DPMO, generando retrabajo en el 0.15 % de las unidades y dos incidencias de falla externa reportadas por el cliente en el último trimestre.»"
+        },
+        {
+          "tipo": "tarjeta",
+          "etiqueta": "PLANTEAMIENTO DE LA META",
+          "estilo": "acento",
+          "texto": "«Reducir el DPMO de la línea de arneses de 300 a menos de 100 en un plazo de 4 meses, sin incrementar el tiempo de ciclo.»"
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab05",
+          "texto": "Abrir LAB 05 con este charter →",
+          "valores": {
+            "nombre": "Reducir el DPMO de la línea de arneses",
+            "problema": "En las últimas 4 semanas, la línea de ensamble de arneses para material rodante ha operado en un nivel cercano a 5σ (300 DPMO), muy por encima del estándar Six Sigma de 3.4 DPMO, generando retrabajo en el 0.15 % de las unidades y dos incidencias de falla externa reportadas por el cliente en el último trimestre.",
+            "metrica": "DPMO de arnés",
+            "unidadMetrica": "DPMO",
+            "lineaBase": 300,
+            "meta": 100,
+            "plazoMeses": 4,
+            "moneda": "MXN",
+            "beneficioAnual": 450000,
+            "costoProyecto": 80000,
+            "dentro": "Estaciones de apriete y verificación de conectores; los 3 turnos.",
+            "fuera": "Rediseño del arnés; proveedores de terminales.",
+            "cronograma": [{ "meses": 0.5 }, { "meses": 1 }, { "meses": 1 }, { "meses": 1 }, { "meses": 0.5 }]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m2-caso-negocio",
+      "etiqueta": "M2 · CASO DE NEGOCIO",
+      "titulo": "Cuantificar el porqué",
+      "subtitulo": "Beneficio y costo de ejemplo tomados de la plantilla Excel «Project Charter»: 450,000 y 80,000 MXN.",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            { "valor": "66.7 %", "etiqueta": "Reducción del DPMO", "nota": "300 → 100", "color": "teal" },
+            { "valor": "370,000", "etiqueta": "Beneficio neto, 1.er año", "nota": "450,000 − 80,000 MXN" },
+            { "valor": "462.5 %", "etiqueta": "Retorno", "nota": "(beneficio − costo) ÷ costo", "color": "azul" },
+            { "valor": "2.1 meses", "etiqueta": "Recuperación", "nota": "costo ÷ (beneficio ÷ 12)", "color": "ambar" }
+          ]
+        },
+        { "tipo": "texto", "texto": "Un buen caso de negocio conecta el problema con las categorías de falla interna y externa del COPQ (módulo 1), responde qué costaría **no** actuar y se alinea con los objetivos de la organización, no solo con la molestia de un área." },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab05",
+          "texto": "Abrir LAB 05 y cambiar el beneficio o el costo →",
+          "valores": { "beneficioAnual": 450000, "costoProyecto": 80000, "moneda": "MXN" }
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab05" },
+    {
+      "id": "m2-urgencia",
+      "etiqueta": "M2 · URGENCIA",
+      "titulo": "El problem statement crea urgencia",
+      "subtitulo": "Un puente hacia la gestión del cambio.",
+      "bloques": [
+        { "tipo": "texto", "texto": "En 1996, John Kotter (Harvard Business School) publicó un modelo de ocho pasos para liderar transformaciones. El primero es **crear un sentido de urgencia**: mostrar con datos por qué el statu quo ya no es sostenible, antes de proponer solución. El planteamiento del problema cumple esa función: cuantifica la brecha." },
+        {
+          "tipo": "tarjeta",
+          "etiqueta": "ACTIVIDAD COLABORATIVA",
+          "estilo": "acento",
+          "texto": "Equipos de 3 o 4 presentan un charter en 3 minutos (el de los arneses u otro propio). El resto hace de Champion escéptico y busca al menos tres objeciones genuinas al caso de negocio, la meta o el alcance antes de aprobarlo."
+        },
+        { "tipo": "texto", "texto": "La guía retoma el modelo de Kotter en los módulos 6, 8 y 10, y lo formaliza en el módulo 12.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m2-voc",
+      "etiqueta": "M2 · VOZ DEL CLIENTE",
+      "titulo": "Escuchar antes de actuar",
+      "subtitulo": "Las necesidades y expectativas, explícitas e implícitas, de quien recibe el resultado del proceso.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "MÉTODOS PROACTIVOS", "texto": "Encuestas, entrevistas, grupos focales y observación directa en el lugar de trabajo (Gemba). Buscan la opinión antes de que surja un problema." },
+            { "etiqueta": "MÉTODOS REACTIVOS", "texto": "Quejas, reclamos de garantía y registros de servicio al cliente. Capturan señales que el cliente ya envió por su cuenta." }
+          ]
+        },
+        { "tipo": "nota", "texto": "Ninguno sustituye al otro: **triangula** varias fuentes. Con solo quejas, el diagnóstico se sesga hacia los problemas más «ruidosos», que no siempre son los más importantes." },
+        { "tipo": "texto", "texto": "Cliente **externo**: quien usa el producto. Cliente **interno**: el siguiente proceso o área que recibe tu trabajo. Ambos tienen voz y sus prioridades no siempre coinciden.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m2-ctq",
+      "etiqueta": "M2 · ÁRBOL CTQ",
+      "titulo": "Del VOC al CTQ: de lo vago a lo medible",
+      "subtitulo": "Necesidad expresada por el cliente → impulsores (drivers) → CTQ con una especificación numérica.",
+      "bloques": [
+        {
+          "tipo": "figura",
+          "figura": "arbol",
+          "params": {
+            "necesidad": "Quiero que la entrega sea rápida",
+            "impulsores": [
+              { "texto": "Tiempo de procesamiento", "ctq": "Pedido procesado en menos de 4 h desde su recepción" },
+              { "texto": "Tiempo de tránsito", "ctq": "Entrega completada en menos de 24 h desde el despacho" }
+            ]
+          },
+          "pie": "Ejemplo genérico de la guía (M2 §3)."
+        },
+        { "tipo": "texto", "texto": "Cada CTQ lleva una especificación (un límite inferior o superior, o un valor objetivo): sin ese número no hay manera de saber, en la fase Medir, si el proceso la cumple." }
+      ]
+    },
+    {
+      "id": "m2-ctq-arneses",
+      "etiqueta": "M2 · EL CASO DE LOS ARNESES",
+      "titulo": "El árbol CTQ de la línea de arneses",
+      "bloques": [
+        {
+          "tipo": "figura",
+          "figura": "arbol",
+          "params": {
+            "necesidad": "Arnés funcional en la primera prueba, sin excepción",
+            "impulsores": [
+              { "texto": "Continuidad eléctrica", "ctq": "0 fallas de continuidad por lote entregado" },
+              { "texto": "Integridad de terminales", "ctq": "Torque de terminal entre 1.2 y 1.5 N·m" }
+            ]
+          }
+        },
+        { "tipo": "texto", "texto": "**VOC.** El cliente interno (montaje final del vehículo) reporta retrabajos que retrasan su línea. El cliente externo (el operador ferroviario) exige, por norma contractual, cero fallas de continuidad eléctrica por lote entregado." },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab06",
+          "texto": "Abrir LAB 06 con este árbol →",
+          "valores": {
+            "ctq": [
+              { "necesidad": "Arnés funcional en la primera prueba, sin excepción", "impulsor": "Continuidad eléctrica", "ctq": "Fallas de continuidad por lote entregado", "unidad": "fallas", "lsl": null, "objetivo": null, "usl": 0, "metodo": "Probador de continuidad, 100 %" },
+              { "necesidad": "Arnés funcional en la primera prueba, sin excepción", "impulsor": "Integridad de terminales", "ctq": "Torque de terminal", "unidad": "N·m", "lsl": 1.2, "objetivo": null, "usl": 1.5, "metodo": "Llave de torque calibrada" }
+            ]
+          }
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab06" },
+    {
+      "id": "m2-seleccion",
+      "etiqueta": "M2 · SELECCIÓN DE PROYECTOS",
+      "titulo": "Elegir el proyecto correcto",
+      "subtitulo": "Con frecuencia, la decisión más importante de toda la fase Definir.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "IMPACTO VS. ESFUERZO", "texto": "Cuadrícula de dos ejes con cuatro cuadrantes. Alto impacto y bajo esfuerzo («fruta al alcance de la mano») se ataca primero; bajo impacto y alto esfuerzo se descarta o pospone." },
+            { "etiqueta": "MATRIZ PONDERADA", "texto": "Con más de dos criterios: se definen los criterios, se asigna un peso a cada uno, se califica cada candidato y se suma el puntaje ponderado." }
+          ]
+        },
+        { "tipo": "formula", "etiqueta": "PUNTAJE PONDERADO", "tex": "\\text{Puntaje}=\\sum_{i}\\text{peso}_i\\times\\text{calificación}_i", "texto": "Puntaje = Σ (peso × calificación)", "nota": "Los pesos suman 100 %; cada opción se califica de 1 a 5 en cada criterio." },
+        { "tipo": "nota", "texto": "Un DMAIC impecable aplicado al problema equivocado genera poco valor." }
+      ]
+    },
+    {
+      "id": "m2-matriz-libro",
+      "etiqueta": "M2 · EL CASO DE LOS ARNESES",
+      "titulo": "Tres proyectos compiten por recursos",
+      "subtitulo": "Pesos ilustrativos de la guía: 40 % impacto en el cliente, 35 % beneficio financiero y 25 % factibilidad.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Proyecto", { "t": "Impacto (40 %)", "num": true }, { "t": "Beneficio (35 %)", "num": true }, { "t": "Factibilidad (25 %)", "num": true }, { "t": "Puntaje", "num": true }],
+          "filas": [
+            ["A. Línea de arneses", "5", "4", "4", "4.40"],
+            ["B. Cambio de modelo (gabinetes)", "3", "3", "3", "3.00"],
+            ["C. Facturación a proveedores", "2", "2", "5", "2.75"]
+          ],
+          "resaltar": [0]
+        },
+        { "tipo": "texto", "texto": "Puntaje de A = 5 × 0.40 + 4 × 0.35 + 4 × 0.25 = **4.40**. El equipo lleva el proyecto de arneses a la fase Medir." },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab07",
+          "texto": "Abrir LAB 07 con esta matriz →",
+          "valores": {
+            "criterios": [{ "nombre": "Impacto en el cliente", "peso": 40 }, { "nombre": "Beneficio financiero", "peso": 35 }, { "nombre": "Factibilidad", "peso": 25 }],
+            "opciones": [
+              { "nombre": "A. Línea de arneses", "c1": 5, "c2": 4, "c3": 4 },
+              { "nombre": "B. Cambio de modelo (gabinetes)", "c1": 3, "c2": 3, "c3": 3 },
+              { "nombre": "C. Facturación a proveedores", "c1": 2, "c2": 2, "c3": 5 }
+            ]
+          }
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab07" },
+    {
+      "id": "m2-ahp",
+      "etiqueta": "M2 · AHP",
+      "titulo": "De dónde salen los pesos",
+      "subtitulo": "El proceso de jerarquía analítica compara los criterios por pares en lugar de asignarles un peso directo.",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            { "valor": "44.3 %", "etiqueta": "Impacto en el cliente", "color": "teal" },
+            { "valor": "21 %", "etiqueta": "Beneficio financiero", "color": "azul" },
+            { "valor": "17.3 %", "etiqueta": "Objetivos operativos", "color": "violeta" },
+            { "valor": "8.2 %", "etiqueta": "Factibilidad", "color": "ambar" }
+          ]
+        },
+        { "tipo": "texto", "texto": "Pesos de un estudio AHP sobre la selección de proyectos Six Sigma (*Journal of Process Management, New Technologies*). La factibilidad funciona más como filtro habilitador que como criterio decisivo.", "tenue": true },
+        {
+          "tipo": "pasos",
+          "columnas": 4,
+          "pasos": [
+            { "texto": "Comparar cada par", "sub": "de 1 (igual importancia) a 9 (extrema)" },
+            { "texto": "Sumar cada columna" },
+            { "texto": "Normalizar", "sub": "celda ÷ suma de su columna" },
+            { "texto": "Promediar cada fila", "sub": "ese es el peso del criterio" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m2-ahp-consistencia",
+      "etiqueta": "M2 · AHP",
+      "titulo": "Una matriz de juicios y su prueba de consistencia",
+      "subtitulo": "Ilustración simplificada de la guía, no una reconstrucción exacta del estudio.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["", { "t": "Impacto cliente", "num": true }, { "t": "Beneficio financiero", "num": true }, { "t": "Objetivos operativos", "num": true }, { "t": "Factibilidad", "num": true }],
+          "filas": [
+            ["Impacto cliente", "1", "3", "4", "7"],
+            ["Beneficio financiero", "0.33", "1", "2", "5"],
+            ["Objetivos operativos", "0.25", "0.50", "1", "4"],
+            ["Factibilidad", "0.14", "0.20", "0.25", "1"]
+          ]
+        },
+        { "tipo": "texto", "texto": "La guía obtiene ≈ 54 %, 24 %, 16 % y 5 %. Con los recíprocos exactos (1/3, 1/7…) el laboratorio da 54.5 %, 24.4 %, 15.6 % y 5.5 %: el mismo orden." },
+        { "tipo": "nota", "etiqueta": "RAZÓN DE CONSISTENCIA", "texto": "Revisa que los juicios no se contradigan (A mucho más importante que B, B mucho más que C y, luego, C más que A). Con **RC < 0.10** la matriz se considera suficientemente consistente." },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab08",
+          "texto": "Abrir LAB 08 con esta comparación →",
+          "valores": {
+            "criterios": [{ "nombre": "Impacto cliente" }, { "nombre": "Beneficio financiero" }, { "nombre": "Objetivos operativos" }, { "nombre": "Factibilidad" }],
+            "pares": [{ "valor": 3 }, { "valor": 4 }, { "valor": 7 }, { "valor": 2 }, { "valor": 5 }, { "valor": 4 }]
+          }
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab08" },
+    {
+      "id": "m2-ejercicios-a",
+      "etiqueta": "M2 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1", "titulo": "Matriz de priorización ponderada",
+              "texto": "Dos proyectos y cinco criterios: impacto (30 %), beneficio (25 %), alineación (20 %), factibilidad (15 %) y riesgo (10 %). X: 4, 5, 3, 4, 3. Y: 5, 3, 4, 5, 4. ¿Cuál gana y por cuánto?",
+              "verificacion": "La guía obtiene 3.95 para X y 4.20 para Y.", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab07", "numeroLab": "07",
+              "valores": {
+                "criterios": [{ "nombre": "Impacto en el cliente", "peso": 30 }, { "nombre": "Beneficio financiero", "peso": 25 }, { "nombre": "Alineación estratégica", "peso": 20 }, { "nombre": "Factibilidad", "peso": 15 }, { "nombre": "Riesgo", "peso": 10 }],
+                "opciones": [{ "nombre": "Proyecto X", "c1": 4, "c2": 5, "c3": 3, "c4": 4, "c5": 3 }, { "nombre": "Proyecto Y", "c1": 5, "c2": 3, "c3": 4, "c4": 5, "c5": 4 }]
+              }
+            },
+            {
+              "numero": "2", "titulo": "Construir un árbol CTQ",
+              "texto": "Un cliente de un banco dice: «Quiero resolver mis trámites sin ir a la sucursal». Construye un árbol de tres niveles con al menos dos impulsores, cada uno con una especificación medible.",
+              "verificacion": "La guía propone: trámites disponibles en canales digitales (al menos 90 %) y tiempo de respuesta (menos de 10 minutos).", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab06", "numeroLab": "06",
+              "valores": {
+                "ctq": [
+                  { "necesidad": "Resolver trámites sin ir a la sucursal", "impulsor": "", "ctq": "", "unidad": "", "lsl": null, "objetivo": null, "usl": null, "metodo": "" },
+                  { "necesidad": "Resolver trámites sin ir a la sucursal", "impulsor": "", "ctq": "", "unidad": "", "lsl": null, "objetivo": null, "usl": null, "metodo": "" }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m2-ejercicios-b",
+      "etiqueta": "M2 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "3", "titulo": "Del DPMO al ahorro en falla interna",
+              "texto": "La línea fabrica 2,000 arneses por semana con 5 oportunidades cada uno: a 300 DPMO se retrabajan 3 por semana. Cada retrabajo cuesta $45. ¿Qué ahorro anual da llegar exactamente a 100 DPMO, con 50 semanas productivas?",
+              "verificacion": "La guía obtiene 1 defecto por semana a 100 DPMO y un ahorro de $4,500 al año.", "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "Calculadora o LAB 04 (Sesión 1)"
+            },
+            {
+              "numero": "4", "titulo": "Puntaje ponderado (sin resolver)",
+              "texto": "Con los pesos 0.40, 0.15, 0.25 y 0.20, un proceso obtiene: impacto financiero 5, factibilidad 2, alineación estratégica 3 y riesgo 4. Calcula su puntaje ponderado total.",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.", "etiquetaVerificacion": "Clave en el libro",
+              "lab": "lab07", "numeroLab": "07",
+              "valores": {
+                "criterios": [{ "nombre": "Impacto financiero", "peso": 40 }, { "nombre": "Factibilidad", "peso": 15 }, { "nombre": "Alineación estratégica", "peso": 25 }, { "nombre": "Riesgo", "peso": 20 }],
+                "opciones": [{ "nombre": "Proceso candidato", "c1": 5, "c2": 2, "c3": 3, "c4": 4 }]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m2-errores",
+      "etiqueta": "M2 · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "ordenada": true,
+          "items": [
+            "Redactar un planteamiento del problema que ya contiene la solución («hay que capacitar al personal»)",
+            "Confundir el planteamiento del problema con el de la meta: el primero describe la brecha y el segundo fija una meta SMART",
+            "Detener el árbol CTQ en el impulsor, sin llegar a una especificación numérica",
+            "Usar solo voz del cliente reactiva (quejas) sin triangular con métodos proactivos",
+            "Priorizar proyectos solo por factibilidad: en el estudio AHP citado pesa apenas 8.2 %"
+          ]
+        }
+      ]
+    }
+  ]
+}

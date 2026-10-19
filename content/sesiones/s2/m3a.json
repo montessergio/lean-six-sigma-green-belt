@@ -1,0 +1,219 @@
+{
+  "id": "m3a",
+  "titulo": "M3A · Mapeo del proceso y herramientas de planeación",
+  "slides": [
+    {
+      "id": "m3a-sipoc",
+      "etiqueta": "M3A · SIPOC",
+      "titulo": "El mapa de alto nivel del proceso",
+      "subtitulo": "Proveedores, Entradas, Proceso, Salidas y Clientes (Suppliers, Inputs, Process, Outputs, Customers).",
+      "bloques": [
+        { "tipo": "titulo", "texto": "Se construye de adentro hacia afuera, en este orden" },
+        {
+          "tipo": "pasos",
+          "columnas": 5,
+          "pasos": [
+            { "texto": "Proceso", "sub": "4 a 7 pasos de alto nivel" },
+            { "texto": "Salidas", "sub": "lo que entrega el proceso" },
+            { "texto": "Clientes", "sub": "quienes reciben las salidas" },
+            { "texto": "Entradas", "sub": "trabajando hacia atrás" },
+            { "texto": "Proveedores", "sub": "quienes las suministran" }
+          ]
+        },
+        { "tipo": "nota", "texto": "Pasar de siete pasos lo convierte en un diagrama de flujo detallado y le hace perder su propósito. La variante **SIPOC+CR** agrega una columna de requisitos del cliente y conecta con los CTQ del módulo 2." }
+      ]
+    },
+    {
+      "id": "m3a-sipoc-arneses",
+      "etiqueta": "M3A · EL CASO DE LOS ARNESES",
+      "titulo": "SIPOC de la línea de arneses",
+      "bloques": [
+        {
+          "tipo": "figura",
+          "figura": "sipoc",
+          "anchoMax": "1000px",
+          "params": {
+            "proveedores": ["Proveedor de terminales y conectores", "Proveedor de cable"],
+            "entradas": ["Cable, terminales, conectores", "Plano de ruteo", "Instrucción de trabajo"],
+            "pasos": ["Corte y pelado", "Engarzado de terminales", "Ensamble de conectores", "Ruteo y amarre", "Inspección final"],
+            "salidas": ["Arnés terminado y etiquetado", "Registro de inspección"],
+            "clientes": ["Montaje final del vehículo (interno)", "Operador ferroviario (externo)"]
+          }
+        },
+        { "tipo": "texto", "texto": "Observa que la guía no nombra un proveedor para el plano de ruteo ni para la instrucción de trabajo: ¿quién los suministra?" , "tenue": true },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab09",
+          "texto": "Abrir LAB 09 con este SIPOC →",
+          "valores": {
+            "proceso": "Ensamble de arneses eléctricos",
+            "inicio": "Corte y pelado",
+            "fin": "Inspección final",
+            "filas": [
+              { "proveedor": "Proveedor de terminales y conectores", "entrada": "Cable, terminales, conectores", "paso": "Corte y pelado", "salida": "Arnés terminado y etiquetado", "cliente": "Montaje final del vehículo (interno)", "requisito": "" },
+              { "proveedor": "Proveedor de cable", "entrada": "Plano de ruteo", "paso": "Engarzado de terminales", "salida": "Registro de inspección", "cliente": "Operador ferroviario (externo)", "requisito": "" },
+              { "proveedor": "", "entrada": "Instrucción de trabajo", "paso": "Ensamble de conectores", "salida": "", "cliente": "", "requisito": "" },
+              { "proveedor": "", "entrada": "", "paso": "Ruteo y amarre", "salida": "", "cliente": "", "requisito": "" },
+              { "proveedor": "", "entrada": "", "paso": "Inspección final", "salida": "", "cliente": "", "requisito": "" }
+            ]
+          }
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab09" },
+    {
+      "id": "m3a-flujo",
+      "etiqueta": "M3A · DIAGRAMA DE FLUJO",
+      "titulo": "El siguiente nivel de detalle",
+      "subtitulo": "Mientras el SIPOC da una vista de pájaro, el diagrama de flujo detalla cada paso con simbología estándar.",
+      "bloques": [
+        { "tipo": "figura", "figura": "simbolos-flujo", "pie": "Óvalos para inicio y fin, rectángulos para actividades, rombos para decisiones y flechas para la secuencia." },
+        {
+          "tipo": "pasos",
+          "titulo": "La columna «Proceso» del SIPOC de arneses, de izquierda a derecha",
+          "columnas": 5,
+          "pasos": ["Corte y pelado", "Engarzado de terminales", "Ensamble de conectores", "Ruteo y amarre", "Inspección final"]
+        },
+        { "tipo": "texto", "texto": "El SIPOC da contexto de negocio (clientes y proveedores); el diagrama de flujo entra en símbolos y decisiones. Confundirlos produce mapas demasiado detallados para alinear al equipo o demasiado vagos para ejecutar la mejora.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m3a-siete-herramientas",
+      "etiqueta": "M3A · HERRAMIENTAS DE GESTIÓN Y PLANEACIÓN",
+      "titulo": "Las siete herramientas de gestión y planeación",
+      "subtitulo": "La Unión de Científicos e Ingenieros Japoneses (JUSE) las desarrolló en 1976 para planear proyectos con ideas cualitativas.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Herramienta", "Para qué sirve"],
+          "filas": [
+            ["Diagrama de afinidad", "Agrupa un gran número de ideas según su relación natural"],
+            ["Diagrama de relaciones", "Muestra vínculos de causa-efecto entre factores de una situación compleja"],
+            ["Diagrama de árbol", "Desglosa un objetivo amplio en niveles cada vez más específicos"],
+            ["Diagrama matricial", "Muestra la fuerza de la relación entre dos conjuntos de factores"],
+            ["Matriz de priorización", "Pondera criterios para elegir entre varias opciones (la del módulo 2)"],
+            ["PDPC", "Anticipa qué podría salir mal en un plan y define contramedidas"],
+            ["Diagrama de red de actividades", "Secuencia tareas paralelas y encuentra la ruta crítica"]
+          ],
+          "resaltar": [0, 2, 5],
+          "pie": "En esta sesión: afinidad, árbol y PDPC (filas resaltadas)."
+        }
+      ]
+    },
+    {
+      "id": "m3a-afinidad",
+      "etiqueta": "M3A · DIAGRAMA DE AFINIDAD",
+      "titulo": "Ordenar ideas dispersas en familias",
+      "subtitulo": "Lluvia de ideas silenciosa e individual, para que nadie influya en las respuestas de los demás.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            { "etiqueta": "MATERIAL", "items": ["Cable fuera de especificación", "Lote de terminales defectuoso"] },
+            { "etiqueta": "MÉTODO", "items": ["Instrucción de trabajo ambigua", "Ausencia de plantilla de ruteo"] },
+            { "etiqueta": "MEDICIÓN", "items": ["Calibrador de torque sin calibración vigente"] }
+          ]
+        },
+        { "tipo": "texto", "texto": "Posibles causas del retrabajo en los arneses, escritas una por nota y agrupadas por el equipo. Las familias deben **emerger** de las notas, no de una clasificación que alguien ya tenía en mente." },
+        { "tipo": "nota", "texto": "Todavía no identifica la causa raíz: eso se hace con Ishikawa y los 5 Porqués en el módulo 6." }
+      ]
+    },
+    {
+      "id": "m3a-arbol-pdpc",
+      "etiqueta": "M3A · ÁRBOL Y PDPC",
+      "titulo": "De la meta al plan, y del plan a sus riesgos",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            { "etiqueta": "META", "texto": "Reducir el DPMO de 300 a menos de 100." },
+            { "etiqueta": "ÁRBOL: ACTIVIDADES", "items": ["Revisar la especificación de torque", "Capacitar operadores", "Actualizar la instrucción de trabajo"], "estilo": "acento" },
+            { "etiqueta": "PDPC: «CAPACITAR OPERADORES»", "texto": "**Qué puede salir mal:** el operador del turno nocturno no asiste a la capacitación presencial.\n**Contramedida:** grabar la sesión y aplicar una evaluación de comprensión antes de autorizarlo a trabajar sin supervisión." }
+          ]
+        },
+        { "tipo": "texto", "texto": "Cada actividad se desglosa en tareas puntuales y asignables. Una contramedida debe poder **verificarse**: «poner más atención» no lo es; «incluir el paso en una checklist firmada por el supervisor» sí." },
+        { "tipo": "texto", "texto": "Anticipar fallas y definir contramedidas reaparece, de forma cuantitativa, en el AMEF (FMEA) del módulo 6.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m3a-ejercicios-a",
+      "etiqueta": "M3A · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1", "titulo": "Construir un SIPOC",
+              "texto": "Un restaurante quiere mapear su proceso de pedidos a domicilio. Construye un SIPOC completo, empezando por el proceso.",
+              "verificacion": "La guía propone 5 pasos, 2 salidas, 2 clientes, 4 entradas y 3 proveedores.", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab09", "numeroLab": "09",
+              "valores": {
+                "proceso": "Pedidos a domicilio de un restaurante", "inicio": "", "fin": "",
+                "filas": [
+                  { "proveedor": "", "entrada": "", "paso": "", "salida": "", "cliente": "", "requisito": "" },
+                  { "proveedor": "", "entrada": "", "paso": "", "salida": "", "cliente": "", "requisito": "" },
+                  { "proveedor": "", "entrada": "", "paso": "", "salida": "", "cliente": "", "requisito": "" },
+                  { "proveedor": "", "entrada": "", "paso": "", "salida": "", "cliente": "", "requisito": "" },
+                  { "proveedor": "", "entrada": "", "paso": "", "salida": "", "cliente": "", "requisito": "" }
+                ]
+              }
+            },
+            {
+              "numero": "2", "titulo": "De la meta al plan: árbol y PDPC",
+              "texto": "Meta: «reducir el tiempo de entrega a domicilio de 45 a 30 minutos en 3 meses». Desglósala en un árbol de dos actividades con dos tareas cada una y aplica un PDPC a una tarea.",
+              "verificacion": "La guía propone optimizar la ruta y reducir el tiempo en cocina; en el PDPC anticipa que el repartidor ignore la ruta, con una checklist de salida como contramedida.", "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m3a-ejercicios-b",
+      "etiqueta": "M3A · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "3", "titulo": "Diagrama de afinidad",
+              "texto": "Seis notas sobre por qué tardan los tickets de soporte: «El cliente no responde a tiempo», «Falta documentación del sistema legado», «El técnico junior no sabe escalar», «El manual está desactualizado», «No hay horario claro de disponibilidad del cliente», «Falta capacitación en el sistema nuevo». Agrúpalas en familias.",
+              "verificacion": "La guía forma tres familias: cliente, documentación y capacitación.", "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            },
+            {
+              "numero": "4", "titulo": "Priorización por pares (sin resolver)",
+              "texto": "En una matriz de priorización por pares con cuatro ideas (W, X, Y, Z): W vence a X, Y y Z; X vence a Y y Z; Y vence a Z. Calcula el puntaje final de cada idea.",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.", "etiquetaVerificacion": "Clave en el libro",
+              "etiqueta": "En papel o pizarrón"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m3a-errores",
+      "etiqueta": "M3A · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "ordenada": true,
+          "items": [
+            "Construir un SIPOC con más de siete pasos en la columna Proceso",
+            "Empezar el SIPOC por los proveedores en vez de por el proceso",
+            "Usar un diagrama de flujo cuando hace falta un SIPOC, o viceversa",
+            "Definir contramedidas de un PDPC que no se pueden verificar",
+            "Dejar que el facilitador imponga las categorías del diagrama de afinidad desde el inicio"
+          ]
+        }
+      ]
+    }
+  ]
+}

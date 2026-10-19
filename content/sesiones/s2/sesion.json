@@ -1,7 +1,7 @@
 {
   "id": "s2",
   "numero": 2,
-  "estado": "planeada",
+  "estado": "disponible",
   "titulo": "Definir: proyecto, VOC, CTQ, mapeo y equipo",
   "fase": "definir",
   "duracion": "4 h",
@@ -14,7 +14,7 @@
     "curso": "LEAN SIX SIGMA GREEN BELT",
     "lineas": [
       "Guía de estudio para estudiantes de Ingeniería Industrial",
-      "Sesión en preparación: estructura lista para completarse"
+      "5 laboratorios interactivos con el caso de la línea de arneses"
     ],
     "sello": {
       "arriba": "CASO APLICADO",
@@ -44,31 +44,31 @@
       "id": "lab05",
       "numero": "05",
       "nombre": "Project Charter",
-      "estado": "planeada"
+      "archivo": "lab05-project-charter.js"
     },
     {
       "id": "lab06",
       "numero": "06",
       "nombre": "Árbol CTQ",
-      "estado": "planeada"
+      "archivo": "lab06-arbol-ctq.js"
     },
     {
       "id": "lab07",
       "numero": "07",
       "nombre": "Matriz de selección ponderada",
-      "estado": "planeada"
+      "archivo": "lab07-matriz-seleccion.js"
     },
     {
       "id": "lab08",
       "numero": "08",
-      "nombre": "AHP (comparación por pares)",
-      "estado": "planeada"
+      "nombre": "AHP: pesos y consistencia",
+      "archivo": "lab08-ahp.js"
     },
     {
       "id": "lab09",
       "numero": "09",
       "nombre": "SIPOC",
-      "estado": "planeada"
+      "archivo": "lab09-sipoc.js"
     }
   ],
   "slides": [
@@ -76,52 +76,16 @@
       "tipo": "portada"
     },
     {
-      "id": "plan",
-      "etiqueta": "SESIÓN 2 · DEFINIR",
-      "titulo": "Esta sesión está en preparación",
-      "subtitulo": "4 h · 5 laboratorios",
-      "bloques": [
-        {
-          "tipo": "planeada",
-          "nota": "Esta sesión ya tiene su lugar en la ruta DMAIC y su estructura lista. Se completará con el mismo patrón que la sesión 1: teoría condensada, laboratorios, ejercicios vinculados y cierre. Mientras tanto, el libro y las plantillas de Excel cubren estos módulos completos.",
-          "modulos": [
-            {
-              "id": "M2",
-              "titulo": "Selección y alcance del proyecto"
-            },
-            {
-              "id": "M3A",
-              "titulo": "Mapeo del proceso y herramientas de planeación"
-            },
-            {
-              "id": "M3B",
-              "titulo": "Herramientas de calidad y dinámica de equipos"
-            }
-          ],
-          "labs": [
-            {
-              "id": "LAB 05",
-              "titulo": "Project Charter"
-            },
-            {
-              "id": "LAB 06",
-              "titulo": "Árbol CTQ"
-            },
-            {
-              "id": "LAB 07",
-              "titulo": "Matriz de selección ponderada"
-            },
-            {
-              "id": "LAB 08",
-              "titulo": "AHP (comparación por pares)"
-            },
-            {
-              "id": "LAB 09",
-              "titulo": "SIPOC"
-            }
-          ]
-        }
-      ]
+      "incluir": "m2.json"
+    },
+    {
+      "incluir": "m3a.json"
+    },
+    {
+      "incluir": "m3b.json"
+    },
+    {
+      "incluir": "cierre.json"
     }
   ]
 }

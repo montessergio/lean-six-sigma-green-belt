@@ -1,0 +1,94 @@
+{
+  "id": "cierre",
+  "titulo": "Cierre de la sesión 2",
+  "slides": [
+    {
+      "id": "cierre",
+      "etiqueta": "SESIÓN 2 · CIERRE",
+      "titulo": "Lo que te llevas de esta sesión",
+      "bloques": [
+        {
+          "tipo": "cierre",
+          "puntos": [
+            "El Project Charter tiene seis elementos: el problema describe la brecha (sin culpas ni soluciones) y la meta es SMART.",
+            "El caso de negocio traduce la meta en dinero: retorno = (beneficio − costo) ÷ costo y recuperación = costo ÷ (beneficio ÷ 12).",
+            "La voz del cliente se captura con métodos proactivos y reactivos; el árbol CTQ la baja a especificaciones numéricas.",
+            "La matriz ponderada (Σ peso × calificación) evita decidir por un solo criterio llamativo; el AHP deriva los pesos y su RC < 0.10 los valida.",
+            "El SIPOC se construye de adentro hacia afuera con 4 a 7 pasos; el diagrama de flujo detalla cada paso.",
+            "Afinidad, árbol y PDPC ordenan ideas antes de tener datos, y el conflicto de un equipo se facilita, no se evita."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m2a",
+      "etiqueta": "SESIÓN 2 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 2 (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Charter y voz del cliente",
+          "items": [
+            "Smartsheet. «Six Sigma Project Charters and Examples». smartsheet.com (2024).",
+            "Juran Institute. «How to Write a Six Sigma Problem Statement». juran.com (2024).",
+            "KnowledgeHut. «Six Sigma Project Charter: Template, Examples And Elements». knowledgehut.com (2025).",
+            "GoLeanSixSigma. «Voice of the Customer In Lean Six Sigma: Capture, Analyze, Optimize». goleansixsigma.com (2024).",
+            "Lean 6 Sigma Hub. «Voice of Customer in Six Sigma: 7 Proven Methods to Capture Customer Needs». lean6sigmahub.com (2025).",
+            "Six Sigma Online. «Harnessing the Voice of the Customer: Six Sigma Strategies». sixsigmaonline.org (2023)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m2b",
+      "etiqueta": "SESIÓN 2 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 2 (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "CTQ, selección de proyectos y gestión del cambio",
+          "items": [
+            "GoSkills. «What is CTQ? Critical to Quality Explained With Examples». goskills.com (2025).",
+            "CliffsNotes. «CTQ Tree». cliffsnotes.com (2025).",
+            "MasterOfProject. «Six Sigma Critical to Quality: 7 Steps to Produce CTQ Tree». blog.masterofproject.com (2026).",
+            "SixSigma.us. «Project Prioritization Matrix in Lean Six Sigma. Complete Guide». 6sigma.us (2025).",
+            "Journal of Process Management, New Technologies. «Prioritization of Six-Sigma project selection» (estudio AHP). academia.edu (2022).",
+            "Unichrone. «Prioritization Matrix in Six Sigma». unichrone.com (2026).",
+            "Prosci. «Kotter's Change Management Theory Explanation and Applications». prosci.com (2026)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m3",
+      "etiqueta": "SESIÓN 2 · REFERENCIAS",
+      "titulo": "Para profundizar: módulos 3A y 3B",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Módulo 3A",
+          "items": [
+            "Miro. «What is a SIPOC Diagram». miro.com.",
+            "Asana. «SIPOC Diagram: Definition & How to Create One Fast». asana.com (2026).",
+            "iSixSigma. «Get Your Team Up to Speed with the SIPOC Diagram». isixsigma.com (2025).",
+            "ASQ. «What are the Seven New Management & Planning Tools?». asq.org.",
+            "Six Sigma Study Guide. «7M Tools / 7 Management tools». sixsigmastudyguide.com (2024).",
+            "Quality Concepts Matter. «The Seven New Management and Planning Tools». qualityconcepts.home.blog (2020).",
+            "Wikipedia. «Seven management and planning tools». en.wikipedia.org."
+          ]
+        },
+        {
+          "tipo": "referencias",
+          "titulo": "Módulo 3B",
+          "items": [
+            "ASQ. «7 Basic Quality Tools: Quality Management Tools». asq.org.",
+            "Wikipedia. «Seven basic tools of quality». en.wikipedia.org.",
+            "SPC for Excel (B. McNeese). «Dr. Ishikawa's Seven Quality Tools». spcforexcel.com (2024).",
+            "Six Sigma Study Guide. «Stages of Team Growth». sixsigmastudyguide.com (2025).",
+            "MindTools. «Forming, Storming, Norming, and Performing». mindtools.com (2026)."
+          ]
+        }
+      ]
+    }
+  ]
+}
