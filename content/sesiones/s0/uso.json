@@ -46,23 +46,18 @@
               "Primera y última diapositiva de la sesión"
             ],
             [
-              "`i`",
-              "Volver al índice de sesiones"
+              "Deslizar en el celular",
+              "Hacia la izquierda: siguiente · hacia la derecha: anterior"
             ],
             [
-              "Botones redondos",
-              "Los mismos movimientos con el ratón o el dedo; el contador «n / N» está a su lado"
+              "`i`",
+              "Volver al índice de sesiones"
             ],
             [
               "Enlace con `#`",
               "La dirección guarda dónde estás: `sesion.html?s=s1#lab01` abre el laboratorio 01. Cópiala para compartir esa diapositiva"
             ]
           ]
-        },
-        {
-          "tipo": "nota",
-          "etiqueta": "TIP",
-          "texto": "Mientras escribes dentro de un campo de un laboratorio, las flechas mueven el cursor y no cambian de diapositiva. Pulsa `Esc` o haz clic fuera del campo para volver a navegar con el teclado."
         }
       ]
     },
@@ -79,23 +74,36 @@
             {
               "etiqueta": "1 · EJEMPLOS",
               "titulo": "Un clic y ya hay datos",
-              "texto": "Cada laboratorio trae ejemplos precargados (los de la guía y los del caso de los arneses). Elige uno y modifícalo para ver qué cambia."
+              "texto": "Cada laboratorio trae ejemplos de la guía y del caso de los arneses. Elige uno y modifícalo para ver qué cambia."
             },
             {
               "etiqueta": "2 · RECÁLCULO",
               "titulo": "Todo se actualiza al instante",
-              "texto": "No hay botón «Calcular»: cada vez que cambias una celda se recalculan los resultados, los semáforos y las gráficas."
+              "texto": "No hay botón «Calcular»: al cambiar una celda se recalculan los resultados, los semáforos y las gráficas."
             },
             {
               "etiqueta": "3 · SIN TRUCOS",
               "titulo": "Nada de respuestas ocultas",
-              "texto": "El laboratorio no te dice «correcto» o «incorrecto»: te muestra el resultado, el umbral con que se interpreta y las preguntas que debe hacerse el analista."
+              "texto": "No dice «correcto» o «incorrecto»: muestra el resultado, el umbral para interpretarlo y las preguntas del analista."
             }
           ]
         },
         {
+          "tipo": "nota",
+          "etiqueta": "TIP",
+          "texto": "Mientras escribes en un campo, las flechas mueven el cursor y no cambian de diapositiva. Pulsa `Esc` o haz clic fuera del campo para volver a navegar con el teclado."
+        }
+      ]
+    },
+    {
+      "id": "colores",
+      "etiqueta": "SESIÓN 0 · COLORES",
+      "titulo": "Los colores y los semáforos",
+      "subtitulo": "Los mismos códigos de las plantillas de Excel, para que el paso de la hoja al sitio sea natural.",
+      "bloques": [
+        {
           "tipo": "titulo",
-          "texto": "Código de colores de las celdas (el mismo de las plantillas de Excel)"
+          "texto": "Colores de las celdas"
         },
         {
           "tipo": "leyenda",
@@ -113,15 +121,11 @@
               "texto": "**Azul claro**: fórmula; se calcula sola, no se edita."
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "semaforos",
-      "etiqueta": "SESIÓN 0 · INTERPRETAR",
-      "titulo": "Semáforos, umbrales y supuestos",
-      "subtitulo": "Cada laboratorio resume su veredicto con los mismos cinco estados que las plantillas de Excel.",
-      "bloques": [
+        },
+        {
+          "tipo": "titulo",
+          "texto": "Semáforos del resultado"
+        },
         {
           "tipo": "leyenda",
           "items": [
@@ -146,7 +150,15 @@
               "texto": "falta capturar información"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "semaforos",
+      "etiqueta": "SESIÓN 0 · INTERPRETAR",
+      "titulo": "Umbrales, supuestos y preguntas",
+      "subtitulo": "Además del número, cada laboratorio te da con qué leerlo.",
+      "bloques": [
         {
           "tipo": "rejilla",
           "columnas": 3,
@@ -154,17 +166,17 @@
             {
               "etiqueta": "UMBRAL",
               "titulo": "¿Con qué se compara el resultado?",
-              "texto": "Una tabla con los rangos de interpretación; la fila que corresponde a tus datos aparece resaltada. Ejemplos: %GRR < 10 % aceptable y 10–30 % condicional; RPN ≥ 200 exige acción inmediata."
+              "texto": "Una tabla con los rangos de interpretación; la fila que corresponde a tus datos aparece resaltada. Ejemplo: %GRR < 10 % aceptable, 10–30 % condicional."
             },
             {
               "etiqueta": "SUPUESTO",
               "titulo": "¿Cuándo es válido el cálculo?",
-              "texto": "Toda herramienta estadística descansa en un supuesto (normalidad, independencia, varianzas parecidas…). El laboratorio lo declara y, cuando puede, lo revisa con tus datos."
+              "texto": "Toda herramienta estadística descansa en un supuesto (normalidad, independencia…). El laboratorio lo declara y, cuando puede, lo revisa con tus datos."
             },
             {
               "etiqueta": "PREGUNTAS",
               "titulo": "Lo que debe cuestionar el analista",
-              "texto": "Al final de cada laboratorio hay preguntas abiertas para discutir en clase o resolver por tu cuenta. Las respuestas dependen de tus datos, por eso no vienen escritas."
+              "texto": "Al final de cada laboratorio hay preguntas abiertas para discutir en clase. Las respuestas dependen de tus datos, por eso no vienen escritas."
             }
           ]
         },
@@ -219,7 +231,7 @@
         {
           "tipo": "nota",
           "etiqueta": "ABRIR EN LOCAL",
-          "texto": "Si descargas el repositorio, no abras `index.html` con doble clic: el navegador bloquea la lectura de los archivos de datos. Usa un servidor local (`python -m http.server`) o la versión publicada en GitHub Pages."
+          "texto": "Si descargas el repositorio, no abras `index.html` con doble clic: el navegador bloquea la lectura de los archivos de datos. Usa un servidor local (`node tools/servir.mjs`) o la versión publicada en GitHub Pages."
         }
       ]
     },
@@ -262,7 +274,15 @@
         {
           "tipo": "texto",
           "texto": "Cada arnés terminado pasa **cinco verificaciones**: continuidad eléctrica, torque de las terminales, asentamiento del conector, etiquetado y ruteo según el plano. Con ese caso recorrerás el ciclo DMAIC completo: lo definirás en la sesión 2, lo medirás en la 3, buscarás sus causas en la 4, lo mejorarás en la 5 y lo controlarás en la 6."
-        },
+        }
+      ]
+    },
+    {
+      "id": "ruta",
+      "etiqueta": "SESIÓN 0 · TU RUTA",
+      "titulo": "Por dónde empezar",
+      "subtitulo": "Seis sesiones, una por fase del ciclo DMAIC más los fundamentos.",
+      "bloques": [
         {
           "tipo": "pasos",
           "columnas": 6,
