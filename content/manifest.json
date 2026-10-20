@@ -28,7 +28,8 @@
     ],
     "enlaces": [
       { "texto": "Código en GitHub", "href": "https://github.com/montessergio/lean-six-sigma-green-belt" },
-      { "texto": "Cómo agregar contenido", "href": "https://github.com/montessergio/lean-six-sigma-green-belt#readme" }
+      { "texto": "Cómo agregar contenido", "href": "https://github.com/montessergio/lean-six-sigma-green-belt#readme" },
+      { "texto": "Datos de práctica (CSV)", "href": "https://github.com/montessergio/lean-six-sigma-green-belt/tree/main/recursos" }
     ]
   }
 }

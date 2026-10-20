@@ -1,0 +1,12 @@
+﻿categoria,concepto,costo_mxn
+Prevención,Capacitación en torque y calibración,18000
+Prevención,Mantenimiento preventivo de herramientas,12000
+Prevención,Diseño e instalación de poka-yoke,9000
+Evaluación,Inspección final y prueba eléctrica,42000
+Evaluación,Calibración de instrumentos,8000
+Evaluación,Auditorías de proceso,6000
+Falla interna,Retrabajo de arneses,55000
+Falla interna,Scrap de cable y terminales,23000
+Falla interna,Paros de línea por defectos,17000
+Falla externa,Garantías y reparaciones,38000
+Falla externa,Devoluciones y reclamos,21000

@@ -1,0 +1,5 @@
+﻿escenario,unidades,oportunidades_por_unidad,defectos,fuente,nota
+Semana de referencia (M1),2000,5,3,Guía M1 §7,
+8 semanas tras la mejora (M10),16000,5,13,Guía M10 §3 y §5,"La guía reporta 162 DPMO (8 semanas × 2,000 arneses × 5 oportunidades). El conteo entero de defectos compatible con esa cifra es 13, que da 162.5 DPMO sin redondear."
+Plantilla Excel: antes,2000,25,15,Plantilla Excel «DPMO y Sigma»,
+Plantilla Excel: después,4000,25,16,Plantilla Excel «DPMO y Sigma»,

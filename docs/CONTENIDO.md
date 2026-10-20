@@ -64,9 +64,10 @@ archivos pequeños y revisables.
 }
 ```
 
-La página es una diapositiva de 16:10; el cuerpo **no se desplaza** en pantallas grandes, así que cada diapositiva debe
-caber: **≤ 6 bloques y ≈ 110 palabras visibles**, tablas de ≤ 7 filas, listas de ≤ 6 elementos. Si no cabe, parte la
-diapositiva en dos (`…-a`, `…-b`). En pantallas pequeñas el contenido se apila y sí se desplaza.
+Cada diapositiva ocupa la pantalla completa. Procura que **quepa sin desplazarse en un portátil (≈1280×720)**; si no
+cabe, se desplaza dentro de su marco, pero se pierde el efecto de presentación. Por eso: **≤ 6 bloques y ≈ 110 palabras
+visibles**, tablas de ≤ 7 filas, listas de ≤ 6 elementos. Si no cabe, parte la diapositiva en dos (`…-a`, `…-b`).
+En pantallas pequeñas el contenido se apila y sí se desplaza.
 
 ## 4. Bloques
 

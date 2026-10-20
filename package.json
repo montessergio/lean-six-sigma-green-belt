@@ -1,0 +1,18 @@
+{
+  "name": "lean-six-sigma-green-belt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sesiones y laboratorios interactivos de la guía Lean Six Sigma Green Belt (sitio estático para GitHub Pages)",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "servir": "node tools/servir.mjs",
+    "validar": "node tools/validar-contenido.mjs",
+    "test": "node --test",
+    "verificar": "node tools/validar-contenido.mjs && node --test",
+    "datos": "node tools/exportar-datos.mjs",
+    "vendorizar": "node tools/vendorizar.mjs"
+  }
+}
