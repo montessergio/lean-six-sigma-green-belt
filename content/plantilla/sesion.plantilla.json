@@ -1,0 +1,72 @@
+{
+  "_ayuda": "MOLDE DE SESIÓN. Cópialo a content/sesiones/<id>/sesion.json (por ejemplo s7), cambia «sN» por ese id y agrega el id a content/manifest.json → sesiones. Las claves que empiezan con guion bajo se ignoran. Todos los campos están explicados en docs/CONTENIDO.md. Para una sesión que aún no se escribe usa estado «planeada» y el bloque «planeada» (modelo: content/sesiones/s3/sesion.json). Este archivo se comprueba con: node tools/validar-contenido.mjs --plantillas",
+
+  "id": "sN",
+  "numero": 7,
+  "estado": "disponible",
+  "titulo": "Fase y tema de la sesión",
+  "fase": "analizar",
+  "duracion": "4 h",
+  "duracionMin": 240,
+  "descripcion": "Una o dos frases para la tarjeta del índice: qué se aprende y con qué laboratorios.",
+
+  "portada": {
+    "pildora": "SESIÓN 7 · 4 H · MÓDULO 6",
+    "titulo": "Fase y tema de la sesión",
+    "subtitulo": "Tres o cuatro ideas clave, separadas por comas",
+    "curso": "LEAN SIX SIGMA GREEN BELT",
+    "lineas": [
+      "Guía de estudio para estudiantes de Ingeniería Industrial",
+      "1 laboratorio interactivo con el caso de la línea de arneses"
+    ],
+    "sello": { "arriba": "CASO APLICADO", "abajo": "LABORATORIOS INTERACTIVOS", "simbolo": "σ" }
+  },
+
+  "modulos": [
+    { "id": "M6", "nombre": "Nombre del módulo, como en la guía", "fase": "analizar" }
+  ],
+
+  "labs": [
+    {
+      "_ayuda": "Un laboratorio por entrada: «id» y «numero» deben coincidir con los que declara el archivo en labs/. Aquí se usa el LAB 01 solo como ejemplo verificable: sustitúyelo por el de tu sesión (docs/LABS.md §5).",
+      "id": "lab01",
+      "numero": "01",
+      "nombre": "Estadística descriptiva",
+      "archivo": "lab01-estadistica-descriptiva.js"
+    }
+  ],
+
+  "slides": [
+    { "tipo": "portada" },
+    { "incluir": "tema.json" },
+    { "tipo": "lab", "lab": "lab01" },
+    {
+      "id": "sN-cierre",
+      "etiqueta": "SESIÓN 7 · CIERRE",
+      "titulo": "Lo que te llevas de esta sesión",
+      "bloques": [
+        {
+          "tipo": "cierre",
+          "puntos": [
+            "Primera idea que debe quedar, en una frase con verbo.",
+            "Segunda idea, con la cifra o la regla que la resume.",
+            "Tercera idea: cómo se conecta con la siguiente sesión."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sN-referencias",
+      "etiqueta": "SESIÓN 7 · REFERENCIAS",
+      "titulo": "Para profundizar",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "items": [
+            "Autor o institución. «Título del documento». sitio.com (año)."
+          ]
+        }
+      ]
+    }
+  ]
+}

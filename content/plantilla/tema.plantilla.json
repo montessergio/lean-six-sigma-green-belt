@@ -1,0 +1,67 @@
+{
+  "_ayuda": "MOLDE DE TEMA (un módulo de la guía). Cópialo a content/sesiones/<id>/<nombre>.json (por ejemplo m6.json), cambia «mN» por el id del módulo y añade { \"incluir\": \"m6.json\" } a «slides» de la sesión. Cada diapositiva incluida recibe su tema automáticamente. Para más tipos de diapositiva copia de diapositiva.plantilla.json. Regla de tamaño: ≤ 6 bloques y ≈ 110 palabras visibles por diapositiva; si no cabe, divídela en «-a» y «-b».",
+
+  "id": "mN",
+  "titulo": "MN · Nombre del módulo",
+
+  "slides": [
+    {
+      "id": "mN-objetivos",
+      "etiqueta": "MN · OBJETIVOS",
+      "titulo": "Qué podrás hacer al terminar este módulo",
+      "subtitulo": "Una frase que conecte con el módulo anterior o con el caso de los arneses.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            { "etiqueta": "CONCEPTO", "titulo": "Primer resultado de aprendizaje", "items": ["Verbo observable 1", "Verbo observable 2"] },
+            { "etiqueta": "HERRAMIENTA", "titulo": "Segundo resultado", "items": ["Verbo observable 3"] },
+            { "etiqueta": "CASO", "titulo": "Tercer resultado", "items": ["Aplicarlo a la línea de arneses"] }
+          ]
+        },
+        { "tipo": "nota", "texto": "Duración estimada del módulo y laboratorio que se usará." }
+      ]
+    },
+    {
+      "id": "mN-concepto",
+      "etiqueta": "MN · CONCEPTO",
+      "titulo": "Una idea por diapositiva",
+      "subtitulo": "El porqué antes del procedimiento.",
+      "bloques": [
+        { "tipo": "texto", "texto": "Explica la idea con frases cortas y deja la **negrita** para el término clave." },
+        {
+          "tipo": "formula",
+          "etiqueta": "NOMBRE DE LA FÓRMULA",
+          "tex": "x=\\frac{a}{b}",
+          "texto": "x = a ÷ b",
+          "nota": "a = …, b = … (el texto de respaldo se muestra si no hay conexión)"
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab01",
+          "texto": "Abrir el laboratorio con este ejemplo →",
+          "valores": { "datos": [12, 15, 11, 14, 13, 19], "unidad": "s", "tipo": "muestra", "clases": 4 }
+        }
+      ]
+    },
+    {
+      "id": "mN-errores",
+      "etiqueta": "MN · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "ordenada": true,
+          "items": [
+            "Primer error, redactado como la acción equivocada.",
+            "Segundo error.",
+            "Tercer error.",
+            "Cuarto error.",
+            "Quinto error."
+          ]
+        }
+      ]
+    }
+  ]
+}

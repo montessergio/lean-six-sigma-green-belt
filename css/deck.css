@@ -279,8 +279,9 @@ ol.lista li::marker { color: var(--txt-2); font-family: var(--f-mono); }
 .lab__cargando { padding: 2.5rem 2rem; font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--txt-3); }
 
 /* ---------- Bloque: gráfica de Plotly dentro de una diapositiva de teoría ---------- */
-.figura--grafica { display: block; }
-.grafica--bloque { background: var(--bg-card); border: 1px solid var(--linea); border-radius: 8px; padding: 0.8rem 0.6rem 0.4rem; }
+/* La gráfica ocupa todo el ancho: sin «place-items: normal» heredaba el centrado de .figura y se encogía al ancho de su título. */
+.figura--grafica { display: block; place-items: normal; }
+.grafica--bloque { width: 100%; background: var(--bg-card); border: 1px solid var(--linea); border-radius: 8px; padding: 0.8rem 0.6rem 0.4rem; }
 .figura--grafica .figura__pie { margin-top: 0.5rem; }
 
 /* ---------- Pantallas bajas (portátiles; alto útil de 650 a 820 px): espaciado vertical más compacto ---------- */

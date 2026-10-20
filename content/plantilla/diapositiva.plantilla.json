@@ -1,0 +1,212 @@
+{
+  "_ayuda": "CATÁLOGO DE DIAPOSITIVAS TIPO. Cada elemento de «slides» es una diapositiva completa y válida: cópiala dentro de «slides» de un tema (tema.plantilla.json) y cambia los textos y el id (único dentro de la sesión). Tiene la misma forma que un archivo de tema, así que se comprueba igual: node tools/validar-contenido.mjs --plantillas. Los campos de cada bloque están en docs/CONTENIDO.md §4.",
+
+  "id": "catalogo",
+  "titulo": "Catálogo de diapositivas tipo",
+
+  "slides": [
+    {
+      "id": "cat-texto-nota",
+      "etiqueta": "MN · CONCEPTO",
+      "titulo": "Texto con una nota destacada",
+      "subtitulo": "Subtítulo opcional en gris claro.",
+      "bloques": [
+        { "tipo": "texto", "texto": "Párrafo breve. Usa **negrita** para el término clave y *cursiva* para énfasis suave. Fórmulas simples en línea: x^{2}, x_{i}, σ, ≤, ×." },
+        { "tipo": "lista", "items": ["Primer punto, una idea completa.", "Segundo punto.", "Tercer punto."] },
+        { "tipo": "nota", "texto": "Advertencia o dato clave que no debe pasar desapercibido (borde ámbar)." }
+      ]
+    },
+    {
+      "id": "cat-tarjetas",
+      "etiqueta": "MN · COMPARACIÓN",
+      "titulo": "Tarjetas en rejilla",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            { "etiqueta": "OPCIÓN A", "titulo": "Primera tarjeta", "texto": "Descripción breve de la opción." },
+            { "etiqueta": "OPCIÓN B", "titulo": "Tarjeta destacada", "texto": "Usa un estilo para enfatizar.", "estilo": "acento" },
+            { "etiqueta": "OPCIÓN C", "titulo": "Tercera tarjeta", "items": ["Con viñetas", "en lugar de párrafo"] }
+          ]
+        },
+        { "tipo": "tarjeta", "etiqueta": "PREGUNTA PARA DISCUTIR", "texto": "Tarjeta suelta, útil para citas, definiciones o actividades.", "estilo": "sutil" }
+      ]
+    },
+    {
+      "id": "cat-cifras",
+      "etiqueta": "MN · EL CASO DE LOS ARNESES",
+      "titulo": "Cifras grandes y botón al laboratorio",
+      "subtitulo": "Toda cifra sale de la guía, de las plantillas Excel o del caso.",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            { "valor": "300", "etiqueta": "DPMO ANTES", "nota": "semana de referencia", "color": "coral" },
+            { "valor": "162", "etiqueta": "DPMO DESPUÉS", "nota": "8 semanas tras la mejora", "color": "teal" },
+            { "valor": "46 %", "etiqueta": "REDUCCIÓN", "nota": "(300 − 162) ÷ 300", "color": "azul" }
+          ]
+        },
+        { "tipo": "texto", "texto": "Una frase que interprete las cifras y las ligue con el proyecto." },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab01",
+          "texto": "Abrir el laboratorio con estos datos →",
+          "valores": { "datos": [12, 15, 11, 14, 13, 19], "unidad": "s", "tipo": "muestra", "clases": 4 }
+        }
+      ]
+    },
+    {
+      "id": "cat-tabla",
+      "etiqueta": "MN · TABLA",
+      "titulo": "Tabla con una fila resaltada",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Herramienta", "Para qué sirve", { "t": "Módulo", "num": true }],
+          "filas": [
+            ["Diagrama de Pareto", "Priorizar problemas por frecuencia", "6"],
+            ["Histograma", "Ver la forma de la distribución", "5"],
+            ["Carta de control", "Vigilar la estabilidad del proceso", "10"]
+          ],
+          "resaltar": [1],
+          "pie": "Máximo recomendado: 7 filas."
+        }
+      ]
+    },
+    {
+      "id": "cat-pasos",
+      "etiqueta": "MN · PROCEDIMIENTO",
+      "titulo": "Pasos numerados",
+      "bloques": [
+        {
+          "tipo": "pasos",
+          "columnas": 4,
+          "pasos": [
+            { "texto": "Definir", "sub": "qué se va a medir" },
+            { "texto": "Recolectar", "sub": "con un plan" },
+            { "texto": "Calcular", "sub": "en el laboratorio" },
+            { "texto": "Interpretar", "sub": "contra el umbral" }
+          ]
+        },
+        { "tipo": "nota", "texto": "Los pasos van de 1 a 8 como máximo." }
+      ]
+    },
+    {
+      "id": "cat-formula",
+      "etiqueta": "MN · FÓRMULA",
+      "titulo": "Fórmula destacada con respaldo",
+      "bloques": [
+        {
+          "tipo": "formula",
+          "etiqueta": "DPMO",
+          "tex": "\\text{DPMO}=\\frac{D}{U\\times O}\\times 10^{6}",
+          "texto": "DPMO = D ÷ (U × O) × 1,000,000",
+          "nota": "D = defectos, U = unidades, O = oportunidades por unidad"
+        },
+        { "tipo": "texto", "texto": "«tex» se dibuja con KaTeX; «texto» es obligatorio porque se muestra cuando no hay conexión y debe leerse bien solo.", "tenue": true }
+      ]
+    },
+    {
+      "id": "cat-columnas-figura",
+      "etiqueta": "MN · FIGURA",
+      "titulo": "Texto a un lado y figura al otro",
+      "bloques": [
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1.2],
+          "izq": [
+            { "tipo": "lista", "items": ["μ ± 1σ contiene ≈ 68 %", "μ ± 2σ contiene ≈ 95 %", "μ ± 3σ contiene ≈ 99.7 %"] }
+          ],
+          "der": [
+            { "tipo": "figura", "figura": "campana", "params": { "mu": 50, "sigma": 4, "bandas": [1, 2, 3] }, "pie": "Figuras disponibles: docs/CONTENIDO.md §5." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat-grafica",
+      "etiqueta": "MN · GRÁFICA",
+      "titulo": "Gráfica generada desde datos",
+      "bloques": [
+        {
+          "tipo": "grafica",
+          "generador": "barras",
+          "params": { "categorias": ["Corte", "Engarzado", "Ensamble", "Inspección"], "valores": [4, 9, 6, 2], "unidad": "defectos", "formato": "num" },
+          "titulo": "Defectos por estación (datos de ejemplo)",
+          "alto": 300
+        }
+      ]
+    },
+    {
+      "id": "cat-leyenda",
+      "etiqueta": "MN · LEYENDA",
+      "titulo": "Código de color y semáforos",
+      "bloques": [
+        {
+          "tipo": "leyenda",
+          "items": [
+            { "muestra": "cumple", "texto": "**Cumple**: el resultado está dentro del umbral." },
+            { "muestra": "atencion", "texto": "**Atención**: cerca del límite; revisa el supuesto." },
+            { "muestra": "critico", "texto": "**Crítico**: fuera del umbral." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat-ejercicios",
+      "etiqueta": "MN · EJERCICIOS",
+      "titulo": "Ejercicios vinculados a un laboratorio",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1",
+              "titulo": "Con laboratorio",
+              "texto": "Siete días de piezas rechazadas: 4, 6, 4, 9, 5, 4, 7. Calcula la media y la mediana.",
+              "verificacion": "Cifra publicada en la guía para que contrastes tu resultado.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab01",
+              "numeroLab": "01",
+              "valores": { "datos": [4, 6, 4, 9, 5, 4, 7], "unidad": "piezas", "tipo": "muestra", "clases": 5 }
+            },
+            {
+              "numero": "2",
+              "titulo": "Sin laboratorio",
+              "texto": "Ejercicio que se resuelve a mano o en Excel; muestra la etiqueta «Con calculadora o Excel».",
+              "verificacion": "Clave en el libro.",
+              "etiquetaVerificacion": "Clave en el libro"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat-cierre",
+      "etiqueta": "SESIÓN N · CIERRE",
+      "titulo": "Lo que te llevas de esta sesión",
+      "bloques": [
+        { "tipo": "cierre", "puntos": ["Primera idea que debe quedar.", "Segunda idea, con su cifra o regla.", "Tercera idea: puente a la siguiente sesión."] }
+      ]
+    },
+    {
+      "id": "cat-referencias",
+      "etiqueta": "SESIÓN N · REFERENCIAS",
+      "titulo": "Para profundizar",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Módulo N",
+          "items": ["Autor o institución. «Título del documento». sitio.com (año).", "Segunda referencia."]
+        },
+        {
+          "tipo": "enlaces",
+          "items": [{ "texto": "Código en GitHub", "href": "https://github.com/montessergio/lean-six-sigma-green-belt", "nota": "enlace con nota opcional" }]
+        }
+      ]
+    }
+  ]
+}

@@ -5,6 +5,9 @@
  *   node tools/validar-contenido.mjs              # estructura + laboratorios (presets y valores de ejercicios)
  *   node tools/validar-contenido.mjs --sin-labs   # solo estructura (útil si el laboratorio aún no existe)
  *   node tools/validar-contenido.mjs s1 s2        # solo esas sesiones
+ *   node tools/validar-contenido.mjs --plantillas # solo los moldes de content/plantilla/
+ *
+ * Sin argumentos revisa todas las sesiones del manifiesto y además los moldes de content/plantilla/.
  *
  * Comprueba: manifiesto, fichas de sesión, temas incluidos, tipos y campos de cada bloque, ids únicos,
  * enlaces diapositiva → laboratorio, y (con laboratorios) que cada preset y cada `valores` de un ejercicio
@@ -19,6 +22,7 @@ import { FASES } from '../js/core/config.js';
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const SIN_LABS = args.includes('--sin-labs');
+const SOLO_PLANTILLAS = args.includes('--plantillas');
 const SOLO = args.filter((a) => !a.startsWith('--'));
 
 const errores = [];
@@ -197,11 +201,14 @@ function validarBloque(b, donde, sesion) {
 const probarValoresPendiente = (labId, valores, sesion, donde) => trabajoLabs.push(() => probarValores(labId, valores, sesion, donde));
 
 /* ---------- Sesiones ---------- */
-function validarSesion(id) {
-  const rutaS = `content/sesiones/${id}/sesion.json`;
-  const s = leer(rutaS);
+/**
+ * Valida una sesión. Por omisión lee content/sesiones/<id>/; para los moldes se pasa la sesión ya leída,
+ * una función para leer sus temas y el prefijo con el que se nombran los archivos en los mensajes.
+ */
+function validarSesion(id, { sesion = null, nombre = `${id}/sesion.json`, prefijo = id, leerTema = (n) => leer(`content/sesiones/${id}/${n}`) } = {}) {
+  const s = sesion ?? leer(`content/sesiones/${id}/sesion.json`);
   if (!s) return null;
-  const d = `${id}/sesion.json`;
+  const d = nombre;
   if (s.id !== id) error(d, `«id» es «${s.id}» y la carpeta se llama «${id}»`);
   if (!['disponible', 'planeada'].includes(s.estado)) error(d, `«estado» debe ser disponible o planeada (es «${s.estado}»)`);
   if (!FASES[s.fase]) error(d, `«fase» desconocida «${s.fase}» (válidas: ${Object.keys(FASES).join(', ')})`);
@@ -252,12 +259,12 @@ function validarSesion(id) {
   };
 
   s.slides.forEach((sl, i) => {
-    const donde = `${id}/sesion.json · diapositiva ${i + 1}`;
+    const donde = `${d} · diapositiva ${i + 1}`;
     if (sl && typeof sl.incluir === 'string') {
-      const t = leer(`content/sesiones/${id}/${sl.incluir}`);
+      const t = leerTema(sl.incluir);
       if (!t) return;
-      if (!Array.isArray(t.slides) || !t.slides.length) return error(`${id}/${sl.incluir}`, 'falta la lista «slides»');
-      t.slides.forEach((x, j) => diapositiva(x, `${id}/${sl.incluir} · diapositiva ${j + 1}`));
+      if (!Array.isArray(t.slides) || !t.slides.length) return error(`${prefijo}/${sl.incluir}`, 'falta la lista «slides»');
+      t.slides.forEach((x, j) => diapositiva(x, `${prefijo}/${sl.incluir} · diapositiva ${j + 1}`));
     } else if (sl) diapositiva(sl, donde);
     else error(donde, 'entrada vacía');
   });
@@ -272,7 +279,7 @@ function validarSesion(id) {
 const manifest = leer('content/manifest.json');
 let totalSesiones = 0;
 let totalSlides = 0;
-if (manifest) {
+if (manifest && !SOLO_PLANTILLAS) {
   if (!manifest.titulo) error('manifest.json', 'falta «titulo»');
   const ids = manifest.sesiones ?? [];
   if (!ids.length) error('manifest.json', 'la lista «sesiones» está vacía');
@@ -281,6 +288,23 @@ if (manifest) {
     if (SOLO.length && !SOLO.includes(id)) continue;
     const s = validarSesion(id);
     if (s) { totalSesiones += 1; totalSlides += s._n ?? 0; }
+  }
+}
+
+/* Moldes de content/plantilla/: se validan como sesiones para que no se desactualicen respecto del motor. */
+if (SOLO_PLANTILLAS || !SOLO.length) {
+  const molde = leer('content/plantilla/sesion.plantilla.json');
+  const temaDeMolde = (n) => leer(`content/plantilla/${n.replace(/\.json$/, '.plantilla.json')}`);
+  if (molde) {
+    const casos = [
+      ['plantilla/sesion.plantilla.json', molde],
+      // El catálogo tiene la forma de un tema: se prueba como si la sesión del molde lo incluyera.
+      ['plantilla/diapositiva.plantilla.json', { ...molde, slides: [{ tipo: 'portada' }, { incluir: 'diapositiva.json' }, { tipo: 'lab', lab: 'lab01' }] }],
+    ];
+    for (const [nombre, sesion] of casos) {
+      const s = validarSesion(molde.id, { sesion, nombre, prefijo: 'plantilla', leerTema: temaDeMolde });
+      if (s) { totalSesiones += 1; totalSlides += s._n ?? 0; }
+    }
   }
 }
 for (const tarea of trabajoLabs) await tarea();
