@@ -71,7 +71,8 @@ node tools/servir.mjs                 # http://localhost:8000
    cuatro registros `A` hacia `185.199.108.153`, `185.199.109.153`, `185.199.110.153` y `185.199.111.153`.
 3. Cuando GitHub verifique el dominio, activa **Enforce HTTPS**.
 4. Actualiza las **dos URL absolutas** de las etiquetas Open Graph en `index.html` (`og:url` y `og:image`) y el enlace del README.
-   Las rutas del sitio no cambian: son relativas.
+   Las rutas del sitio no cambian: son relativas. La imagen que se ve al compartir el enlace es `assets/vista-previa.png`
+   (1200×630); si cambias el título, se regenera con `node tools/generar-vista-previa.mjs` (instrucciones al inicio de ese archivo).
 
 ## 7. Si algo falla
 

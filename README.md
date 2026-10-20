@@ -61,9 +61,9 @@ labs/                                  un archivo .js por laboratorio (+ _planti
 js/core/                               motor: visor, bloques, figuras SVG, interfaz de laboratorios, carga
 js/lib/                                estadística y generadores de gráficas (módulos puros, sin DOM)
 css/                                   tokens de diseño, base, visor, laboratorios, índice
-assets/                                fuentes locales y favicon
+assets/                                fuentes locales, favicon y vista-previa.png (imagen al compartir el enlace)
 tests/                                 pruebas de Node (estadística, laboratorios, recursos) y datos de referencia
-tools/                                 verificador de contenido, servidor local, exportador de CSV, vendorizador y generador de referencias
+tools/                                 verificador de contenido, servidor local, exportador de CSV, vendorizador, imagen de vista previa y generador de referencias
 docs/                                  CONTENIDO.md · LABS.md · ARQUITECTURA.md · PUBLICAR.md
 recursos/                              datos de práctica descargables (CSV generados desde el caso)
 ```
