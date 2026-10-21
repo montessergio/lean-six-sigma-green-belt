@@ -67,7 +67,7 @@
       "titulo": "El siguiente nivel de detalle",
       "subtitulo": "Mientras el SIPOC da una vista de pájaro, el diagrama de flujo detalla cada paso con simbología estándar.",
       "bloques": [
-        { "tipo": "figura", "figura": "simbolos-flujo", "pie": "Óvalos para inicio y fin, rectángulos para actividades, rombos para decisiones y flechas para la secuencia." },
+        { "tipo": "figura", "figura": "simbolos-flujo", "anchoMax": "860px", "pie": "Óvalos para inicio y fin, rectángulos para actividades, rombos para decisiones y flechas para la secuencia." },
         {
           "tipo": "pasos",
           "titulo": "La columna «Proceso» del SIPOC de arneses, de izquierda a derecha",
