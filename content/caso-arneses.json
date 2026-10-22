@@ -44,7 +44,109 @@
 
   "pelado": { "_fuente": "Guía M10 §4 (plan de control).", "nominal": 7, "tolerancia": 0.5, "unidad": "mm" },
 
-  "pce": { "_fuente": "Guía M4: 15 min de valor agregado sobre 55 min de lead time.", "valorAgregadoMin": 15, "leadTimeMin": 55, "pce": 0.273 },
+  "pce": {
+    "_fuente": "Guía M4 §1–2: 15 min de valor agregado sobre 55 min de lead time (PCE 27.3 %). La plantilla Excel «VA-SVA-Desperdicio» y «PCE» usa otras 12 actividades con el mismo resultado. La guía agrupa «esperas y transporte» en un solo renglón, por eso ese desperdicio no trae tipo asignado.",
+    "valorAgregadoMin": 15, "leadTimeMin": 55, "pce": 0.273,
+    "guia": {
+      "actividades": [
+        { "actividad": "Corte y pelado", "minutos": 3, "clase": "VA" },
+        { "actividad": "Engarzado de terminales", "minutos": 4, "clase": "VA" },
+        { "actividad": "Ensamble de conectores", "minutos": 3, "clase": "VA" },
+        { "actividad": "Ruteo y amarre", "minutos": 5, "clase": "VA" },
+        { "actividad": "Inspección final", "minutos": 2, "clase": "SVA" },
+        { "actividad": "Esperas y transporte (staging, buffers, traslado a almacén)", "minutos": 38, "clase": "Desperdicio" }
+      ]
+    },
+    "excel": {
+      "meta": 40, "wip": 40, "tasaSalida": 48,
+      "actividades": [
+        { "actividad": "Cortar cable", "minutos": 3, "clase": "VA" },
+        { "actividad": "Pelar y crimpar", "minutos": 4, "clase": "VA" },
+        { "actividad": "Esperar lote en cola", "minutos": 10, "clase": "Desperdicio", "tipo": "Esperas" },
+        { "actividad": "Transportar a ensamble", "minutos": 4, "clase": "Desperdicio", "tipo": "Transporte" },
+        { "actividad": "Armar y rutear en tablero", "minutos": 5, "clase": "VA" },
+        { "actividad": "Apretar conectores", "minutos": 3, "clase": "VA" },
+        { "actividad": "Verificar torque (inspección)", "minutos": 5, "clase": "SVA" },
+        { "actividad": "Retrabajo por torque bajo", "minutos": 6, "clase": "Desperdicio", "tipo": "Defectos" },
+        { "actividad": "Registro y etiquetado", "minutos": 4, "clase": "SVA" },
+        { "actividad": "Buscar herramienta", "minutos": 3, "clase": "Desperdicio", "tipo": "Movimiento" },
+        { "actividad": "Prueba eléctrica", "minutos": 3, "clase": "SVA" },
+        { "actividad": "Esperar liberación", "minutos": 5, "clase": "Desperdicio", "tipo": "Esperas" }
+      ]
+    }
+  },
+
+  "muestreo": {
+    "_fuente": "Guía M4 §4 (torque: σ ≈ 0.034 N·m y margen de 0.02 N·m, 3 turnos; falla de continuidad de 5 % con margen de 2 %) · plantilla Excel «Tamano de Muestra». Porcentajes en puntos porcentuales.",
+    "guia": {
+      "torque": { "confianza": 95, "sigma": 0.034, "margen": 0.02, "turnos": 3 },
+      "falla": { "confianza": 95, "p": 5, "margenP": 2 }
+    },
+    "excel": { "confianza": 95, "sigma": 3, "margen": 1, "p": 50, "margenP": 5, "potencia": 80, "delta": 2, "sensibilidad": [0.5, 1, 1.5, 2, 3, 4] }
+  },
+
+  "gaugeRR": {
+    "_fuente": "Guía M5 §4 (fuerza de asentamiento del conector, N; diseño cruzado 3 operadores × 10 piezas × 2 repeticiones) · plantilla Excel «Gauge RR» (torque, N·m; 3 × 5 × 2). Cada renglón es una pieza; cada operador trae sus repeticiones en orden.",
+    "guia": {
+      "unidad": "N", "repeticiones": 2,
+      "piezas": [
+        { "A": [48.2, 48.3], "B": [48.0, 48.1], "C": [48.0, 48.2] },
+        { "A": [51.6, 51.6], "B": [51.8, 51.7], "C": [51.3, 50.9] },
+        { "A": [49.7, 49.8], "B": [49.8, 49.9], "C": [49.2, 49.6] },
+        { "A": [52.8, 52.8], "B": [53.5, 53.2], "C": [52.9, 53.0] },
+        { "A": [47.5, 47.6], "B": [48.0, 48.3], "C": [47.8, 47.3] },
+        { "A": [50.0, 50.5], "B": [50.6, 50.4], "C": [49.6, 50.3] },
+        { "A": [52.4, 52.0], "B": [52.0, 52.7], "C": [52.4, 52.1] },
+        { "A": [49.5, 49.0], "B": [49.3, 49.7], "C": [48.9, 49.1] },
+        { "A": [53.9, 53.4], "B": [54.3, 54.2], "C": [53.6, 54.2] },
+        { "A": [48.7, 48.5], "B": [49.3, 49.2], "C": [49.3, 48.4] }
+      ]
+    },
+    "excel": {
+      "unidad": "N·m", "repeticiones": 2,
+      "piezas": [
+        { "A": [10.02, 9.97], "B": [10.08, 10.01], "C": [9.98, 9.9] },
+        { "A": [10.64, 10.61], "B": [10.7, 10.66], "C": [10.61, 10.57] },
+        { "A": [9.68, 9.73], "B": [9.72, 9.79], "C": [9.62, 9.7] },
+        { "A": [10.33, 10.29], "B": [10.39, 10.34], "C": [10.3, 10.23] },
+        { "A": [10.99, 11.02], "B": [11.04, 11.08], "C": [10.93, 10.98] }
+      ]
+    }
+  },
+
+  "capacidad": {
+    "_fuente": "Guía M5 §1 y §5 (torque: x̄ = 1.355 N·m, s ≈ 0.034 N·m, especificación 1.2 a 1.5 N·m) · plantilla Excel «Cp-Cpk» (50 fuerzas de engarzado en N, LSL 173 N, R̄ = 4.4 de una carta X̄-R con subgrupos de 5).",
+    "guia": { "unidad": "N·m", "media": 1.355, "sigma": 0.034, "lsl": 1.2, "usl": 1.5 },
+    "excel": {
+      "unidad": "N", "lsl": 173, "rBarra": 4.4, "nSubgrupo": 5,
+      "valores": [188.2, 179.5, 183.3, 181.7, 180.1, 180.9, 181, 182.2, 183.4, 185.1, 183, 185.3, 183.5, 182.6, 181.7, 179.7, 178.1, 182.1, 181.8, 183.1, 183.2, 179, 180.4, 179.3, 184.9, 182, 182.6, 179.9, 178.9, 180.7, 182, 183.5, 178.3, 183.1, 180, 180.9, 181.4, 181.1, 183.4, 184.5, 183.1, 180.8, 183.3, 183.2, 184.5, 182.9, 178, 180.3, 181.2, 184.7]
+    }
+  },
+
+  "hojaVerificacion": {
+    "_fuente": "Guía M4 §7 (una semana de producción: 3 defectos en 2,000 arneses con 5 oportunidades cada uno = 300 DPMO) · plantilla Excel «Hoja de Verificacion» (conteos por turno).",
+    "estratos": ["Turno 1", "Turno 2", "Turno 3"],
+    "guia": {
+      "unidades": 2000, "oportunidades": 5,
+      "categorias": [
+        { "categoria": "Continuidad eléctrica", "conteos": [1, 0, 0] },
+        { "categoria": "Torque fuera de especificación", "conteos": [0, 1, 0] },
+        { "categoria": "Conector mal asentado", "conteos": [0, 0, 0] },
+        { "categoria": "Etiquetado", "conteos": [0, 0, 1] },
+        { "categoria": "Ruteo", "conteos": [0, 0, 0] }
+      ]
+    },
+    "excel": {
+      "categorias": [
+        { "categoria": "Terminal mal crimpada", "conteos": [14, 11, 9] },
+        { "categoria": "Torque fuera de especificación", "conteos": [6, 8, 21] },
+        { "categoria": "Conector sin seguro", "conteos": [5, 4, 6] },
+        { "categoria": "Cable dañado", "conteos": [3, 2, 4] },
+        { "categoria": "Etiqueta incorrecta", "conteos": [2, 3, 1] },
+        { "categoria": "Otro", "conteos": [1, 2, 1] }
+      ]
+    }
+  },
 
   "copq": {
     "_fuente": "Plantilla Excel «COPQ (PAF)»: costos mensuales en pesos mexicanos (MXN).",
