@@ -314,6 +314,19 @@ test('Gauge R&R: %Tolerancia = R&R ÷ tolerancia (las constantes K ya incluyen e
   cerca(r2.pctTolerancia, 8.595, 0.001);
 });
 
+test('Gauge R&R: límite de los rangos = D4 · R̄ (D4 = 3.267 con 2 repeticiones y 2.574 con 3)', () => {
+  const g = M.gaugeRR({ mediciones: aMediciones(caso().gaugeRR.guia) });
+  cerca(g.limiteRangos, 3.267 * 0.303333333, 1e-6); // 0.99099
+  cerca(g.limiteRangos, 0.99099, 1e-5);
+  assert.ok(g.rangos.flat().every((x) => x <= g.limiteRangos)); // el mayor rango (0.9) queda dentro
+  const e = M.gaugeRR({ mediciones: aMediciones(caso().gaugeRR.excel) });
+  cerca(e.limiteRangos, 3.267 * 0.0526666667, 1e-6); // 0.17206
+  // con 3 repeticiones el factor baja a 2.574 (misma data sintética de la prueba de abajo: R̄ = 0.20)
+  const t3 = M.gaugeRR({ mediciones: [[[10.0, 10.1, 9.9], [12.0, 12.2, 12.1], [14.1, 14.0, 14.2]], [[10.1, 10.2, 10.0], [12.1, 12.3, 12.2], [14.2, 14.1, 14.3]]] });
+  cerca(t3.limiteRangos, 2.574 * 0.2, 1e-9);
+  assert.deepEqual(Object.keys(M.D4), ['2', '3']);
+});
+
 test('Gauge R&R con 2 operadores (SciPy/NumPy aparte): R̄ 0.24, EV 1.0944, AV 1.1047, %GRR 15.54, ndc 8', () => {
   const r = M.gaugeRR({ mediciones: aMediciones(caso().gaugeRR.guia, ['A', 'B']) });
   assert.equal(r.operadores, 2);

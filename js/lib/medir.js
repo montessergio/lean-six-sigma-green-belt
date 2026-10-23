@@ -150,6 +150,9 @@ export const K1 = Object.freeze({ 2: 4.56, 3: 3.05 });
 export const K2 = Object.freeze({ 2: 3.65, 3: 2.7 });
 export const K3 = Object.freeze({ 2: 3.65, 3: 2.7, 4: 2.3, 5: 2.08, 6: 1.93, 7: 1.82, 8: 1.74, 9: 1.67, 10: 1.62 });
 
+/** Constante D4 de la carta R (subgrupos de 2 o 3 lecturas): límite superior de los rangos = D4 · R̄. */
+export const D4 = Object.freeze({ 2: 3.267, 3: 2.574 });
+
 /** Criterio de aceptación del %GRR (guía M5 §4; plantilla «Gauge RR»). */
 export function dictamenGRR(pctGrr) {
   if (!Number.isFinite(pctGrr)) return 'sin-datos';
@@ -199,7 +202,7 @@ export function gaugeRR({ mediciones, tolerancia = NaN }) {
   const pctGrr = pct(rr);
   return {
     valido: true, operadores: o, piezas: p, repeticiones: r, k1, k2, k3,
-    rangos, rBarraPorOperador, rBarra, mediaOperador, mediaPieza, xDiff, rp,
+    rangos, rBarraPorOperador, rBarra, limiteRangos: D4[r] * rBarra, mediaOperador, mediaPieza, xDiff, rp,
     ev, av, rr, pv, tv,
     pctEv: pct(ev), pctAv: pct(av), pctGrr, pctPv: pct(pv),
     contribEv: contribucion(ev), contribAv: contribucion(av), contribGrr: contribucion(rr), contribPv: contribucion(pv),
