@@ -200,6 +200,43 @@ test('Muestra: la sensibilidad de la plantilla (E = 0.5, 1, 1.5, 2, 3, 4) da 139
   assert.deepEqual(n, [139, 35, 16, 9, 4, 3]);
 });
 
+test('Muestra para comparar dos medias con σ y δ del torque de la guía (0.034 y 0.02) → 45.37 → 46 por grupo, 92 en total', () => {
+  // SciPy aparte: 2·(1.959964 + 0.841621)²·0.034² ÷ 0.02² = 45.3665. No aparece en la guía (ella usa la fórmula de la media).
+  const r = M.muestraDosMedias({ confianza: 0.95, potencia: 0.8, sigma: 0.034, delta: 0.02 });
+  cerca(r.nGrupoExacto, 45.36652486, 1e-6);
+  assert.equal(r.nGrupo, 46);
+  assert.equal(r.nTotal, 92);
+});
+
+test('Muestra para una media con σ de una muestra piloto (t de Student, referencia didáctica; SciPy aparte)', () => {
+  // Primer n con n ≥ (t(1 − α/2, n − 1)·σ ÷ E)²; siempre por encima del n con Z.
+  const casos = [
+    // [confianza, σ, E, n con Z, n con t, t, (t·σ/E)²]
+    [0.95, 0.034, 0.02, 12, 14, 2.160369, 13.488187],
+    [0.95, 3, 1, 35, 38, 2.026192, 36.949103],
+    [0.95, 3, 0.5, 139, 141, 1.977054, 140.714691],
+    [0.95, 3, 4, 3, 5, 2.776445, 4.336114],
+    [0.95, 3, 3, 4, 7, 2.446912, 5.987378],
+    [0.99, 3, 1, 60, 64, 2.656145, 63.495959],
+    [0.9, 3, 1, 25, 27, 1.705618, 26.182192],
+  ];
+  for (const [confianza, sigma, margen, nZ, nT, t, requerido] of casos) {
+    const r = M.muestraMediaT({ confianza, sigma, margen });
+    assert.equal(r.valido, true);
+    assert.equal(r.nConZ, nZ, `n con Z (${confianza}, ${sigma}, ${margen})`);
+    assert.equal(r.n, nT, `n con t (${confianza}, ${sigma}, ${margen})`);
+    cerca(r.t, t, 1e-5, 't');
+    cerca(r.requerido, requerido, 1e-4, '(tσ/E)²');
+    assert.equal(M.muestraMedia({ confianza, sigma, margen }).n, nZ);
+  }
+  assert.equal(M.muestraMediaT({ confianza: 0.95, sigma: 100, margen: 1 }).n, 38418); // n grande: t ≈ Z, diferencia de 3
+  // sin sentido o demasiado grande para que importe
+  assert.equal(M.muestraMediaT({ confianza: 0.95, sigma: 100, margen: 0.1 }).valido, false); // n con Z ≈ 3.8 millones
+  assert.equal(M.muestraMediaT({ confianza: 1, sigma: 3, margen: 1 }).valido, false);
+  assert.equal(M.muestraMediaT({ confianza: 0.95, sigma: 0, margen: 1 }).valido, false);
+  assert.equal(M.muestraMediaT({ confianza: 0.95, sigma: 3, margen: NaN }).valido, false);
+});
+
 test('Muestra: datos inválidos no producen números', () => {
   assert.equal(M.muestraMedia({ confianza: 0.95, sigma: 0, margen: 1 }).valido, false);
   assert.equal(M.muestraMedia({ confianza: 0.95, sigma: 3, margen: 0 }).valido, false);

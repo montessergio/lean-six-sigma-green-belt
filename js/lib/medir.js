@@ -4,7 +4,7 @@
  * lo usan los laboratorios 10 a 13 y se prueba en Node (tests/medir.test.mjs). Las fórmulas siguen las plantillas
  * de Excel «VA-SVA-Desperdicio», «PCE», «Tamano de Muestra», «Gauge RR» y «Cp-Cpk», y los ejemplos de la guía.
  */
-import { media, normalCdf, normalPpf, desviacion } from './stats.js';
+import { media, normalCdf, normalPpf, desviacion, tPpf } from './stats.js';
 
 /* ------------------------------------------------------------------ */
 /* PCE: eficiencia del ciclo del proceso (guía M4 §1–2)                  */
@@ -97,6 +97,25 @@ export function muestraMedia({ confianza, sigma, margen, poblacion = NaN }) {
   const nInfinita = ((z * sigma) / margen) ** 2;
   const nAjustada = conPoblacion(nInfinita, poblacion);
   return { valido: true, z, nInfinita, nAjustada, n: subeEntero(nAjustada), corregida: poblacion > 0 };
+}
+
+/**
+ * Referencia didáctica para la sección A: n cuando σ no se conoce y se estima con una muestra piloto, de modo que
+ * el cuantil de la t de Student (n − 1 grados de libertad) sustituye a Z. Como t depende de n, se busca el primer n
+ * que cumple n ≥ (t·σ ÷ E)²; siempre queda por encima del n con Z. Sin población finita. Para n enorme t ≈ Z y no se calcula.
+ */
+export function muestraMediaT({ confianza, sigma, margen }) {
+  const z = zDosColas(confianza);
+  if (!Number.isFinite(z) || !(sigma > 0) || !(margen > 0)) return { valido: false };
+  const nZ = subeEntero(((z * sigma) / margen) ** 2);
+  if (nZ > 100000) return { valido: false, z };
+  const cola = 1 - (1 - confianza) / 2;
+  for (let n = Math.max(2, nZ); n < nZ + 50; n += 1) {
+    const t = tPpf(cola, n - 1);
+    const requerido = ((t * sigma) / margen) ** 2;
+    if (n >= requerido - 1e-9) return { valido: true, n, t, requerido, nConZ: nZ };
+  }
+  return { valido: false, z };
 }
 
 /** Estimar una proporción con margen de error E: n = Z²·p·(1 − p) ÷ E². */
