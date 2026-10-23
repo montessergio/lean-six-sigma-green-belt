@@ -101,6 +101,20 @@ test('PCE: casos límite (vacío, sin VA, filas incompletas, meta ya cumplida)',
   assert.equal(M.resumenPce([{ actividad: 'A', minutos: 6, clase: 'VA' }], { meta: 1.5 }).meta, null); // meta fuera de (0, 1]
 });
 
+test('actividadesValidas: conserva el orden, ignora filas vacías y cuenta las incompletas como descartadas', () => {
+  const { validas, descartadas } = M.actividadesValidas([
+    { actividad: ' Corte ', minutos: 3, clase: 'VA' },
+    { actividad: 'Sin clase', minutos: 4, clase: 'X' },
+    { actividad: '', minutos: NaN, clase: 'VA' }, // vacía
+    { actividad: 'Espera', minutos: 10, clase: 'Desperdicio', tipo: 'Esperas' },
+    { actividad: 'Negativa', minutos: -1, clase: 'SVA' },
+    null,
+  ]);
+  assert.deepEqual(validas.map((f) => [f.actividad, f.minutos, f.clase, f.tipo]), [['Corte', 3, 'VA', ''], ['Espera', 10, 'Desperdicio', 'Esperas']]);
+  assert.equal(descartadas, 2);
+  assert.deepEqual(M.actividadesValidas(undefined), { validas: [], descartadas: 0 });
+});
+
 test('Ley de Little (plantilla Excel «PCE»): 40 piezas en proceso a 48 por hora = 50 min', () => {
   cerca(M.leadTimeLittle(40, 48), 50, 1e-12);
   cerca(15 / M.leadTimeLittle(40, 48), 0.3, 1e-12); // PCE 30 % con el lead time de Little

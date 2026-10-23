@@ -15,31 +15,45 @@ export const CLASES = Object.freeze(['VA', 'SVA', 'Desperdicio']);
 export const TIPOS_DESPERDICIO = Object.freeze(['Defectos', 'Sobreproducción', 'Esperas', 'Talento no utilizado', 'Transporte', 'Inventario', 'Movimiento', 'Procesamiento extra']);
 
 /**
- * Resume una lista de actividades { actividad, minutos, clase, tipo }: tiempo por clase, lead time (suma de
- * todo), PCE = VA ÷ lead time y desperdicio por tipo. Las filas sin minutos válidos (≥ 0) o con una clase
- * desconocida no se cuentan (`descartadas`). `meta` es el PCE objetivo en fracción (0.40 = 40 %).
+ * Separa las filas utilizables de una lista de actividades { actividad, minutos, clase, tipo }: la clase debe ser
+ * VA, SVA o Desperdicio y los minutos un número ≥ 0. Una fila totalmente vacía se ignora sin contarla como error;
+ * cualquier otra fila incompleta suma a `descartadas`. Conserva el orden de captura.
  */
-export function resumenPce(actividades, { meta = NaN } = {}) {
-  const minutos = { VA: 0, SVA: 0, Desperdicio: 0 };
-  const conteo = { VA: 0, SVA: 0, Desperdicio: 0 };
-  const porTipo = new Map(TIPOS_DESPERDICIO.map((t) => [t, 0]));
-  let sinTipo = 0;
+export function actividadesValidas(actividades) {
+  const validas = [];
   let descartadas = 0;
-  let mayor = null;
   for (const a of actividades ?? []) {
     const nombre = String(a?.actividad ?? '').trim();
     const t = a?.minutos;
     if (!CLASES.includes(a?.clase) || !Number.isFinite(t) || t < 0) {
-      if (nombre || Number.isFinite(t)) descartadas += 1; // una fila totalmente vacía no cuenta como error
+      if (nombre || Number.isFinite(t)) descartadas += 1;
       continue;
     }
-    minutos[a.clase] += t;
+    validas.push({ actividad: nombre, minutos: t, clase: a.clase, tipo: String(a?.tipo ?? '') });
+  }
+  return { validas, descartadas };
+}
+
+/**
+ * Resume una lista de actividades { actividad, minutos, clase, tipo }: tiempo por clase, lead time (suma de
+ * todo), PCE = VA ÷ lead time y desperdicio por tipo. Las filas descartadas siguen `actividadesValidas`.
+ * `meta` es el PCE objetivo en fracción (0.40 = 40 %).
+ */
+export function resumenPce(actividades, { meta = NaN } = {}) {
+  const { validas, descartadas } = actividadesValidas(actividades);
+  const minutos = { VA: 0, SVA: 0, Desperdicio: 0 };
+  const conteo = { VA: 0, SVA: 0, Desperdicio: 0 };
+  const porTipo = new Map(TIPOS_DESPERDICIO.map((t) => [t, 0]));
+  let sinTipo = 0;
+  let mayor = null;
+  for (const a of validas) {
+    minutos[a.clase] += a.minutos;
     conteo[a.clase] += 1;
     if (a.clase === 'Desperdicio') {
-      if (porTipo.has(a.tipo)) porTipo.set(a.tipo, porTipo.get(a.tipo) + t);
-      else sinTipo += t;
+      if (porTipo.has(a.tipo)) porTipo.set(a.tipo, porTipo.get(a.tipo) + a.minutos);
+      else sinTipo += a.minutos;
     }
-    if (!mayor || t > mayor.minutos) mayor = { actividad: nombre || '(sin nombre)', minutos: t, clase: a.clase };
+    if (!mayor || a.minutos > mayor.minutos) mayor = { actividad: a.actividad || '(sin nombre)', minutos: a.minutos, clase: a.clase };
   }
   const leadTime = minutos.VA + minutos.SVA + minutos.Desperdicio;
   const valido = leadTime > 0;
