@@ -527,3 +527,105 @@ test('Niveles de capacidad: cortes literales 1.00 / 1.33 / 1.67 / 2.00 (1.33 ya 
   assert.equal(M.nivelCapacidad(1.2).estado, 'atencion');
   assert.equal(M.nivelCapacidad(1.5).estado, 'cumple');
 });
+
+/* ------------------------------------------------------------------ */
+/* Hoja de verificación (guía M4 §6–7 y plantilla «Hoja de Verificacion») */
+/* ------------------------------------------------------------------ */
+
+const filaHoja = (categoria, ...conteos) => ({ categoria, ...Object.fromEntries(conteos.map((v, j) => [`e${j + 1}`, v])) });
+const hojaDe = (categorias) => categorias.map((c) => filaHoja(c.categoria, ...c.conteos));
+
+test('Hoja de la guía (M4 §7): 3 defectos, uno por turno; la plantilla Excel suma 103 (31 / 30 / 42)', () => {
+  const guia = M.resumenHoja(hojaDe(caso().hojaVerificacion.guia.categorias));
+  assert.equal(guia.valido, true);
+  assert.equal(guia.k, 3);
+  assert.equal(guia.categorias.length, 5);
+  assert.equal(guia.total, 3);
+  assert.deepEqual(guia.totalesEstrato, [1, 1, 1]);
+  cerca(guia.categorias[0].pct, 1 / 3, 1e-12); // continuidad eléctrica: 1 de 3
+  assert.equal(guia.categorias[2].total, 0); // «Conector mal asentado»: cero defectos, sigue en la hoja
+  assert.equal(guia.categorias[2].pct, 0);
+  assert.equal(guia.categorias[2].dominante, -1);
+
+  const excel = M.resumenHoja(hojaDe(caso().hojaVerificacion.excel.categorias));
+  assert.equal(excel.total, 103); // 34 + 35 + 15 + 9 + 6 + 4
+  assert.deepEqual(excel.categorias.map((c) => c.total), [34, 35, 15, 9, 6, 4]);
+  assert.deepEqual(excel.totalesEstrato, [31, 30, 42]);
+  cerca(excel.pctEstrato[2], 42 / 103, 1e-12);
+  const torque = excel.categorias[1];
+  assert.equal(torque.dominante, 2); // turno 3
+  cerca(torque.dominantePct, 21 / 35, 1e-12); // 60 %
+  assert.equal(torque.empate, false);
+  assert.equal(excel.categorias[0].dominante, 0); // terminales: 14 de 34 en el turno 1
+});
+
+test('Hoja de verificación: celdas no válidas, filas vacías, sin nombre y sin conteos', () => {
+  const r = M.resumenHoja([
+    filaHoja('A', 2, -1, 2.5), // −1 y 2.5 no son enteros desde 0: se cuentan como inválidas y suman 0
+    filaHoja('B', NaN, NaN, NaN), // nombre sin ningún conteo: no es categoría
+    filaHoja('', 3, NaN, NaN), // conteos sin nombre
+    filaHoja('', NaN, NaN, NaN), // fila vacía: se ignora sin contarla
+    filaHoja('C', 1, NaN, 0), // celda vacía = 0
+  ]);
+  assert.deepEqual(r.categorias.map((c) => c.categoria), ['A', '(sin nombre)', 'C']);
+  assert.deepEqual(r.categorias[0].conteos, [2, 0, 0]);
+  assert.equal(r.celdasInvalidas, 2);
+  assert.equal(r.sinNombre, 1);
+  assert.equal(r.sinConteo, 1);
+  assert.equal(r.total, 6);
+  assert.equal(M.resumenHoja([filaHoja('A'), filaHoja('', NaN)]).valido, false);
+  assert.equal(M.resumenHoja([]).valido, false);
+  assert.equal(M.resumenHoja(undefined).valido, false);
+});
+
+test('Hoja de verificación: el número de estratos se limita a 2–5 y vuelve a 3 si no es un número', () => {
+  const fila = filaHoja('A', 1, 2, 3, 4, 5);
+  assert.equal(M.resumenHoja([fila]).k, 3);
+  assert.equal(M.resumenHoja([fila], { estratos: 9 }).k, 5);
+  assert.equal(M.resumenHoja([fila], { estratos: 1 }).k, 2);
+  assert.equal(M.resumenHoja([fila], { estratos: 'x' }).k, 3);
+  const dos = M.resumenHoja([fila], { estratos: 2 }); // las columnas sobrantes se ignoran
+  assert.deepEqual(dos.categorias[0].conteos, [1, 2]);
+  assert.equal(dos.total, 3);
+});
+
+test('Hoja de verificación: estrato dominante, empates y etiquetas repetidas', () => {
+  const r = M.resumenHoja([filaHoja('A', 8, 8, 0), filaHoja('A', 1, 5, 2), filaHoja('B', 0, 0, 0)]);
+  assert.equal(r.categorias[0].empate, true);
+  assert.equal(r.categorias[1].empate, false);
+  assert.equal(r.categorias[1].dominante, 1);
+  assert.equal(r.categorias[2].empate, false); // sin defectos no hay empate que reportar
+  assert.deepEqual(r.categorias.map((c) => c.etiqueta), ['A', 'A (2)', 'B']);
+  assert.deepEqual(M.etiquetasUnicas(['A', 'A', 'B', 'A']), ['A', 'A (2)', 'B', 'A (3)']);
+});
+
+test('Orden de Pareto: de mayor a menor, empates en orden de captura y «Otro(s)» siempre al final', () => {
+  const cat = (categoria, total) => ({ categoria, total });
+  const orden = M.ordenPareto([cat('Otros', 50), cat('A', 5), cat('B', 9), cat('C', 5), cat('otro', 40)]);
+  assert.deepEqual(orden.map((c) => c.categoria), ['B', 'A', 'C', 'Otros', 'otro']); // los dos «otro» conservan su orden de captura
+  assert.deepEqual(M.ordenPareto([]), []);
+});
+
+test('Concentración por estrato: mitad o más de la categoría, con al menos 5 defectos por estrato', () => {
+  assert.equal(M.minimoCategoria(3), 15);
+  assert.equal(M.minimoCategoria(5), 25);
+  cerca(M.umbralConcentracion(2), 0.75, 1e-12); // 1.5 ÷ 2
+  cerca(M.umbralConcentracion(3), 0.5, 1e-12); // 1.5 ÷ 3 = 0.5
+  cerca(M.umbralConcentracion(5), 0.5, 1e-12); // 1.5 ÷ 5 = 0.3, pero nunca menos de la mitad
+
+  const excel = M.resumenHoja(hojaDe(caso().hojaVerificacion.excel.categorias));
+  const c = M.concentraciones(excel);
+  assert.equal(c.length, 1); // solo el torque: 21 de 35 = 60 % en el turno 3
+  assert.equal(c[0].categoria, 'Torque fuera de especificación');
+  assert.equal(c[0].estrato, 2);
+  assert.equal(c[0].valor, 21);
+  assert.equal(c[0].total, 35);
+  cerca(c[0].pct, 0.6, 1e-12);
+  // terminales: 14 de 34 = 41.2 % y conector: 6 de 15 = 40 %: no llegan a la mitad
+  assert.deepEqual(M.concentraciones(M.resumenHoja([filaHoja('A', 7, 4, 4)])), []); // 15 defectos, 46.7 %
+  assert.equal(M.concentraciones(M.resumenHoja([filaHoja('A', 8, 4, 3)])).length, 1); // 15 defectos, 53.3 %
+  assert.deepEqual(M.concentraciones(M.resumenHoja([filaHoja('A', 8, 4, 2)])), []); // 14 defectos: faltan para opinar
+  assert.deepEqual(M.concentraciones(M.resumenHoja([filaHoja('A', 8, 8, 0)])), []); // empate: no hay estrato dominante
+  assert.equal(M.concentraciones(M.resumenHoja([filaHoja('A', 15, 5)], { estratos: 2 })).length, 1); // 75 % exacto con dos estratos
+  assert.deepEqual(M.concentraciones(M.resumenHoja([filaHoja('A', 7, 3)], { estratos: 2 })), []);
+});

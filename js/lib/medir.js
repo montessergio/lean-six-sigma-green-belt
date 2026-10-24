@@ -1,8 +1,9 @@
 /**
  * medir.js — Cálculos de la fase Medir (guía M4 y M5): eficiencia del ciclo del proceso (PCE), tamaño de
- * muestra, Gauge R&R por el método de promedios y rangos (AIAG) e índices de capacidad. Módulo puro (sin DOM):
- * lo usan los laboratorios 10 a 13 y se prueba en Node (tests/medir.test.mjs). Las fórmulas siguen las plantillas
- * de Excel «VA-SVA-Desperdicio», «PCE», «Tamano de Muestra», «Gauge RR» y «Cp-Cpk», y los ejemplos de la guía.
+ * muestra, Gauge R&R por el método de promedios y rangos (AIAG), índices de capacidad y hoja de verificación de
+ * conteo. Módulo puro (sin DOM): lo usan los laboratorios 10 a 14 y se prueba en Node (tests/medir.test.mjs). Las
+ * fórmulas siguen las plantillas de Excel «VA-SVA-Desperdicio», «PCE», «Tamano de Muestra», «Gauge RR», «Cp-Cpk» y
+ * «Hoja de Verificacion», y los ejemplos de la guía.
  */
 import { media, normalCdf, normalPpf, desviacion, tPpf } from './stats.js';
 
@@ -264,3 +265,114 @@ export function nivelCapacidad(indice) {
 
 /** Atajo: estadísticos de una muestra para capacidad (media, s). */
 export const resumenMuestra = (x) => ({ n: x.length, media: media(x), s: desviacion(x) });
+
+/* ------------------------------------------------------------------ */
+/* Hoja de verificación de conteo (guía M4 §6–7, plantilla «Hoja de Verificacion») */
+/* ------------------------------------------------------------------ */
+
+/** Máximo de estratos (columnas de conteo: turnos, máquinas, operadores…) que admite la hoja. */
+export const MAX_ESTRATOS = 5;
+/** Defectos esperados por celda para comparar estratos (la regla de 5 de la chi-cuadrada; referencia didáctica). */
+export const MIN_ESPERADO = 5;
+
+/** Vuelve únicas las etiquetas repetidas añadiendo « (2)», « (3)»… para que dos filas no compartan la misma barra. */
+export function etiquetasUnicas(nombres) {
+  const usadas = new Set();
+  return nombres.map((nombre) => {
+    let candidata = nombre;
+    let i = 1;
+    while (usadas.has(candidata)) candidata = `${nombre} (${(i += 1)})`;
+    usadas.add(candidata);
+    return candidata;
+  });
+}
+
+/**
+ * Lee una hoja de verificación de conteo: filas { categoria, e1…e5 } con `estratos` columnas de conteo.
+ * Un conteo válido es un entero ≥ 0 (la validación de datos de la plantilla Excel); una celda vacía suma 0 igual que
+ * en la suma de Excel, pero una fila con nombre y sin ningún conteo no es una categoría: se avisa en `sinConteo`.
+ * Cada categoría trae total, % del total, reparto entre estratos y su estrato dominante (único; `empate` si dos
+ * estratos reúnen el mismo máximo). Las filas totalmente vacías se ignoran sin contarlas como error.
+ */
+export function resumenHoja(filas, { estratos = 3 } = {}) {
+  const k = Math.min(MAX_ESTRATOS, Math.max(2, Math.trunc(Number(estratos)) || 3));
+  const crudas = [];
+  let celdasInvalidas = 0;
+  let sinNombre = 0;
+  let sinConteo = 0;
+  for (const fila of filas ?? []) {
+    const nombre = String(fila?.categoria ?? '').trim();
+    const celdas = Array.from({ length: k }, (_, j) => fila?.[`e${j + 1}`]);
+    const capturadas = celdas.filter((v) => Number.isFinite(v)).length;
+    const validas = celdas.map((v) => Number.isFinite(v) && v >= 0 && Number.isInteger(v));
+    if (!nombre && capturadas === 0) continue;
+    celdasInvalidas += capturadas - validas.filter(Boolean).length;
+    if (!validas.some(Boolean)) {
+      if (nombre) sinConteo += 1;
+      continue;
+    }
+    if (!nombre) sinNombre += 1;
+    crudas.push({ categoria: nombre || '(sin nombre)', conteos: celdas.map((v, j) => (validas[j] ? v : 0)) });
+  }
+
+  const suma = (xs) => xs.reduce((a, b) => a + b, 0);
+  const etiquetas = etiquetasUnicas(crudas.map((c) => c.categoria));
+  const total = suma(crudas.map((c) => suma(c.conteos)));
+  const categorias = crudas.map((c, i) => {
+    const t = suma(c.conteos);
+    const maximo = Math.max(...c.conteos);
+    return {
+      categoria: c.categoria,
+      etiqueta: etiquetas[i],
+      conteos: c.conteos,
+      total: t,
+      pct: total > 0 ? t / total : NaN,
+      pctEstrato: c.conteos.map((v) => (t > 0 ? v / t : NaN)),
+      dominante: t > 0 ? c.conteos.indexOf(maximo) : -1,
+      dominantePct: t > 0 ? maximo / t : NaN,
+      empate: t > 0 && c.conteos.filter((v) => v === maximo).length > 1,
+    };
+  });
+  const totalesEstrato = Array.from({ length: k }, (_, j) => suma(categorias.map((c) => c.conteos[j])));
+  return {
+    valido: categorias.length > 0,
+    k,
+    categorias,
+    total,
+    totalesEstrato,
+    pctEstrato: totalesEstrato.map((t) => (total > 0 ? t / total : NaN)),
+    celdasInvalidas,
+    sinNombre,
+    sinConteo,
+  };
+}
+
+const esOtros = (c) => /^otros?$/i.test(c.categoria.trim());
+
+/** Orden de un Pareto: de mayor a menor total (empates en el orden de captura) y «Otro(s)» al final, sea cual sea su tamaño. */
+export function ordenPareto(categorias) {
+  return categorias
+    .map((c, i) => ({ c, i }))
+    .sort((a, b) => Number(esOtros(a.c)) - Number(esOtros(b.c)) || b.c.total - a.c.total || a.i - b.i)
+    .map(({ c }) => c);
+}
+
+/** Defectos mínimos de una categoría para hablar de su reparto: 5 esperados por estrato (regla de 5; referencia didáctica). */
+export const minimoCategoria = (k) => MIN_ESPERADO * k;
+
+/** Una categoría «se concentra» si un estrato reúne la mitad o más de sus defectos y al menos 1.5 veces lo parejo (referencia didáctica). */
+export const umbralConcentracion = (k) => Math.max(0.5, 1.5 / k);
+
+/**
+ * Categorías cuyo estrato dominante (único) reúne una parte grande de sus defectos, siempre que la categoría tenga
+ * defectos suficientes para opinar. Es una descripción del reparto, no una prueba de hipótesis. Orden: más defectos
+ * en la celda dominante primero.
+ */
+export function concentraciones(resumen) {
+  const minimo = minimoCategoria(resumen.k);
+  const umbral = umbralConcentracion(resumen.k);
+  return resumen.categorias
+    .filter((c) => c.total >= minimo && !c.empate && c.dominantePct >= umbral - 1e-9)
+    .map((c) => ({ categoria: c.categoria, etiqueta: c.etiqueta, estrato: c.dominante, valor: c.conteos[c.dominante], total: c.total, pct: c.dominantePct }))
+    .sort((a, b) => b.valor - a.valor);
+}
