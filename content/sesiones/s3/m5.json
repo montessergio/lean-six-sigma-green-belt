@@ -1,0 +1,435 @@
+{
+  "id": "m5",
+  "titulo": "M5 · Estadística y sistema de medición",
+  "slides": [
+    {
+      "id": "m5-bisagra",
+      "etiqueta": "M5 · DE TENER DATOS A ENTENDERLOS",
+      "titulo": "Primero se valida la medición; después se interpreta",
+      "subtitulo": "Es el módulo más técnico de la guía hasta ahora: cada sección depende de la anterior.",
+      "bloques": [
+        {
+          "tipo": "pasos",
+          "columnas": 4,
+          "pasos": [
+            { "texto": "Describir", "sub": "centro y dispersión de los datos" },
+            { "texto": "Modelar", "sub": "regla empírica y tipo de distribución" },
+            { "texto": "Validar la medición", "sub": "Gauge R&R" },
+            { "texto": "Medir la capacidad", "sub": "Cp y Cpk" }
+          ]
+        },
+        { "tipo": "titulo", "texto": "Al terminar el módulo podrás" },
+        {
+          "tipo": "lista",
+          "items": [
+            "Calcular media, mediana, moda, rango y desviación estándar, y aplicar la regla empírica",
+            "Reconocer cuándo un dato sigue mejor una distribución binomial o de Poisson que una normal",
+            "Ejecutar e interpretar un estudio Gauge R&R, y calcular e interpretar Cp y Cpk"
+          ]
+        },
+        { "tipo": "nota", "texto": "Si el tiempo apremia, domina el Gauge R&R y rehaz su cálculo a mano: sin un sistema de medición confiable puedes pasar meses «mejorando» una variación que nunca estuvo en el proceso." }
+      ]
+    },
+    {
+      "id": "m5-repaso",
+      "etiqueta": "M5 · REPASO APLICADO AL TORQUE",
+      "titulo": "Los diez torques de la línea, resumidos",
+      "subtitulo": "Ya las practicaste en la Sesión 1 (laboratorios 01 y 02); aquí se aplican al torque de los arneses.",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            { "valor": "1.355 N·m", "etiqueta": "Media (x̄) y mediana", "nota": "coinciden: posible simetría", "color": "teal" },
+            { "valor": "0.11 N·m", "etiqueta": "Rango" },
+            { "valor": "0.034 N·m", "etiqueta": "Desviación estándar (s)", "color": "azul" },
+            { "valor": "sin moda", "etiqueta": "Moda", "nota": "diez valores distintos" }
+          ]
+        },
+        {
+          "tipo": "tabla",
+          "columnas": ["Rango", { "t": "% esperado", "num": true }, "Torque (x̄ = 1.355; s = 0.034)"],
+          "filas": [
+            ["μ ± 1σ", "68 %", "1.321 – 1.389 N·m"],
+            ["μ ± 2σ", "95 %", "1.287 – 1.423 N·m"],
+            ["μ ± 3σ", "99.7 %", "1.253 – 1.457 N·m"]
+          ],
+          "resaltar": [2]
+        },
+        { "tipo": "texto", "texto": "El 99.7 % de las mediciones debería caer entre 1.253 y 1.457 N·m, dentro de la especificación de 1.2 a 1.5 N·m del módulo 2." },
+        { "tipo": "texto", "texto": "Con una muestra se usan x̄ y s, no μ y σ (módulo 7).", "tenue": true }
+      ]
+    },
+    {
+      "id": "m5-distribuciones",
+      "etiqueta": "M5 · OTRAS DISTRIBUCIONES",
+      "titulo": "Cuando el dato no es continuo, la normal no es la herramienta",
+      "subtitulo": "Los pasa / no pasa y los conteos del módulo 4 no deben forzarse a una campana.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Distribución", "Tipo de dato", "Cuándo se usa", "Ejemplo en la línea de arneses"],
+          "filas": [
+            ["Normal", "Continuo", "Datos medidos en una escala, simétricos alrededor de la media", "Torque, fuerza de asentamiento"],
+            ["Binomial", "Discreto", "Defectos en un número fijo de ensayos independientes", "2 fallas de continuidad en una muestra de 50"],
+            ["Poisson", "Discreto (conteo)", "Eventos raros en un intervalo fijo", "DPMO y DPU del módulo 1"]
+          ]
+        },
+        { "tipo": "texto", "texto": "No es casualidad que el DPMO se apoye en una lógica de tipo Poisson: cuenta eventos raros (defectos) sobre un número grande de oportunidades." },
+        { "tipo": "nota", "texto": "Aplicar la regla 68-95-99.7 a un conteo de defectos o a un pasa / no pasa produce estimaciones sin sentido." }
+      ]
+    },
+    {
+      "id": "m5-grr-porque",
+      "etiqueta": "M5 · SISTEMA DE MEDICIÓN",
+      "titulo": "Antes de confiar en un número, se examina a quien lo mide",
+      "subtitulo": "La variación que ves viene de dos fuentes: el proceso y el sistema de medición.",
+      "bloques": [
+        {
+          "tipo": "formula",
+          "etiqueta": "VARIACIÓN TOTAL",
+          "tex": "TV=\\sqrt{\\text{R\\&R}^{2}+\\text{PV}^{2}}",
+          "texto": "TV = √(R&R² + PV²)",
+          "nota": "R&R: variación del sistema de medición · PV: variación real de las piezas"
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "REPETIBILIDAD (EV)", "titulo": "La variación del equipo", "texto": "Cuánto varía la medición cuando el mismo operador mide la misma pieza varias veces con el mismo instrumento.", "estilo": "acento" },
+            { "etiqueta": "REPRODUCIBILIDAD (AV)", "titulo": "La variación entre operadores", "texto": "Cuánto varían los resultados cuando personas distintas miden las mismas piezas." }
+          ]
+        },
+        { "tipo": "texto", "texto": "El diseño más común cruza 2 o 3 operadores con 10 piezas, cada una medida 2 o 3 veces." },
+        { "tipo": "nota", "texto": "Un sistema ruidoso puede hacer que un proceso capaz parezca incapaz, o esconder un problema real." }
+      ]
+    },
+    {
+      "id": "m5-grr-criterio",
+      "etiqueta": "M5 · CRITERIO DE ACEPTACIÓN",
+      "titulo": "El %GRR dice cuánta de la variación es ruido de medición",
+      "subtitulo": "Criterio AIAG: la variación del sistema de medición como porcentaje de la variación total del estudio.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["%GRR", "Interpretación"],
+          "filas": [
+            ["< 10 %", "Sistema de medición aceptable"],
+            ["10 % – 30 %", "Aceptable condicionalmente, según la aplicación"],
+            ["> 30 %", "Inaceptable: debe mejorarse antes de usar los datos"]
+          ]
+        },
+        { "tipo": "texto", "texto": "El estudio de la llave de torque (3 operadores, 10 arneses, 3 repeticiones) reportó 6.1 % de repetibilidad, 3.4 % de reproducibilidad y **7.0 %** de %GRR total: un sistema aceptable." },
+        { "tipo": "nota", "texto": "Con datos pasa / no pasa el Gauge R&R numérico no aplica: se usa un Análisis de Concordancia de Atributos, que mide qué tan seguido distintos evaluadores deciden lo mismo sobre la misma pieza. El criterio habitual es 90 % de acuerdo o más." }
+      ]
+    },
+    {
+      "id": "m5-grr-datos",
+      "etiqueta": "M5 · EJEMPLO PASO A PASO",
+      "titulo": "La fuerza de asentamiento del conector, medida por tres operadores",
+      "subtitulo": "Diseño cruzado 3 × 10 × 2: los operadores A, B y C miden las mismas 10 piezas, dos veces cada uno (N).",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Pieza", { "t": "A · T1", "num": true }, { "t": "A · T2", "num": true }, { "t": "B · T1", "num": true }, { "t": "B · T2", "num": true }, { "t": "C · T1", "num": true }, { "t": "C · T2", "num": true }],
+          "filas": [
+            ["1", "48.2", "48.3", "48.0", "48.1", "48.0", "48.2"],
+            ["2", "51.6", "51.6", "51.8", "51.7", "51.3", "50.9"],
+            ["3", "49.7", "49.8", "49.8", "49.9", "49.2", "49.6"],
+            ["4", "52.8", "52.8", "53.5", "53.2", "52.9", "53.0"],
+            ["5 a 10", "…", "…", "…", "…", "…", "…"]
+          ],
+          "pie": "Se muestran 4 de las 10 piezas; el laboratorio trae las 60 mediciones."
+        },
+        { "tipo": "texto", "texto": "El método **Promedio-Rango** (AIAG) resume la tabla en cuatro cantidades: la repetibilidad (EV), la reproducibilidad (AV), la variación de pieza (PV) y la variación total (TV)." }
+      ]
+    },
+    {
+      "id": "m5-grr-ingredientes",
+      "etiqueta": "M5 · EJEMPLO PASO A PASO",
+      "titulo": "Tres cifras salen directo de la tabla",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            { "valor": "0.303 N", "etiqueta": "Rango medio entre repeticiones (R̄)", "nota": "promedio de los 30 rangos de las parejas de lecturas; alimenta la repetibilidad (EV)", "color": "azul" },
+            { "valor": "0.395 N", "etiqueta": "Diferencia entre operadores (X̄diff)", "nota": "medias de A, B y C: 50.39, 50.70 y 50.305; alimenta la reproducibilidad (AV)", "color": "teal" },
+            { "valor": "6.18 N", "etiqueta": "Rango de promedios por pieza (Rp)", "nota": "alimenta la variación de pieza (PV)", "color": "violeta" }
+          ]
+        },
+        { "tipo": "nota", "texto": "La guía escribe X̄diff = 0.40, redondeado. Con 0.40 el AV saldría alrededor de 1.03; con el valor exacto, 0.395, sale el 1.02 de la guía." }
+      ]
+    },
+    {
+      "id": "m5-grr-calculo",
+      "etiqueta": "M5 · EJEMPLO PASO A PASO",
+      "titulo": "De las 60 mediciones a la variación del sistema",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Cantidad", "Fórmula", "Con los datos", { "t": "Resultado", "num": true }],
+          "filas": [
+            ["Repetibilidad (EV)", "R̄ × K1", "0.303 × 4.56", "1.38"],
+            ["Reproducibilidad (AV)", "√[(X̄diff × K2)² − EV² ÷ (n × r)]", "√[(0.395 × 2.70)² − 1.38² ÷ 20]", "1.02"],
+            ["Repetibilidad y reproducibilidad (R&R)", "√(EV² + AV²)", "√(1.38² + 1.02²)", "1.72"],
+            ["Variación de pieza (PV)", "Rp × K3", "6.18 × 1.62", "10.02"],
+            ["Variación total (TV)", "√(R&R² + PV²)", "√(1.72² + 10.02²)", "10.16"]
+          ],
+          "resaltar": [2],
+          "pie": "n = piezas · r = repeticiones. R̄ se llama R-doble-barra en la guía."
+        },
+        { "tipo": "texto", "texto": "K1 = 4.56 (2 repeticiones), K2 = 2.70 (3 operadores) y K3 = 1.62 (10 piezas) son constantes de las tablas AIAG: no se derivan a mano; el software y las plantillas las aplican al capturar el tamaño del estudio." }
+      ]
+    },
+    {
+      "id": "m5-grr-resultado",
+      "etiqueta": "M5 · LECTURA DEL RESULTADO",
+      "titulo": "16.9 %: aceptable condicionalmente, no alarmante",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 5,
+          "items": [
+            { "valor": "13.6 %", "etiqueta": "% Repetibilidad (EV)" },
+            { "valor": "10.0 %", "etiqueta": "% Reproducibilidad (AV)" },
+            { "valor": "16.9 %", "etiqueta": "% GRR total", "nota": "zona de 10 % a 30 %", "color": "ambar" },
+            { "valor": "98.6 %", "etiqueta": "% Variación de pieza (PV)", "color": "teal" },
+            { "valor": "8", "etiqueta": "Categorías distintas (ndc)", "nota": "mínimo AIAG: 5", "color": "azul" }
+          ]
+        },
+        { "tipo": "texto", "texto": "A diferencia del estudio de torque (7.0 %), este resultado cae en la zona condicional. Aun así, el 98.6 % de la variación sigue viniendo de diferencias reales entre piezas, y el sistema distingue 8 categorías, por encima del mínimo de 5." },
+        { "tipo": "nota", "texto": "Antes de usarlo en decisiones críticas, averigua por qué el operador C varía más entre repeticiones que A y B: puede ser otra técnica de medición o un dinamómetro por calibrar." },
+        {
+          "tipo": "abrirLab", "lab": "lab12", "texto": "Abrir LAB 12 con el estudio de la guía →",
+          "valores": {
+            "operadores": "3",
+            "repeticiones": "2",
+            "tolerancia": null,
+            "unidad": "N",
+            "mediciones": [
+              { "A1": 48.2, "A2": 48.3, "A3": null, "B1": 48, "B2": 48.1, "B3": null, "C1": 48, "C2": 48.2, "C3": null },
+              { "A1": 51.6, "A2": 51.6, "A3": null, "B1": 51.8, "B2": 51.7, "B3": null, "C1": 51.3, "C2": 50.9, "C3": null },
+              { "A1": 49.7, "A2": 49.8, "A3": null, "B1": 49.8, "B2": 49.9, "B3": null, "C1": 49.2, "C2": 49.6, "C3": null },
+              { "A1": 52.8, "A2": 52.8, "A3": null, "B1": 53.5, "B2": 53.2, "B3": null, "C1": 52.9, "C2": 53, "C3": null },
+              { "A1": 47.5, "A2": 47.6, "A3": null, "B1": 48, "B2": 48.3, "B3": null, "C1": 47.8, "C2": 47.3, "C3": null },
+              { "A1": 50, "A2": 50.5, "A3": null, "B1": 50.6, "B2": 50.4, "B3": null, "C1": 49.6, "C2": 50.3, "C3": null },
+              { "A1": 52.4, "A2": 52, "A3": null, "B1": 52, "B2": 52.7, "B3": null, "C1": 52.4, "C2": 52.1, "C3": null },
+              { "A1": 49.5, "A2": 49, "A3": null, "B1": 49.3, "B2": 49.7, "B3": null, "C1": 48.9, "C2": 49.1, "C3": null },
+              { "A1": 53.9, "A2": 53.4, "A3": null, "B1": 54.3, "B2": 54.2, "B3": null, "C1": 53.6, "C2": 54.2, "C3": null },
+              { "A1": 48.7, "A2": 48.5, "A3": null, "B1": 49.3, "B2": 49.2, "B3": null, "C1": 49.3, "C2": 48.4, "C3": null }
+            ]
+          }
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab12" },
+    {
+      "id": "m5-cp-cpk",
+      "etiqueta": "M5 · CAPACIDAD DEL PROCESO",
+      "titulo": "Cp compara anchos; Cpk además mira el centrado",
+      "subtitulo": "Con datos confiables, la pregunta es qué tan capaz es el proceso de cumplir la especificación del cliente.",
+      "bloques": [
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1],
+          "izq": [
+            {
+              "tipo": "formula",
+              "etiqueta": "Cp · CAPACIDAD POTENCIAL",
+              "tex": "C_{p}=\\frac{LSE-LSI}{6\\sigma}",
+              "texto": "Cp = (LSE − LSI) ÷ 6σ",
+              "nota": "Supone el proceso perfectamente centrado"
+            }
+          ],
+          "der": [
+            {
+              "tipo": "formula",
+              "etiqueta": "Cpk · CAPACIDAD REAL",
+              "tex": "C_{pk}=\\min\\left[\\frac{LSE-\\mu}{3\\sigma},\\ \\frac{\\mu-LSI}{3\\sigma}\\right]",
+              "texto": "Cpk = mínimo [ (LSE − μ) ÷ 3σ , (μ − LSI) ÷ 3σ ]",
+              "nota": "Considera además dónde está centrado"
+            }
+          ]
+        },
+        { "tipo": "texto", "texto": "Cpk nunca es mayor que Cp; si coinciden, el proceso está perfectamente centrado. LSE y LSI son los límites superior e inferior de especificación (USL y LSL en el laboratorio)." },
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            { "valor": "1.47", "etiqueta": "Cp del torque", "nota": "(1.5 − 1.2) ÷ (6 × 0.034)", "color": "azul" },
+            { "valor": "1.42", "etiqueta": "Cpk del torque", "nota": "mínimo [1.42, 1.52]", "color": "teal" },
+            { "valor": "1.2 a 1.5 N·m", "etiqueta": "Especificación del torque", "nota": "x̄ = 1.355 · s = 0.034 (sección 1)" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m5-cpk-lectura",
+      "etiqueta": "M5 · LECTURA DE LOS ÍNDICES",
+      "titulo": "Qué tan alto debe ser el Cpk",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Cpk", "Interpretación"],
+          "filas": [
+            ["< 1.00", "No capaz: genera piezas fuera de especificación"],
+            ["1.00 – 1.33", "Capacidad marginal"],
+            ["1.33 – 1.67", "Capaz: mínimo aceptado en la mayoría de la manufactura"],
+            ["≥ 1.67", "Alta capacidad: típico para características de seguridad"],
+            ["≥ 2.00", "Capacidad de clase mundial (nivel Six Sigma)"]
+          ],
+          "resaltar": [2]
+        },
+        { "tipo": "texto", "texto": "Con un Cpk de 1.42, el sistema de torque de la línea de arneses es capaz." },
+        { "tipo": "nota", "texto": "Este Cp y este Cpk salen de apenas 10 observaciones, una simplificación didáctica. Un estudio de capacidad real suele pedir entre 30 y más de 100 mediciones para que s sea una estimación estable de σ." }
+      ]
+    },
+    {
+      "id": "m5-pp-ppk",
+      "etiqueta": "M5 · CORTO Y LARGO PLAZO",
+      "titulo": "Cp y Cpk frente a Pp y Ppk",
+      "subtitulo": "Son los mismos índices, con una desviación estándar distinta.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "Cp Y Cpk · CORTO PLAZO", "textos": ["Usan la desviación estándar **dentro de subgrupos**.", "Calculados sobre subgrupos estables, no ven las causas especiales."], "estilo": "acento" },
+            { "etiqueta": "Pp Y Ppk · LARGO PLAZO", "textos": ["Usan la desviación estándar **global**, sobre todos los datos históricos.", "Capturan también la variación entre turnos, lotes o días."] }
+          ]
+        },
+        { "tipo": "texto", "texto": "Se calculan Pp y Ppk cuando el proceso aún no se ha confirmado bajo control estadístico. Por definición son menores o iguales que sus equivalentes de corto plazo, porque la variación de largo plazo incluye causas especiales." },
+        {
+          "tipo": "abrirLab", "lab": "lab13", "texto": "Abrir LAB 13 con el torque de los arneses →",
+          "valores": {
+            "unidad": "N·m",
+            "lsl": 1.2,
+            "usl": 1.5,
+            "media": 1.355,
+            "sigma": 0.034,
+            "nResumen": 10,
+            "datos": [],
+            "rBarra": null,
+            "nSubgrupo": null,
+            "sigmaDentro": null,
+            "grr": null
+          }
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab13" },
+    {
+      "id": "m5-arneses",
+      "etiqueta": "M5 · EL CASO DE LOS ARNESES",
+      "titulo": "Lo que la fase Medir dice hasta ahora de la línea",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            { "valor": "27.3 %", "etiqueta": "PCE", "nota": "72.7 % del ciclo es espera y transporte", "color": "azul" },
+            { "valor": "7.0 %", "etiqueta": "%GRR de la llave de torque", "nota": "aceptable", "color": "teal" },
+            { "valor": "16.9 %", "etiqueta": "%GRR del asentamiento", "nota": "condicional: revisar al operador C", "color": "ambar" },
+            { "valor": "1.42", "etiqueta": "Cpk del torque", "nota": "capaz", "color": "teal" }
+          ]
+        },
+        { "tipo": "texto", "texto": "El torque se mide con un sistema confiable y el proceso es capaz. De los 3 defectos que sustentan los 300 DPMO, solo 1 es de torque (los otros dos son de continuidad y etiquetado): la búsqueda de causa raíz del módulo 6 probablemente deba concentrarse en las verificaciones pasa / no pasa (con tan pocos defectos es una pista, no una prueba)." },
+        { "tipo": "nota", "texto": "El orden importa: se valida la medición antes de calcular la capacidad. Un %GRR alto haría poco confiable incluso un Cpk que «se ve bien»." }
+      ]
+    },
+    {
+      "id": "m5-ejercicios-a",
+      "etiqueta": "M5 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1", "titulo": "Regla empírica con un dato nuevo",
+              "texto": "Un diámetro sigue aproximadamente una distribución normal, con media 25.00 mm y desviación estándar 0.08 mm. ¿Entre qué valores cae el 95 % de las mediciones?",
+              "verificacion": "La guía obtiene μ ± 2σ = 24.84 a 25.16 mm. Una pieza de 25.20 mm queda fuera: atípica para el proceso, aunque no necesariamente defectuosa frente a la especificación.", "etiquetaVerificacion": "Comparar con la guía"
+            },
+            {
+              "numero": "2", "titulo": "Cp y Cpk de un proceso descentrado",
+              "texto": "Especificación de 10.0 ± 0.5 (LSI = 9.5, LSE = 10.5); la muestra da x̄ = 10.15 y s = 0.12. Calcula Cp y Cpk e interpreta la diferencia.",
+              "verificacion": "La guía obtiene Cp = 1.39 y Cpk = 0.97: el proceso está descentrado hacia el límite superior. El problema es el centrado, no la variación.", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab13", "numeroLab": "13",
+              "valores": {
+                "unidad": "",
+                "lsl": 9.5,
+                "usl": 10.5,
+                "media": 10.15,
+                "sigma": 0.12,
+                "nResumen": null,
+                "datos": [],
+                "rBarra": null,
+                "nSubgrupo": null,
+                "sigmaDentro": null,
+                "grr": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m5-ejercicios-b",
+      "etiqueta": "M5 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "3", "titulo": "Clasificar el tipo de distribución",
+              "texto": "Clasifica como normal, binomial o de Poisson: (a) el tiempo de ensamble de una pieza; (b) las piezas defectuosas en muestras fijas de 20; (c) las llamadas de servicio que llegan por día.",
+              "verificacion": "La guía responde: (a) normal; (b) binomial, con un número fijo de ensayos; (c) Poisson, eventos al azar sobre un intervalo fijo, la lógica del DPMO.", "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            },
+            {
+              "numero": "4", "titulo": "Sin resolver: Cp y Cpk",
+              "texto": "Los límites de especificación son 205 y 195, con desviación estándar de 1.5. Calcula el Cp. Si la media real es 202 (no 200), calcula también el Cpk.",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.", "etiquetaVerificacion": "Clave en el libro",
+              "lab": "lab13", "numeroLab": "13",
+              "valores": {
+                "unidad": "",
+                "lsl": 195,
+                "usl": 205,
+                "media": 202,
+                "sigma": 1.5,
+                "nResumen": null,
+                "datos": [],
+                "rBarra": null,
+                "nSubgrupo": null,
+                "sigmaDentro": null,
+                "grr": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m5-errores",
+      "etiqueta": "M5 · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "ordenada": true,
+          "items": [
+            "Calcular Cp y Cpk sin validar antes el sistema de medición: un %GRR alto puede hacer que un proceso capaz parezca incapaz, o esconder un problema real",
+            "Confundir Cp con Cpk, o reportar solo uno: Cp supone un centrado perfecto y puede ocultar un descentrado tan grave como el del ejercicio 2",
+            "Aplicar la regla empírica a datos que no son continuos ni aproximadamente normales: un conteo de defectos o un pasa / no pasa no tiene forma de campana",
+            "Usar la media cuando hay valores extremos evidentes: la mediana es más robusta ante ellos",
+            "Confiar en un Cp y un Cpk calculados con muy pocas observaciones: con 10 mediciones la estimación de s es muy incierta; un estudio real suele requerir entre 30 y más de 100"
+          ]
+        }
+      ]
+    }
+  ]
+}

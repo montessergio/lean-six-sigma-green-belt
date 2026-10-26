@@ -17,7 +17,7 @@ para material rodante ferroviario** (300 DPMO → 162 DPMO).
 | **S0** Cómo usar el material | general | disponible | — | — |
 | **S1** Fundamentos cuantitativos y Six Sigma (3 h) | general | disponible | M0, M1 | 01 Estadística descriptiva · 02 Distribución normal · 03 Costo de la mala calidad · 04 DPMO y nivel sigma |
 | **S2** Definir: proyecto, VOC, CTQ, mapeo y equipo (4 h) | definir | disponible | M2, M3A, M3B | 05 Project Charter · 06 Árbol CTQ · 07 Matriz de selección ponderada · 08 AHP · 09 SIPOC |
-| **S3** Medir: proceso, datos y sistema de medición | medir | planeada | M4, M5 | 10 PCE · 11 Tamaño de muestra · 12 Gauge R&R · 13 Cp y Cpk · 14 Hoja de verificación |
+| **S3** Medir: proceso, datos y sistema de medición (4 h) | medir | disponible | M4, M5 | 10 PCE y desperdicios · 11 Tamaño de muestra · 12 Gauge R&R · 13 Cp y Cpk · 14 Hoja de verificación |
 | **S4** Analizar: causas raíz e inferencia | analizar | planeada | M6, M7 | 15 Pareto · 16 Ishikawa y 5 Porqués · 17 AMEF · 18 ANOVA · 19 Correlación y regresión |
 | **S5** Mejorar: Lean y diseño de experimentos | mejorar | planeada | M8, M9 | 20 VSM · 21 Takt time · 22 OEE · 23 Diseño 2² |
 | **S6** Controlar, integrar y sostener | controlar | planeada | M10, M11, M12 | 24 Plan de control · 25 Carta X̄-R · 26 Carta u |

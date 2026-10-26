@@ -1,0 +1,108 @@
+{
+  "id": "cierre",
+  "titulo": "Cierre de la sesión 3",
+  "slides": [
+    {
+      "id": "cierre",
+      "etiqueta": "SESIÓN 3 · CIERRE",
+      "titulo": "Lo que te llevas de esta sesión",
+      "bloques": [
+        {
+          "tipo": "cierre",
+          "puntos": [
+            "Un paso agrega valor solo si transforma, el cliente lo pagaría y sale bien a la primera; PCE = valor agregado ÷ ciclo total (27.3 % en los arneses).",
+            "El dato continuo aporta más información y pide menos muestra; si el turno, la máquina o el proveedor influyen, se muestrea por estratos.",
+            "El tamaño de muestra crece con la variación y la precisión exigida, y se redondea hacia arriba.",
+            "La definición operacional elimina el juicio de quien mide; la hoja de verificación cuenta cada evento y pregunta por el proceso, no por las personas.",
+            "Gauge R&R: %GRR < 10 % aceptable, de 10 % a 30 % condicional, > 30 % inaceptable; el ndc debe ser de 5 o más.",
+            "Cp compara anchos y Cpk añade el centrado; solo son confiables si el sistema de medición pasó antes su Gauge R&R."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m4a",
+      "etiqueta": "SESIÓN 3 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 4 (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Valor agregado, PCE y tipos de dato",
+          "items": [
+            "SixSigma.us. «Value Added vs Non Value Added Activities». 6sigma.us (2024).",
+            "iSixSigma. «Value Added vs. Non-Value Added: What's the Difference?». isixsigma.com (2025).",
+            "Learn Lean Sigma. «How Do You Calculate Process Cycle Efficiency (PCE)?». learnleansigma.com (2025).",
+            "Quality America. «Process Cycle Efficiency». qualityamerica.com.",
+            "Six Sigma Study Guide. «Types of Data». sixsigmastudyguide.com (2025).",
+            "MudaMasters. «Introduction to Six Sigma – Datatypes: Discrete versus Continuous Data». mudamasters.com."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m4b",
+      "etiqueta": "SESIÓN 3 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 4 (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Muestreo, definición operacional y hoja de verificación",
+          "items": [
+            "Learn Lean Sigma. «Guide: Data Sampling Methods». learnleansigma.com (2025).",
+            "MasterOfProject. «5 Sampling Methods You Should Know». blog.masterofproject.com (2026).",
+            "Brain Sensei. «Operational Definition – Measurement Phase – Six Sigma». brainsensei.com (2023).",
+            "Learn Lean Sigma. «Data Collection Plan Template». learnleansigma.com (2026).",
+            "SSDSI. «Check Sheet: Master Quality Control Data Collection». sixsigmadsi.com (2025).",
+            "Process Excellence Network. «The Check Sheet: A Simple and Effective Way to Display Data». processexcellencenetwork.com (2024)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m5a",
+      "etiqueta": "SESIÓN 3 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 5 (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Estadística descriptiva y regla empírica",
+          "items": [
+            "MSI Certified. «Six Sigma Statistics». msicertified.com (2023).",
+            "MasterOfProject. «Measures of Central Tendency: Mean, Median & Mode». blog.masterofproject.com (2026).",
+            "Six Sigma Study Guide. «Central Tendency». sixsigmastudyguide.com (2023).",
+            "SigmaDesk. «Normal Distribution: The Bell Curve, 68, 95 & 99.7 Rule». sigmadesk.app (2026).",
+            "StatisticsFundamentals.com. «Empirical Rule (68-95-99.7): Calculator, Formula & Examples». statisticsfundamentals.com (2026)."
+          ]
+        },
+        {
+          "tipo": "referencias",
+          "titulo": "Gauge R&R",
+          "items": [
+            "SigmaDesk. «Gage R&R – MSA Study Explained». sigmadesk.app (2026).",
+            "The Lean Suite. «Gauge R&R in Manufacturing: Repeatability and Reproducibility». theleansuite.com (2026).",
+            "DMAIC Suite. «Gage R&R: MSA Guide – Repeatability, Reproducibility & Criteria». dmaicsuite.com (2026).",
+            "SPC for Excel. «Three Methods to Analyze Gage R&R Studies». spcforexcel.com (2024).",
+            "Kaizumi. «Free Gage R&R Calculator (MSA): %GRR and ndc». kaizumi.com (2025)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m5b",
+      "etiqueta": "SESIÓN 3 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 5 (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Capacidad del proceso",
+          "items": [
+            "SixSigma.us. «Process Capability Index (Cpk) for Business Success». 6sigma.us (2026).",
+            "Northwest Analytics. «Process Capability Explained: Cp, Cpk, Pp, and Ppk». nwasoft.com (2026).",
+            "MetricMech. «What Is a Good Cpk Value? 1.33, 1.67 & Benchmarks». metricmech.com (2026).",
+            "AmrepInspect. «Ppk vs Cpk: Understand Process Capability». amrepinspect.com (2025)."
+          ]
+        }
+      ]
+    }
+  ]
+}

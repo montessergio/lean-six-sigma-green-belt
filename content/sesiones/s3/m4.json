@@ -1,0 +1,439 @@
+{
+  "id": "m4",
+  "titulo": "M4 · Mapeo de procesos y recolección de datos",
+  "slides": [
+    {
+      "id": "m4-bisagra",
+      "etiqueta": "M4 · DE DEFINIR A MEDIR",
+      "titulo": "Del mapa de alto nivel a datos que se pueden medir",
+      "subtitulo": "Este módulo es la bisagra entre Definir y Medir.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "DIAGNÓSTICO", "titulo": "¿Qué tan eficiente es el proceso hoy?", "texto": "Valor agregado, desperdicio y eficiencia del ciclo (PCE)." },
+            { "etiqueta": "METODOLOGÍA", "titulo": "¿Qué tan confiables serán los datos?", "texto": "Tipos de dato, muestreo, definiciones operacionales y hoja de verificación.", "estilo": "acento" }
+          ]
+        },
+        { "tipo": "titulo", "texto": "Al terminar el módulo podrás" },
+        {
+          "tipo": "lista",
+          "items": [
+            "Clasificar cada paso como valor agregado, sin valor agregado necesario o desperdicio, y calcular el PCE",
+            "Distinguir datos continuos de discretos y elegir el método de muestreo y su tamaño",
+            "Redactar definiciones operacionales que eliminen la ambigüedad",
+            "Diseñar un plan de recolección de datos con su hoja de verificación"
+          ]
+        },
+        { "tipo": "nota", "texto": "Ningún análisis estadístico, por sofisticado que sea, compensa datos mal definidos." }
+      ]
+    },
+    {
+      "id": "m4-valor-agregado",
+      "etiqueta": "M4 · VALOR AGREGADO Y DESPERDICIO",
+      "titulo": "Un paso agrega valor solo si cumple tres criterios a la vez",
+      "bloques": [
+        {
+          "tipo": "pasos",
+          "columnas": 3,
+          "pasos": [
+            { "texto": "Transforma", "sub": "físicamente el producto o el servicio" },
+            { "texto": "El cliente pagaría por él", "sub": "está dispuesto a pagar" },
+            { "texto": "Bien a la primera", "sub": "no se repite ni se corrige" }
+          ]
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            { "etiqueta": "VALOR AGREGADO (VA)", "texto": "Cumple los tres criterios.", "estilo": "acento" },
+            { "etiqueta": "SIN VALOR AGREGADO NECESARIO (SVA)", "texto": "El cliente no lo paga, pero el proceso aún lo requiere: una inspección de calidad o un requisito regulatorio." },
+            { "etiqueta": "DESPERDICIO PURO", "texto": "Esperas, transporte innecesario, retrabajo: se elimina sin contemplaciones.", "estilo": "coral" }
+          ]
+        },
+        { "tipo": "texto", "texto": "La investigación en manufactura Lean sugiere que, en un proceso típico sin intervención, cerca del 90 % de las actividades son SVA o desperdicio.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m4-arneses-va",
+      "etiqueta": "M4 · EL CASO DE LOS ARNESES",
+      "titulo": "Los pasos de la línea, con su tiempo y su clasificación",
+      "subtitulo": "Se parte del mapa del módulo 3A y se agrega el tiempo de cada paso.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Paso", { "t": "Tiempo (min)", "num": true }, "Clasificación"],
+          "filas": [
+            ["Corte y pelado", "3", "Valor agregado"],
+            ["Engarzado de terminales", "4", "Valor agregado"],
+            ["Ensamble de conectores", "3", "Valor agregado"],
+            ["Ruteo y amarre", "5", "Valor agregado"],
+            ["Inspección final", "2", "Sin valor agregado (necesario)"],
+            ["Esperas y transporte (staging, buffers, traslado a almacén)", "38", "Desperdicio"]
+          ],
+          "resaltar": [4, 5]
+        },
+        { "tipo": "nota", "texto": "La inspección final es necesaria hoy, pero no transforma el producto ni el cliente la paga: a medida que el proceso mejore, la meta de largo plazo es depender cada vez menos de ella." }
+      ]
+    },
+    {
+      "id": "m4-pce",
+      "etiqueta": "M4 · EFICIENCIA DEL CICLO DEL PROCESO",
+      "titulo": "PCE: qué proporción del tiempo agrega valor",
+      "bloques": [
+        {
+          "tipo": "formula",
+          "etiqueta": "PCE",
+          "tex": "\\text{PCE}=\\frac{\\text{Tiempo de valor agregado}}{\\text{Tiempo total del ciclo}}\\times 100",
+          "texto": "PCE = (Tiempo de valor agregado ÷ Tiempo total del ciclo) × 100",
+          "nota": "El denominador incluye esperas, transporte e inspecciones."
+        },
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            { "valor": "15 min", "etiqueta": "Valor agregado", "nota": "3 + 4 + 3 + 5", "color": "azul" },
+            { "valor": "55 min", "etiqueta": "Ciclo total", "nota": "15 + 2 + 38" },
+            { "valor": "27.3 %", "etiqueta": "PCE", "nota": "15 ÷ 55", "color": "teal" }
+          ]
+        },
+        { "tipo": "texto", "texto": "Supera el 5-15 % típico de un proceso sin intervención Lean y se acerca al 25 % que suele asociarse con procesos ya mejorados: la línea no parte de cero. El 72.7 % restante es espera y transporte, y ahí está la mayor oportunidad de mejora." },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab10",
+          "texto": "Abrir LAB 10 con la línea de arneses →",
+          "valores": {
+            "actividades": [
+              { "actividad": "Corte y pelado", "minutos": 3, "clase": "VA", "tipo": "" },
+              { "actividad": "Engarzado de terminales", "minutos": 4, "clase": "VA", "tipo": "" },
+              { "actividad": "Ensamble de conectores", "minutos": 3, "clase": "VA", "tipo": "" },
+              { "actividad": "Ruteo y amarre", "minutos": 5, "clase": "VA", "tipo": "" },
+              { "actividad": "Inspección final", "minutos": 2, "clase": "SVA", "tipo": "" },
+              { "actividad": "Esperas y transporte (staging, buffers, traslado a almacén)", "minutos": 38, "clase": "Desperdicio", "tipo": "" }
+            ],
+            "meta": null,
+            "wip": null,
+            "tasaSalida": null
+          }
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab10" },
+    {
+      "id": "m4-ejercicios-a",
+      "etiqueta": "M4 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1", "titulo": "Calcular el PCE de un proceso de crédito",
+              "texto": "Aprobación de crédito: revisar documentos (10 min, VA), consultar buró (5 min, VA), esperar en cola gerencial (120 min, desperdicio), aprobación gerencial (8 min, VA) y revisión KYC (12 min, SVA). Calcula el PCE.",
+              "verificacion": "La guía obtiene 14.8 % (23 ÷ 155 min). La espera en cola, de 120 min, pesa el 77 % del ciclo: ahí está la oportunidad más evidente, no en acelerar la revisión KYC.", "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab10", "numeroLab": "10",
+              "valores": {
+                "actividades": [
+                  { "actividad": "Revisar documentos del cliente", "minutos": 10, "clase": "VA", "tipo": "" },
+                  { "actividad": "Consultar buró de crédito", "minutos": 5, "clase": "VA", "tipo": "" },
+                  { "actividad": "Espera en cola de aprobación gerencial", "minutos": 120, "clase": "Desperdicio", "tipo": "Esperas" },
+                  { "actividad": "Aprobación gerencial", "minutos": 8, "clase": "VA", "tipo": "" },
+                  { "actividad": "Revisión de cumplimiento regulatorio (KYC)", "minutos": 12, "clase": "SVA", "tipo": "" }
+                ],
+                "meta": null, "wip": null, "tasaSalida": null
+              }
+            },
+            {
+              "numero": "4", "titulo": "Sin resolver: PCE y tiempo de desperdicio",
+              "texto": "Un ciclo total de 65 minutos incluye 18 minutos que agregan valor. Calcula el PCE y el tiempo de desperdicio. En el laboratorio, completa el segundo renglón con lo que resta del ciclo.",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.", "etiquetaVerificacion": "Clave en el libro",
+              "lab": "lab10", "numeroLab": "10",
+              "valores": {
+                "actividades": [
+                  { "actividad": "Pasos que agregan valor", "minutos": 18, "clase": "VA", "tipo": "" },
+                  { "actividad": "Resto del ciclo (el total es de 65 min)", "minutos": null, "clase": "Desperdicio", "tipo": "" }
+                ],
+                "meta": null, "wip": null, "tasaSalida": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m4-tipos-dato",
+      "etiqueta": "M4 · TIPOS DE DATO",
+      "titulo": "Continuo o discreto: de eso depende qué herramientas podrás usar",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "CONTINUOS (DE VARIABLE)", "texto": "Se miden en una escala que admite subdivisión con sentido: tiempo, longitud, peso, torque. 1.3 y 1.4 N·m son distintos entre sí de una forma que un simple «aprobado» no captura.", "estilo": "acento" },
+            { "etiqueta": "DISCRETOS (DE ATRIBUTO)", "texto": "Son conteos o categorías que no admiten subdivisión con sentido: pasa / no pasa, número de defectos, tipo de falla." }
+          ]
+        },
+        { "tipo": "nota", "texto": "Si el dato puede recolectarse de las dos formas, prefiere el continuo: aporta más información por observación y, en general, requiere una muestra menor para llegar a la misma conclusión." },
+        { "tipo": "texto", "texto": "En la línea de arneses, el torque de terminal y la fuerza de asentamiento del conector se prestan a datos continuos; la continuidad eléctrica, el etiquetado y el ruteo son inherentemente pasa / no pasa." }
+      ]
+    },
+    {
+      "id": "m4-muestreo",
+      "etiqueta": "M4 · MÉTODOS DE MUESTREO",
+      "titulo": "Cuatro métodos cubren la mayoría de los casos de un Green Belt",
+      "subtitulo": "Cuando no es práctico medir el 100 % de las unidades, se mide una muestra.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Método", "Qué es", "Cuándo usarlo"],
+          "filas": [
+            ["Aleatorio simple", "Cada unidad tiene la misma probabilidad de ser elegida", "Población homogénea y con listado completo"],
+            ["Sistemático", "Punto de partida al azar y luego cada n-ésima unidad", "Líneas de producción continuas"],
+            ["Estratificado", "Se divide la población en estratos y se muestrea dentro de cada uno", "El turno, la máquina o el proveedor pueden influir en el resultado"],
+            ["Por conglomerados", "Se eligen al azar grupos completos de unidades", "Población dispersa: muestrear unidad por unidad es costoso"]
+          ],
+          "resaltar": [2]
+        },
+        { "tipo": "texto", "texto": "La línea opera en tres turnos y no se sabe si el desempeño varía entre ellos: conviene un muestreo **estratificado por turno** para el torque y el asentamiento, y compararlos en Analizar en lugar de asumir que son iguales." }
+      ]
+    },
+    {
+      "id": "m4-tamano-muestra",
+      "etiqueta": "M4 · TAMAÑO DE MUESTRA",
+      "titulo": "Elegido el método, falta decidir cuántas unidades tomar",
+      "subtitulo": "Con 95 % de confianza y un margen de error E; se redondea siempre hacia arriba.",
+      "bloques": [
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1],
+          "izq": [
+            {
+              "tipo": "formula",
+              "etiqueta": "ESTIMAR UNA MEDIA",
+              "tex": "n=\\left(\\frac{1.96\\,\\sigma}{E}\\right)^{2}",
+              "texto": "n = (1.96 × σ ÷ E)²"
+            },
+            { "tipo": "metricas", "columnas": 1, "items": [{ "valor": "12 por turno", "etiqueta": "Torque promedio", "nota": "σ ≈ 0.034 N·m y E = 0.02 N·m dan n ≈ 11.1", "color": "teal" }] }
+          ],
+          "der": [
+            {
+              "tipo": "formula",
+              "etiqueta": "ESTIMAR UNA PROPORCIÓN",
+              "tex": "n=\\frac{1.96^{2}\\,p\\,(1-p)}{E^{2}}",
+              "texto": "n = (1.96² × p × (1 − p)) ÷ E²"
+            },
+            { "tipo": "metricas", "columnas": 1, "items": [{ "valor": "457 arneses", "etiqueta": "Tasa de falla de continuidad", "nota": "p = 5 % y E = 2 % dan n ≈ 456.2", "color": "azul" }] }
+          ]
+        },
+        { "tipo": "texto", "texto": "Piden más muestra un margen de error más pequeño y un proceso más variable (σ grande, o p cercana a 0.5). Comparar los turnos entre sí es otro cálculo: la sección C del laboratorio." },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab11",
+          "texto": "Abrir LAB 11 con el caso de los arneses →",
+          "valores": {
+            "confianzaA": 95, "sigma": 0.034, "margen": 0.02, "unidad": "N·m", "poblacionA": null, "estratos": 3,
+            "confianzaB": 95, "p": 5, "margenP": 2, "poblacionB": null,
+            "confianzaC": 95, "potencia": 80, "sigmaC": 0.034, "delta": 0.02
+          }
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab11" },
+    {
+      "id": "m4-definicion-operacional",
+      "etiqueta": "M4 · DEFINICIONES OPERACIONALES",
+      "titulo": "Si dos personas miden lo mismo, deben obtener lo mismo",
+      "subtitulo": "Cada CTQ del módulo 2 se convierte en una descripción tan precisa del qué y el cómo medir que cualquier persona, en cualquier turno, llegue al mismo resultado.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "NO ES UNA DEFINICIÓN OPERACIONAL", "textos": ["«El arnés está fuera de especificación»", "«Visiblemente defectuoso» · «significativamente fuera de rango»"], "estilo": "coral" },
+            { "etiqueta": "SÍ LO ES", "texto": "«El torque registrado por la llave calibrada está fuera del rango 1.2-1.5 N·m».", "estilo": "acento" }
+          ]
+        },
+        { "tipo": "texto", "texto": "A las primeras les falta el número, el instrumento o el criterio binario que elimine la interpretación personal.", "tenue": true },
+        { "tipo": "nota", "texto": "Una definición ambigua invalida en silencio todo lo que se construya encima (Gauge R&R, cartas de control, pruebas de hipótesis), y el error rara vez se nota hasta que ya es tarde." }
+      ]
+    },
+    {
+      "id": "m4-instrumento",
+      "etiqueta": "M4 · EL INSTRUMENTO TAMBIÉN SE VERIFICA",
+      "titulo": "Una definición precisa no basta si el instrumento no es confiable",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "CONTROL 1 · AL INICIO DE CADA TURNO", "texto": "El operador, con supervisión de calidad, confirma que el torquímetro sigue calibrado y lo registra en un formato físico, según un procedimiento escrito. Sin registro no hay evidencia de que el lote se torqueó con un instrumento preciso." },
+            { "etiqueta": "CONTROL 2 · ANTES DE ELEGIR EL INSTRUMENTO", "texto": "El rango de medición y la resolución son criterios distintos y ambos deben cumplirse. Se verifican por separado, antes del primer dato.", "estilo": "acento" }
+          ]
+        },
+        { "tipo": "nota", "etiqueta": "EJEMPLO", "texto": "El plano pide 10.14 N·m y el torquímetro cubre de 2.5 a 20 N·m: el rango sirve. Pero con resolución de 0.1 N·m solo registra 10.1 o 10.2. No se fuerza el instrumento: se pide al cliente, con autorización previa, una especificación compatible con la resolución disponible." }
+      ]
+    },
+    {
+      "id": "m4-plan",
+      "etiqueta": "M4 · PLAN DE RECOLECCIÓN DE DATOS",
+      "titulo": "El plan decide cinco cosas antes de tomar el primer dato",
+      "bloques": [
+        {
+          "tipo": "pasos",
+          "columnas": 5,
+          "pasos": [
+            { "texto": "Qué", "sub": "dato y de qué tipo" },
+            { "texto": "Quién y dónde", "sub": "lo recolecta" },
+            { "texto": "Cuándo", "sub": "y con qué frecuencia" },
+            { "texto": "Cómo", "sub": "método de muestreo y tamaño" },
+            { "texto": "Estratos", "sub": "etiquetas que viajan con el dato" }
+          ]
+        },
+        { "tipo": "texto", "texto": "Las etiquetas de estratificación (turno, máquina, operador) se registran junto con cada dato para poder cruzarlo más adelante en la fase Analizar." },
+        { "tipo": "texto", "texto": "Cada CTQ definido en el módulo 2 llega a este plan ya convertido en una definición operacional, con su tipo de dato y su muestreo.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m4-plan-arneses",
+      "etiqueta": "M4 · EL CASO DE LOS ARNESES",
+      "titulo": "El plan de recolección de las cinco verificaciones de la línea",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Verificación", "Definición operacional", "Tipo de dato", "Muestreo"],
+          "filas": [
+            ["Continuidad eléctrica", "Circuito cerrado en las 12 posiciones del conector, con probador calibrado", "Discreto", "100 % de la producción"],
+            ["Torque de terminales", "Valor en N·m registrado por la llave calibrada en cada terminal", "Continuo", "5 arneses por turno (estratificado)"],
+            ["Asentamiento del conector", "Fuerza de extracción en N, con dinamómetro, sobre el mínimo del plano", "Continuo", "5 arneses por turno (estratificado)"],
+            ["Colocación de etiquetado", "Etiqueta legible, en la posición del plano, sin dobleces", "Discreto", "100 % de la producción"],
+            ["Ruteo del cableado", "Cableado sujeto en los 6 puntos de amarre del plano, sin cruces", "Discreto", "100 % de la producción"]
+          ],
+          "resaltar": [1, 2],
+          "pie": "Los dos datos continuos se muestrean por turno; las tres verificaciones discretas (pasa / no pasa) se hacen en toda la producción."
+        }
+      ]
+    },
+    {
+      "id": "m4-personas",
+      "etiqueta": "M4 · MEDIR TAMBIÉN ES UN TEMA DE PERSONAS",
+      "titulo": "Los datos evalúan al proceso, no a las personas",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "RESISTENCIA", "textos": ["Cuando el torque, antes revisado «a criterio», pasa a verificarse con una llave calibrada, los operadores pueden sentir que los auditan a ellos. Sin atenderlo, se vuelve resistencia pasiva o datos poco confiables.", "Comunica desde el inicio que se evalúa al proceso y explica por qué se eligió cada definición."] },
+            { "etiqueta": "SESGO SIN INTENCIÓN", "textos": ["Quien sabe que su trabajo se mide puede redondear una fuerza límite hacia lo aceptable, o ser más estricto con otro turno.", "Rota quién mide entre operadores y turnos, y blinda la definición con instrumentos calibrados y criterios numéricos."], "estilo": "acento" }
+          ]
+        },
+        { "tipo": "nota", "texto": "Salir a recolectar datos con compañeros de otros turnos puede detonar la etapa de Conflicto del equipo (módulo 3B): el líder debe facilitarla, no evitarla." }
+      ]
+    },
+    {
+      "id": "m4-hoja",
+      "etiqueta": "M4 · HOJA DE VERIFICACIÓN",
+      "titulo": "Contar cada evento en el momento y el lugar donde ocurre",
+      "subtitulo": "La hoja de verificación (check sheet) es el formulario que pone en práctica el plan de recolección.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            { "etiqueta": "HOJA DE VERIFICACIÓN", "texto": "Cuenta la **frecuencia** de un evento: una lista de categorías con un espacio para registrar cuántas veces se presenta cada una.", "estilo": "acento" },
+            { "etiqueta": "CHECKLIST", "texto": "Confirma que los pasos de un procedimiento se completaron. No cuenta eventos." }
+          ]
+        },
+        {
+          "tipo": "tarjeta",
+          "etiqueta": "VARIANTES SEGÚN EL PROPÓSITO",
+          "items": ["Frecuencia o conteo (tally)", "Ubicación del defecto: un diagrama del producto donde se marca dónde ocurre cada falla", "Tipo de defecto", "Distribución"],
+          "estilo": "sutil"
+        },
+        { "tipo": "texto", "texto": "Bien diseñada, alimenta directamente al diagrama de Pareto y al histograma de los módulos 5 y 6.", "tenue": true }
+      ]
+    },
+    {
+      "id": "m4-hoja-arneses",
+      "etiqueta": "M4 · EL CASO DE LOS ARNESES",
+      "titulo": "La semana que sustenta los 300 DPMO",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Categoría de defecto", { "t": "Turno 1", "num": true }, { "t": "Turno 2", "num": true }, { "t": "Turno 3", "num": true }, { "t": "Total semana", "num": true }],
+          "filas": [
+            ["Continuidad eléctrica", "1", "0", "0", "1"],
+            ["Torque fuera de especificación", "0", "1", "0", "1"],
+            ["Conector mal asentado", "0", "0", "0", "0"],
+            ["Etiquetado", "0", "0", "1", "1"],
+            ["Ruteo", "0", "0", "0", "0"],
+            ["Total", "1", "1", "1", "3"]
+          ],
+          "resaltar": [5]
+        },
+        { "tipo": "texto", "texto": "3 defectos en 2,000 arneses con 5 oportunidades cada uno son **300 DPMO**. El reparto es parejo (con tan pocos defectos, no prueba que los turnos sean iguales), pero no siempre lo será: si un turno concentra más defectos, resiste el «¿quién lo hizo?». Los 5 Porqués del módulo 6 llevan la conversación a la causa del proceso: ¿por qué el proceso permite ese resultado?" },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab14",
+          "texto": "Abrir LAB 14 con esta semana →",
+          "valores": {
+            "estrato": "Turno", "numEstratos": "3",
+            "categorias": [
+              { "categoria": "Continuidad eléctrica", "e1": 1, "e2": 0, "e3": 0 },
+              { "categoria": "Torque fuera de especificación", "e1": 0, "e2": 1, "e3": 0 },
+              { "categoria": "Conector mal asentado", "e1": 0, "e2": 0, "e3": 0 },
+              { "categoria": "Etiquetado", "e1": 0, "e2": 0, "e3": 1 },
+              { "categoria": "Ruteo", "e1": 0, "e2": 0, "e3": 0 }
+            ],
+            "unidades": 2000, "oportunidades": 5
+          }
+        }
+      ]
+    },
+    { "tipo": "lab", "lab": "lab14" },
+    {
+      "id": "m4-ejercicios-b",
+      "etiqueta": "M4 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "2", "titulo": "Elegir el método de muestreo",
+              "texto": "Una cadena de 15 farmacias quiere medir el tiempo de espera en caja; nada sugiere diferencias entre sucursales y visitar las 15 es costoso. ¿Qué método conviene y por qué?",
+              "verificacion": "La guía propone muestreo por conglomerados: sin sospecha de diferencias no se estratifica; se eligen al azar sucursales completas (por ejemplo, 4 de 15).", "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            },
+            {
+              "numero": "3", "titulo": "Redactar una definición operacional",
+              "texto": "Un supervisor anota en su reporte: «El empaque se ve mal». Reescribe la observación como una definición operacional verificable.",
+              "verificacion": "La guía propone: no conforme si hay sello roto o incompleto, etiqueta ilegible o despegada en más del 25 % de su superficie, o caja deformada más de 1 cm; revisión visual del 100 % de las unidades.", "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m4-errores",
+      "etiqueta": "M4 · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "ordenada": true,
+          "items": [
+            "Confundir «sin valor agregado necesario» con desperdicio puro: eliminar una inspección regulatoria puede subir el PCE y crear un problema legal o de calidad más caro",
+            "Calcular el PCE con solo los pasos de valor agregado en el denominador: el denominador es el tiempo total del ciclo; de lo contrario siempre da 100 %",
+            "Preferir un dato discreto «porque es más fácil» cuando el continuo es igual de accesible: se descarta información y suele exigirse una muestra mayor",
+            "Usar muestreo aleatorio simple cuando hay razón para sospechar diferencias entre estratos: puede diluir la diferencia real en el promedio general",
+            "Redactar una definición operacional que sigue dependiendo del juicio de quien mide: falta el número, el instrumento o el criterio binario"
+          ]
+        }
+      ]
+    }
+  ]
+}
