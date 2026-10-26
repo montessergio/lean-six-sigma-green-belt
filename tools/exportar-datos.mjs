@@ -59,6 +59,28 @@ export function generar(caso = JSON.parse(readFileSync(path.join(RAIZ, 'content/
     ['Plantilla Excel: después', d.plantillaExcel.despues.unidades, d.plantillaExcel.despues.oportunidades, d.plantillaExcel.despues.defectos, 'Plantilla Excel «DPMO y Sigma»', ''],
   ]));
 
+  /* Sesión 3 (Medir): Gauge R&R, capacidad y hoja de verificación */
+  const grr = caso.gaugeRR.guia;
+  salida.set('recursos/datos/arneses-gauge-rr-asentamiento.csv', csv([
+    ['pieza', 'operador', 'repeticion', `fuerza_${grr.unidad}`],
+    ...grr.piezas.flatMap((p, i) => ['A', 'B', 'C'].flatMap((op) => p[op].map((v, r) => [i + 1, op, r + 1, v]))),
+  ]));
+
+  const cap = caso.capacidad.excel;
+  salida.set('recursos/datos/arneses-capacidad-engarzado.csv', csv([
+    ['medicion', `fuerza_${cap.unidad}`],
+    ...cap.valores.map((v, i) => [i + 1, v]),
+  ]));
+
+  const hoja = caso.hojaVerificacion;
+  const columnasEstrato = hoja.estratos.map((e) => e.toLowerCase().replaceAll(' ', '_'));
+  const filasHoja = (escenario, categorias) => categorias.map((c) => [escenario, c.categoria, ...c.conteos, c.conteos.reduce((a, b) => a + b, 0)]);
+  salida.set('recursos/datos/arneses-hoja-verificacion.csv', csv([
+    ['escenario', 'categoria', ...columnasEstrato, 'total'],
+    ...filasHoja('Guía M4 §7: una semana de producción', hoja.guia.categorias),
+    ...filasHoja('Plantilla Excel «Hoja de Verificacion»', hoja.excel.categorias),
+  ]));
+
   return salida;
 }
 

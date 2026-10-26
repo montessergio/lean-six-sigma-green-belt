@@ -1,0 +1,12 @@
+﻿escenario,categoria,turno_1,turno_2,turno_3,total
+Guía M4 §7: una semana de producción,Continuidad eléctrica,1,0,0,1
+Guía M4 §7: una semana de producción,Torque fuera de especificación,0,1,0,1
+Guía M4 §7: una semana de producción,Conector mal asentado,0,0,0,0
+Guía M4 §7: una semana de producción,Etiquetado,0,0,1,1
+Guía M4 §7: una semana de producción,Ruteo,0,0,0,0
+Plantilla Excel «Hoja de Verificacion»,Terminal mal crimpada,14,11,9,34
+Plantilla Excel «Hoja de Verificacion»,Torque fuera de especificación,6,8,21,35
+Plantilla Excel «Hoja de Verificacion»,Conector sin seguro,5,4,6,15
+Plantilla Excel «Hoja de Verificacion»,Cable dañado,3,2,4,9
+Plantilla Excel «Hoja de Verificacion»,Etiqueta incorrecta,2,3,1,6
+Plantilla Excel «Hoja de Verificacion»,Otro,1,2,1,4
