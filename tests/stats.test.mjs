@@ -177,3 +177,34 @@ test('histograma: 8 clases como la plantilla Excel', () => {
   assert.equal(S.suma(h.clases.map((c) => c.frecuencia)), d.length, 'toda observación cae en una clase');
   cerca(h.ancho, (196.1 - 167.9) / 8, {}, 'ancho de clase');
 });
+
+test('Cuantiles de F y chi-cuadrada (valores críticos) coinciden con SciPy', () => {
+  for (const [p, d1, d2, x] of ref.f_ppf) cerca(S.fPpf(p, d1, d2), x, { rel: 1e-9 }, `F⁻¹(${p}; ${d1}, ${d2})`);
+  for (const [p, k, x] of ref.chi2_ppf) cerca(S.chi2Ppf(p, k), x, { rel: 1e-9 }, `χ²⁻¹(${p}; ${k})`);
+  cerca(S.fPpf(0.95, 2, 12), 3.8852938346523924, { rel: 1e-9 }); // F crítica de la guía M7 §2 (F(2, 12), α = 0.05)
+  cerca(S.chi2Ppf(0.95, 2), 5.991464547107979, { rel: 1e-9 }); // χ² crítica de la guía M7 §5 (gl = 2): 5.99
+  assert.equal(S.fPpf(0, 2, 12), 0);
+  assert.equal(S.fPpf(1, 2, 12), Infinity);
+  assert.ok(Number.isNaN(S.fPpf(1.5, 2, 12)));
+  assert.ok(Number.isNaN(S.chi2Ppf(0.95, 0)));
+  // ida y vuelta con la función de supervivencia
+  cerca(S.fSf(S.fPpf(0.9, 5, 10), 5, 10), 0.1, { rel: 1e-9 });
+  cerca(S.chi2Sf(S.chi2Ppf(0.99, 6), 6), 0.01, { rel: 1e-9 });
+});
+
+test('Rango estudentizado (Tukey): cola superior y cuantil coinciden con SciPy (k = 2 a 10, gl = 1 a 200)', () => {
+  for (const [q, k, df, sf] of ref.tukey_sf) cerca(S.tukeySf(q, k, df), sf, { rel: 1e-5, abs: 2e-7 }, `P(Q > ${q}; k=${k}, gl=${df})`);
+  for (const [p, k, df, q] of ref.tukey_ppf) cerca(S.tukeyPpf(p, k, df), q, { rel: 1e-6 }, `q(${p}; k=${k}, gl=${df})`);
+  // con k = 2 el rango estudentizado es √2·|t|: P(Q > q) = P(|T| > q ÷ √2) = 2·P(T > q ÷ √2)
+  cerca(S.tukeySf(3, 2, 10), 2 * S.tSf(3 / Math.SQRT2, 10), { rel: 1e-5, abs: 2e-7 });
+  assert.equal(S.tukeyCdf(0, 3, 10), 0);
+  assert.equal(S.tukeyCdf(-1, 3, 10), 0);
+  // la cola es más pesada con pocos grados de libertad: SciPy da P(Q > 30; k = 3, gl = 10) = 3.3124444e-9
+  cerca(S.tukeySf(30, 3, 10), 3.3124444298593403e-9, { rel: 1e-5, abs: 1e-12 }, 'cola lejana con gl = 10');
+  assert.ok(S.tukeyCdf(30, 3, 200) > 1 - 1e-9);
+  assert.ok(Number.isNaN(S.tukeyCdf(3, 1, 10)));
+  assert.ok(Number.isNaN(S.tukeyPpf(0.95, 3, 0.5)));
+  assert.equal(S.tukeyPpf(0, 3, 10), 0);
+  assert.equal(S.tukeyPpf(1, 3, 10), Infinity);
+});
+

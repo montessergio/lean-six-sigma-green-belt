@@ -376,6 +376,173 @@ export function fSf(f, d1, d2) {
 /** P(χ² > x) con k grados de libertad: valor p de chi-cuadrada. */
 export const chi2Sf = (x, k) => gammaQ(k / 2, x / 2);
 
+/** x tal que sf(x) = cola, para una función de supervivencia decreciente desde 1 en 0 (bisección). */
+function invertirCola(sf, cola) {
+  let lo = 0;
+  let hi = 1;
+  while (sf(hi) > cola && hi < 1e12) hi *= 2;
+  for (let i = 0; i < 300; i++) {
+    const mid = (lo + hi) / 2;
+    if (sf(mid) > cola) lo = mid;
+    else hi = mid;
+    if (hi - lo < 1e-14 * hi) break;
+  }
+  return (lo + hi) / 2;
+}
+
+/** Cuantil de F(d1, d2): P(F ≤ f) = p. Con p = 1 − α es el valor crítico de ANOVA. */
+export function fPpf(p, d1, d2) {
+  if (Number.isNaN(p) || !(d1 > 0) || !(d2 > 0) || p < 0 || p > 1) return NaN;
+  if (p === 0) return 0;
+  if (p === 1) return Infinity;
+  return invertirCola((x) => fSf(x, d1, d2), 1 - p);
+}
+
+/** Cuantil de la chi-cuadrada con k grados de libertad: P(χ² ≤ x) = p. Con p = 1 − α es el valor crítico de la prueba. */
+export function chi2Ppf(p, k) {
+  if (Number.isNaN(p) || !(k > 0) || p < 0 || p > 1) return NaN;
+  if (p === 0) return 0;
+  if (p === 1) return Infinity;
+  return invertirCola((x) => chi2Sf(x, k), 1 - p);
+}
+
+/* ------------------------------------------------------------------ */
+/* Rango estudentizado (comparaciones de Tukey)                         */
+/* ------------------------------------------------------------------ */
+
+/** Nodos y pesos de Gauss–Legendre de orden n en [−1, 1] (Newton sobre los polinomios de Legendre). */
+function gaussLegendre(n) {
+  const x = new Array(n);
+  const w = new Array(n);
+  for (let i = 0; i < (n + 1) >> 1; i++) {
+    let z = Math.cos((Math.PI * (i + 0.75)) / (n + 0.5));
+    let pp = 1;
+    for (let it = 0; it < 100; it++) {
+      let p1 = 1;
+      let p2 = 0;
+      for (let j = 1; j <= n; j++) {
+        const p3 = p2;
+        p2 = p1;
+        p1 = ((2 * j - 1) * z * p2 - (j - 1) * p3) / j;
+      }
+      pp = (n * (z * p1 - p2)) / (z * z - 1);
+      const z1 = z;
+      z = z1 - p1 / pp;
+      if (Math.abs(z - z1) < 1e-15) break;
+    }
+    x[i] = -z;
+    x[n - 1 - i] = z;
+    w[i] = 2 / ((1 - z * z) * pp * pp);
+    w[n - 1 - i] = w[i];
+  }
+  return { x, w };
+}
+
+const GL = gaussLegendre(12);
+
+/** ∫ f sobre [a, b] con `paneles` paneles de Gauss–Legendre de 12 nodos. */
+function integrar(f, a, b, paneles) {
+  const h = (b - a) / paneles;
+  let total = 0;
+  for (let i = 0; i < paneles; i++) {
+    const centro = a + (i + 0.5) * h;
+    for (let j = 0; j < GL.x.length; j++) total += GL.w[j] * f(centro + 0.5 * h * GL.x[j]);
+  }
+  return total * 0.5 * h;
+}
+
+/** Nodos fijos de la integral interior (z de −8 a 8) con φ(z)·Φ(z) ya calculados: no dependen de w. */
+const PANELES_Z = 8;
+const NODOS_Z = (() => {
+  const h = 16 / PANELES_Z;
+  const z = [];
+  const peso = [];
+  for (let i = 0; i < PANELES_Z; i++) {
+    const centro = -8 + (i + 0.5) * h;
+    for (let j = 0; j < GL.x.length; j++) {
+      const zz = centro + 0.5 * h * GL.x[j];
+      z.push(zz);
+      peso.push(GL.w[j] * 0.5 * h * normalPdf(zz));
+    }
+  }
+  return { z, peso, cdf: z.map((v) => normalCdf(v)) };
+})();
+
+/** P(rango de k normales estándar independientes ≤ w) = k ∫ φ(z) [Φ(z) − Φ(z − w)]^(k−1) dz. */
+function rangoNormalCdf(w, k) {
+  if (!(w > 0)) return 0;
+  let total = 0;
+  for (let i = 0; i < NODOS_Z.z.length; i++) {
+    const dif = NODOS_Z.cdf[i] - normalCdf(NODOS_Z.z[i] - w);
+    if (dif > 0) total += NODOS_Z.peso[i] * Math.pow(dif, k - 1);
+  }
+  return Math.min(1, k * total);
+}
+
+/* La integral interior depende solo de (w, k): se tabula una vez por k y se interpola, así cada valor p de Tukey cuesta microsegundos. */
+const PASO_TABLA = 0.04;
+const W_MAX = 14; // con k ≤ 10 grupos, P(rango > 14σ) es despreciable
+const TABLAS_RANGO = new Map();
+
+function tablaRango(k) {
+  let tabla = TABLAS_RANGO.get(k);
+  if (!tabla) {
+    const m = Math.ceil(W_MAX / PASO_TABLA) + 3;
+    tabla = new Float64Array(m + 1);
+    for (let i = 1; i <= m; i++) tabla[i] = rangoNormalCdf(i * PASO_TABLA, k);
+    TABLAS_RANGO.set(k, tabla);
+  }
+  return tabla;
+}
+
+/** P(rango de k normales estándar ≤ w), por interpolación cúbica de Lagrange sobre la tabla (error ≈ 1e-7). */
+function rangoCdf(w, k) {
+  if (!(w > 0)) return 0;
+  if (w >= W_MAX) return 1;
+  const tabla = tablaRango(k);
+  const x = w / PASO_TABLA;
+  const a = Math.max(0, Math.floor(x) - 1);
+  const v = x - a;
+  const y = (tabla[a] * (v - 1) * (v - 2) * (v - 3)) / -6 + (tabla[a + 1] * v * (v - 2) * (v - 3)) / 2 + (tabla[a + 2] * v * (v - 1) * (v - 3)) / -2 + (tabla[a + 3] * v * (v - 1) * (v - 2)) / 6;
+  return Math.min(1, Math.max(0, y));
+}
+
+/**
+ * P(Q ≤ q) del rango estudentizado de k medias con `df` grados de libertad del error:
+ * ∫ f(s) · P(rango ≤ q·s) ds, con s = √(χ²_df ÷ df). Integración numérica (error < 1e-6 frente a SciPy), pensada
+ * para el valor p y el valor crítico de Tukey de un ANOVA de un factor.
+ */
+export function tukeyCdf(q, k, df) {
+  if (Number.isNaN(q) || !(k >= 2) || !(df >= 1)) return NaN;
+  if (!(q > 0)) return 0;
+  const logC = Math.log(2) + (df / 2) * Math.log(df / 2) - lgamma(df / 2);
+  const densidad = (s) => Math.exp(logC + (df - 1) * Math.log(s) - (df * s * s) / 2);
+  const sd = 1 / Math.sqrt(2 * df);
+  const a = Math.max(0, 1 - 9 * sd);
+  const b = 1 + 12 * sd;
+  return Math.min(1, integrar((s) => densidad(s) * rangoCdf(q * s, k), a, b, 16));
+}
+
+/** P(Q > q): valor p de una comparación de Tukey. */
+export const tukeySf = (q, k, df) => 1 - tukeyCdf(q, k, df);
+
+/** Cuantil del rango estudentizado: P(Q ≤ q) = p. Con p = 1 − α es el valor crítico q de Tukey (bisección). */
+export function tukeyPpf(p, k, df) {
+  if (Number.isNaN(p) || !(k >= 2) || !(df >= 1) || p < 0 || p > 1) return NaN;
+  if (p === 0) return 0;
+  if (p === 1) return Infinity;
+  let lo = 0;
+  let hi = 4;
+  while (tukeyCdf(hi, k, df) < p && hi < 1e3) hi *= 2;
+  for (let i = 0; i < 60; i++) {
+    const mid = (lo + hi) / 2;
+    if (tukeyCdf(mid, k, df) < p) lo = mid;
+    else hi = mid;
+    if (hi - lo < 1e-9 * hi) break;
+  }
+  return (lo + hi) / 2;
+}
+
 /* ------------------------------------------------------------------ */
 /* Six Sigma: DPU, DPO, DPMO y nivel sigma                             */
 /* ------------------------------------------------------------------ */
