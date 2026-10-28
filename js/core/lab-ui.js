@@ -666,6 +666,7 @@ export function montarLab(contenedor, def, ctx = {}) {
       nodosVisuales.set(id, n);
     }
     n.tituloEl.textContent = titulo ?? '';
+    n.caja.classList.toggle('grafica--figura', tipo === 'figura');
     n.caja.classList.toggle('grafica--ancha', Boolean(ancha));
     n.caja.classList.toggle('grafica--alta', Boolean(alta));
     return n;

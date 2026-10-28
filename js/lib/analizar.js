@@ -137,12 +137,17 @@ export function resumenIshikawa(causas) {
   };
 }
 
-/** Frases que suelen señalar a una persona y no al proceso (guía M6 §3 y nota de la plantilla «5 Porques»). */
-const FRASES_PERSONA = [
+/**
+ * Frases que suelen señalar a una persona y no al proceso. Las dos primeras vienen de la nota de la plantilla «5 Porques»
+ * («no se fijó», «se descuidó»); el resto son variantes comunes (referencia didáctica). La lista es pública para que el
+ * laboratorio la muestre: la revisión es un indicio visible, no una caja negra.
+ */
+export const LISTA_FRASES_PERSONA = Object.freeze([
   'no se fijó', 'se descuidó', 'se equivocó', 'no puso atención', 'falta de atención', 'se distrajo', 'se olvidó', 'olvidó', 'descuido', 'negligencia',
   'error humano', 'error del operador', 'error del técnico', 'error del inspector', 'por culpa', 'no quiso', 'no le importó', 'flojera', 'irresponsabilidad',
   'falta de compromiso', 'no tuvo cuidado', 'no fue cuidadoso', 'mala actitud',
-].map((frase) => ({ frase, patron: new RegExp(`(^|[^a-z])${plano(frase)}([^a-z]|$)`) }));
+]);
+const FRASES_PERSONA = LISTA_FRASES_PERSONA.map((frase) => ({ frase, patron: new RegExp(`(^|[^a-z])${plano(frase)}([^a-z]|$)`) }));
 
 /**
  * Frases del texto que señalan a una persona (un indicio, no un veredicto): se buscan sin acentos ni mayúsculas y,

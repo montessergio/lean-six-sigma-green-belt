@@ -170,8 +170,12 @@ select.entrada option { background: #101a1b; color: var(--txt); }
 .grafica { position: relative; min-height: 330px; }
 .grafica--ancha { grid-column: 1 / -1; }
 .grafica--alta { min-height: 440px; }
+.grafica.grafica--figura { min-height: auto; } /* una figura SVG mide lo que dibuja: sin hueco bajo ella (también en pantallas angostas). No usar 0: la rejilla comprimiría la fila al alto del área y recortaría la figura. */
 .grafica__titulo { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; color: var(--txt-gris); margin: 0 0 0.3rem 0.4rem; }
 .grafica__lienzo { width: 100%; height: 100%; min-height: inherit; }
+/* Las figuras SVG densas (Ishikawa, 5 Porqués) declaran --ancho-min: en pantallas angostas se desplazan en vez de encogerse. */
+.grafica__lienzo--figura { height: auto; min-height: 0; overflow-x: auto; overflow-y: hidden; }
+.grafica__lienzo--figura svg { display: block; min-width: var(--ancho-min, 0); }
 .grafica__lienzo.js-plotly-plot { min-height: inherit; }
 .grafica__aviso { margin: 0.6rem 0; }
 .grafica__respaldo { overflow-x: auto; }

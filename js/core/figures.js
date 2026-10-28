@@ -6,7 +6,8 @@
  *   { "tipo": "figura", "figura": "campana", "params": { "mu": 50, "sigma": 4 } }
  */
 import { s } from './dom.js';
-import { COLOR } from './config.js';
+import { COLOR, COLOR_6M } from './config.js';
+import { CATEGORIAS_6M } from '../lib/analizar.js';
 import { normalPdf, normalSf } from '../lib/stats.js';
 
 let contador = 0;
@@ -343,6 +344,167 @@ function sipoc({ proveedores = [], entradas = [], pasos = [], salidas = [], clie
 }
 
 /* ------------------------------------------------------------------ */
+/* Ishikawa (M6 §2): espina de pescado con las 6M                        */
+/* ------------------------------------------------------------------ */
+
+/** Recorta a `max` líneas; si sobra texto, la última termina en «…» (el texto completo queda en el tooltip). */
+function recortarLineas(texto, ancho, max) {
+  const todas = partir(texto, ancho);
+  const lineas = todas.slice(0, max);
+  if (todas.length > max) lineas[max - 1] = `${lineas[max - 1].replace(/[\s.,;:]*$/, '').slice(0, Math.max(1, ancho - 1))}…`;
+  return lineas;
+}
+
+/**
+ * Espina de pescado: tres categorías (M) arriba de la espina y tres abajo, cada una con sus causas, y el efecto en la
+ * cabeza. params: { efecto, causas: [{ categoria, causa, votos? }] } con categoria ∈ CATEGORIAS_6M. Con votos, van entre
+ * paréntesis junto a cada causa y la(s) más votada(s) se resaltan en ámbar. Una M sin causas se rotula «sin causas».
+ */
+function ishikawa({ efecto = '', causas = [] } = {}) {
+  const TAM = 12.5;
+  const LH = 15;
+  const CHARS = 24;
+  const MAX_LINEAS = 3;
+  const W = 880;
+  const X_CABEZA = 716;
+  const J = [245, 470, 695]; // dónde cada hueso toca la espina (los de arriba y los de abajo comparten x)
+  const ETIQ_H = 26;
+  const ETIQ_W = 124;
+  const lista = (causas ?? [])
+    .filter((c) => CATEGORIAS_6M.includes(c?.categoria) && String(c?.causa ?? '').trim())
+    .map((c) => ({ categoria: c.categoria, causa: String(c.causa).trim(), votos: Number.isFinite(c.votos) ? c.votos : null }));
+  const hayVotos = lista.some((c) => c.votos !== null);
+  const maximo = Math.max(0, ...lista.map((c) => c.votos ?? 0));
+  const ramas = CATEGORIAS_6M.map((nombre) => ({
+    nombre,
+    causas: lista.filter((c) => c.categoria === nombre).map((c) => {
+      const lineas = recortarLineas(c.causa, CHARS, MAX_LINEAS);
+      return { ...c, lineas, alto: lineas.length * LH + 10 };
+    }),
+  }));
+  const contenido = Math.max(0, ...ramas.map((r) => r.causas.reduce((a, c) => a + c.alto, 0)));
+  const hB = Math.max(120, contenido + 26); // alto de cada hueso (igual en las seis M)
+  const dx = Math.min(50, Math.round(hB * 0.25));
+  const y0 = ETIQ_H + hB; // y de la espina
+  const H0 = 2 * y0;
+  const H = H0 + (hayVotos ? 24 : 6);
+  const resumen = `${lista.length} causas en las 6M`;
+  const svg = s('svg', { viewBox: `-6 -2 ${W + 8} ${H + 4}`, role: 'img', 'aria-label': `Diagrama de Ishikawa (6M) del efecto «${efecto || 'sin definir'}»: ${resumen}` });
+  const FUENTE = 'Inter, system-ui, sans-serif';
+
+  // Espina y cabeza
+  svg.appendChild(s('line', { x1: 14, y1: y0, x2: X_CABEZA - 12, y2: y0, stroke: COLOR.gris, 'stroke-width': 2.6, 'stroke-linecap': 'round' }));
+  svg.appendChild(s('path', { d: `M${X_CABEZA} ${y0} L${X_CABEZA - 15} ${y0 - 7.5} L${X_CABEZA - 15} ${y0 + 7.5} Z`, fill: COLOR.gris }));
+  const lineasEfecto = recortarLineas(String(efecto).trim() || '(escribe el efecto)', 15, 6);
+  const hCabeza = Math.max(84, lineasEfecto.length * 17 + 30);
+  const wCabeza = W - X_CABEZA - 2;
+  svg.appendChild(s('text', { x: X_CABEZA + wCabeza / 2, y: y0 - hCabeza / 2 - 9, 'text-anchor': 'middle', fill: COLOR.gris, 'font-size': 10, 'font-weight': 700, 'letter-spacing': '1.6', 'font-family': FUENTE, texto: 'EFECTO (PROBLEMA)' }));
+  svg.appendChild(s('rect', { x: X_CABEZA, y: y0 - hCabeza / 2, width: wCabeza, height: hCabeza, rx: 9, fill: '#0f1819', stroke: COLOR.blanco, 'stroke-width': 1.8 }));
+  svg.appendChild(textoMulti(X_CABEZA + wCabeza / 2, y0, lineasEfecto, { tam: 13.5, peso: 600, interlinea: 1.25 }));
+
+  // Las seis ramas
+  ramas.forEach((rama, k) => {
+    const arriba = k < 3;
+    const xj = J[k % 3];
+    const yExt = arriba ? ETIQ_H : y0 + hB;
+    const xExt = xj - dx;
+    const color = COLOR_6M[rama.nombre] ?? COLOR.gris;
+    const vacia = rama.causas.length === 0;
+    const xHueso = (y) => xj - dx * (Math.abs(y - y0) / hB);
+    svg.appendChild(s('line', { x1: xj, y1: y0, x2: xExt, y2: yExt, stroke: COLOR.gris, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: 0.8 }));
+    const yEtiq = arriba ? 0 : yExt;
+    svg.appendChild(s('rect', { x: xExt - ETIQ_W / 2, y: yEtiq, width: ETIQ_W, height: ETIQ_H, rx: 6, fill: '#0f1819', stroke: color, 'stroke-width': 1.7, opacity: vacia ? 0.6 : 1 }));
+    svg.appendChild(s('text', { x: xExt, y: yEtiq + ETIQ_H / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: color, 'font-size': 12.5, 'font-weight': 700, 'font-family': FUENTE, texto: rama.nombre }));
+    if (vacia) {
+      const yv = arriba ? y0 - hB / 2 : y0 + hB / 2;
+      svg.appendChild(s('text', { x: xHueso(yv) - 14, y: yv, 'text-anchor': 'end', 'dominant-baseline': 'central', fill: COLOR.gris, 'font-size': TAM, 'font-style': 'italic', 'font-family': FUENTE, opacity: 0.8, texto: 'sin causas' }));
+      return;
+    }
+    let y = (arriba ? ETIQ_H : y0) + 13; // arriba y abajo se lee de arriba hacia abajo, en el orden capturado
+    for (const c of rama.causas) {
+      const yc = y + c.alto / 2;
+      const xb = xHueso(yc);
+      const destacada = hayVotos && maximo > 0 && c.votos === maximo;
+      svg.appendChild(s('line', { x1: xb - 18, y1: yc, x2: xb, y2: yc, stroke: COLOR.gris, 'stroke-width': 1.2, opacity: 0.65 }));
+      const t = s('text', { x: xb - 22, y: yc - ((c.lineas.length - 1) * LH) / 2, 'text-anchor': 'end', 'dominant-baseline': 'central', fill: destacada ? COLOR.ambar : COLOR.blanco, 'font-size': TAM, 'font-weight': destacada ? 700 : 500, 'font-family': FUENTE });
+      c.lineas.forEach((l, i) => t.appendChild(s('tspan', { x: xb - 22, dy: i === 0 ? 0 : LH, texto: l })));
+      if (c.votos !== null) t.appendChild(s('tspan', { fill: COLOR.ambar, 'font-family': 'JetBrains Mono, ui-monospace, monospace', 'font-weight': 700, texto: ` (${c.votos})` }));
+      t.appendChild(s('title', { texto: `${c.causa}${c.votos !== null ? ` · ${c.votos} ${c.votos === 1 ? 'voto' : 'votos'}` : ''} · ${rama.nombre}` }));
+      svg.appendChild(t);
+      y += c.alto;
+    }
+  });
+  if (hayVotos) {
+    svg.appendChild(s('text', { x: 4, y: H0 + 17, fill: COLOR.gris, 'font-size': 11, 'font-family': FUENTE, texto: '(n) = votos del equipo · en ámbar, la causa más votada: es la primera que hay que verificar con datos.' }));
+  }
+  svg.style.setProperty('--ancho-min', '640px'); // en un laboratorio angosto la figura se desplaza en vez de encogerse hasta ser ilegible (labs.css)
+  return svg;
+}
+
+/* ------------------------------------------------------------------ */
+/* 5 Porqués (M6 §3): de la causa aparente a la causa raíz              */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Cadena vertical: problema → ¿por qué? 1 … n → causa raíz. A la derecha, cómo se verificó cada respuesta.
+ * params: { problema, pasos: [{ respuesta, evidencia?, verificada? ('Sí'|'No') }], causaRaiz?, categoria? }
+ * Las verificadas llevan borde verde continuo y marca de verificación; las demás, borde ámbar punteado.
+ */
+function porques({ problema = '', pasos = [], causaRaiz = '', categoria = '' } = {}) {
+  const W = 810;
+  const CAJA_W = 500;
+  const EV_X = 526;
+  const LH = 16;
+  const CHARS = 62;
+  const MAX_LINEAS = 3;
+  const GAP = 36;
+  const FUENTE = 'Inter, system-ui, sans-serif';
+  const usados = (pasos ?? []).filter((p) => String(p?.respuesta ?? '').trim());
+  const filas = [];
+  if (String(problema).trim()) filas.push({ clase: 'problema', etiqueta: 'PROBLEMA', color: COLOR.coral, lineas: recortarLineas(String(problema).trim(), CHARS, MAX_LINEAS) });
+  usados.forEach((p, i) => filas.push({
+    clase: 'paso', n: i + 1, color: p.verificada === 'Sí' ? COLOR.verde : COLOR.ambar, verificada: p.verificada === 'Sí',
+    lineas: recortarLineas(String(p.respuesta).trim(), CHARS, MAX_LINEAS), evidencia: String(p.evidencia ?? '').trim(),
+  }));
+  if (String(causaRaiz).trim()) filas.push({ clase: 'raiz', etiqueta: 'CAUSA RAÍZ', color: COLOR.teal, lineas: recortarLineas(String(causaRaiz).trim(), CHARS, MAX_LINEAS), categoria: String(categoria ?? '').trim() });
+  const medidas = filas.map((f) => {
+    const etiq = f.etiqueta ? 19 : 0;
+    return { ...f, etiq, alto: Math.max(44, etiq + f.lineas.length * LH + 18) };
+  });
+  const H = medidas.reduce((a, f) => a + f.alto, 0) + GAP * Math.max(0, medidas.length - 1) + 6;
+  const svg = s('svg', { viewBox: `-4 -2 ${W + 8} ${Math.max(60, H) + 4}`, role: 'img', 'aria-label': `Cadena de porqués: ${usados.length} ${usados.length === 1 ? 'paso' : 'pasos'} del problema a la causa raíz` });
+  let y = 0;
+  medidas.forEach((f, i) => {
+    if (i > 0) {
+      const xa = 30;
+      svg.appendChild(s('line', { x1: xa, y1: y - GAP + 2, x2: xa, y2: y - 7, stroke: COLOR.gris, 'stroke-width': 1.5 }));
+      svg.appendChild(s('path', { d: `M${xa - 5} ${y - 9} L${xa} ${y - 1} L${xa + 5} ${y - 9} Z`, fill: COLOR.gris }));
+      svg.appendChild(s('text', { x: xa + 14, y: y - GAP / 2, 'dominant-baseline': 'central', fill: COLOR.gris, 'font-size': 11, 'font-style': 'italic', 'font-family': FUENTE, texto: f.clase === 'raiz' ? 'Conclusión' : `¿Por qué? ${f.n}` }));
+    }
+    const grueso = f.clase === 'raiz' ? 2.4 : 1.6;
+    svg.appendChild(s('rect', { x: 0, y, width: CAJA_W, height: f.alto, rx: 8, fill: f.clase === 'raiz' ? 'rgba(44,209,182,0.08)' : '#0f1819', stroke: f.color, 'stroke-width': grueso, 'stroke-dasharray': f.clase === 'paso' && !f.verificada ? '6 4' : null }));
+    if (f.etiqueta) svg.appendChild(s('text', { x: 16, y: y + 14, fill: f.color, 'font-size': 10, 'font-weight': 700, 'letter-spacing': '1.6', 'font-family': FUENTE, texto: f.etiqueta }));
+    svg.appendChild(textoMulti(16, y + f.etiq + (f.alto - f.etiq) / 2, f.lineas, { tam: 12.5, ancla: 'start', peso: f.clase === 'raiz' ? 600 : 500, interlinea: 1.28 }));
+    const yc = y + f.alto / 2;
+    if (f.clase === 'paso') {
+      const xm = EV_X + 9;
+      svg.appendChild(s('circle', { cx: xm, cy: yc, r: 8, fill: 'none', stroke: f.color, 'stroke-width': 1.5, 'stroke-dasharray': f.verificada ? null : '3 2.5' }));
+      if (f.verificada) svg.appendChild(s('path', { d: `M${xm - 4} ${yc} L${xm - 1} ${yc + 3.2} L${xm + 4.2} ${yc - 3.4}`, fill: 'none', stroke: f.color, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+      const evid = f.evidencia ? recortarLineas(f.evidencia, 36, 3) : [f.verificada ? '(sin evidencia escrita)' : '¿cómo se verificaría?'];
+      const t = s('text', { x: EV_X + 26, y: yc - ((evid.length) * 14) / 2 + 4, 'dominant-baseline': 'central', 'font-family': FUENTE });
+      t.appendChild(s('tspan', { x: EV_X + 26, fill: f.color, 'font-size': 11, 'font-weight': 700, texto: f.verificada ? 'Verificada' : 'Sin verificar' }));
+      evid.forEach((l) => t.appendChild(s('tspan', { x: EV_X + 26, dy: 14, fill: f.evidencia ? COLOR.blanco : COLOR.gris, 'font-size': 11, 'font-style': f.evidencia ? null : 'italic', texto: l })));
+      svg.appendChild(t);
+    } else if (f.clase === 'raiz' && f.categoria) {
+      svg.appendChild(s('text', { x: EV_X + 4, y: yc, 'dominant-baseline': 'central', fill: COLOR.teal, 'font-size': 11, 'font-weight': 700, 'font-family': FUENTE, texto: `Categoría: ${f.categoria}` }));
+    }
+    y += f.alto + GAP;
+  });
+  svg.style.setProperty('--ancho-min', '560px');
+  return svg;
+}
+
+/* ------------------------------------------------------------------ */
 /* Registro                                                             */
 /* ------------------------------------------------------------------ */
 
@@ -354,6 +516,8 @@ export const FIGURAS = {
   arbol,
   'simbolos-flujo': simbolosFlujo,
   sipoc,
+  ishikawa,
+  porques,
 };
 
 /** Crea una figura por nombre; si no existe devuelve un SVG con un aviso legible. */

@@ -13,7 +13,7 @@
  * «Pareto» y la hoja de verificación del LAB 14 con los tres turnos sumados (103 defectos).
  */
 import { UMBRAL_PARETO, pareto } from '../js/lib/analizar.js';
-import { bandaV } from '../js/lib/graficas.js';
+import { bandaV, envolver } from '../js/lib/graficas.js';
 import { corto, entero, num, pct, plural } from '../js/core/format.js';
 import { COLOR } from '../js/core/config.js';
 
@@ -49,20 +49,6 @@ const SUPUESTO = {
     'El Pareto ordena por frecuencia (o por costo o tiempo si eso se cuenta): no mide severidad ni riesgo. Una categoría muy frecuente puede tener bajo impacto; para eso está el AMEF (LAB 17).',
 };
 
-/** Parte una etiqueta larga en líneas de hasta `ancho` caracteres (máximo tres) para que quepa bajo cada barra. */
-function envuelve(texto, ancho = 16) {
-  const lineas = [];
-  let actual = '';
-  for (const palabra of texto.split(/\s+/)) {
-    if (actual && `${actual} ${palabra}`.length > ancho) {
-      lineas.push(actual);
-      actual = palabra;
-    } else actual = actual ? `${actual} ${palabra}` : palabra;
-  }
-  lineas.push(actual);
-  if (lineas.length > 3) lineas.length = 3, lineas[2] = `${lineas[2].slice(0, ancho - 1)}…`;
-  return lineas.join('<br>');
-}
 const aFila = (c) => ({ categoria: c.categoria, frecuencia: c.frecuencia });
 const mayuscula = (t) => (t ? t[0].toUpperCase() + t.slice(1) : t);
 
@@ -229,7 +215,7 @@ export default function lab15(ctx = {}) {
       const supuesto = { ...SUPUESTO, estado: 'informativo', detalle: 'Antes de priorizar, confirma que las categorías son excluyentes y que el periodo de datos es representativo; una frecuencia alta no siempre es un riesgo alto.' };
 
       /* ---- gráfica: barras (vital / trivial) + línea de acumulado en un segundo eje ---- */
-      const unicos = r.categorias.map((c) => envuelve(c.etiqueta));
+      const unicos = r.categorias.map((c) => envolver(c.etiqueta));
       const grande = Math.max(1, total);
       const detalle = r.categorias.map((c) => [pct(c.pct, 1), pct(c.acum, 1), c.etiqueta]);
       const barras = (nombre, color, esVital) => ({

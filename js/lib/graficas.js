@@ -63,6 +63,27 @@ export const trazaBarras = (x, y, { nombre = '', color = COLOR.teal, texto = nul
   textfont: { color: COLOR.blanco, family: MONO, size: 11 },
 });
 
+/**
+ * Parte una etiqueta larga en líneas de hasta `ancho` caracteres (a lo sumo `maxLineas`; si sobra texto, la última termina
+ * en «…»), unidas con <br> para que Plotly las dibuje en varias líneas bajo cada barra o junto a cada punto.
+ */
+export function envolver(texto, ancho = 16, maxLineas = 3) {
+  const lineas = [];
+  let actual = '';
+  for (const palabra of String(texto).split(/\s+/)) {
+    if (actual && `${actual} ${palabra}`.length > ancho) {
+      lineas.push(actual);
+      actual = palabra;
+    } else actual = actual ? `${actual} ${palabra}` : palabra;
+  }
+  lineas.push(actual);
+  if (lineas.length > maxLineas) {
+    lineas.length = maxLineas;
+    lineas[maxLineas - 1] = `${lineas[maxLineas - 1].slice(0, ancho - 1)}…`;
+  }
+  return lineas.join('<br>');
+}
+
 /** '#rrggbb' → 'rgba(r,g,b,a)'. */
 export function hexARgba(hex, a = 1) {
   const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex);

@@ -109,3 +109,13 @@ export const COLOR = Object.freeze({
   linea: '#1d2b2d',
   linea2: '#2b3c3f',
 });
+
+/** Un color por cada M del diagrama de Ishikawa: lo comparten la figura SVG y las gráficas de votos. */
+export const COLOR_6M = Object.freeze({
+  'Mano de obra': COLOR.azul,
+  Método: COLOR.violeta,
+  Máquina: COLOR.teal,
+  Material: COLOR.verde,
+  Medición: COLOR.coral,
+  'Medio ambiente': COLOR.gris,
+});
