@@ -260,5 +260,186 @@
         { "proveedor": "Proveedor de empaque", "entrada": "Material de empaque", "paso": "Empacar y embarcar", "salida": "Embarque", "cliente": "Cliente ferroviario", "requisito": "Entrega completa y a tiempo" }
       ]
     }
+  },
+
+  "pareto": {
+    "_fuente": "Guía M6 §1 (ocho semanas acumuladas de la hoja de verificación del M4: 25 defectos) y Ejercicio 1 (tickets de un equipo de soporte) · plantilla Excel «Pareto» (causas con su frecuencia; la plantilla no rotula qué se cuenta). El ejemplo de la hoja de verificación del Excel (103 defectos) se arma en el LAB 15 sumando las categorías de `hojaVerificacion.excel`.",
+    "guia": {
+      "unidad": "defectos",
+      "categorias": [
+        { "categoria": "Continuidad eléctrica", "frecuencia": 10 },
+        { "categoria": "Etiquetado", "frecuencia": 7 },
+        { "categoria": "Torque fuera de especificación", "frecuencia": 4 },
+        { "categoria": "Conector mal asentado", "frecuencia": 3 },
+        { "categoria": "Ruteo", "frecuencia": 1 }
+      ]
+    },
+    "tickets": {
+      "unidad": "tickets",
+      "categorias": [
+        { "categoria": "Problemas de acceso", "frecuencia": 45 },
+        { "categoria": "Lentitud del sistema", "frecuencia": 28 },
+        { "categoria": "Errores de sincronización de datos", "frecuencia": 15 },
+        { "categoria": "Errores de interfaz", "frecuencia": 8 },
+        { "categoria": "Otros", "frecuencia": 4 }
+      ]
+    },
+    "excel": {
+      "unidad": "registros",
+      "categorias": [
+        { "categoria": "Herramienta descalibrada", "frecuencia": 42 },
+        { "categoria": "Sin verificación al inicio de turno", "frecuencia": 25 },
+        { "categoria": "Método de apriete inconsistente", "frecuencia": 15 },
+        { "categoria": "Capacitación incompleta", "frecuencia": 9 },
+        { "categoria": "Variación de material", "frecuencia": 6 },
+        { "categoria": "Otros", "frecuencia": 3 }
+      ]
+    }
+  },
+
+  "ishikawa": {
+    "_fuente": "Guía M6 §2 (las 6M aplicadas a las fallas de continuidad eléctrica, sin votos) · plantilla Excel «Ishikawa» (fuerza de retención por debajo del límite en el Turno 3, con votos de 1 a 10).",
+    "guia": {
+      "efecto": "Fallas de continuidad eléctrica",
+      "causas": [
+        { "categoria": "Mano de obra", "causa": "Capacitación insuficiente en técnica de engarzado" },
+        { "categoria": "Mano de obra", "causa": "Alta rotación en el turno nocturno" },
+        { "categoria": "Método", "causa": "Instrucción de trabajo sin valor numérico de fuerza de engarzado" },
+        { "categoria": "Método", "causa": "Sin punto de verificación intermedio" },
+        { "categoria": "Máquina", "causa": "Prensa de engarzado sin mantenimiento preventivo al día" },
+        { "categoria": "Material", "causa": "Lote de terminales fuera de especificación" },
+        { "categoria": "Material", "causa": "Aislamiento de cable dañado en el carrete" },
+        { "categoria": "Medición", "causa": "Probador de continuidad sin calibración vigente" },
+        { "categoria": "Medición", "causa": "Criterio de aceptación no estandarizado entre turnos" },
+        { "categoria": "Medio ambiente", "causa": "Variación de temperatura en planta que afecta la consistencia del engarzado" }
+      ]
+    },
+    "excel": {
+      "efecto": "Fuerza de retención por debajo del límite en Turno 3",
+      "causas": [
+        { "categoria": "Mano de obra", "causa": "Turno 3 con menor experiencia", "votos": 5 },
+        { "categoria": "Mano de obra", "causa": "Capacitación incompleta en torque", "votos": 6 },
+        { "categoria": "Método", "causa": "Sin verificación de torque al inicio de turno", "votos": 9 },
+        { "categoria": "Método", "causa": "Secuencia de apriete inconsistente", "votos": 4 },
+        { "categoria": "Máquina", "causa": "Torquímetro descalibrado", "votos": 8 },
+        { "categoria": "Máquina", "causa": "Desgaste de herramienta", "votos": 3 },
+        { "categoria": "Material", "causa": "Variación de terminales", "votos": 2 },
+        { "categoria": "Medición", "causa": "Resolución del instrumento mayor que el rango", "votos": 7 },
+        { "categoria": "Medición", "causa": "Sin patrón de verificación", "votos": 5 },
+        { "categoria": "Medio ambiente", "causa": "Iluminación deficiente en T3", "votos": 2 }
+      ]
+    }
+  },
+
+  "porques": {
+    "_fuente": "Guía M6 §3 (cadena de cinco porqués desde las fallas de continuidad eléctrica; la guía no da evidencias, por eso quedan en blanco) · plantilla Excel «5 Porques» (fuerza de retención promedio en el Turno 3).",
+    "guia": {
+      "problema": "Fallas de continuidad eléctrica en los arneses",
+      "cadena": [
+        { "respuesta": "Algunos engarzados no logran contacto eléctrico completo entre el terminal y el conductor" },
+        { "respuesta": "La fuerza de engarzado aplicada varía entre operadores" },
+        { "respuesta": "La instrucción de trabajo dice «engarzar firmemente», sin valor numérico ni tope mecánico de referencia" },
+        { "respuesta": "Se redactó antes de instalar prensas con control de fuerza programable, y nunca se actualizó" },
+        { "respuesta": "No existe un proceso de control de cambios que vincule actualizaciones de equipo con la revisión de instrucciones de trabajo" }
+      ],
+      "causaRaiz": "No existe un proceso de control de cambios que vincule las actualizaciones de equipo con la revisión de las instrucciones de trabajo.",
+      "categoria": "Método / sistema"
+    },
+    "excel": {
+      "problema": "Fuerza de retención promedio de 165 N en Turno 3 (límite: 173 N)",
+      "cadena": [
+        { "respuesta": "El conector no se aprieta hasta el valor requerido", "evidencia": "Mediciones de fuerza por turno", "verificada": "Sí" },
+        { "respuesta": "El operador no tiene forma de saber cuándo alcanzó el valor", "evidencia": "Observación en estación; sin indicador", "verificada": "Sí" },
+        { "respuesta": "El torquímetro no se verifica al inicio del turno", "evidencia": "Bitácora de verificación sin registros", "verificada": "Sí" },
+        { "respuesta": "El arranque de turno no incluye la verificación del instrumento", "evidencia": "Revisión de la instrucción de trabajo", "verificada": "Sí" },
+        { "respuesta": "El plan de control no define frecuencia ni responsable", "evidencia": "Revisión del plan de control", "verificada": "No" }
+      ],
+      "causaRaiz": "El plan de control no exige verificar el instrumento al inicio de cada turno.",
+      "categoria": "Método / sistema",
+      "pruebaInversa": "Sí",
+      "contramedida": "Verificación del torquímetro al inicio de cada turno, con registro y responsable en el plan de control",
+      "responsable": "Jefe de producción"
+    }
+  },
+
+  "amef": {
+    "_fuente": "Guía M6 §4 (tres modos de falla de la línea de arneses), Ejercicios 2 y 3 (sellado de bolsas en una línea de empaque) · plantilla Excel «AMEF» (tres modos con su causa).",
+    "guia": {
+      "filas": [
+        { "paso": "Engarzado de terminales", "modo": "Fuerza de engarzado insuficiente", "efecto": "Falla de continuidad eléctrica", "causa": "", "s": 8, "o": 6, "d": 4 },
+        { "paso": "Ensamble de conectores", "modo": "Conector mal asentado", "efecto": "Desconexión en servicio", "causa": "", "s": 9, "o": 2, "d": 3 },
+        { "paso": "Colocación de etiquetado", "modo": "Etiqueta ilegible o mal ubicada", "efecto": "Error de identificación", "causa": "", "s": 3, "o": 7, "d": 2 }
+      ]
+    },
+    "empaque": {
+      "filas": [
+        { "paso": "Sellado de bolsas", "modo": "Sellado incompleto de bolsa", "efecto": "Contaminación o pérdida de frescura del producto", "causa": "", "s": 7, "o": 5, "d": 6 }
+      ],
+      "dNueva": 2
+    },
+    "excel": {
+      "filas": [
+        { "paso": "Atornillado", "modo": "Torque bajo", "efecto": "Conector flojo", "causa": "Herramienta descalibrada", "s": 8, "o": 5, "d": 6 },
+        { "paso": "Crimpado", "modo": "Terminal mal crimpada", "efecto": "Circuito abierto", "causa": "Desgaste de aplicador", "s": 9, "o": 4, "d": 5 },
+        { "paso": "Etiquetado", "modo": "Etiqueta incorrecta", "efecto": "Mezcla de arneses", "causa": "Falta de poka-yoke", "s": 5, "o": 3, "d": 8 }
+      ]
+    }
+  },
+
+  "anova": {
+    "_fuente": "Guía M7 §2 (ejemplo mínimo de seis datos y cinco fuerzas de engarzado, en N, por turno) · plantilla Excel «ANOVA» (diez fuerzas, en N, por turno).",
+    "unidad": "N",
+    "minimo": {
+      "unidad": "",
+      "grupos": [
+        { "nombre": "Grupo A", "datos": [10, 12] },
+        { "nombre": "Grupo B", "datos": [14, 16] },
+        { "nombre": "Grupo C", "datos": [18, 20] }
+      ]
+    },
+    "guia": {
+      "grupos": [
+        { "nombre": "Turno 1", "datos": [172, 175, 178, 174, 176] },
+        { "nombre": "Turno 2", "datos": [173, 176, 171, 177, 173] },
+        { "nombre": "Turno 3", "datos": [165, 168, 158, 170, 164] }
+      ]
+    },
+    "excel": {
+      "grupos": [
+        { "nombre": "Turno 1", "datos": [178.3, 176.5, 171.5, 180.1, 177.6, 177.8, 177.1, 183.1, 180.3, 181.6] },
+        { "nombre": "Turno 2", "datos": [178.8, 178, 174.9, 183.1, 172.2, 177.1, 179.9, 179.1, 179, 173.9] },
+        { "nombre": "Turno 3", "datos": [162.5, 165.5, 169.7, 164.9, 162.8, 160.5, 170.7, 166.7, 164.6, 163.2] }
+      ]
+    }
+  },
+
+  "regresion": {
+    "_fuente": "Plantilla Excel «Correlacion y Regresion» (12 pares; la plantilla no rotula las variables: se leen como fuerza de engarzado en N y resistencia de contacto en mΩ, por coincidir con el rango de las fuerzas del caso y con el ejemplo de la guía M7 §3–4). La ecuación publicada en la guía (Resistencia = 16.37 − 0.088 × Fuerza, R² = 0.985) sale de diez pares que solo aparecen en una figura: no se puede reproducir con estos datos y por eso las cifras del LAB 19 difieren un poco.",
+    "x": { "nombre": "Fuerza de engarzado", "unidad": "N" },
+    "y": { "nombre": "Resistencia de contacto", "unidad": "mΩ" },
+    "excel": {
+      "x": [160, 162.3, 164.5, 166.8, 169.1, 171.4, 173.6, 175.9, 178.2, 180.5, 182.7, 185],
+      "y": [2.21, 2.01, 1.94, 1.53, 1.48, 1.13, 1.17, 0.9, 0.78, 0.45, 0.32, 0.07],
+      "xPrediccion": 170,
+      "yObjetivo": 1.5
+    },
+    "guia": { "intercepto": 16.37, "pendiente": -0.088, "r": -0.99, "r2": 0.985, "limite": 1.2, "fuerzaMinima": 173, "fuerzaTurno3": 165 }
+  },
+
+  "chi": {
+    "_fuente": "Guía M7 §5 (fallas de continuidad eléctrica de ocho semanas: 2, 2 y 6 en 5,340 arneses por turno) · plantilla Excel «Chi-cuadrada» (285/15, 280/20 y 262/38). El ejemplo «Torque contra el resto» se deriva de la hoja de verificación del Excel (LAB 14) agrupando las otras cinco categorías, como sugiere la plantilla cuando hay celdas con esperado menor que 5.",
+    "estratos": ["Turno 1", "Turno 2", "Turno 3"],
+    "guia": { "unidadesPorTurno": 5340, "fallas": [2, 2, 6] },
+    "excel": {
+      "filas": [
+        { "categoria": "Conforme", "conteos": [285, 280, 262] },
+        { "categoria": "Defecto", "conteos": [15, 20, 38] }
+      ]
+    }
+  },
+
+  "ic": {
+    "_fuente": "Guía M7 §1 (diez torques del M5: x̄ = 1.355 N·m, s = 0.034 N·m; 95 % de confianza).",
+    "torque": { "n": 10, "media": 1.355, "s": 0.034, "confianza": 95, "unidad": "N·m" }
   }
 }
