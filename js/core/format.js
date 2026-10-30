@@ -99,5 +99,25 @@ export function leerNumero(texto) {
   return Number.isFinite(n) ? n : NaN;
 }
 
+/**
+ * Valor p como se reporta: cuatro decimales y, por debajo de 0.0001, «< 0.0001» (no se da un valor exacto que casi nadie
+ * puede interpretar). Valores no finitos → «—».
+ */
+export function valorP(p) {
+  if (typeof p !== 'number' || !Number.isFinite(p)) return '—';
+  if (p < 0.0001) return '< 0.0001';
+  return num(p, 4);
+}
+
+/** Notación científica con exponente en superíndice: cientifica(3.57e-10, 3) → «3.57 × 10⁻¹⁰». */
+export function cientifica(x, cifrasSig = 3) {
+  if (typeof x !== 'number' || !Number.isFinite(x)) return '—';
+  if (x === 0) return '0';
+  const [mantisa, exponente] = x.toExponential(Math.max(0, cifrasSig - 1)).split('e');
+  const e = Number(exponente);
+  const superindice = String(Math.abs(e)).replace(/\d/g, (d) => '⁰¹²³⁴⁵⁶⁷⁸⁹'[Number(d)]);
+  return `${mantisa.replace('-', MENOS)} × 10${e < 0 ? '⁻' : ''}${superindice}`;
+}
+
 /** Cuenta con singular/plural: plural(1, 'dato') → «1 dato»; plural(3, 'dato') → «3 datos». */
 export const plural = (n, singular, pluralTexto = `${singular}s`) => `${entero(n)} ${n === 1 ? singular : pluralTexto}`;
