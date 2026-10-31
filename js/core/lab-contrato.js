@@ -10,8 +10,8 @@
  *     titulo: 'Estadística descriptiva',
  *     modulo: 'M0',
  *     resumen: 'Una o dos frases sobre qué se practica.',
- *     entradas: [ …campos editables… ],  // ver TIPOS_ENTRADA
- *     presets: [ { id, etiqueta, valores } ],   // ejemplos con un clic (y destino de «Cargar en LAB»)
+ *     entradas: [ …campos editables… ],  // ver TIPOS_ENTRADA; cualquiera puede llevar visibleSi(estado) → boolean
+ *     presets: [ { id, etiqueta, valores, visibleSi? } ],   // ejemplos con un clic (y destino de «Cargar en LAB»)
  *     calcular(entradas, ctx) → resultado,      // función PURA: mismos datos → mismo resultado
  *     umbral:   { … },                   // criterio de interpretación (estático o devuelto por calcular)
  *     supuesto: { … },                   // supuesto estadístico relevante (ídem)
@@ -28,6 +28,7 @@
  *   figuras?:   [{ id, titulo, figura, params, ancha? }],                      // SVG de figures.js
  *   tablas?:    [{ titulo, columnas, filas, pie?, resaltar? }],
  *   vacio?:     string,                                  // mensaje si no hay nada que graficar
+ *   preguntas?: string[],                                // sustituyen a las de la definición (laboratorios con varias herramientas)
  * }
  */
 import { ESTADOS } from './config.js';
@@ -199,6 +200,7 @@ export function validarResultado(r, def = {}) {
     if (!g.respaldo?.columnas || !g.respaldo?.filas) p.push(`gráfica «${g.id}»: falta la tabla de respaldo (necesaria sin conexión)`);
   }
   for (const f of r.figuras ?? []) if (!f.id || !f.figura) p.push('figura sin id o sin nombre');
+  if (r.preguntas !== undefined && !(Array.isArray(r.preguntas) && r.preguntas.every((q) => typeof q === 'string' && q.trim()))) p.push('preguntas debe ser una lista de textos');
   for (const t of r.tablas ?? []) if (!Array.isArray(t.columnas) || !Array.isArray(t.filas)) p.push(`tabla «${t.titulo}» mal formada`);
   const umbral = r.umbral ?? def.umbral;
   const supuesto = r.supuesto ?? def.supuesto;

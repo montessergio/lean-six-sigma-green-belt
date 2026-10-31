@@ -601,3 +601,62 @@ test('IC de una media: ejemplos de la guía (torque [1.334, 1.376], n = 16 [46.0
   }
   assert.deepEqual(A.intervaloMedia({ n: 5, media: 10, s: 0 }).icT, [10, 10]); // sin variación el intervalo se reduce a un punto
 });
+
+/* ------------------------------------------------------------------ */
+/* Regresión con otro nivel de confianza e intervalo de Wilson           */
+/* ------------------------------------------------------------------ */
+
+test('Regresión: `nivel` cambia el IC de la pendiente y los intervalos de la predicción (SciPy, 12 pares de la plantilla)', () => {
+  const caso = ref.regresion.find((c) => c.nombre === 'excel');
+  const r95 = A.regresionLineal(caso.x, caso.y);
+  const r99 = A.regresionLineal(caso.x, caso.y, { nivel: 0.99 });
+  const r90 = A.regresionLineal(caso.x, caso.y, { nivel: 0.9 });
+  assert.deepEqual([r95.nivel, r99.nivel, r90.nivel], [0.95, 0.99, 0.9]);
+  cerca(r99.tCrit, 3.16927267261695, { rel: 1e-9 }); // t.ppf(0.995, 10)
+  cerca(r99.icPendiente[0], -0.09332790679989661, { rel: 1e-9 });
+  cerca(r99.icPendiente[1], -0.07474407263455086, { rel: 1e-9 });
+  cerca(r90.icPendiente[0], -0.08934990246895544, { rel: 1e-9 });
+  cerca(r90.icPendiente[1], -0.07872207696549194, { rel: 1e-9 });
+  // la predicción usa por defecto el nivel de la regresión; con 0.95 coincide con el IC de siempre
+  cerca(A.prediccion(r99, 170).icMedia[0], 1.2993894542496447, { rel: 1e-9 });
+  cerca(A.prediccion(r99, 170).icMedia[1], 1.4524571610031396, { rel: 1e-9 });
+  cerca(A.prediccion(r99, 170).icPred[0], 1.1119704329789093, { rel: 1e-9 });
+  cerca(A.prediccion(r99, 170).icPred[1], 1.639876182273875, { rel: 1e-9 });
+  cerca(A.prediccion(r90, 170).icMedia[0], 1.3321547057566818, { rel: 1e-9 });
+  cerca(A.prediccion(r90, 170).icPred[1], 1.526874132301858, { rel: 1e-9 });
+  cerca(A.prediccion(r95, 170).icMedia[0], 1.322116623943305, { rel: 1e-9 });
+  // un nivel explícito distinto del de la regresión también funciona
+  cerca(A.prediccion(r95, 170, 0.99).icMedia[0], 1.2993894542496447, { rel: 1e-9 });
+  // un nivel inválido vuelve a 95 %
+  assert.equal(A.regresionLineal(caso.x, caso.y, { nivel: 1.5 }).nivel, 0.95);
+  assert.equal(A.regresionLineal(caso.x, caso.y, { nivel: 0 }).nivel, 0.95);
+});
+
+for (const [x, n, confianza, bajo, alto] of [
+  [2, 5340, 0.95, 0.00010271614756587248, 0.0013646662366459186], // fallas del Turno 1 de la guía
+  [6, 5340, 0.95, 0.0005150524417934425, 0.0024493803436414193], // Turno 3
+  [15, 300, 0.95, 0.030531640629347285, 0.08084703347274416], // plantilla Excel, defectos del Turno 1
+  [38, 300, 0.99, 0.08515773050715829, 0.18433180743196875],
+  [0, 10, 0.95, 0, 0.27753279986288926],
+  [10, 10, 0.95, 0.7224672001371109, 1],
+  [21, 35, 0.95, 0.435727090128925, 0.7444927114061941],
+  [1, 2, 0.99, 0.06171307677810184, 0.9382869232218982],
+]) {
+  test(`Wilson: ${x} de ${n} con ${confianza * 100} % coincide con scipy.stats.binomtest(...).proportion_ci(method='wilson')`, () => {
+    const r = A.intervaloWilson(x, n, confianza);
+    assert.equal(r.valido, true);
+    assert.equal(r.p, x / n);
+    cerca(r.ic[0], bajo, { rel: 1e-9, abs: 1e-15 }, 'límite inferior');
+    cerca(r.ic[1], alto, { rel: 1e-9, abs: 1e-15 }, 'límite superior');
+    assert.ok(r.ic[0] >= 0 && r.ic[1] <= 1);
+    assert.ok(r.ic[0] <= r.p && r.p <= r.ic[1]);
+  });
+}
+
+test('Wilson: con 0 o n eventos el extremo es exactamente 0 o 1, y las entradas inválidas se rechazan', () => {
+  assert.equal(A.intervaloWilson(0, 10).ic[0], 0);
+  assert.equal(A.intervaloWilson(10, 10).ic[1], 1);
+  for (const malo of [[-1, 10], [11, 10], [1.5, 10], [1, 0], [1, 10.5], [NaN, 10], [1, 10, 1], [1, 10, 0]]) {
+    assert.equal(A.intervaloWilson(...malo).valido, false, JSON.stringify(malo));
+  }
+});

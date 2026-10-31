@@ -346,9 +346,10 @@ function campoTabla(spec, api) {
         construir();
         return;
       }
-      cabeceras.forEach(({ nodo, col }) => {
+      // Los rótulos pueden depender del estado (p. ej. «Turno 1» → «Máquina 1» sin que cambien las columnas): se leen de nuevo.
+      cols.forEach((col, i) => {
         const t = etiquetaDe(col);
-        if (nodo.textContent !== t) nodo.textContent = t;
+        if (cabeceras[i] && cabeceras[i].nodo.textContent !== t) cabeceras[i].nodo.textContent = t;
       });
       fijas.forEach(({ nodo, fila, col }) => {
         const t = col.texto ? col.texto(estado, estado[spec.id][fila], fila) : '';
@@ -468,6 +469,8 @@ export function montarLab(contenedor, def, ctx = {}) {
   let ultimoResultado = null;
   let presetActivo = null;
   const campos = new Map(); // id → campo
+  const condicionales = []; // entradas con `visibleSi(estado)`: solo se muestran cuando el estado lo pide
+  const presetsCondicionales = []; // ejemplos con `visibleSi(estado)` (p. ej. los de la herramienta elegida en un selector)
   const botonesPreset = new Map();
   const nodosVisuales = new Map(); // id → { caja, lienzo, tipo }
   const nodosTabla = [];
@@ -509,6 +512,7 @@ export function montarLab(contenedor, def, ctx = {}) {
     ? seccion('EJEMPLOS', h('div', { class: 'presets' }, presets.map((p) => {
         const b = h('button', { type: 'button', class: 'btn', title: p.ayuda ?? null, onclick: () => cargar(p.valores, p.id) }, p.etiqueta);
         botonesPreset.set(p.id, b);
+        if (typeof p.visibleSi === 'function') presetsCondicionales.push({ spec: p, el: b });
         return b;
       })))
     : null;
@@ -531,13 +535,13 @@ export function montarLab(contenedor, def, ctx = {}) {
     const fabrica = FABRICAS[spec.tipo];
     const campo = fabrica(spec, api);
     if (tieneEstado(spec)) campos.set(spec.id, campo);
+    if (typeof spec.visibleSi === 'function') condicionales.push({ spec, el: campo.el });
     seccionEntradas.appendChild(campo.el);
   }
   seccionEntradas.append(acciones, codigoColor);
 
-  const preguntas = def.preguntas?.length
-    ? h('section', { class: 'lab__pregunta' }, h('span', { class: 'etiqueta' }, 'PREGUNTAS PARA EL ANALISTA'), def.preguntas.map((q) => h('p', null, inline(q))))
-    : null;
+  // Las preguntas son las de la definición, salvo que calcular() devuelva otras (un laboratorio con varias herramientas).
+  const preguntas = h('section', { class: 'lab__pregunta', hidden: true });
 
   const panel = h(
     'aside',
@@ -563,6 +567,8 @@ export function montarLab(contenedor, def, ctx = {}) {
 
   function refrescarCampos() {
     for (const campo of campos.values()) campo.refrescar(estado, ejemplo);
+    for (const { spec, el } of condicionales) el.hidden = !spec.visibleSi(estado);
+    for (const { spec, el } of presetsCondicionales) el.hidden = !spec.visibleSi(estado);
   }
 
   function marcarPreset(id) {
@@ -601,6 +607,7 @@ export function montarLab(contenedor, def, ctx = {}) {
     const msgs = [];
     for (const spec of def.entradas) {
       if (spec.tipo !== 'numero' && spec.tipo !== 'slider') continue;
+      if (typeof spec.visibleSi === 'function' && !spec.visibleSi(estado)) continue; // un campo oculto no avisa
       const v = estado[spec.id];
       if (!Number.isFinite(v)) continue;
       if ((spec.min !== undefined && v < spec.min) || (spec.max !== undefined && v > spec.max)) {
@@ -653,6 +660,11 @@ export function montarLab(contenedor, def, ctx = {}) {
       bloqueCriterio(r.umbral ?? def.umbral, '', 'Umbral de interpretación'),
       bloqueCriterio(r.supuesto ?? def.supuesto, 'criterio--supuesto', 'Supuesto estadístico')
     );
+    // Preguntas para el analista
+    const lista = Array.isArray(r.preguntas) && r.preguntas.length ? r.preguntas : def.preguntas ?? [];
+    vaciar(preguntas);
+    preguntas.hidden = lista.length === 0;
+    if (lista.length) preguntas.append(h('span', { class: 'etiqueta' }, 'PREGUNTAS PARA EL ANALISTA'), ...lista.map((q) => h('p', null, inline(q))));
     pintarArea(r);
   }
 

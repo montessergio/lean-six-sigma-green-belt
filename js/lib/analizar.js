@@ -365,9 +365,10 @@ export function fuerzaCorrelacion(r) {
 /**
  * Regresión lineal simple por mínimos cuadrados de Y sobre X (listas del mismo largo, al menos 3 pares): pendiente,
  * intercepto, r, R² (= r²), error estándar de la estimación, error estándar y prueba t de la pendiente (valor p de dos
- * colas, glRes = n − 2) e intervalo de confianza del 95 % de la pendiente, con ajustados y residuos.
+ * colas, glRes = n − 2) e intervalo de confianza de la pendiente (95 % si no se indica otro `nivel`), con ajustados y
+ * residuos.
  */
-export function regresionLineal(x, y) {
+export function regresionLineal(x, y, { nivel = 0.95 } = {}) {
   const n = Math.min(x?.length ?? 0, y?.length ?? 0);
   if ((x?.length ?? 0) !== (y?.length ?? 0)) return { valido: false, n, motivo: 'largos' };
   if (n < 3) return { valido: false, n, motivo: 'pocos' };
@@ -395,9 +396,10 @@ export function regresionLineal(x, y) {
   const r = syy > 0 ? sxy / Math.sqrt(sxx * syy) : NaN;
   const t = eeB > 0 ? b / eeB : b === 0 ? 0 : Math.sign(b) * Infinity;
   const p = eeB > 0 ? 2 * tSf(Math.abs(t), glRes) : b === 0 ? 1 : 0;
-  const tCrit = tPpf(0.975, glRes);
+  const nivelValido = nivel > 0 && nivel < 1 ? nivel : 0.95;
+  const tCrit = tPpf(1 - (1 - nivelValido) / 2, glRes);
   return {
-    valido: true, n, glRes, mediaX: mx, mediaY: my, sxx, syy, sxy, pendiente: b, intercepto: a, r, r2: r * r, s, eePendiente: eeB,
+    valido: true, n, glRes, nivel: nivelValido, mediaX: mx, mediaY: my, sxx, syy, sxy, pendiente: b, intercepto: a, r, r2: r * r, s, eePendiente: eeB,
     eeIntercepto: s * Math.sqrt(1 / n + (mx * mx) / sxx), t, p, tCrit, icPendiente: [b - tCrit * eeB, b + tCrit * eeB],
     ajustados, residuos, xMin: Math.min(...x), xMax: Math.max(...x), yConstante: !(syy > 0), fuerza: fuerzaCorrelacion(r),
   };
@@ -405,12 +407,13 @@ export function regresionLineal(x, y) {
 
 /**
  * Predicción para X = x0: Ŷ, intervalo de confianza de la respuesta media e intervalo de predicción de una unidad
- * nueva (t de Student, `nivel` de confianza) y aviso de extrapolación si x0 queda fuera del rango observado.
+ * nueva (t de Student; `nivel` de confianza, por defecto el de la regresión) y aviso de extrapolación si x0 queda
+ * fuera del rango observado.
  */
-export function prediccion(reg, x0, nivel = 0.95) {
+export function prediccion(reg, x0, nivel = reg?.nivel ?? 0.95) {
   if (!reg?.valido || !Number.isFinite(x0)) return { valido: false };
   const yh = reg.intercepto + reg.pendiente * x0;
-  const tCrit = nivel === 0.95 ? reg.tCrit : tPpf(1 - (1 - nivel) / 2, reg.glRes);
+  const tCrit = nivel === reg.nivel ? reg.tCrit : tPpf(1 - (1 - nivel) / 2, reg.glRes);
   const base = 1 / reg.n + (x0 - reg.mediaX) ** 2 / reg.sxx;
   const seMedia = reg.s * Math.sqrt(base);
   const sePred = reg.s * Math.sqrt(1 + base);
@@ -518,4 +521,25 @@ export function intervaloMedia({ n, media: m, s, confianza = 0.95 }) {
   const t = tPpf(cola, gl);
   const ee = s / Math.sqrt(n);
   return { valido: true, n, media: m, s, confianza, gl, ee, z, t, semiZ: z * ee, semiT: t * ee, icZ: [m - z * ee, m + z * ee], icT: [m - t * ee, m + t * ee] };
+}
+
+/* ------------------------------------------------------------------ */
+/* Intervalo de una proporción (apoyo de la chi-cuadrada, guía M7 §5)    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Intervalo de Wilson para la proporción x / n (`confianza` de 0 a 1, por defecto 0.95). Con pocos eventos es mucho más
+ * confiable que el intervalo normal «p ± z·√(p(1−p)/n)», que puede salirse de [0, 1]; con x = 0 o x = n llega a 0 o a 1.
+ * Coincide con scipy.stats.binomtest(x, n).proportion_ci(method='wilson').
+ */
+export function intervaloWilson(x, n, confianza = 0.95) {
+  if (!Number.isInteger(n) || n < 1 || !Number.isInteger(x) || x < 0 || x > n || !(confianza > 0 && confianza < 1)) return { valido: false };
+  const z = normalPpf(1 - (1 - confianza) / 2);
+  const p = x / n;
+  const z2 = z * z;
+  const denominador = 1 + z2 / n;
+  const centro = (p + z2 / (2 * n)) / denominador;
+  const mitad = (z * Math.sqrt((p * (1 - p)) / n + z2 / (4 * n * n))) / denominador;
+  // Con x = 0 o x = n un extremo es exactamente 0 o 1 (la resta deja un residuo de redondeo).
+  return { valido: true, x, n, p, confianza, z, ic: [x === 0 ? 0 : Math.max(0, centro - mitad), x === n ? 1 : Math.min(1, centro + mitad)] };
 }

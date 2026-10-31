@@ -37,6 +37,8 @@
 
 /* ---------- Campos ---------- */
 .campo { display: grid; gap: 0.35rem; }
+/* Entradas con `visibleSi` (labs con varias herramientas, como el LAB 19): el atributo hidden debe ganarle al display de .campo. */
+.lab__panel [hidden] { display: none; }
 .campo__fila { display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem; }
 /* Las etiquetas de campos y resultados NO van en mayúsculas: n y N, s y σ, x̄ y X significan cosas distintas. */
 .campo__etiqueta { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; color: var(--txt-gris); }
