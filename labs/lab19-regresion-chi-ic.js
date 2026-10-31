@@ -522,6 +522,7 @@ function calcularChi(e) {
     const ps = top.map((x, i) => ({ x, i })).filter(({ x }) => (signo > 0 ? x.z >= 0 : x.z < 0));
     return {
       type: 'bar', orientation: 'h', name: nombre, x: ps.map(({ x }) => x.contribucion), y: ps.map(({ i }) => etiquetasTop[i]), marker: { color },
+      textposition: 'none', // el texto solo sirve para el globo; sin esto Plotly lo dibuja dentro de las barras y se desborda
       text: ps.map(({ x }) => `<b>${x.nombre}</b><br>observado ${cuenta(x.o)} · esperado ${num(x.e, 2)}<br>contribución ${num(x.contribucion, 3)} · z = ${conSigno(x.z, 2)}`), hovertemplate: '%{text}<extra></extra>',
     };
   };
@@ -550,11 +551,13 @@ function calcularChi(e) {
         marker: { color: COLOR.coral, size: 11, line: { color: '#0a1011', width: 1 } },
         error_y: { type: 'data', symmetric: false, array: wilson.map((w) => 100 * (w.ic[1] - w.p)), arrayminus: wilson.map((w) => 100 * (w.p - w.ic[0])), visible: true, color: COLOR.coral, thickness: 2.4, width: 8 },
         text: etiquetasCols.map((_, j) => textoW(j)), hovertemplate: '%{text}<extra></extra>',
+      }, {
+        // entrada de leyenda para la línea punteada (que es una forma): sin datos, solo el nombre y el estilo
+        type: 'scatter', mode: 'lines', name: `Proporción global ${porcentaje(p0)} (lo que supone H₀)`, x: [null], y: [null],
+        line: { color: COLOR.gris, dash: 'dot', width: 1.5 }, hoverinfo: 'skip',
       }],
       layout: {
-        showlegend: false,
         shapes: [lineaH(100 * p0, COLOR.gris, { dash: 'dot', ancho: 1.5 })],
-        annotations: [{ x: 0, y: 100 * p0, xref: 'paper', yref: 'y', text: ` global ${porcentaje(p0)} (lo que supone H₀) `, showarrow: false, xanchor: 'left', yanchor: 'bottom', font: { color: COLOR.gris, size: 11 } }],
         xaxis: { type: 'category', categoryorder: 'array', categoryarray: etiquetasCols, zeroline: false },
         yaxis: { title: { text: 'Proporción (%)' }, ticksuffix: ' %', rangemode: 'tozero', zeroline: false },
         margin: { l: 66, r: 18, t: 18, b: 52 },
