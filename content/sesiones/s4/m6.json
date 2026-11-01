@@ -1,0 +1,716 @@
+{
+  "id": "m6",
+  "titulo": "M6 · Análisis de causa raíz",
+  "slides": [
+    {
+      "id": "m6-bisagra",
+      "etiqueta": "M6 · DE MEDIR A ANALIZAR",
+      "titulo": "Del qué pasa al por qué pasa",
+      "subtitulo": "Cuatro herramientas que trabajan en cadena; conviene leerlas en este orden.",
+      "bloques": [
+        {
+          "tipo": "pasos",
+          "columnas": 4,
+          "pasos": [
+            {"texto": "Pareto", "sub": "qué atacar primero, por frecuencia"},
+            {"texto": "Ishikawa", "sub": "por qué podría pasar, con las 6M"},
+            {"texto": "5 Porqués", "sub": "profundizar hasta una causa procesal"},
+            {"texto": "AMEF", "sub": "priorizar con números cuando las causas compiten"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "El módulo 5 dejó una pista: si el torque es capaz (Cpk = 1.42), la causa de los 300 DPMO probablemente está en las verificaciones discretas. Aquí esa pista se convierte en un plan de ataque."
+        },
+        {
+          "tipo": "nota",
+          "texto": "Ninguna de las cuatro herramientas prueba nada por sí sola: generan y priorizan hipótesis. Confirmarlas con datos es tarea del módulo 7."
+        }
+      ]
+    },
+    {
+      "id": "m6-pareto-idea",
+      "etiqueta": "M6 · DIAGRAMA DE PARETO",
+      "titulo": "Pocas vitales, muchas triviales",
+      "subtitulo": "Una minoría de las causas suele explicar la mayoría del efecto.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Vilfredo Pareto observó que una minoría de causas explica la mayoría de un efecto, y Joseph Juran llevó la idea a la calidad: unas pocas categorías concentran casi todo el impacto y muchas otras aportan poco."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "CÓMO SE CONSTRUYE",
+              "items": ["Cuenta los defectos por categoría.", "Ordénalos de mayor a menor.", "Calcula el porcentaje y el porcentaje acumulado."],
+              "ordenada": true,
+              "estilo": "acento"
+            },
+            {
+              "etiqueta": "CÓMO SE LEE",
+              "textos": [
+                "Las **pocas vitales** son las primeras categorías, hasta rebasar cerca de 80 %.",
+                "El 80/20 es una guía, no un resultado exacto: cada conjunto de datos da el suyo."
+              ]
+            }
+          ]
+        },
+        {"tipo": "nota", "texto": "Pareto prioriza por frecuencia. No dice qué tan grave ni qué tan costosa es cada categoría; eso lo aporta el AMEF."}
+      ]
+    },
+    {
+      "id": "m6-pareto-arneses",
+      "etiqueta": "M6 · EL PARETO DE LA LÍNEA DE ARNESES",
+      "titulo": "Tres categorías explican 84 % de los defectos",
+      "subtitulo": "Ocho semanas acumuladas de la hoja de verificación del módulo 4.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Categoría", {"t": "Frecuencia", "num": true}, {"t": "%", "num": true}, {"t": "% acumulado", "num": true}],
+          "filas": [
+            ["Continuidad eléctrica", "10", "40 %", "40 %"],
+            ["Etiquetado", "7", "28 %", "68 %"],
+            ["Torque fuera de especificación", "4", "16 %", "84 %"],
+            ["Conector mal asentado", "3", "12 %", "96 %"],
+            ["Ruteo", "1", "4 %", "100 %"]
+          ],
+          "resaltar": [0, 1, 2],
+          "pie": "Elaboración propia a partir de los registros acumulados de la hoja de verificación (módulo 4)."
+        },
+        {"tipo": "texto", "texto": "Continuidad eléctrica, etiquetado y torque son las pocas vitales. Se empieza por la de mayor frecuencia: la continuidad eléctrica."},
+        {
+          "tipo": "abrirLab",
+          "lab": "lab15",
+          "texto": "Abrir LAB 15 con el Pareto de los arneses →",
+          "valores": {
+            "unidad": "defectos",
+            "categorias": [
+              {"categoria": "Continuidad eléctrica", "frecuencia": 10},
+              {"categoria": "Etiquetado", "frecuencia": 7},
+              {"categoria": "Torque fuera de especificación", "frecuencia": 4},
+              {"categoria": "Conector mal asentado", "frecuencia": 3},
+              {"categoria": "Ruteo", "frecuencia": 1}
+            ],
+            "corte": 80
+          }
+        }
+      ]
+    },
+    {"tipo": "lab", "lab": "lab15"},
+    {
+      "id": "m6-ishikawa-idea",
+      "etiqueta": "M6 · DIAGRAMA DE ISHIKAWA",
+      "titulo": "Seis M para ordenar la lluvia de ideas",
+      "subtitulo": "Kaoru Ishikawa lo desarrolló en 1943; en manufactura se organiza en seis categorías.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {"etiqueta": "MANO DE OBRA", "texto": "¿Quién lo hace y cómo se capacitó?"},
+            {"etiqueta": "MÁQUINA", "texto": "¿Con qué equipo y en qué estado?"},
+            {"etiqueta": "MATERIAL", "texto": "¿Qué entra al proceso y de quién?"},
+            {"etiqueta": "MÉTODO", "texto": "¿Cómo está definido el trabajo?"},
+            {"etiqueta": "MEDICIÓN", "texto": "¿Cómo se verifica el resultado?"},
+            {"etiqueta": "MEDIO AMBIENTE", "texto": "¿En qué condiciones se trabaja?"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Se popularizó en los astilleros de Kawasaki y después en Toyota. Junto con el Pareto, es una de las siete herramientas básicas de calidad del módulo 3B."
+        },
+        {"tipo": "nota", "texto": "El diagrama enumera sospechosos, no los condena: cada causa listada debe verificarse con datos antes de invertir en una solución."}
+      ]
+    },
+    {
+      "id": "m6-ishikawa-arneses",
+      "etiqueta": "M6 · ISHIKAWA APLICADO",
+      "titulo": "Fallas de continuidad eléctrica, con las 6M",
+      "subtitulo": "Se aplica a la causa de mayor frecuencia del Pareto.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Categoría (M)", "Causas potenciales"],
+          "filas": [
+            ["Mano de obra", "Capacitación insuficiente en técnica de engarzado; alta rotación en el turno nocturno"],
+            ["Máquina", "Prensa de engarzado sin mantenimiento preventivo al día"],
+            ["Material", "Lote de terminales fuera de especificación; aislamiento dañado en el carrete"],
+            ["Método", "Instrucción de trabajo sin valor numérico de fuerza de engarzado; sin punto de verificación intermedio"],
+            ["Medición", "Probador de continuidad sin calibración vigente; criterio de aceptación no estandarizado entre turnos"],
+            ["Medio ambiente", "Variación de temperatura en planta que afecta el engarzado"]
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Varias ya aparecían, con otras palabras, en el diagrama de afinidad del módulo 3A. Actividad sugerida: intercambia tu Ishikawa con otro equipo y revisen en 10 minutos si falta alguna M o si alguna causa es un síntoma.",
+          "tenue": true
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab16",
+          "texto": "Abrir LAB 16 con el Ishikawa de los arneses →",
+          "valores": {
+            "efecto": "Fallas de continuidad eléctrica",
+            "causas": [
+              {"categoria": "Mano de obra", "causa": "Capacitación insuficiente en técnica de engarzado", "votos": null},
+              {"categoria": "Mano de obra", "causa": "Alta rotación en el turno nocturno", "votos": null},
+              {"categoria": "Método", "causa": "Instrucción de trabajo sin valor numérico de fuerza de engarzado", "votos": null},
+              {"categoria": "Método", "causa": "Sin punto de verificación intermedio", "votos": null},
+              {"categoria": "Máquina", "causa": "Prensa de engarzado sin mantenimiento preventivo al día", "votos": null},
+              {"categoria": "Material", "causa": "Lote de terminales fuera de especificación", "votos": null},
+              {"categoria": "Material", "causa": "Aislamiento de cable dañado en el carrete", "votos": null},
+              {"categoria": "Medición", "causa": "Probador de continuidad sin calibración vigente", "votos": null},
+              {"categoria": "Medición", "causa": "Criterio de aceptación no estandarizado entre turnos", "votos": null},
+              {"categoria": "Medio ambiente", "causa": "Variación de temperatura en planta que afecta la consistencia del engarzado", "votos": null}
+            ],
+            "problema": "Fallas de continuidad eléctrica en los arneses",
+            "cadena": [
+              {"respuesta": "Algunos engarzados no logran contacto eléctrico completo entre el terminal y el conductor", "evidencia": "", "verificada": "No"},
+              {"respuesta": "La fuerza de engarzado aplicada varía entre operadores", "evidencia": "", "verificada": "No"},
+              {"respuesta": "La instrucción de trabajo dice «engarzar firmemente», sin valor numérico ni tope mecánico de referencia", "evidencia": "", "verificada": "No"},
+              {"respuesta": "Se redactó antes de instalar prensas con control de fuerza programable, y nunca se actualizó", "evidencia": "", "verificada": "No"},
+              {
+                "respuesta": "No existe un proceso de control de cambios que vincule actualizaciones de equipo con la revisión de instrucciones de trabajo",
+                "evidencia": "",
+                "verificada": "No"
+              }
+            ],
+            "causaRaiz": "No existe un proceso de control de cambios que vincule las actualizaciones de equipo con la revisión de las instrucciones de trabajo.",
+            "categoriaRaiz": "Método / sistema",
+            "pruebaInversa": "",
+            "contramedida": "",
+            "responsable": "",
+            "fecha": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "m6-porques-idea",
+      "etiqueta": "M6 · LOS 5 PORQUÉS",
+      "titulo": "De la causa aparente a la causa raíz",
+      "subtitulo": "Sakichi Toyoda la desarrolló a principios del siglo XX; hoy es parte del Sistema de Producción Toyota.",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "items": [
+            "No te detengas en la primera explicación que suene razonable.",
+            "Cinco es orientativo: algunos problemas piden tres preguntas y otros ocho.",
+            "La cadena termina en una falla de proceso o de sistema, nunca en «la persona se equivocó».",
+            "Cada respuesta es una hipótesis: se sostiene con evidencia."
+          ]
+        },
+        {"tipo": "nota", "texto": "Si una respuesta señala a una persona, pregunta por qué el proceso permitió el error."}
+      ]
+    },
+    {
+      "id": "m6-porques-cadena",
+      "etiqueta": "M6 · 5 PORQUÉS APLICADO",
+      "titulo": "Cinco preguntas desde la falla hasta el sistema",
+      "subtitulo": "Parte de la causa «método» del Ishikawa anterior.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": [{"t": "#", "num": true}, "Pregunta", "Respuesta"],
+          "filas": [
+            ["1", "¿Por qué hay fallas de continuidad?", "Algunos engarzados no logran contacto eléctrico completo"],
+            ["2", "¿Por qué no lo logran?", "La fuerza de engarzado varía entre operadores"],
+            ["3", "¿Por qué varía?", "La instrucción dice «engarzar firmemente», sin valor numérico ni tope"],
+            ["4", "¿Por qué no tiene valor numérico?", "Se redactó antes de instalar prensas con control de fuerza y nunca se actualizó"],
+            ["5", "¿Por qué no se actualizó?", "No hay control de cambios que vincule los cambios de equipo con las instrucciones"]
+          ],
+          "resaltar": [4]
+        },
+        {
+          "tipo": "texto",
+          "texto": "La causa del quinto nivel es procesal y accionable: nadie necesita ser sancionado, pero hay que crear ese vínculo para que no se repita."
+        }
+      ]
+    },
+    {
+      "id": "m6-porques-persona",
+      "etiqueta": "M6 · EL ERROR MÁS FRECUENTE",
+      "titulo": "Si la cadena culpa a una persona, se detuvo un nivel antes",
+      "subtitulo": "Ejemplo didáctico a partir de la fuerza de retención del Turno 3.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "SE DETIENE EN LA PERSONA",
+              "textos": [
+                "¿Por qué la fuerza de retención es baja? **El operador se equivocó al torquear.**",
+                "¿Por qué? **Se descuidó.**",
+                "Termina en un nombre, no en una causa que se pueda corregir."
+              ],
+              "estilo": "coral"
+            },
+            {
+              "etiqueta": "SIGUE HASTA EL PROCESO",
+              "textos": [
+                "¿Por qué se equivocó? **El arranque de turno no incluye verificar el torquímetro.**",
+                "¿Por qué? **El plan de control no define frecuencia ni responsable.**",
+                "Termina en una contramedida del sistema."
+              ],
+              "estilo": "acento"
+            }
+          ]
+        },
+        {"tipo": "texto", "texto": "Frases como «se descuidó» o «no se fijó» son la señal para revisar la cadena. El LAB 16 las detecta y avisa."},
+        {
+          "tipo": "abrirLab",
+          "lab": "lab16",
+          "texto": "Abrir LAB 16 con una cadena que culpa a una persona →",
+          "valores": {
+            "efecto": "Fuerza de retención por debajo del límite en Turno 3",
+            "causas": [
+              {"categoria": "Mano de obra", "causa": "Turno 3 con menor experiencia", "votos": 5},
+              {"categoria": "Mano de obra", "causa": "Capacitación incompleta en torque", "votos": 6},
+              {"categoria": "Método", "causa": "Sin verificación de torque al inicio de turno", "votos": 9},
+              {"categoria": "Método", "causa": "Secuencia de apriete inconsistente", "votos": 4},
+              {"categoria": "Máquina", "causa": "Torquímetro descalibrado", "votos": 8},
+              {"categoria": "Máquina", "causa": "Desgaste de herramienta", "votos": 3},
+              {"categoria": "Material", "causa": "Variación de terminales", "votos": 2},
+              {"categoria": "Medición", "causa": "Resolución del instrumento mayor que el rango", "votos": 7},
+              {"categoria": "Medición", "causa": "Sin patrón de verificación", "votos": 5},
+              {"categoria": "Medio ambiente", "causa": "Iluminación deficiente en T3", "votos": 2}
+            ],
+            "problema": "Fuerza de retención promedio de 165 N en Turno 3 (límite: 173 N)",
+            "cadena": [
+              {"respuesta": "El operador se equivocó al torquear el conector", "evidencia": "", "verificada": "No"},
+              {"respuesta": "Se descuidó y no puso atención", "evidencia": "", "verificada": "No"}
+            ],
+            "causaRaiz": "El operador se descuidó.",
+            "categoriaRaiz": "Mano de obra",
+            "pruebaInversa": "",
+            "contramedida": "",
+            "responsable": "",
+            "fecha": ""
+          }
+        }
+      ]
+    },
+    {"tipo": "lab", "lab": "lab16"},
+    {
+      "id": "m6-amef-idea",
+      "etiqueta": "M6 · AMEF Y RPN",
+      "titulo": "Tres calificaciones de 1 a 10 y un solo número",
+      "subtitulo": "El AMEF (FMEA) vuelve cuantitativa la lógica del PDPC del módulo 3A.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {"etiqueta": "SEVERIDAD (S)", "textos": ["Qué tan grave es el efecto si la falla ocurre.", "1 = imperceptible · 10 = riesgo de seguridad."]},
+            {"etiqueta": "OCURRENCIA (O)", "textos": ["Qué tan probable es que la falla suceda.", "1 = muy improbable · 10 = casi segura."]},
+            {
+              "etiqueta": "DETECCIÓN (D)",
+              "textos": ["Qué tan probable es que los controles la detecten antes del cliente.", "**Escala invertida:** 1 = casi segura · 10 = indetectable."],
+              "estilo": "aviso"
+            }
+          ]
+        },
+        {
+          "tipo": "formula",
+          "etiqueta": "RPN · NÚMERO DE PRIORIDAD DE RIESGO",
+          "tex": "\\text{RPN}=S\\times O\\times D",
+          "texto": "RPN = Severidad × Ocurrencia × Detección",
+          "nota": "De 1 a 1,000"
+        },
+        {"tipo": "nota", "texto": "Calificar de forma consistente exige anclas intermedias, no solo los extremos 1 y 10. Las dos láminas siguientes las muestran."}
+      ]
+    },
+    {
+      "id": "m6-amef-modo-efecto",
+      "etiqueta": "M6 · ANTES DE CALIFICAR",
+      "titulo": "El modo de falla vive en el proceso; el efecto, en el cliente",
+      "subtitulo": "Distinguirlos es lo que más se equivoca al construir un AMEF.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "MODO DE FALLA · CÓMO FALLA",
+              "textos": ["Ejemplo: **fuerza de engarzado insuficiente.**", "La forma concreta en que falla el proceso o la pieza."]
+            },
+            {
+              "etiqueta": "EFECTO · QUÉ LE PASA AL CLIENTE",
+              "textos": ["Ejemplo: **falla de continuidad eléctrica.**", "La consecuencia para el cliente o para el siguiente proceso."],
+              "estilo": "acento"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Un mismo modo de falla puede tener más de un efecto. Por convención, la severidad se califica sobre el efecto más grave, no sobre el modo de falla."
+        },
+        {"tipo": "nota", "texto": "Confundir las dos columnas es el error más común la primera vez que un equipo hace un AMEF."}
+      ]
+    },
+    {
+      "id": "m6-amef-severidad",
+      "etiqueta": "M6 · ESCALA DE SEVERIDAD",
+      "titulo": "La severidad se califica sobre el efecto más grave",
+      "subtitulo": "Las escalas de ocurrencia y detección van en la lámina siguiente.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Severidad", "Descripción"],
+          "filas": [
+            ["10", "Riesgo de seguridad para el operador o el usuario, sin aviso previo"],
+            ["9", "Riesgo de seguridad, con algún aviso previo perceptible"],
+            ["7–8", "Pérdida de la función primaria; producto inoperable"],
+            ["5–6", "Función degradada: opera, pero por debajo del desempeño esperado"],
+            ["3–4", "Defecto perceptible por la mayoría de los clientes; sin pérdida de función"],
+            ["2", "Defecto perceptible solo por clientes muy exigentes"],
+            ["1", "Sin efecto perceptible"]
+          ],
+          "pie": "Escalas adaptadas de las tablas de referencia AIAG/VDA a un contexto de manufactura general."
+        },
+        {"tipo": "nota", "texto": "La severidad depende del efecto, no de qué tan fácil sea que ocurra: eso es la ocurrencia, una calificación aparte."}
+      ]
+    },
+    {
+      "id": "m6-amef-ocurrencia-deteccion",
+      "etiqueta": "M6 · ESCALAS DE OCURRENCIA Y DETECCIÓN",
+      "titulo": "Ocurrencia de menos a más; detección, al revés",
+      "subtitulo": "En la detección, 1 significa casi segura y 10 significa prácticamente indetectable.",
+      "bloques": [
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1],
+          "izq": [
+            {
+              "tipo": "tabla",
+              "columnas": ["Ocurrencia", "Descripción"],
+              "filas": [
+                ["9–10", "Casi inevitable: en la mayoría de las unidades"],
+                ["7–8", "Frecuente: historial repetido de fallas similares"],
+                ["5–6", "Ocasional: fallas moderadas en situaciones similares"],
+                ["3–4", "Poco frecuente: fallas aisladas"],
+                ["2", "Rara: sin precedentes en procesos similares"],
+                ["1", "Prevenida por el diseño del proceso (poka-yoke)"]
+              ]
+            }
+          ],
+          "der": [
+            {
+              "tipo": "tabla",
+              "columnas": ["Detección", "Descripción"],
+              "filas": [
+                ["1", "Casi segura: el diseño previene o detecta la falla"],
+                ["2–3", "Alta: verificación automática al 100 %"],
+                ["4–6", "Moderada: inspección manual sistemática o muestreo"],
+                ["7–8", "Baja: controles indirectos o inspección visual poco confiable"],
+                ["9–10", "Improbable: no se detecta antes de llegar al cliente"]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m6-amef-arneses",
+      "etiqueta": "M6 · AMEF DE LA LÍNEA DE ARNESES",
+      "titulo": "La continuidad eléctrica tiene el RPN más alto: 192",
+      "subtitulo": "Frecuencia y riesgo no son lo mismo: Pareto y AMEF pueden dar prioridades distintas.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Paso", "Modo de falla", "Efecto", {"t": "S", "num": true}, {"t": "O", "num": true}, {"t": "D", "num": true}, {"t": "RPN", "num": true}],
+          "filas": [
+            ["Engarzado de terminales", "Fuerza de engarzado insuficiente", "Falla de continuidad eléctrica", "8", "6", "4", "192"],
+            ["Ensamble de conectores", "Conector mal asentado", "Desconexión en servicio", "9", "2", "3", "54"],
+            ["Colocación de etiquetado", "Etiqueta ilegible o mal ubicada", "Error de identificación", "3", "7", "2", "42"]
+          ],
+          "resaltar": [0]
+        },
+        {
+          "tipo": "texto",
+          "texto": "El etiquetado fue la segunda categoría del Pareto, pero su bajo impacto (S = 3) y su fácil detección (D = 2) lo dejan con el RPN más bajo. La continuidad combina severidad alta, ocurrencia frecuente y detección tardía: ahí se concentra la mejora del módulo 8."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab17",
+          "texto": "Abrir LAB 17 con los tres modos de falla →",
+          "valores": {
+            "criterio": "guia",
+            "modos": [
+              {
+                "paso": "Engarzado de terminales",
+                "modo": "Fuerza de engarzado insuficiente",
+                "efecto": "Falla de continuidad eléctrica",
+                "causa": "",
+                "s": 8,
+                "o": 6,
+                "d": 4
+              },
+              {"paso": "Ensamble de conectores", "modo": "Conector mal asentado", "efecto": "Desconexión en servicio", "causa": "", "s": 9, "o": 2, "d": 3},
+              {"paso": "Colocación de etiquetado", "modo": "Etiqueta ilegible o mal ubicada", "efecto": "Error de identificación", "causa": "", "s": 3, "o": 7, "d": 2}
+            ],
+            "mejoraFila": "",
+            "sNueva": null,
+            "oNueva": null,
+            "dNueva": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "m6-amef-umbrales",
+      "etiqueta": "M6 · CÓMO USAR EL RPN",
+      "titulo": "Un número útil, con una debilidad conocida",
+      "subtitulo": "La última fila es el caso que la Prioridad de Acción formaliza.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["RPN", "Acción sugerida"],
+          "filas": [
+            ["Menor a 50", "Bajo: monitorear en la siguiente revisión"],
+            ["50 a 100", "Revisar y priorizar según los recursos"],
+            ["Mayor a 100", "Acción requerida; documentar la justificación si no se actúa pronto"],
+            ["Severidad ≥ 9, cualquier RPN", "Revisión independiente obligatoria"]
+          ],
+          "pie": "Umbrales de referencia de esta guía, no una norma."
+        },
+        {
+          "tipo": "texto",
+          "texto": "Una severidad alta puede esconderse tras ocurrencia o detección bajas: S = 9, O = 2 y D = 3 dan solo 54. Por eso el manual AIAG-VDA (2019) sustituyó los umbrales fijos por la **Prioridad de Acción (AP)**, donde la severidad domina: un S de 9 o 10 nunca queda en prioridad baja."
+        }
+      ]
+    },
+    {
+      "id": "m6-amef-mejora",
+      "etiqueta": "M6 · RECALCULAR TRAS UNA MEJORA",
+      "titulo": "Mejorar la detección no baja la frecuencia de la falla",
+      "subtitulo": "Ejemplo de la guía: «sellado incompleto de bolsa» en una línea de empaque.",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            {"valor": "210", "etiqueta": "RPN antes", "nota": "S = 7 · O = 5 · D = 6", "color": "ambar"},
+            {"valor": "70", "etiqueta": "RPN después", "nota": "D baja de 6 a 2", "color": "verde"},
+            {"valor": "−67 %", "etiqueta": "Reducción del RPN", "color": "teal"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Un sensor que verifica el 100 % de las bolsas mejora la detección, pero la ocurrencia sigue en 5: el sellado falla con la misma frecuencia. Lo ideal, cuando se puede, es atacar también la causa que produce la falla."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab17",
+          "texto": "Abrir LAB 17 con el sellado de bolsas →",
+          "valores": {
+            "criterio": "guia",
+            "modos": [
+              {
+                "paso": "Sellado de bolsas",
+                "modo": "Sellado incompleto de bolsa",
+                "efecto": "Contaminación o pérdida de frescura del producto",
+                "causa": "",
+                "s": 7,
+                "o": 5,
+                "d": 6
+              }
+            ],
+            "mejoraFila": "1",
+            "sNueva": null,
+            "oNueva": null,
+            "dNueva": 2
+          }
+        }
+      ]
+    },
+    {"tipo": "lab", "lab": "lab17"},
+    {
+      "id": "m6-caso",
+      "etiqueta": "M6 · EL CASO DE LOS ARNESES",
+      "titulo": "Lo que Analizar dice hasta ahora de la línea",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "items": [
+            "**Pareto:** continuidad eléctrica, etiquetado y torque concentran 84 % de los defectos.",
+            "**Ishikawa:** diez causas potenciales de las fallas de continuidad, repartidas en las 6M.",
+            "**5 Porqués:** la causa raíz es procesal: no hay control de cambios que vincule los cambios de equipo con las instrucciones de trabajo.",
+            "**AMEF:** el RPN de la continuidad (192) supera al del conector (54) y al del etiquetado (42)."
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Con las causas priorizadas, el equipo ya tiene la visión y la estrategia que pide el modelo de Kotter, ancladas en datos. Falta confirmar la hipótesis con inferencia estadística: el módulo 7."
+        }
+      ]
+    },
+    {
+      "id": "m6-ejercicios-a",
+      "etiqueta": "M6 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 3)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1",
+              "titulo": "Construir un Pareto",
+              "texto": "Un equipo de soporte registra en un mes: Problemas de acceso 45, Lentitud del sistema 28, Errores de sincronización de datos 15, Errores de interfaz 8 y Otros 4 (100 tickets). Calcula el porcentaje y el porcentaje acumulado e identifica las pocas vitales.",
+              "verificacion": "La guía obtiene 45, 73, 88, 96 y 100 % acumulado: tres categorías explican 88 % de los tickets. Se empieza por los problemas de acceso, no por «Otros».",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab15",
+              "numeroLab": "15",
+              "valores": {
+                "unidad": "tickets",
+                "categorias": [
+                  {"categoria": "Problemas de acceso", "frecuencia": 45},
+                  {"categoria": "Lentitud del sistema", "frecuencia": 28},
+                  {"categoria": "Errores de sincronización de datos", "frecuencia": 15},
+                  {"categoria": "Errores de interfaz", "frecuencia": 8},
+                  {"categoria": "Otros", "frecuencia": 4}
+                ],
+                "corte": 80
+              }
+            },
+            {
+              "numero": "2",
+              "titulo": "Calcular un RPN",
+              "texto": "En una línea de empaque, el modo de falla «sellado incompleto de bolsa» tiene como efecto contaminación o pérdida de frescura. El equipo califica S = 7, O = 5 y D = 6. Calcula el RPN.",
+              "verificacion": "La guía obtiene 7 × 5 × 6 = 210: prioridad alta, impulsada por la severidad y por una detección poco confiable.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab17",
+              "numeroLab": "17",
+              "valores": {
+                "criterio": "guia",
+                "modos": [
+                  {
+                    "paso": "Sellado de bolsas",
+                    "modo": "Sellado incompleto de bolsa",
+                    "efecto": "Contaminación o pérdida de frescura del producto",
+                    "causa": "",
+                    "s": 7,
+                    "o": 5,
+                    "d": 6
+                  }
+                ],
+                "mejoraFila": "1",
+                "sNueva": null,
+                "oNueva": null,
+                "dNueva": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m6-ejercicios-b",
+      "etiqueta": "M6 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 3)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "3",
+              "titulo": "Recalcular el RPN tras una mejora",
+              "texto": "Un sensor verifica el 100 % de las bolsas y la detección pasa de 6 a 2; S y O no cambian. ¿Cuál es el nuevo RPN y cuánto se redujo?",
+              "verificacion": "La guía obtiene 7 × 5 × 2 = 70, una reducción de 67 %. La ocurrencia sigue en 5: la causa del sellado incompleto no se ha atacado.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab17",
+              "numeroLab": "17",
+              "valores": {
+                "criterio": "guia",
+                "modos": [
+                  {
+                    "paso": "Sellado de bolsas",
+                    "modo": "Sellado incompleto de bolsa",
+                    "efecto": "Contaminación o pérdida de frescura del producto",
+                    "causa": "",
+                    "s": 7,
+                    "o": 5,
+                    "d": 6
+                  }
+                ],
+                "mejoraFila": "1",
+                "sNueva": null,
+                "oNueva": null,
+                "dNueva": 2
+              }
+            },
+            {
+              "numero": "4",
+              "titulo": "Calibrar la escala de severidad",
+              "texto": "Clasifica la severidad de tres fallas de un tornillo que se afloja: (a) causa ruido; (b) provoca el desprendimiento de una pieza; (c) provoca un accidente.",
+              "verificacion": "La guía responde: (a) S = 3–4; (b) S = 7–8; (c) S = 10. La severidad depende del efecto, no de qué tan fácil sea que el tornillo se afloje: eso es la ocurrencia.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m6-ejercicios-c",
+      "etiqueta": "M6 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (3 de 3)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "5",
+              "titulo": "Modo de falla contra efecto",
+              "texto": "Identifica el modo de falla y el efecto en: «El cable se pela en el punto de engarzado y causa una falla de continuidad».",
+              "verificacion": "La guía responde: modo de falla = pelado del cable en el punto de engarzado (cómo falla el proceso); efecto = falla de continuidad eléctrica (lo que percibe el cliente o el siguiente proceso).",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            },
+            {
+              "numero": "6",
+              "titulo": "Sin resolver: RPN y mejora",
+              "texto": "Un modo de falla tiene S = 7, O = 4 y D = 6. Calcula el RPN. Si una mejora baja la detección a 3, sin cambiar S ni O, ¿cuál es el nuevo RPN y qué reducción porcentual representa?",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.",
+              "etiquetaVerificacion": "Clave en el libro",
+              "lab": "lab17",
+              "numeroLab": "17",
+              "valores": {
+                "criterio": "guia",
+                "modos": [{"paso": "Proceso", "modo": "Modo de falla", "efecto": "Efecto", "causa": "", "s": 7, "o": 4, "d": 6}],
+                "mejoraFila": "1",
+                "sNueva": null,
+                "oNueva": null,
+                "dNueva": 3
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m6-errores",
+      "etiqueta": "M6 · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "items": [
+            "**Confundir el modo de falla con el efecto.** Calificar la severidad sobre la columna equivocada distorsiona todo el RPN.",
+            "**Detenerse en los 5 Porqués ante la primera respuesta razonable.** Cinco es orientativo; parar antes suele dejar una causa superficial.",
+            "**Tratar el Ishikawa como una conclusión.** Enumera sospechosos: cada causa debe verificarse con datos antes de invertir en una solución.",
+            "**Priorizar solo por frecuencia o solo por riesgo.** Una causa muy frecuente puede tener bajo impacto, y una rara puede ser la más severa.",
+            "**Llegar a «la persona se equivocó».** Si la cadena culpa a alguien, casi siempre se detuvo un nivel antes de la causa de proceso."
+          ],
+          "ordenada": true
+        }
+      ]
+    }
+  ]
+}
