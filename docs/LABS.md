@@ -64,6 +64,12 @@ función `(ctx) => definición` para construir sus presets con los datos del cas
 Columnas de `tabla`: `{ id, etiqueta, tipo: 'numero'|'texto'|'opcion'|'fijo', min, max, ancho, opciones,
 texto: (estado, fila, i) => string }` (`fijo` = columna calculada, azul claro, no editable).
 
+**Laboratorios con varias herramientas** (LAB 19). Cualquier entrada y cualquier preset pueden llevar
+`visibleSi: (estado) => boolean`: la interfaz los oculta mientras devuelva `false` (un campo oculto tampoco avisa de
+errores), de modo que el selector `herramienta` muestre solo los campos y los ejemplos de la herramienta elegida. Los
+rótulos de columna de una `tabla` pueden depender del estado (`columnas` como función) y `calcular()` puede devolver
+`preguntas` (lista de textos) que sustituyen a las de la definición.
+
 ### Resultado de `calcular`
 
 ```
@@ -110,6 +116,11 @@ Los **ids de entrada y de presets** de esta tabla son el contrato con el conteni
 | 12 | `lab12-gauge-rr.js` | M5 | Gauge R&R por promedios y rangos: EV, AV, %GRR y ndc |
 | 13 | `lab13-cp-cpk.js` | M5 | capacidad del proceso: Cp, Cpk, Pp y Ppk, con diagnóstico de centrado y de variación |
 | 14 | `lab14-hoja-verificacion.js` | M4 | hoja de verificación de conteo por estrato (turno, máquina…), concentración y DPMO |
+| 15 | `lab15-pareto.js` | M6 | diagrama de Pareto: frecuencia, porcentaje acumulado, «pocas vitales» con línea de corte y «Otros» al final |
+| 16 | `lab16-ishikawa-porques.js` | M6 | Ishikawa (6M) con votos y 5 Porqués con evidencia, causa raíz, prueba inversa y contramedida |
+| 17 | `lab17-amef-rpn.js` | M6 | AMEF: RPN = S × O × D con el criterio de la guía o el de la plantilla, severidad ≥ 9 y simulador de mejora |
+| 18 | `lab18-anova.js` | M7 | ANOVA de un factor (hasta seis grupos): F, p, η², Tukey–Kramer o LSD y diagnóstico de residuos |
+| 19 | `lab19-regresion-chi-ic.js` | M7 | selector de herramienta: correlación y regresión lineal, chi-cuadrada de independencia o intervalo de confianza de una media |
 
 ### LAB 02 · Distribución normal (`lab02-distribucion-normal.js`)
 Entradas: `mu` (numero, 50), `sigma` (numero >0, 4), `lsl` (numero, 38), `usl` (numero, 62),
@@ -227,6 +238,75 @@ proceso, no sobre las personas) y «pocos defectos» (menos de 5 esperados por e
 didáctica). Gráficas: `categorias` (apilada por estrato, de mayor a menor) y `reparto`. La tabla con totales y porcentajes imita
 la plantilla «Hoja de Verificacion».
 
+### LAB 15 · Diagrama de Pareto (`lab15-pareto.js`)
+Entradas: `unidad` (texto), `categorias` (tabla: `categoria` texto y `frecuencia` número; hasta 12 filas) y `corte` (número de 50
+a 99: % acumulado con el que se cierran las «pocas vitales»; 80 por omisión). Presets: `guia` (M6 §1: 25 defectos en cinco
+categorías, tres vitales = **84 %**), `tickets` (Ejercicio 1: 100 tickets, tres vitales, «Otros» 4 %), `excel` (plantilla «Pareto»,
+100 registros) y `hoja` (los 103 defectos de la hoja de verificación del LAB 14). Salidas: total, pocas vitales (n de N), categoría
+mayor y, si existe, «Otros». La categoría que cruza el corte se incluye en las vitales (así la guía obtiene 84 %); «Otros» va
+siempre al final, sea cual sea su tamaño. Semáforos: «Pocas vitales» (atención si hacen falta casi todas las categorías: el
+Pareto no separa nada), «Categoría Otros» y «Pocos registros» (menos de 30; referencia didáctica: el orden de las barras puede
+cambiar con un periodo más de datos). Gráfica: `pareto` (barras ordenadas, línea de % acumulado y línea de corte). Tabla «El
+Pareto, paso a paso». Supuesto: ordena por frecuencia, no por gravedad ni por costo; el riesgo se pondera con el LAB 17.
+
+### LAB 16 · Ishikawa y 5 Porqués (`lab16-ishikawa-porques.js`)
+Ishikawa: `efecto` (texto) y `causas` (tabla: `categoria` opción de las 6M, `causa` texto y `votos` número; hasta 30 filas).
+5 Porqués: `problema` (texto), `cadena` (tabla: `respuesta`, `evidencia` y `verificada` `Sí|No`; hasta 8 pasos), `causaRaiz` (área),
+`categoriaRaiz` (`Método / sistema|Mano de obra|Máquina|Material|Medición|Medio ambiente` o vacío), `pruebaInversa`
+(`Sí|No|No sé` o vacío), `contramedida`, `responsable` y `fecha` (texto). Presets: `guia` (M6 §3: fallas de continuidad eléctrica,
+cinco porqués), `excel` (plantillas: fuerza de retención baja en el Turno 3, con votos y evidencias) y `persona` (cadena que se
+detiene en una persona; variante didáctica, no está en la guía). Salidas: causas, votos y causa más votada (si hay votos), pasos de
+la cadena y causa raíz. Semáforos: «Las seis M», «Votos», «Cadena de porqués» (cuenta los pasos sin verificar: una respuesta sin
+evidencia es una hipótesis), «Sin culpar a personas» (señala las respuestas que apuntan a una persona, como «se equivocó» o «se
+descuidó», y pide seguir hasta una causa de proceso o de sistema), «Causa raíz», «Prueba inversa» y «Contramedida». Figuras SVG (no
+Plotly): `ishikawa` y `porques`; tabla «Resumen por categoría». Supuesto: ninguna de las dos herramientas prueba nada, cada causa
+se verifica con datos.
+
+### LAB 17 · AMEF y RPN (`lab17-amef-rpn.js`)
+Entradas: `criterio` (`guia|excel`), `modos` (tabla: `paso`, `modo`, `efecto`, `causa` texto y `s`, `o`, `d` número de 1 a 10;
+hasta 20 filas) y el simulador de mejora: `mejoraFila` (`1`…`20` o vacío) con `sNueva`, `oNueva` y `dNueva`. Presets: `guia` (M6 §4:
+tres modos, RPN **192 · 54 · 42**), `empaque` (Ejercicios 2 y 3: sellado de bolsas, **210 → 70**) y `excel` (plantilla: **240 ·
+180 con S ≥ 9 · 120**). RPN = S × O × D (1 a 1,000). Los dos criterios de prioridad no coinciden y se conservan ambos: guía
+(< 50 bajo, 50–100 revisar, > 100 acción) y plantilla (< 100 monitorear, 100–199 acción, ≥ 200 acción inmediata). Salidas: modos
+evaluados, RPN máximo, modos que piden acción, modos con S ≥ 9 y, con la mejora, RPN antes → después. Semáforos: prioridad por
+RPN, **severidad ≥ 9 (se revisa sin importar el RPN)**, frecuencia y riesgo, mejora simulada. Gráficas: `rpn` y `perfil`. Tablas:
+«El AMEF ordenado por RPN» y «¿Y si mejoramos?». No calcula la Prioridad de Acción (AP) del manual AIAG-VDA 2019: la guía
+la menciona sin dar su tabla.
+
+### LAB 18 · ANOVA de un factor (`lab18-anova.js`)
+Entradas: `unidad`, `nombre1`…`nombre6` (texto), `datos1`…`datos6` (`number[]`; solo cuentan los grupos con al menos 2 datos),
+`alfa` (número, 0.05 por omisión) y `comparacion` (`tukey|lsd`). Presets: `guia` (M7 §2: tres turnos con cinco datos,
+F(2, 12) = **14.22**, p = 0.0007, η² = 0.703), `minimo` (ejemplo mínimo A 10 · 12, B 14 · 16, C 18 · 20: F = **16.00**,
+SC total 70 = 64 + 6), `excel` (plantilla: tres turnos con diez datos y LSD) y `sinDiferencia` (turnos 1 y 2 de la guía, derivado:
+el ANOVA no es significativo). Salidas: F, p, η², razón de desviaciones (s máx ÷ s mín), grupos · datos y, si el ANOVA es significativo, los pares que difieren (si no, la media global). Tablas:
+«Tabla ANOVA» (SC, gl, CM, F y p), «Resumen por grupo» y «Comparaciones por pares». La plantilla compara con LSD de Fisher, que
+no controla el error por comparaciones múltiples; la guía recomienda Tukey, así que aquí el método por defecto es Tukey–Kramer y
+LSD queda como opción. Semáforos: «Conclusión del ANOVA», «Tamaño del efecto» (informativo), «Varianzas parecidas» (razón < 2 es
+razonable), «Tamaño de los grupos» (algún grupo con menos de 5 datos; referencia didáctica), «Comparaciones por pares» (solo se
+interpretan si el ANOVA es significativo), «Comparaciones múltiples» (aviso al elegir LSD) y «Dos grupos» (con dos grupos el ANOVA
+coincide con la prueba t de dos muestras, F = t²). Gráficas: `grupos`, `pares` (solo si el ANOVA es significativo), `residuos` y `normal`.
+Supuestos: independencia, normalidad de los residuos y varianzas parecidas.
+
+### LAB 19 · Regresión, chi-cuadrada e intervalo de confianza (`lab19-regresion-chi-ic.js`)
+Un selector `herramienta` (`regresion|chi|ic`) decide qué entradas y qué ejemplos se ven (`visibleSi`); `alfa` es común y el nivel
+de confianza sigue a α. **Regresión:** `nombreX`, `unidadX`, `nombreY`, `unidadY` (texto), `datosX` y `datosY` (`number[]`, mismos
+pares), `xPred` (valor de X a predecir) y `yObjetivo` (valor de Y del que se quiere despejar X). **Chi-cuadrada:** `numCols`
+(`2`…`5`), `nombresCols` (texto, nombres separados por comas) y `observadas` (tabla: `categoria` y `c1`…`c5`; las filas y columnas
+sin conteos se ignoran). **Intervalo de confianza de una media:** `icN`, `icMedia`, `icS` y `icUnidad`. Presets: `reg-plantilla`
+(plantilla: 12 pares de fuerza y resistencia, r = −0.994), `reg-curva` (Y = X², r = 0 con una relación perfecta), `chi-guia` (M7 §5:
+2, 2 y 6 fallas en 5,340 arneses por turno, χ² = **3.20**, gl 2, p = 0.2017), `chi-plantilla` (900 unidades, χ² = 13.09),
+`chi-torque` (derivado del LAB 14: torque contra el resto), `chi-2x2` (derivado: turnos 1 y 3 en 2 × 2, con Yates y Fisher),
+`ic-torque` (M7 §1: diez torques del M5, IC 95 % de **1.334 a 1.376** con z) e `ic-examen` (n = 16, x̄ = 50, s = 8). Salidas
+de la regresión: r, R², ecuación, pendiente, p, s, n, predicción y X para el Y objetivo (con bandas de confianza y de predicción);
+de la chi-cuadrada: χ², p, V de Cramér, esperado mínimo y N (en 2 × 2, también Yates y Fisher); del IC: crítico t y z, error
+estándar y margen. Las constantes se verifican contra SciPy (`tests/lab19.test.mjs`). Semáforos de la regresión: «Correlación»,
+«Pendiente», «Forma de la relación», «Residuos», «Interpolación» (con aviso de extrapolación fuera del rango observado) y
+«Causalidad»; de la chi-cuadrada: «Conclusión de la prueba», «Frecuencias esperadas» (menores que 5), «Tamaño del efecto», «Poder
+de la prueba» (pocos eventos; referencia didáctica de 30) y, en 2 × 2, «Yates y Fisher»; del intervalo: «z o t» y «Qué significa».
+Gráficas: `dispersion`, `residuos` y `normal` · `distribucion`, `contribuciones` y `tasas` (intervalo de Wilson) · `intervalos` y
+`margen`. Supuestos: relación lineal y residuos normales (regresión); observaciones independientes y esperados ≥ 5 (chi-cuadrada);
+muestra aleatoria (intervalo).
+
 ## 5. Cómo agregar un laboratorio nuevo
 
 1. Copia `labs/_plantilla.js` a `labs/labNN-nombre.js` y completa los campos.
@@ -254,8 +334,15 @@ Estos ids son fijos; puedes **añadir** entradas, nunca renombrar ni quitar esta
 | 12 | `operadores` (`"2"`\|`"3"`) · `repeticiones` (`"2"`\|`"3"`) · `unidad` · `tolerancia` · `mediciones` = filas `{A1, A2, A3, B1, B2, B3, C1, C2, C3}` (una fila por pieza) |
 | 13 | `unidad` · `lsl` · `usl` · `media` · `sigma` · `nResumen` · `datos` number[] · `rBarra` · `nSubgrupo` · `sigmaDentro` · `grr` |
 | 14 | `estrato` (`Turno`\|`Máquina`\|`Operador`\|`Proveedor`) · `numEstratos` (`"2"`…`"5"`) · `categorias` = filas `{categoria, e1, e2, e3, e4, e5}` · `unidades` · `oportunidades` |
+| 15 | `unidad` · `categorias` = filas `{categoria, frecuencia}` · `corte` (50 a 99) |
+| 16 | `efecto` · `causas` = filas `{categoria, causa, votos}` (`categoria`: una de las 6M) · `problema` · `cadena` = filas `{respuesta, evidencia, verificada}` (`Sí`\|`No`) · `causaRaiz` · `categoriaRaiz` · `pruebaInversa` (`Sí`\|`No`\|`No sé`) · `contramedida` · `responsable` · `fecha` |
+| 17 | `criterio` (`guia`\|`excel`) · `modos` = filas `{paso, modo, efecto, causa, s, o, d}` · `mejoraFila` (`"1"`…`"20"` o vacío) · `sNueva` · `oNueva` · `dNueva` |
+| 18 | `unidad` · `nombre1`…`nombre6` · `datos1`…`datos6` number[] · `alfa` · `comparacion` (`tukey`\|`lsd`) |
+| 19 | `herramienta` (`regresion`\|`chi`\|`ic`) · `alfa` · regresión: `nombreX` · `unidadX` · `nombreY` · `unidadY` · `datosX` number[] · `datosY` number[] · `xPred` · `yObjetivo` · chi: `numCols` (`"2"`…`"5"`) · `nombresCols` (nombres separados por comas) · `observadas` = filas `{categoria, c1, c2, c3, c4, c5}` · IC: `icN` · `icMedia` · `icS` · `icUnidad` |
 
 Presets obligatorios (ids): 01 `guia`,`rechazos`,`fuerza`,`torque` · 02 `guia`,`tres-sigma`,`seis-sigma`,`fuerza`,`torque` ·
 03 `arneses`,`guia-ej2` · 04 `guia`,`excel`,`empaque`,`lineas-ab` (+ ejercicios del M1) · 05 `guia`,`excel` · 06 `libro`,`excel` ·
 07 `libro`,`excel` · 08 `guia`,`inconsistente` · 09 `libro`,`excel` · 10 `guia`,`excel`,`credito` · 11 `guia`,`excel` ·
-12 `guia`,`excel`,`sesgo` · 13 `guia`,`ej2`,`ej4`,`excel` · 14 `guia`,`excel`.
+12 `guia`,`excel`,`sesgo` · 13 `guia`,`ej2`,`ej4`,`excel` · 14 `guia`,`excel` · 15 `guia`,`tickets`,`excel`,`hoja` ·
+16 `guia`,`excel`,`persona` · 17 `guia`,`empaque`,`excel` · 18 `guia`,`minimo`,`excel`,`sinDiferencia` · 19 `reg-plantilla`,`reg-curva`,
+`chi-guia`,`chi-plantilla`,`chi-torque`,`chi-2x2`,`ic-torque`,`ic-examen`.

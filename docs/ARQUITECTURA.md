@@ -110,7 +110,7 @@ content/ (JSON)  ──►  loader.js  ──►  deck.js ──► blocks.js / 
 
 ## 10. Roadmap visible: sesiones «planeadas»
 
-Las sesiones 3 a 6 ya aparecen en el índice con su fase, sus módulos y los laboratorios previstos, pero no se abren.
+Las sesiones 5 y 6 ya aparecen en el índice con su fase, sus módulos y los laboratorios previstos, pero no se abren.
 Completarlas no cambia el motor: se escribe su contenido y los laboratorios con el mismo patrón y se cambia su `estado`
 a `disponible`.
 
