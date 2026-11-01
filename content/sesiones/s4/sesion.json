@@ -72,6 +72,9 @@
     },
     {
       "incluir": "m6.json"
+    },
+    {
+      "incluir": "m7.json"
     }
   ]
 }

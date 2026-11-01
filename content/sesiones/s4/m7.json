@@ -1,0 +1,723 @@
+{
+  "id": "m7",
+  "titulo": "M7 · Inferencia estadística",
+  "slides": [
+    {
+      "id": "m7-bisagra",
+      "etiqueta": "M7 · DE LA HIPÓTESIS A LA EVIDENCIA",
+      "titulo": "Poner a prueba lo que el Ishikawa sospechó",
+      "subtitulo": "Cinco herramientas que se encadenan sobre el mismo problema.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El módulo 6 dejó una hipótesis: el turno nocturno aplica menos fuerza de engarzado. Aquí se prueba con datos, en lugar de aceptarla o descartarla por intuición."
+        },
+        {
+          "tipo": "pasos",
+          "columnas": 5,
+          "pasos": [
+            {"texto": "Hipótesis", "sub": "qué se prueba y qué riesgos se corren"},
+            {"texto": "ANOVA", "sub": "¿difieren los tres turnos?"},
+            {"texto": "Correlación", "sub": "¿se mueven juntas fuerza y resistencia?"},
+            {"texto": "Regresión", "sub": "una ecuación para predecir"},
+            {"texto": "Chi-cuadrada", "sub": "la misma pregunta con datos de atributo"}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Las primeras herramientas usan datos continuos y construyen un caso sólido. La chi-cuadrada trae un giro que parece contradecirlas; en realidad es una lección sobre poder estadístico."
+        }
+      ]
+    },
+    {
+      "id": "m7-hipotesis",
+      "etiqueta": "M7 · PRUEBAS DE HIPÓTESIS",
+      "titulo": "La estructura del módulo 0, ahora con datos reales",
+      "subtitulo": "Dos afirmaciones compiten; el valor p dice si la evidencia alcanza para descartar la primera.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "H₀ · HIPÓTESIS NULA", "texto": "La fuerza de engarzado promedio es igual en los tres turnos."},
+            {"etiqueta": "H₁ · HIPÓTESIS ALTERNATIVA", "texto": "Al menos un turno tiene una fuerza de engarzado promedio distinta.", "estilo": "acento"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Si el valor p es menor que α, fijado antes de ver los datos (normalmente 0.05), se rechaza H₀ y la diferencia es estadísticamente significativa."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "ERROR TIPO I · PROBABILIDAD α", "texto": "Concluir que los turnos difieren cuando en realidad son iguales: un falso positivo."},
+            {"etiqueta": "ERROR TIPO II · PROBABILIDAD β", "texto": "No detectar una diferencia entre turnos que sí existe: un falso negativo."}
+          ]
+        },
+        {"tipo": "texto", "texto": "Las definiciones completas están en el módulo 0; aquí se aplican al caso.", "tenue": true}
+      ]
+    },
+    {
+      "id": "m7-significancia",
+      "etiqueta": "M7 · SIGNIFICANCIA Y RELEVANCIA",
+      "titulo": "Un valor p pequeño dice que la diferencia es real, no que sea grande",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "SIGNIFICANCIA ESTADÍSTICA",
+              "titulo": "¿La diferencia es real?",
+              "texto": "La responde el valor p: qué tan compatible es el resultado con el azar."
+            },
+            {
+              "etiqueta": "RELEVANCIA PRÁCTICA",
+              "titulo": "¿La diferencia importa?",
+              "texto": "La responde el tamaño del efecto, comparado contra lo que el proceso necesita.",
+              "estilo": "acento"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Con muestras suficientemente grandes, hasta una diferencia trivial, de 0.001 N·m por ejemplo, puede salir significativa sin que le importe a nadie en la práctica."
+        },
+        {"tipo": "nota", "texto": "Antes de actuar, compara el tamaño de la diferencia con lo que la pieza necesita; el valor p no lo hace por ti."}
+      ]
+    },
+    {
+      "id": "m7-ic-idea",
+      "etiqueta": "M7 · INTERVALOS DE CONFIANZA",
+      "titulo": "De «¿hay diferencia?» a «¿de qué tamaño y con qué margen?»",
+      "subtitulo": "La prueba de hipótesis responde sí o no; el intervalo estima el tamaño del parámetro.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un intervalo de confianza de 95 % para una media es un rango construido de modo que, si el muestreo se repitiera muchas veces, 95 % de esos rangos contendría la verdadera media poblacional."
+        },
+        {
+          "tipo": "formula",
+          "etiqueta": "INTERVALO DE CONFIANZA PARA UNA MEDIA",
+          "tex": "\\bar{x}\\pm z\\,\\dfrac{s}{\\sqrt{n}}",
+          "texto": "IC = x̄ ± z × (s / √n)",
+          "nota": "z = 1.96 para 95 % de confianza"
+        },
+        {
+          "tipo": "nota",
+          "texto": "Con n menor que 30 lo más correcto es usar la distribución t de Student: es un poco más ancha porque compensa la incertidumbre de estimar también la desviación estándar."
+        }
+      ]
+    },
+    {
+      "id": "m7-ic-torque",
+      "etiqueta": "M7 · INTERVALO DE CONFIANZA APLICADO",
+      "titulo": "Los diez datos de torque, con 95 % de confianza",
+      "subtitulo": "Datos del módulo 5: n = 10, media = 1.355 N·m y s = 0.034 N·m.",
+      "bloques": [
+        {
+          "tipo": "formula",
+          "etiqueta": "IC DE 95 % CON z",
+          "tex": "1.355\\pm1.96\\times\\dfrac{0.034}{\\sqrt{10}}=1.355\\pm0.021",
+          "texto": "IC = 1.355 ± 1.96 × (0.034 / √10) = 1.355 ± 0.021",
+          "nota": "De 1.334 a 1.376 N·m"
+        },
+        {
+          "tipo": "texto",
+          "texto": "Con 95 % de confianza, la verdadera media del proceso está entre **1.334 y 1.376 N·m**. No dice que la media sea exactamente 1.355: entrega el margen, algo que una prueba de hipótesis por sí sola no da."
+        },
+        {
+          "tipo": "texto",
+          "texto": "Como n = 10, el laboratorio calcula también el intervalo con t de Student (t = 2.262): de 1.331 a 1.379 N·m, apenas más ancho.",
+          "tenue": true
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab19",
+          "texto": "Abrir LAB 19 con el intervalo del torque →",
+          "valores": {"alfa": 0.05, "herramienta": "ic", "icN": 10, "icMedia": 1.355, "icS": 0.034, "icUnidad": "N·m"}
+        }
+      ]
+    },
+    {
+      "id": "m7-anova-idea",
+      "etiqueta": "M7 · ANOVA DE UN FACTOR",
+      "titulo": "Comparar tres o más grupos en una sola prueba",
+      "subtitulo": "H₀: todas las medias son iguales. H₁: al menos una es distinta.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Con tres turnos podrían correrse tres pruebas t por pares, pero cada prueba suma su propio riesgo de falso positivo y el riesgo conjunto queda muy por encima del 5 % nominal. El ANOVA compara todos los grupos a la vez."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "VARIACIÓN ENTRE GRUPOS", "texto": "Qué tan distintas son las medias de los turnos entre sí."},
+            {"etiqueta": "VARIACIÓN DENTRO DE LOS GRUPOS", "texto": "Qué tan dispersos están los datos alrededor de la media de su propio turno."}
+          ]
+        },
+        {
+          "tipo": "formula",
+          "etiqueta": "ESTADÍSTICO F",
+          "tex": "F=\\dfrac{CM_{\\text{entre}}}{CM_{\\text{dentro}}}",
+          "texto": "F = CM entre grupos ÷ CM dentro de los grupos",
+          "nota": "Un F grande es evidencia de que al menos un grupo difiere"
+        }
+      ]
+    },
+    {
+      "id": "m7-anova-minimo-sc",
+      "etiqueta": "M7 · ANOVA: LA MECÁNICA",
+      "titulo": "Seis datos para ver cómo se reparte la variación",
+      "subtitulo": "Grupo A (10, 12), Grupo B (14, 16) y Grupo C (18, 20).",
+      "bloques": [
+        {"tipo": "texto", "texto": "Las medias de grupo son 11, 15 y 19; la media general de las seis mediciones es 15."},
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            {"valor": "70", "etiqueta": "SC total", "nota": "(10 − 15)² + (12 − 15)² + … + (20 − 15)²"},
+            {"valor": "64", "etiqueta": "SC entre grupos", "nota": "2(11 − 15)² + 2(15 − 15)² + 2(19 − 15)²", "color": "verde"},
+            {"valor": "6", "etiqueta": "SC dentro de los grupos", "nota": "(10 − 11)² + (12 − 11)² + … + (20 − 19)²", "color": "ambar"}
+          ]
+        },
+        {"tipo": "nota", "texto": "64 + 6 = 70: las dos partes suman exactamente el total, sin sobrar ni faltar nada. Esa es la idea central de «analizar la varianza»."}
+      ]
+    },
+    {
+      "id": "m7-anova-minimo-f",
+      "etiqueta": "M7 · ANOVA: LA MECÁNICA",
+      "titulo": "Grados de libertad, cuadrados medios y F = 16",
+      "subtitulo": "Una F de 16 sugiere, ya en este ejemplo mínimo, que los tres grupos difieren.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Fuente", {"t": "SC", "num": true}, {"t": "gl", "num": true}, {"t": "CM", "num": true}, {"t": "F", "num": true}],
+          "filas": [["Entre grupos", "64", "2", "32", "16"], ["Dentro de los grupos", "6", "3", "2", "—"], ["Total", "70", "5", "—", "—"]],
+          "resaltar": [0]
+        },
+        {
+          "tipo": "lista",
+          "items": [
+            "**gl entre = k − 1 = 2:** con k = 3 grupos, fijada la media general solo dos medias de grupo varían libremente.",
+            "**gl dentro = N − k = 3:** con N = 6 datos, en cada grupo de dos un solo dato es libre.",
+            "**CM = SC ÷ gl:** 64 ÷ 2 = 32 y 6 ÷ 3 = 2, de modo que F = 32 ÷ 2 = 16."
+          ]
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab18",
+          "texto": "Abrir LAB 18 con el ejemplo mínimo →",
+          "valores": {
+            "unidad": "",
+            "alfa": 0.05,
+            "comparacion": "tukey",
+            "nombre1": "Grupo A",
+            "datos1": [10, 12],
+            "nombre2": "Grupo B",
+            "datos2": [14, 16],
+            "nombre3": "Grupo C",
+            "datos3": [18, 20],
+            "nombre4": "",
+            "datos4": [],
+            "nombre5": "",
+            "datos5": [],
+            "nombre6": "",
+            "datos6": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "m7-anova-datos",
+      "etiqueta": "M7 · ANOVA APLICADO",
+      "titulo": "Cinco mediciones de fuerza de engarzado por turno",
+      "subtitulo": "La hipótesis del Ishikawa del módulo 6: el turno nocturno aplica menos fuerza.",
+      "bloques": [
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1],
+          "izq": [
+            {
+              "tipo": "tabla",
+              "columnas": [{"t": "Turno 1 (N)", "num": true}, {"t": "Turno 2 (N)", "num": true}, {"t": "Turno 3 (N)", "num": true}],
+              "filas": [
+                ["172", "173", "165"],
+                ["175", "176", "168"],
+                ["178", "171", "158"],
+                ["174", "177", "170"],
+                ["176", "173", "164"],
+                ["Media = 175", "Media = 174", "Media = 165"]
+              ],
+              "resaltar": [5],
+              "pie": "Cada dato es una medición individual de fuerza."
+            }
+          ],
+          "der": [
+            {
+              "tipo": "texto",
+              "texto": "El Turno 3 se ve más bajo, pero con cinco datos por turno la vista no basta: el ANOVA dice si la diferencia supera la variación normal dentro de cada turno."
+            },
+            {
+              "tipo": "abrirLab",
+              "lab": "lab18",
+              "texto": "Abrir LAB 18 con los datos de los tres turnos →",
+              "valores": {
+                "unidad": "N",
+                "alfa": 0.05,
+                "comparacion": "tukey",
+                "nombre1": "Turno 1",
+                "datos1": [172, 175, 178, 174, 176],
+                "nombre2": "Turno 2",
+                "datos2": [173, 176, 171, 177, 173],
+                "nombre3": "Turno 3",
+                "datos3": [165, 168, 158, 170, 164],
+                "nombre4": "",
+                "datos4": [],
+                "nombre5": "",
+                "datos5": [],
+                "nombre6": "",
+                "datos6": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m7-anova-tabla",
+      "etiqueta": "M7 · ANOVA APLICADO",
+      "titulo": "F(2, 12) = 14.22: se rechaza H₀",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Fuente de variación", {"t": "SC", "num": true}, {"t": "gl", "num": true}, {"t": "CM", "num": true}, {"t": "F", "num": true}, {"t": "valor p", "num": true}],
+          "filas": [
+            ["Entre turnos", "303.33", "2", "151.67", "14.22", "< 0.001"],
+            ["Dentro de los turnos", "128.00", "12", "10.67", "—", "—"],
+            ["Total", "431.33", "14", "—", "—", "—"]
+          ],
+          "resaltar": [0],
+          "pie": "Entre turnos: gl = 3 − 1 = 2. Dentro de los turnos: gl = 3 × (5 − 1) = 12."
+        },
+        {
+          "tipo": "texto",
+          "texto": "Con p < 0.001 la fuerza de engarzado no es igual en los tres turnos. Ahora hay evidencia estadística, y no solo una hipótesis del Ishikawa, de que el Turno 3 opera con menos fuerza: 165 N frente a 174–175 N."
+        },
+        {
+          "tipo": "nota",
+          "texto": "El ANOVA dice que al menos un turno difiere, no cuál. Para ubicarlo se comparan los turnos por pares; con Tukey, el LAB 18 señala al Turno 3 frente a cada uno de los otros dos."
+        }
+      ]
+    },
+    {"tipo": "lab", "lab": "lab18"},
+    {
+      "id": "m7-correlacion-idea",
+      "etiqueta": "M7 · CORRELACIÓN DE PEARSON",
+      "titulo": "Qué tan fuerte, y en qué dirección, se relacionan dos variables",
+      "subtitulo": "El coeficiente r va de −1 a 1.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Saber que el Turno 3 aplica menos fuerza no explica por qué eso produce fallas de continuidad. Falta un puente: la **resistencia de contacto** (mΩ) en el punto de engarzado, una medición continua que avisa antes que el pasa/no pasa de la prueba de continuidad."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "CERCA DE −1 O DE 1", "texto": "Relación lineal fuerte. El signo indica si es directa (+) o inversa (−)."},
+            {"etiqueta": "CERCA DE 0", "texto": "Poca o ninguna relación lineal."}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Correlación no es causalidad, y r solo detecta relaciones lineales: una relación curva fuerte puede dar un r cercano a 0. Acompaña siempre el número con un diagrama de dispersión."
+        }
+      ]
+    },
+    {
+      "id": "m7-correlacion-arneses",
+      "etiqueta": "M7 · CORRELACIÓN APLICADA",
+      "titulo": "Fuerza y resistencia de contacto: r = −0.99",
+      "subtitulo": "Diez pares fuerza–resistencia medidos en la línea de arneses.",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 2,
+          "items": [
+            {"valor": "−0.99", "etiqueta": "Coeficiente r", "nota": "relación lineal negativa muy fuerte", "color": "teal"},
+            {"valor": "Inversa", "etiqueta": "Dirección", "nota": "a mayor fuerza, menor resistencia", "color": "verde"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Además del número hay una razón física plausible: una conexión mejor engarzada reduce la resistencia en el punto de contacto. Con r alto y un mecanismo físico, la relación merece tratarse como causal; con solo el número, no."
+        },
+        {"tipo": "texto", "texto": "El laboratorio usa los 12 pares de la plantilla de Excel; su r es −0.994, muy cercano al de la guía.", "tenue": true},
+        {
+          "tipo": "abrirLab",
+          "lab": "lab19",
+          "texto": "Abrir LAB 19 con el diagrama de dispersión →",
+          "valores": {
+            "alfa": 0.05,
+            "herramienta": "regresion",
+            "nombreX": "Fuerza de engarzado",
+            "unidadX": "N",
+            "nombreY": "Resistencia de contacto",
+            "unidadY": "mΩ",
+            "datosX": [160, 162.3, 164.5, 166.8, 169.1, 171.4, 173.6, 175.9, 178.2, 180.5, 182.7, 185],
+            "datosY": [2.21, 2.01, 1.94, 1.53, 1.48, 1.13, 1.17, 0.9, 0.78, 0.45, 0.32, 0.07],
+            "xPred": 170,
+            "yObjetivo": 1.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "m7-regresion-idea",
+      "etiqueta": "M7 · REGRESIÓN LINEAL SIMPLE",
+      "titulo": "De la correlación a la predicción",
+      "subtitulo": "La correlación describe la relación; la regresión estima una ecuación para predecir.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "De todas las rectas posibles sobre los puntos, se elige la que hace mínima la suma de los cuadrados de las distancias verticales entre cada punto y la recta. Es la misma suma de cuadrados del módulo 0, aplicada ahora a los errores de predicción: de ahí el nombre **mínimos cuadrados**."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "R² · COEFICIENTE DE DETERMINACIÓN",
+              "texto": "Proporción de la variación de Y que queda explicada por X. En regresión simple, R² es el cuadrado de r.",
+              "estilo": "acento"
+            },
+            {"etiqueta": "CON MÁS DE UN PREDICTOR", "texto": "La igualdad deja de cumplirse: R² combina la contribución de varias variables a la vez."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m7-regresion-arneses",
+      "etiqueta": "M7 · REGRESIÓN APLICADA",
+      "titulo": "Una ecuación que traduce fuerza en resistencia",
+      "bloques": [
+        {
+          "tipo": "formula",
+          "etiqueta": "ECUACIÓN DE LA GUÍA",
+          "tex": "\\text{Resistencia}=16.37-0.088\\times\\text{Fuerza}",
+          "texto": "Resistencia (mΩ) = 16.37 − 0.088 × Fuerza (N)",
+          "nota": "R² = 0.985: 98.5 % de la variación de la resistencia queda explicada por la fuerza"
+        },
+        {
+          "tipo": "texto",
+          "texto": "Si la resistencia debe mantenerse en 1.2 mΩ o menos, se despeja la fuerza: 16.37 − 0.088 × F = 1.2, de donde F ≈ 172.4. La fuerza de engarzado debe ser de **al menos 173 N**."
+        },
+        {
+          "tipo": "nota",
+          "texto": "El laboratorio ajusta los 12 pares de la plantilla de Excel, así que sus coeficientes difieren un poco de los de la guía (pendiente −0.084; R² = 0.988). La conclusión no cambia: la fuerza mínima ronda 172–173 N."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab19",
+          "texto": "Abrir LAB 19 con los datos de fuerza y resistencia →",
+          "valores": {
+            "alfa": 0.05,
+            "herramienta": "regresion",
+            "nombreX": "Fuerza de engarzado",
+            "unidadX": "N",
+            "nombreY": "Resistencia de contacto",
+            "unidadY": "mΩ",
+            "datosX": [160, 162.3, 164.5, 166.8, 169.1, 171.4, 173.6, 175.9, 178.2, 180.5, 182.7, 185],
+            "datosY": [2.21, 2.01, 1.94, 1.53, 1.48, 1.13, 1.17, 0.9, 0.78, 0.45, 0.32, 0.07],
+            "xPred": 170,
+            "yObjetivo": 1.2
+          }
+        }
+      ]
+    },
+    {
+      "id": "m7-regresion-turnos",
+      "etiqueta": "M7 · REGRESIÓN APLICADA",
+      "titulo": "Aplicada de vuelta a los turnos, la ecuación cierra el círculo",
+      "subtitulo": "Fuerza promedio de cada turno según el ANOVA.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Turno", {"t": "Fuerza promedio (N)", "num": true}, {"t": "Resistencia predicha (mΩ)", "num": true}, "Frente al límite de 1.2 mΩ"],
+          "filas": [["Turno 1", "175", "0.97", "Cumple"], ["Turno 2", "174", "1.06", "Cumple"], ["Turno 3", "165", "1.85", "No cumple"]],
+          "resaltar": [2],
+          "pie": "Cálculo con la ecuación de la guía: 16.37 − 0.088 × fuerza."
+        },
+        {
+          "tipo": "texto",
+          "texto": "El Turno 3 queda por debajo de los 173 N necesarios. Así, la causa raíz procesal de los 5 Porqués del módulo 6 se conecta, con datos, con el Pareto: la continuidad eléctrica concentra los defectos y el turno nocturno participa en ellos de forma desproporcionada."
+        },
+        {"tipo": "nota", "texto": "Predecir dentro del rango de fuerzas medido es confiable; fuera de él, no (ejercicio 2)."}
+      ]
+    },
+    {
+      "id": "m7-chi-idea",
+      "etiqueta": "M7 · CHI-CUADRADA DE INDEPENDENCIA",
+      "titulo": "La misma pregunta, con datos de atributo",
+      "subtitulo": "Para comparar proporciones o conteos entre grupos.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La continuidad eléctrica es pasa/no pasa y el ANOVA no aplica a ese tipo de dato. La chi-cuadrada pregunta lo mismo que el ANOVA, pero con datos discretos: ¿la proporción de fallas es igual en los tres turnos, o al menos una difiere?"
+        },
+        {
+          "tipo": "formula",
+          "etiqueta": "ESTADÍSTICO χ²",
+          "tex": "\\chi^{2}=\\sum\\dfrac{(O-E)^{2}}{E}",
+          "texto": "χ² = Σ (O − E)² ÷ E",
+          "nota": "O: frecuencia observada · E: esperada si H₀ fuera cierta · gl = (filas − 1) × (columnas − 1)"
+        },
+        {
+          "tipo": "nota",
+          "texto": "No es la prueba de proporción de una muestra. La chi-cuadrada compara grupos entre sí; la de una muestra compara una proporción contra un estándar fijo, por ejemplo «¿la tasa de defectos es menor a 1 %?»."
+        }
+      ]
+    },
+    {
+      "id": "m7-chi-arneses",
+      "etiqueta": "M7 · CHI-CUADRADA APLICADA",
+      "titulo": "10 fallas en 16,020 unidades: χ² = 3.20",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Turno", {"t": "Unidades producidas", "num": true}, {"t": "Fallas de continuidad", "num": true}, {"t": "Fallas esperadas bajo H₀", "num": true}],
+          "filas": [["Turno 1", "5,340", "2", "3.33"], ["Turno 2", "5,340", "2", "3.33"], ["Turno 3", "5,340", "6", "3.33"], ["Total", "16,020", "10", "10.00"]],
+          "resaltar": [2]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Con gl = (3 − 1)(2 − 1) = 2, el valor crítico para α = 0.05 es 5.99. Como 3.20 < 5.99, **no se rechaza H₀**: no hay evidencia significativa de que la proporción de fallas cambie entre turnos, aunque el Turno 3 acumule el triple de fallas que cada uno de los otros dos."
+        },
+        {
+          "tipo": "nota",
+          "texto": "Las frecuencias esperadas (3.33) son menores que 5, el mínimo que suele pedirse para fiarse de la aproximación. El LAB 19 lo señala y, en tablas de 2 × 2, calcula también Yates y Fisher."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab19",
+          "texto": "Abrir LAB 19 con la tabla de fallas por turno →",
+          "valores": {
+            "alfa": 0.05,
+            "herramienta": "chi",
+            "numCols": "3",
+            "nombresCols": "Turno 1, Turno 2, Turno 3",
+            "observadas": [
+              {"categoria": "Falla de continuidad", "c1": 2, "c2": 2, "c3": 6, "c4": null, "c5": null},
+              {"categoria": "Sin falla", "c1": 5338, "c2": 5338, "c3": 5334, "c4": null, "c5": null}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m7-poder",
+      "etiqueta": "M7 · PODER ESTADÍSTICO",
+      "titulo": "Un mismo problema, dos resultados: una lección de poder",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "DATO CONTINUO · ANOVA",
+              "titulo": "15 mediciones de fuerza",
+              "texto": "F(2, 12) = 14.22 y p < 0.001: detecta la diferencia con claridad.",
+              "estilo": "acento"
+            },
+            {"etiqueta": "DATO DE ATRIBUTO · CHI-CUADRADA", "titulo": "10 fallas en 16,020 unidades", "texto": "χ² = 3.20, menor que 5.99: no alcanza para rechazar H₀."}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "No es una contradicción. El **poder estadístico** (1 − β) es la probabilidad de detectar una diferencia que sí existe. Crece con el tamaño de muestra, con la magnitud del efecto y con un α mayor, aunque subir α aumenta el riesgo de error Tipo I."
+        },
+        {
+          "tipo": "nota",
+          "texto": "Los datos continuos aportan más información por observación y detectan diferencias reales con muestras mucho más pequeñas. Es la razón por la que el módulo 4 recomienda preferirlos cuando sea posible."
+        }
+      ]
+    },
+    {"tipo": "lab", "lab": "lab19"},
+    {
+      "id": "m7-sintesis",
+      "etiqueta": "M7 · SÍNTESIS",
+      "titulo": "Cuatro herramientas, un solo argumento",
+      "subtitulo": "Del Ishikawa del módulo 6 a una causa confirmada con datos.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Herramienta", "Qué aportó", "Resultado en los arneses"],
+          "filas": [
+            ["ANOVA", "Los turnos difieren", "F(2, 12) = 14.22 · p < 0.001; Turno 3: 165 N frente a 174–175 N"],
+            ["Correlación", "Fuerza y resistencia se mueven juntas", "r = −0.99"],
+            ["Regresión", "Fuerza mínima para 1.2 mΩ", "173 N; el Turno 3 queda por debajo"],
+            ["Chi-cuadrada", "Poco poder con datos de atributo", "χ² = 3.20 < 5.99; 10 fallas en 16,020 unidades"]
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Las cuatro, incluida la que no encontró significancia, apuntan a la misma conclusión: la hipótesis del Ishikawa queda confirmada con datos y lista para atacarse en Mejorar."
+        },
+        {"tipo": "nota", "texto": "Si puedes medir un dato continuo en lugar de uno de atributo, hazlo: permite un caso convincente con muestras mucho más pequeñas."}
+      ]
+    },
+    {
+      "id": "m7-supuestos",
+      "etiqueta": "M7 · SUPUESTOS",
+      "titulo": "Tres supuestos que el software no valida por sí solo",
+      "subtitulo": "Verifícalos antes de confiar en un ANOVA o en una regresión.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {"etiqueta": "1 · INDEPENDENCIA", "texto": "Una medición no influye en la siguiente."},
+            {"etiqueta": "2 · NORMALIDAD DE LOS RESIDUOS", "texto": "Los errores del modelo se distribuyen aproximadamente como una normal."},
+            {"etiqueta": "3 · HOMOGENEIDAD DE VARIANZAS", "texto": "La dispersión es parecida entre los grupos o a lo largo del rango de predicción."}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Un gráfico de residuos contra valores ajustados revela las violaciones de un vistazo: patrones, embudos o curvas donde debería haber una nube de puntos sin forma son la señal de alerta. Los laboratorios 18 y 19 lo dibujan."
+        },
+        {"tipo": "nota", "texto": "Un valor p o un R² muy buenos no rescatan a un modelo que incumple sus supuestos."}
+      ]
+    },
+    {
+      "id": "m7-software",
+      "etiqueta": "M7 · SOFTWARE ESTADÍSTICO",
+      "titulo": "En Minitab, dos recorridos que reproducen este módulo",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "ANOVA · UN SOLO FACTOR",
+              "items": [
+                "Estadísticas > ANOVA > Un solo factor.",
+                "Respuesta = fuerza de engarzado; Factor = turno.",
+                "Comparaciones: activa Tukey para saber cuáles turnos difieren.",
+                "Gráficas: «Cuatro en uno» para revisar los residuos."
+              ],
+              "ordenada": true
+            },
+            {
+              "etiqueta": "REGRESIÓN",
+              "items": [
+                "Estadísticas > Regresión > Regresión > Ajustar modelo de regresión.",
+                "Respuesta = resistencia de contacto; predictor continuo = fuerza de engarzado.",
+                "Aceptar: el resultado trae ecuación, R² y significancia de la pendiente."
+              ],
+              "ordenada": true
+            }
+          ]
+        },
+        {"tipo": "texto", "texto": "En JMP, Analizar > Modelo de ajuste cubre ambos casos en la misma ventana."},
+        {
+          "tipo": "nota",
+          "texto": "Un software mal alimentado entrega un número igual de limpio que uno bien alimentado. Entender la mecánica, como en el ejemplo mínimo del ANOVA, permite notar cuándo un resultado no cuadra con lo que el proceso debería estar haciendo."
+        }
+      ]
+    },
+    {
+      "id": "m7-ejercicios-a",
+      "etiqueta": "M7 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1",
+              "titulo": "Identificar el tipo de error",
+              "texto": "H₀: «el proveedor nuevo de terminales no cambia la resistencia de contacto». (a) Se concluye que sí la cambia, pero es equivalente al anterior. (b) Se concluye que no la cambia, pero produce peor resistencia. ¿Qué error es cada uno?",
+              "verificacion": "La guía responde: (a) Tipo I, un falso positivo; (b) Tipo II, un falso negativo, más costoso porque deja pasar un proveedor problemático.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            },
+            {
+              "numero": "2",
+              "titulo": "Los peligros de extrapolar",
+              "texto": "¿Qué resistencia de contacto predice Resistencia = 16.37 − 0.088 × Fuerza para 190 N? ¿Es confiable la predicción?",
+              "verificacion": "La guía obtiene −0.35 mΩ, imposible físicamente: 190 N queda fuera del rango medido. Con los 12 pares de la plantilla, el laboratorio da −0.30 mΩ y lo marca como extrapolación.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab19",
+              "numeroLab": "19",
+              "valores": {
+                "alfa": 0.05,
+                "herramienta": "regresion",
+                "nombreX": "Fuerza de engarzado",
+                "unidadX": "N",
+                "nombreY": "Resistencia de contacto",
+                "unidadY": "mΩ",
+                "datosX": [160, 162.3, 164.5, 166.8, 169.1, 171.4, 173.6, 175.9, 178.2, 180.5, 182.7, 185],
+                "datosY": [2.21, 2.01, 1.94, 1.53, 1.48, 1.13, 1.17, 0.9, 0.78, 0.45, 0.32, 0.07],
+                "xPred": 190,
+                "yObjetivo": 1.5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m7-ejercicios-b",
+      "etiqueta": "M7 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "3",
+              "titulo": "Interpretar la fuerza de una correlación",
+              "texto": "Un analista encuentra r = 0.15 entre la temperatura en planta y los defectos de soldadura. ¿Qué tan fuerte es la relación? ¿Cambiaría tu recomendación de investigarla si fuera r = −0.85?",
+              "verificacion": "La guía responde: r = 0.15 es muy débil, casi inexistente; probablemente no valga la pena priorizarla. r = −0.85 es fuerte e inversa y merece investigarse, aunque no prueba causalidad.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            },
+            {
+              "numero": "4",
+              "titulo": "Sin resolver: intervalo de confianza",
+              "texto": "Con n = 25, media = 80 y desviación estándar muestral = 10, calcula el intervalo de confianza de 95 % para μ (usa z = 1.96).",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.",
+              "etiquetaVerificacion": "Clave en el libro",
+              "lab": "lab19",
+              "numeroLab": "19",
+              "valores": {"alfa": 0.05, "herramienta": "ic", "icN": 25, "icMedia": 80, "icS": 10, "icUnidad": ""}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m7-errores",
+      "etiqueta": "M7 · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "items": [
+            "**Concluir causalidad solo porque r es alto.** Hace falta un diagrama de dispersión y una razón física plausible, como la que existe entre fuerza de engarzado y resistencia de contacto.",
+            "**Leer «no se rechaza H₀» como «H₀ es verdadera».** La chi-cuadrada del módulo no prueba que los turnos sean iguales: solo dice que la evidencia no alcanza para afirmar lo contrario.",
+            "**Correr varias pruebas t por pares en vez de un ANOVA.** Cada prueba acumula su riesgo de error Tipo I y el riesgo conjunto supera con mucho el 5 % nominal.",
+            "**Extrapolar una regresión fuera del rango de los datos.** Puede dar predicciones imposibles, como la resistencia negativa del ejercicio 2.",
+            "**Aplicar ANOVA a un dato de atributo.** El ANOVA exige un dato continuo; para comparar proporciones o conteos entre grupos usa la chi-cuadrada."
+          ],
+          "ordenada": true
+        }
+      ]
+    }
+  ]
+}
