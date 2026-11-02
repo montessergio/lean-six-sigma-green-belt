@@ -93,3 +93,93 @@ export function resumenVsm(filas, { takt = NaN, demanda = NaN } = {}) {
 export function aplicarEspera(filas, fila, esperaNueva) {
   return (filas ?? []).map((f, i) => (i === fila - 1 ? { ...f, espera: esperaNueva, inv: NaN } : f));
 }
+
+/* ============================================================ Takt y balanceo (LAB 21) ============================================================ */
+
+/**
+ * Tiempo neto disponible por día, en minutos = turnos × (minutos por turno − descansos − juntas, 5S y mantenimiento planeado):
+ * los descuentos son por turno, como en la plantilla «Takt Time». Un descuento vacío vale 0. NaN si falta el turno, si algún
+ * dato es negativo o si los descuentos se comen todo el turno.
+ */
+export function tiempoNeto({ minTurno, turnos = 1, descansos = 0, paros = 0 } = {}) {
+  const d = finito(descansos) ? descansos : 0;
+  const p = finito(paros) ? paros : 0;
+  if (!(minTurno > 0) || !(turnos > 0) || d < 0 || p < 0) return NaN;
+  const porTurno = minTurno - d - p;
+  return porTurno > 0 ? turnos * porTurno : NaN;
+}
+
+/** Demanda diaria a partir de la demanda del periodo: si es semanal se reparte entre los días de operación por semana. */
+export function demandaDiaria(demanda, periodo, diasSemana) {
+  if (!(demanda > 0)) return NaN;
+  if (periodo === 'semana') return diasSemana > 0 ? demanda / diasSemana : NaN;
+  return demanda;
+}
+
+/**
+ * Ritmo del cliente: takt (min y s por unidad), unidades por hora requeridas (60 ÷ takt) y pitch = takt × cantidad por contenedor
+ * (los minutos que tarda el cliente en consumir un contenedor; opcional). `neto` y `demanda` van en la misma unidad de periodo.
+ */
+export function ritmoCliente({ neto, demanda, contenedor = NaN }) {
+  const takt = taktTime(neto, demanda);
+  return {
+    takt,
+    segundos: takt * 60,
+    porHora: takt > 0 ? 60 / takt : NaN,
+    pitch: takt > 0 && contenedor > 0 ? takt * contenedor : NaN,
+  };
+}
+
+/**
+ * Estaciones frente al takt (plantilla «Takt Time»). `filas` = [{ estacion, tc }] con el tiempo de ciclo en minutos por unidad.
+ * Una fila vacía se ignora; una con nombre pero sin tiempo, o con tiempo ≤ 0, se descarta y se cuenta en `descartadas`.
+ *   uso          tc ÷ takt (NaN sin takt); excede cuando tc > takt;
+ *   contenido    Σ tc, el trabajo que lleva una unidad de punta a punta;
+ *   operadores   ⌈contenido ÷ takt⌉, el mínimo que sigue el ritmo del cliente si el trabajo se repartiera sin sobrantes;
+ *   eficiencia   contenido ÷ (n × tc máximo): qué tanto del tiempo que la estación más lenta impone a todas se usa trabajando;
+ *   ocio         n × tc máximo − contenido, minutos por unidad que se pierden esperando a la estación más lenta.
+ * `indice` es el número de fila de la tabla (1, 2, …). Con empate en la más lenta gana la primera (como MATCH en la plantilla).
+ */
+export function balancearEstaciones(filas, takt = NaN) {
+  const lista = [];
+  let descartadas = 0;
+  (filas ?? []).forEach((f, i) => {
+    if (!f) return;
+    const nombre = String(f.estacion ?? '').trim();
+    const hayTc = finito(f.tc);
+    if (!nombre && !hayTc) return;
+    if (!hayTc || f.tc <= 0) {
+      descartadas += 1;
+      return;
+    }
+    lista.push({ indice: i + 1, estacion: nombre, tc: f.tc, uso: takt > 0 ? f.tc / takt : NaN, excede: takt > 0 && f.tc > takt + 1e-9 });
+  });
+  const contenido = lista.reduce((s, r) => s + r.tc, 0);
+  const lenta = lista.reduce((m, r) => (!m || r.tc > m.tc ? r : m), null);
+  return {
+    valido: lista.length > 0,
+    filas: lista, descartadas, contenido, lenta,
+    operadores: lista.length && takt > 0 ? Math.ceil(contenido / takt - 1e-9) : NaN,
+    eficiencia: lenta ? contenido / (lista.length * lenta.tc) : NaN,
+    ocio: lenta ? lista.length * lenta.tc - contenido : NaN,
+    exceden: lista.filter((r) => r.excede),
+  };
+}
+
+/** Lectura de la guía (M8, ej. 4): del takt, la parte de valor agregado es PCE × takt y el resto es desperdicio. `pce` va en 0–1. */
+export function valorEnTakt(pce, takt) {
+  if (!(pce >= 0 && pce <= 1 && takt > 0)) return { va: NaN, desperdicio: NaN };
+  const va = pce * takt;
+  return { va, desperdicio: takt - va };
+}
+
+/**
+ * SMED: el cambio de modelo más corto libera tiempo de producción. Ahorro por cambio = cambio × reducción (en %); por turno =
+ * ahorro por cambio × cambios por turno (guía M8, ej. 3). NaN si falta un dato o la reducción sale de 0–100.
+ */
+export function ahorroSmed({ cambio, reduccion, cambiosTurno } = {}) {
+  const ok = finito(cambio) && cambio > 0 && finito(reduccion) && reduccion >= 0 && reduccion <= 100 && finito(cambiosTurno) && cambiosTurno >= 0;
+  if (!ok) return { porCambio: NaN, nuevo: NaN, porTurno: NaN };
+  const porCambio = cambio * (reduccion / 100);
+  return { porCambio, nuevo: cambio - porCambio, porTurno: porCambio * cambiosTurno };
+}
