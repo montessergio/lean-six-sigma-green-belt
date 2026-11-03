@@ -5,7 +5,10 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { ahorroSmed, aplicarEspera, balancearEstaciones, demandaDiaria, resumenVsm, ritmoCliente, taktTime, tiempoNeto, valorEnTakt } from '../js/lib/mejorar.js';
+import {
+  ahorroSmed, aplicarEspera, balancearEstaciones, cascadaOee, demandaDiaria, factorMasDebil, factoresPeriodo, mayorPerdida, oee, resumenOee, resumenVsm,
+  ritmoCliente, simularMejora, taktTime, tiempoNeto, valorEnTakt,
+} from '../js/lib/mejorar.js';
 
 const cerca = (a, b, tol = 1e-9, msg = '') => assert.ok(Math.abs(a - b) <= tol, `${msg} ${a} ≠ ${b} (tol ${tol})`);
 const sin = { inv: NaN, espera: NaN, fty: NaN };
@@ -244,4 +247,125 @@ test('ahorroSmed (ej. 3 de la guía): 25 min con 50 % y 3 cambios por turno libe
   assert.ok(Number.isNaN(ahorroSmed({ cambio: 0, reduccion: 50, cambiosTurno: 3 }).porTurno));
   assert.ok(Number.isNaN(ahorroSmed({ cambio: 25, reduccion: 50, cambiosTurno: -1 }).porTurno));
   assert.ok(Number.isNaN(ahorroSmed({}).porCambio));
+});
+
+/* ------------------------------------------------------------------ OEE ------------------------------------------------------------------ */
+const DIAS = [
+  { periodo: 'Día 1', plan: 450, paros: 75, ciclo: 0.9, prod: 400, buenas: 380 },
+  { periodo: 'Día 2', plan: 450, paros: 90, ciclo: 0.9, prod: 380, buenas: 360 },
+  { periodo: 'Día 3', plan: 450, paros: 68, ciclo: 0.9, prod: 410, buenas: 392 },
+  { periodo: 'Día 4', plan: 450, paros: 82, ciclo: 0.9, prod: 395, buenas: 374 },
+  { periodo: 'Día 5', plan: 450, paros: 70, ciclo: 0.9, prod: 405, buenas: 388 },
+];
+
+test('oee: producto de los tres factores (guía: 90 × 85 × 96 = 73.44 %; ej. 5: 77.68 %; examen: 52.02 %)', () => {
+  cerca(oee(0.9, 0.85, 0.96), 0.7344, 1e-12);
+  cerca(oee(0.88, 0.91, 0.97), 0.776776, 1e-12);
+  cerca(oee(0.9, 0.85, 0.68), 0.5202, 1e-12);
+  assert.ok(Number.isNaN(oee(0.9, NaN, 0.96)));
+  assert.ok(Number.isNaN(oee(undefined, 0.9, 0.9)));
+});
+
+test('factoresPeriodo: turno de la guía (480 min, 48 de paros, ciclo de 56.25 s) y día 1 de la plantilla', () => {
+  const g = factoresPeriodo({ plan: 480, paros: 48, ciclo: 0.9375, prod: 391, buenas: 375 });
+  cerca(g.A, 0.9, 1e-12, 'disponibilidad = 432 ÷ 480');
+  cerca(g.operando, 432, 1e-12);
+  cerca(g.teoricas, 460.8, 1e-9, '25,920 s ÷ 56.25 s (la guía redondea a 460)');
+  cerca(g.P, 0.848524305556, 1e-9, '391 ÷ 460.8');
+  cerca(g.Q, 0.959079283887, 1e-9, '375 ÷ 391');
+  cerca(g.oee, 0.732421875, 1e-12, '0.9375 × 375 ÷ 480');
+  const d1 = factoresPeriodo(DIAS[0]);
+  cerca(d1.A, 375 / 450, 1e-12);
+  cerca(d1.P, 0.96, 1e-12);
+  cerca(d1.Q, 0.95, 1e-12);
+  cerca(d1.oee, 0.76, 1e-12);
+  assert.ok(Number.isNaN(factoresPeriodo({ plan: 450, paros: 450, ciclo: 0.9, prod: 10, buenas: 9 }).P), 'sin tiempo operando no hay rendimiento');
+  assert.ok(Number.isNaN(factoresPeriodo({ plan: 450, paros: 10, ciclo: 0.9, prod: 0, buenas: 0 }).Q), 'sin producción no hay calidad');
+});
+
+test('resumenOee: cinco días de la plantilla → OEE por día y total (A 82.9 %, P 96.0 %, Q 95.2 %, OEE 75.76 %)', () => {
+  const r = resumenOee(DIAS);
+  assert.equal(r.valido, true);
+  assert.equal(r.descartadas, 0);
+  [0.76, 0.72, 0.784, 0.748, 0.776].forEach((v, i) => cerca(r.filas[i].oee, v, 1e-12, `día ${i + 1}`));
+  const t = r.total;
+  assert.deepEqual([t.plan, t.paros, t.prod, t.buenas], [2250, 385, 1990, 1894]);
+  cerca(t.ciclo, 0.9, 1e-12);
+  cerca(t.A, 0.828888888889, 1e-9);
+  cerca(t.P, 0.960321715818, 1e-9);
+  cerca(t.Q, 0.951758793970, 1e-9);
+  cerca(t.oee, 0.7576, 1e-12);
+  cerca(r.perdidas.paros, 385, 1e-9);
+  cerca(r.perdidas.velocidad, 74, 1e-9);
+  cerca(r.perdidas.defectos, 86.4, 1e-9);
+  cerca(r.perdidas.productivo, 1704.6, 1e-9);
+  cerca(r.perdidas.paros + r.perdidas.velocidad + r.perdidas.defectos + r.perdidas.productivo, t.plan, 1e-9, 'la cascada suma el tiempo planificado');
+  assert.equal(r.rendimientoAlto, 0);
+});
+
+test('resumenOee: el ciclo ideal del total se pondera por las unidades producidas', () => {
+  const r = resumenOee([
+    { periodo: 'A', plan: 400, paros: 40, ciclo: 1, prod: 300, buenas: 290 },
+    { periodo: 'B', plan: 400, paros: 20, ciclo: 0.5, prod: 700, buenas: 650 },
+  ]);
+  cerca(r.total.ciclo, 0.65, 1e-12, '(1 × 300 + 0.5 × 700) ÷ 1000');
+  cerca(r.total.A, 0.925, 1e-12);
+  cerca(r.total.Q, 0.94, 1e-12);
+  cerca(r.total.oee, 0.76375, 1e-12, '0.65 × 940 ÷ 800');
+  cerca(r.perdidas.productivo / r.total.plan, r.total.oee, 1e-12, 'el tiempo productivo ÷ el planificado es el OEE');
+});
+
+test('resumenOee: filas vacías, descartadas y rendimiento mayor que 100 %', () => {
+  const r = resumenOee([
+    { periodo: '', plan: NaN, paros: NaN, ciclo: NaN, prod: NaN, buenas: NaN },
+    { periodo: 'bien', plan: 480, paros: 48, ciclo: 0.9375, prod: 391, buenas: 375 },
+    { periodo: 'incompleta', plan: 480, paros: 48, ciclo: NaN, prod: 391, buenas: 375 },
+    { periodo: 'sin tiempo', plan: 480, paros: 480, ciclo: 1, prod: 10, buenas: 9 },
+    { periodo: 'más buenas', plan: 480, paros: 48, ciclo: 1, prod: 100, buenas: 101 },
+    { periodo: 'sin producir', plan: 480, paros: 48, ciclo: 1, prod: 0, buenas: 0 },
+    { periodo: 'paros negativos', plan: 480, paros: -1, ciclo: 1, prod: 100, buenas: 90 },
+    { periodo: 'ciclo cero', plan: 480, paros: 0, ciclo: 0, prod: 100, buenas: 90 },
+    { periodo: 'rápido', plan: 480, paros: 48, ciclo: 1.2, prod: 390, buenas: 380 },
+  ]);
+  assert.equal(r.descartadas, 6);
+  assert.deepEqual(r.filas.map((f) => f.indice), [2, 9]);
+  assert.equal(r.rendimientoAlto, 1, '1.2 × 390 ÷ 432 = 108 %');
+  cerca(r.filas[1].P, 1.083333333333, 1e-9);
+  assert.equal(resumenOee([]).valido, false);
+  assert.equal(resumenOee(undefined).valido, false);
+  assert.equal(resumenOee([{ periodo: 'x', plan: NaN, paros: NaN, ciclo: NaN, prod: NaN, buenas: NaN }]).valido, false);
+});
+
+test('cascadaOee y mayor pérdida: el factor más débil y la pérdida más grande pueden no coincidir', () => {
+  const c = cascadaOee({ A: 0.9, P: 0.85, Q: 0.96 });
+  cerca(c.paros, 0.1, 1e-12);
+  cerca(c.velocidad, 0.135, 1e-12);
+  cerca(c.defectos, 0.0306, 1e-12);
+  cerca(c.productivo, 0.7344, 1e-12);
+  cerca(c.paros + c.velocidad + c.defectos + c.productivo, 1, 1e-12);
+  assert.equal(mayorPerdida(c).clave, 'velocidad');
+  assert.equal(factorMasDebil({ A: 0.9, P: 0.85, Q: 0.96 }).clave, 'P');
+  const otro = { A: 0.9, P: 0.7, Q: 0.65 };
+  assert.equal(factorMasDebil(otro).clave, 'Q', 'calidad tiene el valor más bajo');
+  const co = cascadaOee(otro);
+  cerca(co.velocidad, 0.27, 1e-12);
+  cerca(co.defectos, 0.2205, 1e-12);
+  assert.equal(mayorPerdida(co).clave, 'velocidad', 'pero la pérdida más grande es la de velocidad');
+});
+
+test('factorMasDebil: examen de la guía (90, 85 y 68 → calidad), plantilla (disponibilidad), empates y datos faltantes', () => {
+  assert.deepEqual(factorMasDebil({ A: 0.9, P: 0.85, Q: 0.68 }), { clave: 'Q', nombre: 'Calidad', valor: 0.68 });
+  assert.equal(factorMasDebil({ A: 0.828888888889, P: 0.960321715818, Q: 0.95175879397 }).nombre, 'Disponibilidad');
+  assert.equal(factorMasDebil({ A: 0.9, P: 0.9, Q: 0.95 }).clave, 'A', 'con empate gana el primero');
+  assert.equal(factorMasDebil({ A: NaN, P: 0.8, Q: 0.9 }).clave, 'P');
+  assert.equal(factorMasDebil({ A: NaN, P: NaN, Q: NaN }), null);
+});
+
+test('simularMejora: llevar la calidad del examen de 68 % a 85 % sube el OEE de 52.02 % a 65.03 %', () => {
+  const s = simularMejora({ A: 0.9, P: 0.85, Q: 0.68 }, 'Q', 0.85);
+  cerca(s.oee, 0.65025, 1e-12);
+  cerca(s.ganancia, 0.13005, 1e-12);
+  assert.deepEqual([s.A, s.P, s.Q], [0.9, 0.85, 0.85]);
+  cerca(simularMejora({ A: 0.9, P: 0.85, Q: 0.68 }, 'A', 0.95).ganancia, 0.05 * 0.85 * 0.68, 1e-12);
+  cerca(simularMejora({ A: 0.9, P: 0.85, Q: 0.68 }, 'P', 0.85).ganancia, 0, 1e-12, 'sin cambio no hay ganancia');
 });

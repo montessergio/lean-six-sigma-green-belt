@@ -183,3 +183,92 @@ export function ahorroSmed({ cambio, reduccion, cambiosTurno } = {}) {
   const porCambio = cambio * (reduccion / 100);
   return { porCambio, nuevo: cambio - porCambio, porTurno: porCambio * cambiosTurno };
 }
+
+/* ============================================================ OEE (LAB 22) ============================================================ */
+
+export const FACTORES_OEE = Object.freeze({ A: 'Disponibilidad', P: 'Rendimiento', Q: 'Calidad' });
+
+/** OEE = disponibilidad × rendimiento × calidad, los tres en 0–1. NaN si falta alguno. */
+export const oee = (A, P, Q) => (finito(A) && finito(P) && finito(Q) ? A * P * Q : NaN);
+
+/**
+ * Factores de un periodo (plantilla «OEE»), con `plan` y `paros` en minutos, `ciclo` ideal en minutos por unidad y las unidades:
+ *   disponibilidad  A = (plan − paros) ÷ plan
+ *   rendimiento     P = ciclo ideal × producidas ÷ (plan − paros)
+ *   calidad         Q = buenas ÷ producidas
+ * `operando` es el tiempo que la máquina estuvo disponible y `teoricas` las unidades que cabían en él al ciclo ideal.
+ */
+export function factoresPeriodo({ plan, paros, ciclo, prod, buenas }) {
+  const operando = plan - paros;
+  const A = plan > 0 ? operando / plan : NaN;
+  const P = operando > 0 ? (ciclo * prod) / operando : NaN;
+  const Q = prod > 0 ? buenas / prod : NaN;
+  return { A, P, Q, oee: oee(A, P, Q), operando, teoricas: ciclo > 0 ? operando / ciclo : NaN };
+}
+
+/**
+ * Resumen del OEE de una tabla de periodos [{ periodo, plan, paros, ciclo, prod, buenas }]. Una fila vacía se ignora; una con
+ * datos incompletos o incoherentes (plan o ciclo ≤ 0, paros negativos o iguales o mayores que el plan, sin unidades producidas
+ * o con más unidades buenas que producidas) se descarta y se cuenta en `descartadas`. `indice` es el número de fila de la tabla.
+ * El total suma los periodos y pondera el ciclo ideal por las unidades producidas, como la plantilla; `perdidas` reparte el tiempo
+ * planificado en minutos: paros, velocidad (operando − ciclo × producidas), defectos (ciclo × malas) y tiempo productivo
+ * (ciclo × buenas), que suman el tiempo planificado. `rendimientoAlto` cuenta los periodos con rendimiento > 100 %, señal de que
+ * el ciclo ideal es más lento que el real.
+ */
+export function resumenOee(filas) {
+  const lista = [];
+  let descartadas = 0;
+  (filas ?? []).forEach((f, i) => {
+    if (!f) return;
+    const nombre = String(f.periodo ?? '').trim();
+    const datos = [f.plan, f.paros, f.ciclo, f.prod, f.buenas];
+    if (!nombre && !datos.some(finito)) return;
+    const coherente = datos.every(finito) && f.plan > 0 && f.paros >= 0 && f.paros < f.plan && f.ciclo > 0 && f.prod > 0 && f.buenas >= 0 && f.buenas <= f.prod;
+    if (!coherente) {
+      descartadas += 1;
+      return;
+    }
+    lista.push({ indice: i + 1, periodo: nombre, plan: f.plan, paros: f.paros, ciclo: f.ciclo, prod: f.prod, buenas: f.buenas, ...factoresPeriodo(f) });
+  });
+  if (!lista.length) return { valido: false, filas: lista, descartadas, total: null, perdidas: null, rendimientoAlto: 0 };
+  const suma = (campo) => lista.reduce((s, r) => s + r[campo], 0);
+  const plan = suma('plan');
+  const paros = suma('paros');
+  const prod = suma('prod');
+  const buenas = suma('buenas');
+  const ciclo = lista.reduce((s, r) => s + r.ciclo * r.prod, 0) / prod;
+  const f = factoresPeriodo({ plan, paros, ciclo, prod, buenas });
+  return {
+    valido: true, filas: lista, descartadas,
+    total: { plan, paros, prod, buenas, ciclo, ...f },
+    perdidas: { paros, velocidad: f.operando - ciclo * prod, defectos: ciclo * (prod - buenas), productivo: ciclo * buenas },
+    rendimientoAlto: lista.filter((r) => r.P > 1 + 1e-9).length,
+  };
+}
+
+/** Cascada de pérdidas como fracción del tiempo planificado: paros 1 − A, velocidad A(1 − P), defectos A·P(1 − Q) y tiempo productivo A·P·Q. */
+export function cascadaOee({ A, P, Q }) {
+  return { paros: 1 - A, velocidad: A * (1 - P), defectos: A * P * (1 - Q), productivo: A * P * Q };
+}
+
+/** El factor con el valor más bajo ('A', 'P' o 'Q'); con empate, el primero. */
+export function factorMasDebil({ A, P, Q }) {
+  const lista = [['A', A], ['P', P], ['Q', Q]].filter(([, v]) => finito(v));
+  if (!lista.length) return null;
+  const [clave, valor] = lista.reduce((m, x) => (x[1] < m[1] ? x : m));
+  return { clave, nombre: FACTORES_OEE[clave], valor };
+}
+
+/** La pérdida de la cascada que más tiempo planificado consume ('paros', 'velocidad' o 'defectos'); con empate, la primera. */
+export function mayorPerdida(cascada) {
+  const [clave, valor] = ['paros', 'velocidad', 'defectos'].map((k) => [k, cascada[k]]).reduce((m, x) => (x[1] > m[1] ? x : m));
+  return { clave, valor };
+}
+
+/** OEE si un factor ('A', 'P' o 'Q') pasa a `nuevo` (0–1) y los otros quedan igual: devuelve los factores, el OEE y la ganancia en puntos (0–1). */
+export function simularMejora({ A, P, Q }, clave, nuevo) {
+  const f = { A, P, Q, [clave]: nuevo };
+  const antes = oee(A, P, Q);
+  const despues = oee(f.A, f.P, f.Q);
+  return { ...f, oee: despues, ganancia: despues - antes };
+}
