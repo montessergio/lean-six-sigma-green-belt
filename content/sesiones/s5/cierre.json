@@ -1,0 +1,117 @@
+{
+  "id": "cierre",
+  "titulo": "Cierre de la sesión 5",
+  "slides": [
+    {
+      "id": "cierre",
+      "etiqueta": "SESIÓN 5 · CIERRE",
+      "titulo": "Lo que te llevas de esta sesión",
+      "bloques": [
+        {
+          "tipo": "cierre",
+          "puntos": [
+            "El VSM mide el flujo completo: 38 de 55 minutos son espera (PCE de 27.3 %); con Kanban en el buffer, el PCE sube a 34.1 %.",
+            "Takt time = tiempo disponible ÷ demanda: 56.25 s con 2,400 arneses por semana; el ciclo de cada estación debe caber en él.",
+            "Las 5S ordenan, el poka-yoke previene, Kanban limita el WIP y el SMED reduce el cambio de modelo entre 50 % y 80 %.",
+            "OEE = disponibilidad × rendimiento × calidad: 73.4 % en el turno de la guía, con una herramienta Lean para cada factor.",
+            "La matriz de selección pondera impacto, costo, velocidad y riesgo: C (4.15) y A (3.95) avanzan en paralelo.",
+            "En el factorial 2², fuerza y pelado son significativos y la interacción no: se estandarizan 173 N y 7 mm."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m8a",
+      "etiqueta": "SESIÓN 5 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 8 (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Mapa de flujo de valor (VSM)",
+          "items": [
+            "Symestic. «Value Stream Mapping (VSM): The Honest Guide 2026». symestic.com (2026).",
+            "Lean Six Sigma Experts. «Value Stream Mapping Explained: Steps, Symbols, And Examples». leansixsigmaexperts.com (2026).",
+            "Six-Sigma-Material.com. «Value Stream Mapping (VSM)». six-sigma-material.com."
+          ]
+        },
+        {
+          "tipo": "referencias",
+          "titulo": "5S",
+          "items": [
+            "SixSigma DSI. «5S Methodology: Sort, Set in Order, Shine, Standardize, Sustain». sixsigmadsi.com (2026).",
+            "ASQ. «5S – What are The Five S's of Lean?». asq.org."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m8b",
+      "etiqueta": "SESIÓN 5 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 8 (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Poka-Yoke",
+          "items": [
+            "FlowFuse. «Poka Yoke Explained: Definition, Examples, Types». flowfuse.com (2025).",
+            "Wikipedia. «Poka-yoke». en.wikipedia.org.",
+            "The Lean Suite. «What Is Poka-Yoke in Manufacturing?». theleansuite.com (2026)."
+          ]
+        },
+        {
+          "tipo": "referencias",
+          "titulo": "Kanban",
+          "items": [
+            "Ease.io. «Kanban in Manufacturing: A Comprehensive Guide to Lean Production». ease.io (2026).",
+            "Symestic. «Kanban in Manufacturing: Pull System, WIP Limits & MES». symestic.com (2026)."
+          ]
+        },
+        {
+          "tipo": "referencias",
+          "titulo": "SMED",
+          "items": ["Lean Enterprise Institute. «Single Minute Exchange of Die». lean.org.", "TEEPTRAK. «What is SMED (Single-Minute Exchange of Die)?». teeptrak.com (2026)."]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m9a",
+      "etiqueta": "SESIÓN 5 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 9 (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Generación y selección de soluciones",
+          "items": [
+            "Six Sigma Study Guide. «Improve Phase (DMAIC)». sixsigmastudyguide.com (2024).",
+            "Lean 6 Sigma Hub. «How to Generate Improvement Solutions: Brainstorming Techniques for Six Sigma Teams». lean6sigmahub.com (2025).",
+            "Texas Lean Six Sigma. «Better Brainstorming». texasleansixsigma.com (2024).",
+            "Gemba Academy. «What is a Solution Selection Matrix?». gembaacademy.com (2025).",
+            "SixSigma.us. «Solution Selection Matrix in Six Sigma for Process Improvement». 6sigma.us (2025).",
+            "Learn Lean Sigma. «Prioritization Matrix Template». learnleansigma.com (2026).",
+            "Lean 6 Sigma Hub. «Improve Phase: Solution Selection Using Decision Matrices in Lean Six Sigma Projects». lean6sigmahub.com (2025)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m9b",
+      "etiqueta": "SESIÓN 5 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 9 (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "OFAT y diseño de experimentos",
+          "items": [
+            "SixSigma.us. «OFAT (One-Factor-at-a-Time). All You Need to Know». 6sigma.us (2025).",
+            "ASQ. «What Is Design of Experiments (DOE)?». asq.org.",
+            "Fiveable. «Factorial designs and interaction effects». fiveable.me (2024).",
+            "Czitrom, V. «One-Factor-at-a-Time Versus Designed Experiments». The American Statistician (1999).",
+            "Wikibooks. «Recipes for the Design of Experiments – Chapter 1: One Factor, Two Level Experiments». en.wikibooks.org.",
+            "Statistics 514, Purdue University. «2k Factorial Design» (notas de curso, método de tabla de signos). stat.purdue.edu.",
+            "LearnChe.org. «Assessing significance of main effects and interactions». learnche.org (2024)."
+          ]
+        }
+      ]
+    }
+  ]
+}

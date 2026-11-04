@@ -1,0 +1,643 @@
+{
+  "id": "m9",
+  "titulo": "M9 · Generación de soluciones y DOE",
+  "slides": [
+    {
+      "id": "m9-bisagra",
+      "etiqueta": "M9 · DE LAS HERRAMIENTAS A LA DECISIÓN",
+      "titulo": "Elegir qué implementar y cómo ajustarlo",
+      "subtitulo": "Cierra la fase Mejorar.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Con la causa confirmada en el módulo 7 y las herramientas Lean del módulo 8 sobre la mesa, este módulo cierra la fase Mejorar con dos preguntas distintas."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "1 · ¿CUÁL IMPLEMENTAR PRIMERO?", "texto": "Generar varias soluciones genuinas y compararlas con una matriz de selección ponderada."},
+            {
+              "etiqueta": "2 · ¿CÓMO AJUSTARLA?",
+              "texto": "Cuando la solución depende de más de un parámetro, un diseño factorial 2² evita probar cada combinación por separado.",
+              "estilo": "acento"
+            }
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "No dependen una de la otra: podrías usar la matriz sin correr nunca un DOE. En la guía terminan aplicándose al mismo problema, lo que ayuda a ver cómo encajan en un proyecto real."
+        }
+      ]
+    },
+    {
+      "id": "m9-brainstorming",
+      "etiqueta": "M9 · GENERACIÓN DE SOLUCIONES",
+      "titulo": "Resistir la primera idea que suena razonable",
+      "bloques": [
+        {"tipo": "texto", "texto": "Es una trampa común incluso en equipos experimentados. El brainstorming estructurado la evita con cuatro reglas:"},
+        {
+          "tipo": "pasos",
+          "columnas": 4,
+          "pasos": [
+            {"texto": "Tiempo limitado", "sub": "se fija de antemano"},
+            {"texto": "Sin juzgar", "sub": "la evaluación viene después, no durante"},
+            {"texto": "Cantidad primero", "sub": "antes que calidad inicial"},
+            {"texto": "Construir sobre otros", "sub": "no solo agregar ideas propias"}
+          ]
+        },
+        {"tipo": "texto", "texto": "El diagrama de afinidad del módulo 3A, el mismo que agrupó las causas, sirve sin cambios para agrupar las soluciones."},
+        {
+          "tipo": "nota",
+          "texto": "Vale también resistir el sesgo de «no inventado aquí»: una solución externa se descarta porque los datos no la favorecen, no porque venga de fuera."
+        }
+      ]
+    },
+    {
+      "id": "m9-candidatas",
+      "etiqueta": "M9 · SOLUCIONES CANDIDATAS",
+      "titulo": "Cuatro soluciones deliberadamente distintas para la misma causa",
+      "subtitulo": "Las letras son las de la guía.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La causa raíz confirmada en los módulos 6 y 7: fuerza de engarzado insuficiente y variable, sin una instrucción de trabajo que la especifique numéricamente."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "A · POKA-YOKE", "texto": "Sensor de fuerza en la prensa actual que impide liberar la pieza si la fuerza es menor de 173 N."},
+            {
+              "etiqueta": "C · INSTRUCCIÓN Y CAPACITACIÓN",
+              "texto": "Instrucción de trabajo con el valor numérico de fuerza, más capacitación y el control de cambios que el módulo 6 vio ausente."
+            },
+            {"etiqueta": "E · REEMPLAZO DE PRENSA", "texto": "Un modelo con control de fuerza integrado de fábrica."},
+            {"etiqueta": "F · DOBLE VERIFICACIÓN", "texto": "Segunda verificación de continuidad con muestreo reforzado por turno, sin tocar el engarzado."}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "La solución A conviene diseñarla con los operadores, no solo para ellos: quien opera la prensa conoce sus modos reales de falla, y así el sensor no se percibe como una acusación."
+        }
+      ]
+    },
+    {
+      "id": "m9-matriz-idea",
+      "etiqueta": "M9 · MATRIZ DE SELECCIÓN",
+      "titulo": "Comparar soluciones con criterios ponderados",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Es el mismo mecanismo de la matriz de priorización de proyectos del módulo 2, ahora aplicado a soluciones de un proyecto en marcha. Cuatro criterios, calificados de 1 a 5:"
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 4,
+          "tarjetas": [
+            {"etiqueta": "IMPACTO · 40 %", "texto": "En la causa raíz."},
+            {"etiqueta": "COSTO · 25 %", "texto": "Una calificación alta es un costo bajo."},
+            {"etiqueta": "VELOCIDAD · 20 %", "texto": "De implementación."},
+            {"etiqueta": "RIESGO · 15 %", "texto": "Una calificación alta es un riesgo bajo."}
+          ]
+        },
+        {"tipo": "formula", "etiqueta": "PUNTAJE PONDERADO", "tex": "P=\\sum_{i}w_i\\,c_i", "texto": "Puntaje = Σ (peso × calificación)", "nota": "Los pesos suman 100 %"},
+        {
+          "tipo": "nota",
+          "texto": "El criterio es el impacto en la causa raíz, no el impacto de negocio en general. Por eso no conviene reutilizar sin ajustar los criterios y pesos de la matriz de proyectos."
+        }
+      ]
+    },
+    {
+      "id": "m9-matriz-arneses",
+      "etiqueta": "M9 · MATRIZ APLICADA",
+      "titulo": "C obtiene 4.15 y A 3.95: casi empatadas",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": [
+            "Solución",
+            {"t": "Impacto (40 %)", "num": true},
+            {"t": "Costo (25 %)", "num": true},
+            {"t": "Velocidad (20 %)", "num": true},
+            {"t": "Riesgo (15 %)", "num": true},
+            {"t": "Puntaje", "num": true}
+          ],
+          "filas": [
+            ["C. Instrucción + capacitación + control de cambios", "4", "5", "5", "2", "4.15"],
+            ["A. Poka-yoke (sensor de fuerza en la prensa)", "5", "3", "3", "4", "3.95"],
+            ["F. Doble verificación / muestreo reforzado", "2", "4", "5", "3", "3.25"],
+            ["E. Reemplazo de prensa (control de fábrica)", "5", "1", "1", "3", "2.90"]
+          ],
+          "resaltar": [0, 1],
+          "pie": "Puntaje de C = 4(0.40) + 5(0.25) + 5(0.20) + 2(0.15) = 4.15."
+        },
+        {
+          "tipo": "texto",
+          "texto": "F es rápida y barata, pero solo detecta el defecto sin prevenirlo. E tiene el mismo impacto que A, pero es demasiado costosa y lenta frente al retrofit del poka-yoke."
+        },
+        {"tipo": "texto", "texto": "El LAB 07 de la sesión 2 hace este mismo cálculo; su ejemplo «Plantilla Excel» usa los pesos 40/25/20/15.", "tenue": true}
+      ]
+    },
+    {
+      "id": "m9-matriz-lectura",
+      "etiqueta": "M9 · DE LA MATRIZ A LA DECISIÓN",
+      "titulo": "El puntaje no es una sentencia automática",
+      "subtitulo": "Es también una lección de gestión del cambio.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Que C sume 4.15 y A 3.95 no significa que la organización esté igual de lista para adoptar ambas mañana. Cuánto capital aprueba el gerente esta semana, o si mantenimiento tiene ventana para instalar un sensor sin detener la línea, son preguntas políticas y operativas que la matriz no captura del todo."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "C · EN MANOS DEL EQUIPO",
+              "texto": "Depende de voluntad y disciplina: actualizar un documento, capacitar a un turno. Entra en vigor de inmediato.",
+              "estilo": "acento"
+            },
+            {"etiqueta": "A · REQUIERE APROBACIÓN", "texto": "Pide aprobación de inversión e instalación física, tiempos que ninguna matriz acelera."}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "El equipo implementa C de inmediato y gestiona A en paralelo. Avanzar con lo que sí depende de él mantiene visible el progreso y evita que toda la mejora dependa de un solo punto de falla administrativo."
+        }
+      ]
+    },
+    {
+      "id": "m9-ofat",
+      "etiqueta": "M9 · POR QUÉ UN FACTOR A LA VEZ NO BASTA",
+      "titulo": "OFAT: más corridas y ciego a las interacciones",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Antes de fijar el punto de ajuste del sensor queda una pregunta: ¿la fuerza es el único parámetro que influye en la resistencia de contacto? Lo intuitivo es probar un factor a la vez (OFAT): fijar todo lo demás, variar uno, medir; luego fijar su mejor valor y pasar al siguiente."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "OFAT",
+              "items": [
+                "Requiere más corridas de las necesarias.",
+                "No detecta interacciones: casos en que el efecto de un factor depende del nivel del otro.",
+                "Su óptimo puede no ser el óptimo real."
+              ]
+            },
+            {
+              "etiqueta": "DOE FACTORIAL",
+              "items": [
+                "Prueba todas las combinaciones de niveles.",
+                "Estima el efecto de cada factor y su interacción.",
+                "Suele usar menos corridas que un OFAT igual de riguroso."
+              ],
+              "estilo": "acento"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m9-factorial-diseno",
+      "etiqueta": "M9 · DISEÑO FACTORIAL 2²",
+      "titulo": "Fuerza y longitud de pelado: cuatro combinaciones, dos réplicas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El equipo probó un segundo candidato nunca estudiado formalmente: la longitud de pelado del cable. Dos factores, dos niveles cada uno y dos réplicas por combinación, es decir, ocho corridas."
+        },
+        {
+          "tipo": "tabla",
+          "columnas": ["Combinación", "Fuerza (A)", "Pelado (B)", {"t": "Resistencia (mΩ)", "num": true}, {"t": "Promedio (mΩ)", "num": true}],
+          "filas": [
+            ["(1)", "Baja (165 N)", "Corto (5 mm)", "2.1 · 1.9", "2.0"],
+            ["a", "Alta (178 N)", "Corto (5 mm)", "1.3 · 1.1", "1.2"],
+            ["b", "Baja (165 N)", "Largo (7 mm)", "1.8 · 1.6", "1.7"],
+            ["ab", "Alta (178 N)", "Largo (7 mm)", "0.8 · 0.6", "0.7"]
+          ],
+          "pie": "La letra aparece en el nombre de la combinación cuando ese factor está en su nivel alto."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab23",
+          "texto": "Abrir LAB 23 con el experimento de fuerza y pelado →",
+          "valores": {
+            "respuesta": "Resistencia de contacto (mΩ)",
+            "objetivo": "min",
+            "factores": [{"nombre": "Fuerza de engarzado (N)", "bajo": 165, "alto": 178}, {"nombre": "Longitud de pelado (mm)", "bajo": 5, "alto": 7}],
+            "corridas": [
+              {"y1": 2.1, "y2": 1.9, "y3": null, "y4": null, "y5": null},
+              {"y1": 1.3, "y2": 1.1, "y3": null, "y4": null, "y5": null},
+              {"y1": 1.8, "y2": 1.6, "y3": null, "y4": null, "y5": null},
+              {"y1": 0.8, "y2": 0.6, "y3": null, "y4": null, "y5": null}
+            ],
+            "alfa": 0.05,
+            "predA": 173,
+            "predB": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": "m9-signos",
+      "etiqueta": "M9 · MÉTODO DE LA TABLA DE SIGNOS",
+      "titulo": "Cada efecto es un promedio en el nivel alto menos uno en el bajo",
+      "bloques": [
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1],
+          "izq": [
+            {
+              "tipo": "tabla",
+              "columnas": ["Corrida", "A", "B", "AB", {"t": "Promedio (mΩ)", "num": true}],
+              "filas": [["(1)", "−", "−", "+", "2.0"], ["a", "+", "−", "−", "1.2"], ["b", "−", "+", "−", "1.7"], ["ab", "+", "+", "+", "0.7"]],
+              "pie": "La columna AB es, en cada fila, el producto de los signos de A y B."
+            }
+          ],
+          "der": [
+            {
+              "tipo": "formula",
+              "etiqueta": "EFECTO A",
+              "tex": "A=\\dfrac{-(1)+a-b+ab}{2}",
+              "texto": "Efecto A = [−(1) + a − b + ab] ÷ 2",
+              "nota": "Cada promedio lleva el signo de la columna A"
+            }
+          ]
+        },
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            {"valor": "−0.90", "etiqueta": "Efecto A · fuerza", "nota": "[−2.0 + 1.2 − 1.7 + 0.7] ÷ 2", "color": "teal"},
+            {"valor": "−0.40", "etiqueta": "Efecto B · pelado", "nota": "[−2.0 − 1.2 + 1.7 + 0.7] ÷ 2", "color": "azul"},
+            {"valor": "−0.10", "etiqueta": "Efecto AB · interacción", "nota": "[2.0 − 1.2 − 1.7 + 0.7] ÷ 2", "color": "ambar"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m9-ortogonal",
+      "etiqueta": "M9 · POR QUÉ FUNCIONA",
+      "titulo": "El diseño factorial 2² es ortogonal",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "EN CADA COLUMNA", "texto": "Hay exactamente el mismo número de signos + que de signos −, y ninguna columna se puede predecir a partir de otra."},
+            {
+              "etiqueta": "LO QUE PERMITE",
+              "texto": "Promediar las corridas con A en + y restar las de A en −: cualquier contribución de B y de AB se cancela, porque están igual de repartidas a ambos lados.",
+              "estilo": "acento"
+            }
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Sin ortogonalidad, por ejemplo si todas las corridas con A alto también tuvieran B alto, los efectos de A y de B quedarían mezclados sin forma de separarlos."
+        }
+      ]
+    },
+    {
+      "id": "m9-efectos",
+      "etiqueta": "M9 · INTERPRETAR LOS EFECTOS",
+      "titulo": "La fuerza domina, el pelado también importa y la interacción es pequeña",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Efecto", {"t": "Valor (mΩ)", "num": true}, "Interpretación"],
+          "filas": [
+            ["Fuerza (A)", "−0.90", "Pasar de 165 a 178 N reduce la resistencia 0.90 mΩ, en promedio."],
+            ["Pelado (B)", "−0.40", "Pasar de 5 a 7 mm la reduce 0.40 mΩ, en promedio."],
+            ["Interacción (AB)", "−0.10", "El efecto de un factor casi no depende del nivel del otro."]
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "La fuerza confirma lo que sugería la regresión del módulo 7. Pero el pelado, un factor nunca estudiado, aporta 0.40 mΩ adicionales. Con una interacción pequeña, las dos líneas del gráfico quedan casi paralelas y ambos factores pueden ajustarse de forma prácticamente independiente."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab23",
+          "texto": "Abrir LAB 23 con la gráfica de interacción →",
+          "valores": {
+            "respuesta": "Resistencia de contacto (mΩ)",
+            "objetivo": "min",
+            "factores": [{"nombre": "Fuerza de engarzado (N)", "bajo": 165, "alto": 178}, {"nombre": "Longitud de pelado (mm)", "bajo": 5, "alto": 7}],
+            "corridas": [
+              {"y1": 2.1, "y2": 1.9, "y3": null, "y4": null, "y5": null},
+              {"y1": 1.3, "y2": 1.1, "y3": null, "y4": null, "y5": null},
+              {"y1": 1.8, "y2": 1.6, "y3": null, "y4": null, "y5": null},
+              {"y1": 0.8, "y2": 0.6, "y3": null, "y4": null, "y5": null}
+            ],
+            "alfa": 0.05,
+            "predA": 173,
+            "predB": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": "m9-interaccion",
+      "etiqueta": "M9 · INTERACCIÓN",
+      "titulo": "Cuando la interacción es grande, los efectos principales engañan",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "INTERACCIÓN PEQUEÑA",
+              "texto": "Líneas casi paralelas: el efecto de la fuerza es casi el mismo con pelado corto o largo. Cada factor se ajusta por separado."
+            },
+            {
+              "etiqueta": "INTERACCIÓN GRANDE",
+              "texto": "Líneas que se cruzan o se abren: el efecto de un factor cambia según el nivel del otro. Fijar cada uno con su efecto principal puede llevar a un ajuste equivocado.",
+              "estilo": "acento"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Ejemplo didáctico inventado, no de la guía: temperatura y catalizador sobre el rendimiento de una reacción. Los efectos principales son +1.0 y −1.0, casi nulos, pero la interacción es de −19. Con catalizador bajo, subir la temperatura mejora el rendimiento de 61 % a 81 %; con catalizador alto, lo empeora de 79 % a 61 %."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab23",
+          "texto": "Abrir LAB 23 con el ejemplo de interacción grande →",
+          "valores": {
+            "respuesta": "Rendimiento de la reacción (%)",
+            "objetivo": "max",
+            "factores": [{"nombre": "Temperatura (°C)", "bajo": 150, "alto": 170}, {"nombre": "Concentración de catalizador (%)", "bajo": 1, "alto": 2}],
+            "corridas": [
+              {"y1": 60, "y2": 62, "y3": 61, "y4": null, "y5": null},
+              {"y1": 80, "y2": 82, "y3": 81, "y4": null, "y5": null},
+              {"y1": 78, "y2": 80, "y3": 79, "y4": null, "y5": null},
+              {"y1": 60, "y2": 62, "y3": 61, "y4": null, "y5": null}
+            ],
+            "alfa": 0.05,
+            "predA": null,
+            "predB": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "m9-prueba",
+      "etiqueta": "M9 · PRUEBA DE SIGNIFICANCIA",
+      "titulo": "Con dos réplicas se puede probar cada efecto",
+      "bloques": [
+        {"tipo": "texto", "texto": "«Casi paralelas» es una lectura visual; el error se estima con la dispersión dentro de cada combinación replicada."},
+        {
+          "tipo": "tabla",
+          "columnas": ["Fuente", {"t": "Valor", "num": true}],
+          "filas": [
+            ["Suma de cuadrados del error (SCE)", "0.08, con 4 grados de libertad (= 2² × (2 − 1))"],
+            ["Cuadrado medio del error", "0.02"],
+            ["Error estándar de cada efecto", "0.10 mΩ"]
+          ]
+        },
+        {
+          "tipo": "formula",
+          "etiqueta": "MARGEN DE SIGNIFICANCIA",
+          "tex": "\\text{Margen}=t_{4;\\,0.05}\\times EE=2.776\\times0.10=\\pm0.278",
+          "texto": "Margen = t(4 gl; α = 0.05) × error estándar = 2.776 × 0.10 = ± 0.278 mΩ"
+        },
+        {
+          "tipo": "nota",
+          "texto": "La guía escribe 0.05 y ±0.14: ese es el error estándar de cada coeficiente (efecto ÷ 2). Para los efectos como diferencia de promedios corresponden 0.10 y ±0.278. Las conclusiones no cambian."
+        }
+      ]
+    },
+    {
+      "id": "m9-prueba-resultado",
+      "etiqueta": "M9 · PRUEBA DE SIGNIFICANCIA",
+      "titulo": "Fuerza y pelado son significativos; la interacción, no",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Efecto", {"t": "Valor ± margen (mΩ)", "num": true}, {"t": "t", "num": true}, {"t": "valor p", "num": true}, "¿Significativo?"],
+          "filas": [
+            ["Fuerza (A)", "−0.90 ± 0.278", "−9", "0.0008", "Sí, claramente"],
+            ["Pelado (B)", "−0.40 ± 0.278", "−4", "0.0161", "Sí"],
+            ["Interacción (AB)", "−0.10 ± 0.278", "−1", "0.3739", "No: el intervalo incluye 0"]
+          ],
+          "resaltar": [0, 1],
+          "pie": "Un efecto es significativo cuando su intervalo excluye 0, es decir, cuando |t| supera 2.776 (valor p < 0.05)."
+        },
+        {
+          "tipo": "texto",
+          "texto": "La prueba confirma con un criterio formal lo que sugería el gráfico: la fuerza y el pelado tienen efectos reales sobre la resistencia de contacto, y la interacción no se distingue de cero con estos datos. El equipo puede ajustar ambos factores por separado."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab23",
+          "texto": "Abrir LAB 23 con la prueba t de cada efecto →",
+          "valores": {
+            "respuesta": "Resistencia de contacto (mΩ)",
+            "objetivo": "min",
+            "factores": [{"nombre": "Fuerza de engarzado (N)", "bajo": 165, "alto": 178}, {"nombre": "Longitud de pelado (mm)", "bajo": 5, "alto": 7}],
+            "corridas": [
+              {"y1": 2.1, "y2": 1.9, "y3": null, "y4": null, "y5": null},
+              {"y1": 1.3, "y2": 1.1, "y3": null, "y4": null, "y5": null},
+              {"y1": 1.8, "y2": 1.6, "y3": null, "y4": null, "y5": null},
+              {"y1": 0.8, "y2": 0.6, "y3": null, "y4": null, "y5": null}
+            ],
+            "alfa": 0.05,
+            "predA": 173,
+            "predB": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": "m9-decision",
+      "etiqueta": "M9 · DECISIÓN TÉCNICA",
+      "titulo": "Dos parámetros estandarizados: fuerza ≥ 173 N y pelado de 7 mm",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            {"valor": "≥ 173 N", "etiqueta": "Fuerza de engarzado", "nota": "punto de ajuste del poka-yoke (módulo 7)", "color": "teal"},
+            {"valor": "7 mm", "etiqueta": "Longitud de pelado", "nota": "en la instrucción de trabajo de la solución C", "color": "azul"},
+            {"valor": "−0.40 mΩ", "etiqueta": "Ganancia adicional", "nota": "que un análisis de un solo factor no habría encontrado", "color": "verde"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "La fase Mejorar cierra con dos parámetros de proceso listos para blindarse en el módulo 10. El DOE reveló el efecto de la longitud de pelado, un factor que nunca se había estudiado."
+        },
+        {
+          "tipo": "nota",
+          "texto": "Con el modelo del laboratorio, 173 N y 7 mm predicen 1.08 mΩ, por debajo del límite de 1.2 mΩ del módulo 7. Ambos valores caen dentro del rango probado, así que no es una extrapolación."
+        }
+      ]
+    },
+    {"tipo": "lab", "lab": "lab23"},
+    {
+      "id": "m9-escala",
+      "etiqueta": "M9 · MÁS ALLÁ DEL 2²",
+      "titulo": "Con más factores, el diseño crece o se fracciona",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Diseño", {"t": "Corridas", "num": true}, "Qué estima"],
+          "filas": [
+            ["2² (este módulo)", "4", "Dos efectos principales y una interacción."],
+            ["2³", "8", "Tres efectos principales, tres interacciones de dos factores y una de tres."],
+            ["2⁵", "32", "Probar todas las combinaciones ya es costoso."],
+            ["2⁶", "64", "Todavía más costoso: conviene fraccionar."]
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "La lógica del método de signos es la misma, con una columna más por cada efecto. Un diseño factorial fraccionado corre solo una fracción cuidadosamente elegida de las combinaciones y acepta que algunas interacciones de orden alto, generalmente las menos importantes, queden mezcladas entre sí."
+        },
+        {"tipo": "nota", "texto": "Completo o fraccionado no se decide con una regla fija: depende de cuántos factores hay y de qué tan caro o lento es cada corrida."}
+      ]
+    },
+    {
+      "id": "m9-software",
+      "etiqueta": "M9 · SOFTWARE ESTADÍSTICO",
+      "titulo": "En Minitab, el mismo diseño de ocho corridas",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "PASO A PASO",
+              "items": [
+                "Estadísticas > DOE > Factorial > Crear diseño factorial: 2 factores (fuerza y pelado), 2 niveles, 2 réplicas.",
+                "Captura la resistencia medida en cada corrida.",
+                "Estadísticas > DOE > Factorial > Analizar diseño factorial, y elige la columna de respuesta.",
+                "Revisa el gráfico de efectos normalizados: cruzan la línea de significancia la fuerza y el pelado, no la interacción."
+              ],
+              "ordenada": true
+            },
+            {"etiqueta": "EN JMP", "items": ["DOE > Diseño clásico para construir el experimento.", "Analizar > Modelo de ajuste para los efectos."]}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Ambos programas escalan sin esfuerzo a más de dos factores, donde calcular los efectos a mano con el método de signos deja de ser práctico. El LAB 23 reproduce el análisis de este módulo."
+        }
+      ]
+    },
+    {
+      "id": "m9-ejercicios-a",
+      "etiqueta": "M9 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": [
+            "Solución",
+            {"t": "Impacto (40 %)", "num": true},
+            {"t": "Costo (25 %)", "num": true},
+            {"t": "Velocidad (20 %)", "num": true},
+            {"t": "Riesgo (15 %)", "num": true}
+          ],
+          "filas": [["X · Reinicio automático de sesiones", "3", "5", "5", "4"], ["Y · Rediseño del flujo de inicio de sesión", "5", "2", "2", "3"]],
+          "pie": "Calificaciones de 1 a 5 (ejercicio 1)."
+        },
+        {
+          "tipo": "ejercicios",
+          "columnas": 1,
+          "items": [
+            {
+              "numero": "1",
+              "titulo": "Matriz de selección con un caso nuevo",
+              "texto": "El equipo de soporte de software del módulo 6 evalúa dos soluciones para reducir los problemas de acceso. Con los cuatro criterios de este módulo y las calificaciones de la tabla, calcula el puntaje de cada una. ¿Cuál puntúa más?",
+              "verificacion": "La guía responde: X = 3(0.40) + 5(0.25) + 5(0.20) + 4(0.15) = 4.05; Y = 3.35. Gana X pese a su menor impacto, por su bajo costo y rapidez; eso no descarta perseguir Y después.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "Con calculadora o el LAB 07"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m9-ejercicios-b",
+      "etiqueta": "M9 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "2",
+              "titulo": "Calcular los efectos de un 2² nuevo",
+              "texto": "Un equipo prueba la velocidad de máquina (A) y la temperatura de sellado (B) sobre la resistencia de un sellado (N), con una réplica: (1) = 12, a = 18, b = 14, ab = 22. Calcula los efectos A, B y AB.",
+              "verificacion": "La guía responde: A = 7.0; B = 3.0; AB = 1.0. La velocidad domina y la interacción es pequeña; con una sola réplica no se puede estimar el error ni probar la significancia.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab23",
+              "numeroLab": "23",
+              "valores": {
+                "respuesta": "Resistencia del sellado (N)",
+                "objetivo": "max",
+                "factores": [{"nombre": "Velocidad de máquina", "bajo": -1, "alto": 1}, {"nombre": "Temperatura de sellado", "bajo": -1, "alto": 1}],
+                "corridas": [
+                  {"y1": 12, "y2": null, "y3": null, "y4": null, "y5": null},
+                  {"y1": 18, "y2": null, "y3": null, "y4": null, "y5": null},
+                  {"y1": 14, "y2": null, "y3": null, "y4": null, "y5": null},
+                  {"y1": 22, "y2": null, "y3": null, "y4": null, "y5": null}
+                ],
+                "alfa": 0.05,
+                "predA": null,
+                "predB": null
+              }
+            },
+            {
+              "numero": "3",
+              "titulo": "Sin resolver: efecto principal",
+              "texto": "En un diseño factorial 2², las corridas dan (1) = 15, a = 22, b = 19 y ab = 30. Calcula el efecto principal del factor B.",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.",
+              "etiquetaVerificacion": "Clave en el libro",
+              "lab": "lab23",
+              "numeroLab": "23",
+              "valores": {
+                "respuesta": "Respuesta",
+                "objetivo": "max",
+                "factores": [{"nombre": "Factor A", "bajo": -1, "alto": 1}, {"nombre": "Factor B", "bajo": -1, "alto": 1}],
+                "corridas": [
+                  {"y1": 15, "y2": null, "y3": null, "y4": null, "y5": null},
+                  {"y1": 22, "y2": null, "y3": null, "y4": null, "y5": null},
+                  {"y1": 19, "y2": null, "y3": null, "y4": null, "y5": null},
+                  {"y1": 30, "y2": null, "y3": null, "y4": null, "y5": null}
+                ],
+                "alfa": 0.05,
+                "predA": null,
+                "predB": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m9-errores",
+      "etiqueta": "M9 · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "items": [
+            "**Usar OFAT y asumir que su óptimo es el real.** Con una interacción entre factores, el óptimo de un factor a la vez puede estar lejos del verdadero.",
+            "**Implementar solo la solución de mayor puntaje.** C y A no compiten: en paralelo suele ser mejor que elegir una sola.",
+            "**Confundir un efecto grande con uno significativo.** Solo lo es si su magnitud excede el margen calculado con el error estándar; si no, podría ser ruido experimental.",
+            "**Ignorar la columna AB al interpretar un 2².** Suponer que los factores siempre actúan por separado es justo el error que el DOE está diseñado para evitar.",
+            "**Reutilizar sin ajustar los criterios de la matriz de proyectos del módulo 2.** Elegir un proyecto y elegir una solución dentro de uno ya aprobado son decisiones distintas."
+          ],
+          "ordenada": true
+        }
+      ]
+    }
+  ]
+}
