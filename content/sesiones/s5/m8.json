@@ -1,0 +1,789 @@
+{
+  "id": "m8",
+  "titulo": "M8 · Principios y herramientas Lean",
+  "slides": [
+    {
+      "id": "m8-bisagra",
+      "etiqueta": "M8 · DE LA CAUSA A LA SOLUCIÓN",
+      "titulo": "Convertir una causa confirmada en una solución implementada",
+      "subtitulo": "Un mapa general y cuatro herramientas que atacan el desperdicio desde ángulos distintos.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El módulo 7 confirmó con datos que el Turno 3 aplica menos fuerza de engarzado: 165 N frente a los 173 N que pide la resistencia de contacto. Entramos a la fase Mejorar: ahora hay que cambiar el proceso."
+        },
+        {
+          "tipo": "pasos",
+          "columnas": 6,
+          "pasos": [
+            {"texto": "VSM y takt", "sub": "ver el flujo y el ritmo del cliente"},
+            {"texto": "5S", "sub": "orden en la estación"},
+            {"texto": "Poka-Yoke", "sub": "prevenir el error"},
+            {"texto": "Kanban", "sub": "producir según la demanda"},
+            {"texto": "SMED", "sub": "cambios de modelo rápidos"},
+            {"texto": "OEE", "sub": "un número que resume tres palancas"}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Pregunta guía del módulo: de las cinco herramientas, ¿cuál ataca el buffer de 15 minutos entre el engarzado y el ensamble? La respuesta aparece en el estado futuro del VSM."
+        }
+      ]
+    },
+    {
+      "id": "m8-vsm-idea",
+      "etiqueta": "M8 · MAPA DE FLUJO DE VALOR",
+      "titulo": "El VSM va más allá del diagrama de flujo",
+      "subtitulo": "El VSM hace visible el desperdicio de punta a punta.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "DIAGRAMA DE FLUJO · MÓDULO 3A", "texto": "Muestra la secuencia de pasos de un proceso."},
+            {
+              "etiqueta": "MAPA DE FLUJO DE VALOR",
+              "texto": "Cubre toda la familia de producto, de proveedor a cliente; documenta el flujo de material y el de información, y añade una línea de tiempo con datos reales de cada etapa.",
+              "estilo": "acento"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "De cada etapa se anotan tres datos: **tiempo de ciclo**, **inventario** y **tiempo de espera**. Con ellos se separa el tiempo que agrega valor del que solo transcurre."
+        },
+        {
+          "tipo": "nota",
+          "texto": "Un proceso puede verse razonable en un diagrama de flujo y esconder semanas de inventario estancado entre sus pasos. En la mayoría de los VSM reales, menos de 5 % del tiempo total agrega valor."
+        }
+      ]
+    },
+    {
+      "id": "m8-vsm-iconos",
+      "etiqueta": "M8 · ICONOGRAFÍA DEL VSM",
+      "titulo": "Un lenguaje visual que cualquiera en la planta puede leer",
+      "subtitulo": "Quien no dibujó el mapa debe poder leerlo sin ambigüedad.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Símbolo", "Qué representa"],
+          "filas": [
+            ["Rectángulo de proceso", "Una etapa o estación, por ejemplo «Engarzado»."],
+            ["Triángulo de inventario", "Material en espera entre estaciones: un buffer."],
+            ["Fábrica", "El proveedor externo (arriba a la izquierda) y el cliente externo (arriba a la derecha)."],
+            ["Flecha recta", "Flujo de información manual: órdenes en papel o verbales."],
+            ["Flecha en zigzag", "Flujo de información electrónica: datos que viajan por un ERP o un MES."],
+            ["Flecha ancha (push)", "Material empujado a la siguiente estación sin señal de demanda real."],
+            ["Icono Kanban", "Tarjeta o contenedor que dispara la producción según la demanda real."],
+            ["Escalera de tiempo", "Al pie del mapa: tiempo de valor agregado arriba y de espera abajo, por etapa."]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m8-vsm-linea-tiempo",
+      "etiqueta": "M8 · VSM APLICADO",
+      "titulo": "La línea de arneses, etapa por etapa",
+      "subtitulo": "Datos de tiempo del módulo 4, con cada segmento de espera desglosado.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Etapa", {"t": "Tiempo de ciclo (min)", "num": true}, "Clasificación"],
+          "filas": [
+            ["Corte y pelado", "3", "Valor agregado"],
+            ["Engarzado de terminales", "4", "Valor agregado"],
+            ["Ensamble de conectores", "3", "Valor agregado"],
+            ["Ruteo y amarre", "5", "Valor agregado"],
+            ["Inspección final", "2", "Sin valor agregado (necesario)"],
+            ["Esperas y transporte", "38", "Desperdicio"],
+            ["Cambio de modelo (SMED)", "~25, ×3 por turno", "Desperdicio, fuera del lead time"]
+          ],
+          "resaltar": [5],
+          "pie": "Lead time = 17 min de tiempos de ciclo + 38 min de espera = 55 min."
+        },
+        {
+          "tipo": "texto",
+          "texto": "El cambio de modelo no entra en el lead time de 55 minutos de una unidad: ocurre entre corridas, no dentro de una. Pero consume capacidad real de la línea tres veces por turno, y es justo lo que ataca el SMED."
+        }
+      ]
+    },
+    {
+      "id": "m8-vsm-lectura",
+      "etiqueta": "M8 · VSM APLICADO",
+      "titulo": "38 de los 55 minutos son espera: el PCE es de 27.3 %",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            {"valor": "55 min", "etiqueta": "Lead time total", "nota": "de la primera a la última etapa", "color": "teal"},
+            {"valor": "15 min", "etiqueta": "Valor agregado", "nota": "cuatro etapas de transformación", "color": "verde"},
+            {"valor": "38 min", "etiqueta": "Esperas y transporte", "nota": "69 % del lead time", "color": "ambar"},
+            {"valor": "27.3 %", "etiqueta": "PCE", "nota": "15 ÷ 55", "color": "azul"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Con 27.3 %, la línea ya parte de una posición mejor que ese 5 % típico, pero el mapa muestra con precisión dónde está el resto. El buffer de **15 minutos** entre el engarzado y el ensamble es, por sí solo, la mayor oportunidad individual."
+        },
+        {
+          "tipo": "nota",
+          "texto": "En el laboratorio, 23 de los 38 minutos de espera están agrupados en una sola fila, por eso la marca como la mayor. Cuando una fila agrupa varias esperas, conviene desglosarla."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab20",
+          "texto": "Abrir LAB 20 con el VSM de la línea de arneses →",
+          "valores": {
+            "etapas": [
+              {"etapa": "Corte y pelado", "tc": 3, "clase": "VA", "inv": null, "espera": null, "fty": null},
+              {"etapa": "Engarzado de terminales", "tc": 4, "clase": "VA", "inv": null, "espera": 15, "fty": null},
+              {"etapa": "Ensamble de conectores", "tc": 3, "clase": "VA", "inv": null, "espera": null, "fty": null},
+              {"etapa": "Ruteo y amarre", "tc": 5, "clase": "VA", "inv": null, "espera": null, "fty": null},
+              {"etapa": "Inspección final", "tc": 2, "clase": "SVA", "inv": null, "espera": null, "fty": null},
+              {"etapa": "Resto de esperas y transporte", "tc": 0, "clase": "Desperdicio", "inv": null, "espera": 23, "fty": null}
+            ],
+            "demanda": null,
+            "disponible": null,
+            "mejoraFila": "",
+            "esperaNueva": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "m8-vsm-futuro",
+      "etiqueta": "M8 · VSM DEL ESTADO FUTURO",
+      "titulo": "Con Kanban en el buffer, el lead time baja de 55 a 44 min",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un VSM de estado actual sin estado futuro es solo un diagnóstico. Si el buffer de 15 minutos se sustituye por dos contenedores pequeños, con unos 4 minutos de espera, el mapa se recalcula."
+        },
+        {
+          "tipo": "tabla",
+          "columnas": ["Métrica", {"t": "Estado actual", "num": true}, {"t": "Estado futuro", "num": true}],
+          "filas": [
+            ["Buffer engarzado → ensamble", "15 min (acumulación libre)", "4 min (2 contenedores)"],
+            ["Esperas", "38 min", "27 min"],
+            ["Lead time total", "55 min", "44 min"],
+            ["PCE", "27.3 %", "34.1 %"]
+          ],
+          "resaltar": [3],
+          "pie": "Esperas = 38 − 15 + 4 = 27 min · lead time = 15 + 2 + 27 = 44 min · PCE = 15 ÷ 44 = 34.1 %."
+        },
+        {
+          "tipo": "nota",
+          "texto": "Este estado futuro solo cuantifica lo que el Kanban justifica. Las 5S, el poka-yoke y el SMED también aportan, pero se miden con otras métricas (tiempo de cambio, tasa de defectos)."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab20",
+          "texto": "Abrir LAB 20 con el estado futuro →",
+          "valores": {
+            "etapas": [
+              {"etapa": "Corte y pelado", "tc": 3, "clase": "VA", "inv": null, "espera": null, "fty": null},
+              {"etapa": "Engarzado de terminales", "tc": 4, "clase": "VA", "inv": null, "espera": 15, "fty": null},
+              {"etapa": "Ensamble de conectores", "tc": 3, "clase": "VA", "inv": null, "espera": null, "fty": null},
+              {"etapa": "Ruteo y amarre", "tc": 5, "clase": "VA", "inv": null, "espera": null, "fty": null},
+              {"etapa": "Inspección final", "tc": 2, "clase": "SVA", "inv": null, "espera": null, "fty": null},
+              {"etapa": "Resto de esperas y transporte", "tc": 0, "clase": "Desperdicio", "inv": null, "espera": 23, "fty": null}
+            ],
+            "demanda": null,
+            "disponible": null,
+            "mejoraFila": "2",
+            "esperaNueva": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "m8-vsm-plantilla",
+      "etiqueta": "M8 · VSM CON INVENTARIOS",
+      "titulo": "La variante de la plantilla: la espera sale del inventario",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Si sabes cuántas unidades esperan entre etapas, puedes estimar la espera sin cronometrarla: **espera = inventario × takt time**. La plantilla de Excel sigue esta lógica y añade el rendimiento de primera pasada (FTY) de cada etapa."
+        },
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            {"valor": "481.6 min", "etiqueta": "Lead time", "nota": "5 etapas, 510 unidades en proceso", "color": "teal"},
+            {"valor": "3.45 min", "etiqueta": "Valor agregado", "nota": "suma de los tiempos de ciclo", "color": "verde"},
+            {"valor": "0.72 %", "etiqueta": "PCE", "nota": "menos de 5 %, como la mayoría de los VSM reales", "color": "ambar"},
+            {"valor": "89.4 %", "etiqueta": "RTY", "nota": "producto de los FTY de las cinco etapas", "color": "azul"}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Es otro caso, no el de la guía: cinco etapas de menos de un minuto y un takt de 0.9375 min. Aquí todo el tiempo de ciclo cuenta como valor agregado; en el caso de la guía, la inspección final es sin valor agregado."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab20",
+          "texto": "Abrir LAB 20 con el ejemplo de la plantilla →",
+          "valores": {
+            "etapas": [
+              {"etapa": "Corte y pelado", "tc": 0.4, "clase": "VA", "inv": 150, "espera": null, "fty": 99},
+              {"etapa": "Crimpado", "tc": 0.7, "clase": "VA", "inv": 120, "espera": null, "fty": 98},
+              {"etapa": "Ensamble en tablero", "tc": 0.85, "clase": "VA", "inv": 80, "espera": null, "fty": 97},
+              {"etapa": "Apriete y verificación", "tc": 0.9, "clase": "VA", "inv": 60, "espera": null, "fty": 96},
+              {"etapa": "Prueba eléctrica", "tc": 0.6, "clase": "VA", "inv": 100, "espera": null, "fty": 99}
+            ],
+            "demanda": 480,
+            "disponible": 450,
+            "mejoraFila": "",
+            "esperaNueva": null
+          }
+        }
+      ]
+    },
+    {"tipo": "lab", "lab": "lab20"},
+    {
+      "id": "m8-takt-idea",
+      "etiqueta": "M8 · TAKT TIME",
+      "titulo": "El takt time es el ritmo que marca el cliente",
+      "subtitulo": "Confundir uno con otro es de los errores más comunes del módulo.",
+      "bloques": [
+        {
+          "tipo": "formula",
+          "etiqueta": "TAKT TIME",
+          "tex": "\\text{Takt time}=\\dfrac{\\text{Tiempo disponible}}{\\text{Demanda del cliente}}",
+          "texto": "Takt time = tiempo disponible ÷ demanda del cliente",
+          "nota": "Del alemán Taktzeit: el compás de una pieza musical"
+        },
+        {"tipo": "texto", "texto": "Es el ritmo al que debe salir una unidad terminada para que la línea alcance, ni más ni menos, la demanda real del periodo."},
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "TAKT TIME", "texto": "Lo fija la demanda del cliente."},
+            {
+              "etiqueta": "TIEMPO DE CICLO",
+              "texto": "Es lo que realmente tarda un proceso o una estación. Un proceso es viable solo si su tiempo de ciclo es igual o menor al takt.",
+              "estilo": "acento"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m8-takt-arneses",
+      "etiqueta": "M8 · TAKT TIME APLICADO",
+      "titulo": "Con 2,400 arneses por semana, el takt es de 56.25 s",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El cliente subió su pedido de 2,000 a 2,400 arneses por semana. La línea trabaja 5 días, con un turno de 8 h y 30 min de descansos (450 min disponibles)."
+        },
+        {
+          "tipo": "tabla",
+          "columnas": ["Demanda semanal", {"t": "Demanda por día", "num": true}, {"t": "Takt time", "num": true}],
+          "filas": [["2,000 (antes)", "400", "1.125 min = 67.5 s"], ["2,400 (ahora)", "480", "0.9375 min = 56.25 s"]],
+          "resaltar": [1],
+          "pie": "Takt = 450 min ÷ 480 unidades = 0.9375 min = 56.25 s por unidad."
+        },
+        {
+          "tipo": "nota",
+          "texto": "La nueva demanda exige sacar cada unidad 11.25 s antes, sin más turnos ni personal. El takt dice qué tan rápido debe salir una unidad; el PCE, qué parte de ese tiempo agrega valor. Subir el PCE, eliminando desperdicio y no apurando a los operadores, cierra la brecha."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab21",
+          "texto": "Abrir LAB 21 con la demanda de 2,400 arneses →",
+          "valores": {
+            "minTurno": 480,
+            "turnos": 1,
+            "descansos": 30,
+            "paros": 0,
+            "demanda": 2400,
+            "periodo": "semana",
+            "diasSemana": 5,
+            "demandaAnterior": 2000,
+            "contenedor": null,
+            "estaciones": [],
+            "pce": null,
+            "cambioMin": null,
+            "reduccionSmed": null,
+            "cambiosTurno": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "m8-takt-estaciones",
+      "etiqueta": "M8 · TAKT TIME Y ESTACIONES",
+      "titulo": "Del takt a las estaciones: ¿cabe el trabajo en el ritmo del cliente?",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Con el takt fijado, cada estación debe terminar su trabajo en ese tiempo o menos. El laboratorio, siguiendo la plantilla de Excel, añade tres cálculos para repartir el trabajo. Su ejemplo: 435 min netos, 480 unidades por día y seis estaciones."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {"etiqueta": "OPERADORES MÍNIMOS", "texto": "Contenido de trabajo ÷ takt, redondeado hacia arriba. Con 4.25 min y un takt de 0.906 min: 5 operadores."},
+            {"etiqueta": "EFICIENCIA DE BALANCEO", "texto": "Contenido de trabajo ÷ (estaciones × ciclo de la más lenta): 4.25 ÷ (6 × 0.9) = 78.7 %."},
+            {"etiqueta": "PITCH", "texto": "Unidades por contenedor × takt: cada cuánto se mueve un contenedor. Con 50 unidades, 45.3 min."}
+          ]
+        },
+        {"tipo": "nota", "texto": "La estación más lenta, «Apriete y verificación», usa 99.3 % del takt: cumple, pero con apenas 0.375 s de holgura por unidad."},
+        {
+          "tipo": "abrirLab",
+          "lab": "lab21",
+          "texto": "Abrir LAB 21 con el ejemplo de la plantilla →",
+          "valores": {
+            "minTurno": 480,
+            "turnos": 1,
+            "descansos": 30,
+            "paros": 15,
+            "demanda": 480,
+            "periodo": "dia",
+            "diasSemana": 5,
+            "demandaAnterior": null,
+            "contenedor": 50,
+            "estaciones": [
+              {"estacion": "Corte y pelado", "tc": 0.4},
+              {"estacion": "Crimpado", "tc": 0.7},
+              {"estacion": "Ensamble A", "tc": 0.85},
+              {"estacion": "Ensamble B", "tc": 0.8},
+              {"estacion": "Apriete y verificación", "tc": 0.9},
+              {"estacion": "Prueba eléctrica", "tc": 0.6}
+            ],
+            "pce": null,
+            "cambioMin": null,
+            "reduccionSmed": null,
+            "cambiosTurno": null
+          }
+        }
+      ]
+    },
+    {"tipo": "lab", "lab": "lab21"},
+    {
+      "id": "m8-5s",
+      "etiqueta": "M8 · 5S",
+      "titulo": "Las 5S: la base de cualquier mejora sostenible",
+      "subtitulo": "Cinco pasos secuenciales, popularizados por Osada (1991) y Hirano (1995).",
+      "bloques": [
+        {"tipo": "texto", "texto": "La disciplina más básica, y la más saltada: ordenar el lugar donde se trabaja."},
+        {
+          "tipo": "tabla",
+          "columnas": ["S", "Qué implica", "En la estación de engarzado"],
+          "filas": [
+            ["Clasificar (Seiri)", "Quitar lo innecesario; lo dudoso lleva «tarjeta roja».", "Retirar herramientas descontinuadas y terminales sin uso."],
+            ["Ordenar (Seiton)", "Un lugar fijo y visible para lo necesario.", "Tablero con silueta de cada herramienta calibrada."],
+            ["Limpiar (Seiso)", "Limpiar como forma de inspección.", "Limpieza diaria de la prensa (mantenimiento autónomo)."],
+            ["Estandarizar (Seiketsu)", "Volver rutina documentada las primeras 3S.", "Checklist de inicio de turno: calibración y orden."],
+            ["Sostener (Shitsuke)", "Auditar y mantener la disciplina.", "Auditoría mensual con el mismo checklist."]
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Conexión con el Ishikawa del módulo 6: gran parte de las causas de Máquina y Medición (mantenimiento inconsistente, calibración vencida) son, en el fondo, una 5S no sostenida."
+        }
+      ]
+    },
+    {
+      "id": "m8-pokayoke-idea",
+      "etiqueta": "M8 · POKA-YOKE",
+      "titulo": "Prevenir el error, no solo detectarlo",
+      "subtitulo": "Un mecanismo que hace el error imposible de cometer, o evidente en el instante en que ocurre.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En 1961, en una fábrica japonesa de componentes electrónicos, los operadores a veces olvidaban uno de los dos resortes de un interruptor y el defecto aparecía con el cliente. Shigeo Shingo no pidió más atención: rediseñó el método. Cada operador tomaba exactamente dos resortes y los colocaba en un plato que debía quedar vacío al terminar. Si sobraba uno, el error se veía al instante."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "PREVENCIÓN", "texto": "El error es físicamente imposible.", "estilo": "acento"},
+            {"etiqueta": "DETECCIÓN", "texto": "El error ocurre, pero se detecta de inmediato."}
+          ]
+        },
+        {"tipo": "nota", "texto": "La prevención es siempre preferible cuando es viable; la detección es mejor que nada."}
+      ]
+    },
+    {
+      "id": "m8-pokayoke-metodos",
+      "etiqueta": "M8 · POKA-YOKE",
+      "titulo": "Los tres métodos de Shingo",
+      "subtitulo": "Tres formas de verificar; dos filosofías para actuar.",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Método", "Cómo funciona", "Ejemplo típico"],
+          "filas": [
+            [
+              "Contacto",
+              "Detecta si la forma, el tamaño, la posición u otra propiedad física de la pieza es correcta.",
+              "Pines guía asimétricos: la pieza solo entra en una orientación."
+            ],
+            ["Valor fijo", "Verifica que se completó un número específico de acciones o piezas.", "Un conteo de tornillos que detiene la máquina si falta alguno."],
+            ["Secuencia de movimientos", "Verifica que los pasos se siguieron en el orden correcto.", "El equipo no avanza si un sensor no confirma el paso anterior."]
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Método y filosofía se clasifican por separado: un mismo dispositivo de contacto puede prevenir (la tapa no encaja) o solo detectar (enciende una luz de advertencia)."
+        }
+      ]
+    },
+    {
+      "id": "m8-pokayoke-aplicado",
+      "etiqueta": "M8 · POKA-YOKE APLICADO",
+      "titulo": "En la prensa de engarzado: sensor de fuerza o testigo de torque",
+      "subtitulo": "No todas las operaciones admiten un sensor integrado.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "CON SENSOR · CONTACTO Y PREVENCIÓN",
+              "textos": [
+                "Un sensor de fuerza mide cada ciclo de la prensa. Si la fuerza cae por debajo de **173 N**, el umbral que fijó la regresión del módulo 7, la prensa no libera la pieza ni la deja avanzar.",
+                "El defecto deja de depender de que cada operador, en cada turno, aplique la fuerza correcta: la máquina lo garantiza."
+              ],
+              "estilo": "acento"
+            },
+            {
+              "etiqueta": "SIN SENSOR · DETECCIÓN",
+              "textos": [
+                "En un atornillado de ensambles, cada sujetador torqueado lleva un testigo de color (torque seal naranja) y lo verifica un segundo operador con habilidad documentada en una matriz.",
+                "Calidad audita al azar reaplicando su torquímetro a **80 %** del valor especificado: si el tornillo gira, no se había alcanzado; si no gira, sí. Auditar por debajo del valor final confirma sin riesgo de sobre-apretar."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m8-kanban",
+      "etiqueta": "M8 · KANBAN",
+      "titulo": "Producir según la demanda real, no según el pronóstico",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "SISTEMA PUSH",
+              "texto": "Cada estación produce según un pronóstico y empuja su producción a la siguiente: el inventario se acumula donde el ritmo no calza."
+            },
+            {
+              "etiqueta": "SISTEMA PULL · KANBAN",
+              "texto": "La estación de aguas abajo avisa con una tarjeta o un contenedor vacío; la de aguas arriba solo repone esa señal, nunca produce por adelantado.",
+              "estilo": "acento"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Taiichi Ohno lo desarrolló para atacar el exceso de inventario en proceso. El límite de trabajo en proceso (WIP) que resulta de las señales **hace visibles los cuellos de botella** que un sistema push esconde detrás de una pila de inventario."
+        },
+        {
+          "tipo": "nota",
+          "texto": "En la línea de arneses, el buffer de 15 minutos se sustituye por dos contenedores: el de ensamble consume de uno mientras el otro se repone, y el de engarzado solo produce cuando vuelve uno vacío. La espera pasa a ser una cantidad fija, visible y limitada."
+        }
+      ]
+    },
+    {
+      "id": "m8-smed",
+      "etiqueta": "M8 · SMED",
+      "titulo": "Cambios de modelo en minutos de un solo dígito",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Shigeo Shingo lo desarrolló entre 1950 y 1969 en prensas de Mazda, Mitsubishi y Toyota. Separa el setup **interno** (con la máquina detenida) del **externo** (que se prepara con la máquina operando)."
+        },
+        {
+          "tipo": "pasos",
+          "columnas": 4,
+          "pasos": [
+            {"numero": "0", "texto": "Medición base", "sub": "cronometrar o filmar el cambio actual, sin modificarlo"},
+            {"numero": "1", "texto": "Separar", "sub": "clasificar cada actividad como interna o externa"},
+            {"numero": "2", "texto": "Convertir", "sub": "preparar por adelantado lo que antes era interno"},
+            {"numero": "3", "texto": "Depurar", "sub": "simplificar lo que sigue siendo interno"}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "La línea de arneses cambia de modelo unas tres veces por turno e incluye ir al almacén por el carrete de cable con la prensa detenida: una actividad externa tratada como interna. Dejar el carrete siguiente junto a la línea antes de terminar la corrida es la mejora de mayor impacto y menor costo. El SMED suele reducir el tiempo de cambio entre 50 % y 80 %, sin inversión en equipo."
+        }
+      ]
+    },
+    {
+      "id": "m8-oee-idea",
+      "etiqueta": "M8 · OEE",
+      "titulo": "Un número que resume tres palancas",
+      "subtitulo": "Las herramientas del módulo no son iniciativas sueltas: son palancas sobre los mismos tres factores.",
+      "bloques": [
+        {
+          "tipo": "formula",
+          "etiqueta": "OEE",
+          "tex": "\\text{OEE}=D\\times R\\times C",
+          "texto": "OEE = Disponibilidad × Rendimiento × Calidad",
+          "nota": "Qué fracción del tiempo planificado se usa realmente para fabricar piezas buenas"
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {"etiqueta": "DISPONIBILIDAD", "texto": "Tiempo operando ÷ tiempo planificado. La mejora el SMED: menos tiempo perdido en cambios de modelo."},
+            {"etiqueta": "RENDIMIENTO", "texto": "Piezas producidas ÷ piezas posibles al ritmo ideal. Lo mejora un Kanban bien calibrado: menos paros por desabasto."},
+            {"etiqueta": "CALIDAD", "texto": "Piezas buenas ÷ piezas producidas. La mejora el poka-yoke: menos piezas fuera de especificación."}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Referencia de la guía: 85 % es clase mundial; la mayoría de las plantas que no han trabajado el tema opera entre 40 % y 60 %. A diferencia del PCE, que mide qué parte del tiempo de ciclo agrega valor, el OEE mide el uso del tiempo ya planificado para producir."
+        }
+      ]
+    },
+    {
+      "id": "m8-oee-turno",
+      "etiqueta": "M8 · OEE APLICADO",
+      "titulo": "Un turno de 480 minutos: OEE ≈ 73.4 %",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            {"valor": "90 %", "etiqueta": "Disponibilidad", "nota": "432 ÷ 480 min", "color": "azul"},
+            {"valor": "85 %", "etiqueta": "Rendimiento", "nota": "391 ÷ 460 unidades", "color": "ambar"},
+            {"valor": "96 %", "etiqueta": "Calidad", "nota": "tasa de buena calidad", "color": "verde"},
+            {"valor": "73.4 %", "etiqueta": "OEE", "nota": "0.90 × 0.85 × 0.96", "color": "teal"}
+          ]
+        },
+        {
+          "tipo": "lista",
+          "items": [
+            "**Disponibilidad:** de 480 min planificados se pierden 48 en cambios de modelo y paros menores; operan 432 min.",
+            "**Rendimiento:** a 56.25 s por unidad, 432 min (25,920 s) permitirían 460 unidades; el turno produce 391."
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Con 391 producidas y 375 buenas, el laboratorio calcula 73.2 %: la guía usa los factores redondeados. Queda sobre el rango típico (40-60 %), pero bajo el 85 % de clase mundial."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab22",
+          "texto": "Abrir LAB 22 con el turno de la guía →",
+          "valores": {
+            "modo": "periodos",
+            "periodos": [{"periodo": "Turno", "plan": 480, "paros": 48, "ciclo": 0.9375, "prod": 391, "buenas": 375}],
+            "disp": 90,
+            "rend": 85,
+            "cal": 96,
+            "mejoraFactor": "",
+            "mejoraValor": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "m8-oee-cascada",
+      "etiqueta": "M8 · OEE: DE LAS PÉRDIDAS A LAS HERRAMIENTAS",
+      "titulo": "Cinco días de la plantilla: cada pérdida apunta a una herramienta",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Pérdida", {"t": "Minutos", "num": true}, {"t": "% del tiempo planificado", "num": true}, "Herramienta"],
+          "filas": [
+            ["Paros (disponibilidad)", "385", "17.11 %", "SMED, mantenimiento autónomo"],
+            ["Velocidad y microparos (rendimiento)", "74", "3.29 %", "Flujo continuo, Kanban, balanceo"],
+            ["Defectos y retrabajo (calidad)", "86.4", "3.84 %", "Poka-yoke, estandarización"],
+            ["Tiempo completamente productivo", "1,704.6", "75.76 %", "—"]
+          ],
+          "resaltar": [0],
+          "pie": "Cinco días de 450 min (2,250 min planificados): OEE = 82.9 % × 96.0 % × 95.2 % = 75.76 %."
+        },
+        {"tipo": "texto", "texto": "Aquí el factor más débil y la mayor pérdida coinciden: la disponibilidad. No siempre ocurre, y el laboratorio muestra ambos."},
+        {
+          "tipo": "abrirLab",
+          "lab": "lab22",
+          "texto": "Abrir LAB 22 con los cinco días de la plantilla →",
+          "valores": {
+            "modo": "periodos",
+            "periodos": [
+              {"periodo": "Día 1", "plan": 450, "paros": 75, "ciclo": 0.9, "prod": 400, "buenas": 380},
+              {"periodo": "Día 2", "plan": 450, "paros": 90, "ciclo": 0.9, "prod": 380, "buenas": 360},
+              {"periodo": "Día 3", "plan": 450, "paros": 68, "ciclo": 0.9, "prod": 410, "buenas": 392},
+              {"periodo": "Día 4", "plan": 450, "paros": 82, "ciclo": 0.9, "prod": 395, "buenas": 374},
+              {"periodo": "Día 5", "plan": 450, "paros": 70, "ciclo": 0.9, "prod": 405, "buenas": 388}
+            ],
+            "disp": 90,
+            "rend": 85,
+            "cal": 96,
+            "mejoraFactor": "",
+            "mejoraValor": null
+          }
+        }
+      ]
+    },
+    {"tipo": "lab", "lab": "lab22"},
+    {
+      "id": "m8-ejercicios-a",
+      "etiqueta": "M8 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 3)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1",
+              "titulo": "Calcular un takt time nuevo",
+              "texto": "Una línea opera 2 turnos de 7 h efectivas, 6 días a la semana, y debe surtir 5,040 piezas semanales. Calcula el takt time en minutos y en segundos.",
+              "verificacion": "La guía responde: 2 × 7 × 60 × 6 = 5,040 min disponibles; takt = 5,040 ÷ 5,040 = 1.0 min = 60 s por pieza.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab21",
+              "numeroLab": "21",
+              "valores": {
+                "minTurno": 420,
+                "turnos": 2,
+                "descansos": 0,
+                "paros": 0,
+                "demanda": 5040,
+                "periodo": "semana",
+                "diasSemana": 6,
+                "demandaAnterior": null,
+                "contenedor": null,
+                "estaciones": [],
+                "pce": null,
+                "cambioMin": null,
+                "reduccionSmed": null,
+                "cambiosTurno": null
+              }
+            },
+            {
+              "numero": "2",
+              "titulo": "Clasificar un poka-yoke",
+              "texto": "Una plantilla con pines solo permite colocar una tapa plástica en la orientación correcta. Clasifícala según el método de Shingo (contacto, valor fijo o secuencia) y su filosofía (prevención o detección).",
+              "verificacion": "La guía responde: método de contacto (detecta si la forma o la posición de la pieza es correcta) y filosofía de prevención (la tapa no encaja mal: el error no llega a ocurrir).",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "En papel o pizarrón"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m8-ejercicios-b",
+      "etiqueta": "M8 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 3)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "3",
+              "titulo": "Ahorro de tiempo con SMED",
+              "texto": "Un cambio de modelo de 25 min se somete a SMED con la reducción más conservadora del módulo (50 %). Si ocurre 3 veces por turno, ¿cuántos minutos libera por turno?",
+              "verificacion": "La guía responde: 25 × 0.50 = 12.5 min por cambio; × 3 = 37.5 min por turno, sin invertir en equipo.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab21",
+              "numeroLab": "21",
+              "valores": {
+                "minTurno": 480,
+                "turnos": 1,
+                "descansos": 30,
+                "paros": 0,
+                "demanda": 2400,
+                "periodo": "semana",
+                "diasSemana": 5,
+                "demandaAnterior": null,
+                "contenedor": null,
+                "estaciones": [],
+                "pce": null,
+                "cambioMin": 25,
+                "reduccionSmed": 50,
+                "cambiosTurno": 3
+              }
+            },
+            {
+              "numero": "4",
+              "titulo": "Conectar takt time y PCE",
+              "texto": "La línea de arneses tiene un PCE de 27.3 % (módulo 4) y un takt de 56.25 s por unidad. ¿Cuánto de ese tiempo es valor agregado y cuánto es desperdicio?",
+              "verificacion": "La guía responde: valor agregado = 0.273 × 56.25 = 15.36 s; desperdicio = 56.25 − 15.36 = 40.89 s.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab21",
+              "numeroLab": "21",
+              "valores": {
+                "minTurno": 480,
+                "turnos": 1,
+                "descansos": 30,
+                "paros": 0,
+                "demanda": 2400,
+                "periodo": "semana",
+                "diasSemana": 5,
+                "demandaAnterior": null,
+                "contenedor": null,
+                "estaciones": [],
+                "pce": 27.3,
+                "cambioMin": null,
+                "reduccionSmed": null,
+                "cambiosTurno": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m8-ejercicios-c",
+      "etiqueta": "M8 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (3 de 3)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "5",
+              "titulo": "Sin resolver: OEE",
+              "texto": "Una planta reporta Disponibilidad = 88 %, Rendimiento = 91 % y Calidad = 97 %. Calcula el OEE.",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.",
+              "etiquetaVerificacion": "Clave en el libro",
+              "lab": "lab22",
+              "numeroLab": "22",
+              "valores": {
+                "modo": "factores",
+                "periodos": [{"periodo": "Turno", "plan": 480, "paros": 48, "ciclo": 0.9375, "prod": 391, "buenas": 375}],
+                "disp": 88,
+                "rend": 91,
+                "cal": 97,
+                "mejoraFactor": "",
+                "mejoraValor": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m8-errores",
+      "etiqueta": "M8 · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "items": [
+            "**Construir un VSM de estado actual y detenerse ahí.** Sin estado futuro es solo un diagnóstico; el valor está en decidir qué cambiar.",
+            "**Confundir el takt time con el tiempo de ciclo.** El takt lo fija el cliente; el ciclo es lo que tarda el proceso, y debe ser igual o menor al takt.",
+            "**Instalar un poka-yoke de detección cuando la prevención es viable.** Avisar del error es mejor que nada, pero volverlo físicamente imposible (ejercicio 2) siempre es preferible.",
+            "**Instalar Kanban sin limitar el WIP a un número fijo.** Sin un número definido de tarjetas o contenedores, es un buffer informal con otro nombre.",
+            "**Aplicar SMED sin la etapa 0.** Sin documentar el tiempo actual con cronómetro o video, no se sabe si la mejora redujo de verdad el cambio."
+          ],
+          "ordenada": true
+        }
+      ]
+    }
+  ]
+}
