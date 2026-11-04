@@ -121,6 +121,10 @@ Los **ids de entrada y de presets** de esta tabla son el contrato con el conteni
 | 17 | `lab17-amef-rpn.js` | M6 | AMEF: RPN = S × O × D con el criterio de la guía o el de la plantilla, severidad ≥ 9 y simulador de mejora |
 | 18 | `lab18-anova.js` | M7 | ANOVA de un factor (hasta seis grupos): F, p, η², Tukey–Kramer o LSD y diagnóstico de residuos |
 | 19 | `lab19-regresion-chi-ic.js` | M7 | selector de herramienta: correlación y regresión lineal, chi-cuadrada de independencia o intervalo de confianza de una media |
+| 20 | `lab20-vsm.js` | M8 | mapa de flujo de valor: lead time, valor agregado, esperas, PCE, etapa más lenta y estado futuro; con inventarios, takt, RTY e inventario en proceso |
+| 21 | `lab21-takt.js` | M8 | takt time (tiempo neto, demanda por día o por semana, pitch), cambio frente a la demanda anterior, balanceo de estaciones, PCE × takt y ahorro del SMED |
+| 22 | `lab22-oee.js` | M8 | OEE por periodos o por factores, cascada de pérdidas con su herramienta Lean, factor más débil frente a mayor pérdida y simulador de mejora |
+| 23 | `lab23-doe.js` | M9 | diseño factorial 2² con réplicas: efectos por la tabla de signos, error estándar, t, p, suma de cuadrados, mejor combinación y predicción |
 
 ### LAB 02 · Distribución normal (`lab02-distribucion-normal.js`)
 Entradas: `mu` (numero, 50), `sigma` (numero >0, 4), `lsl` (numero, 38), `usl` (numero, 62),
@@ -307,6 +311,69 @@ Gráficas: `dispersion`, `residuos` y `normal` · `distribucion`, `contribucione
 `margen`. Supuestos: relación lineal y residuos normales (regresión); observaciones independientes y esperados ≥ 5 (chi-cuadrada);
 muestra aleatoria (intervalo).
 
+### LAB 20 · Mapa de flujo de valor (`lab20-vsm.js`)
+Entradas: `etapas` (tabla de 1 a 12 filas `{etapa, tc, clase, inv, espera, fty}`: tiempo de ciclo en min, `clase` = `VA|SVA|Desperdicio`,
+inventario en unidades y espera en min después de la etapa, y FTY en %), `demanda` (unidades por día), `disponible` (min netos por
+día), `mejoraFila` (`""` o `"1"`…`"12"`) y `esperaNueva` (min). La espera de una fila es la capturada o, si falta y hay inventario y
+takt, inventario × takt (plantilla «VSM»); si hay ambas, manda la capturada. Presets: `guia` (M8 §1: seis filas, lead time **55** min,
+valor agregado **15**, PCE **27.3 %**; el buffer de 15 min entre engarzado y ensamble baja a 4 min con Kanban → lead time **44** min y
+PCE **34.1 %**) y `excel` (plantilla: cinco procesos con inventario y FTY, takt 450 ÷ 480 = 0.9375 min, lead time 481.575 min, PCE
+0.72 %, RTY 89.4 %, 510 unidades en proceso). Salidas: `lead`, `va`, `esperas`, `pce`, `sva`, `cuello`, `mayor-espera`, `lead-futuro`,
+`pce-futuro` y, con takt, `takt`, `rty` e `inventario`. Tablas: «El mapa, etapa por etapa» y «Estado actual y estado futuro (…)».
+Semáforos: «PCE frente a las referencias» (5 % de los VSM reales según la guía y 25 % de los procesos ya mejorados con Lean), «Mayor
+espera», «Etapa más lenta», «Estado futuro», y con takt «Takt» (crítico si alguna etapa lo excede), «Rendimiento acumulado» e
+«Inventario». Gráficas: `linea-tiempo` y `futuro`. Diferencias con la plantilla: la guía no cuenta la inspección final como valor
+agregado (es SVA necesario) y la plantilla suma todos los tiempos de ciclo como VA, así que aquí cada etapa lleva su clase; la
+capacidad y el tiempo de cambio de cada proceso de la plantilla no se incluyen (la disponibilidad se trata en el LAB 22).
+
+### LAB 21 · Takt time y balanceo de estaciones (`lab21-takt.js`)
+Entradas: `minTurno`, `turnos`, `descansos` y `paros` (min por turno; `paros` = juntas, 5S y mantenimiento planeado), `demanda` con
+`periodo` (`dia|semana`) y `diasSemana` (solo con semana), `demandaAnterior` (misma unidad que `demanda`), `contenedor` (unidades
+por contenedor, para el pitch), `estaciones` (tabla de 0 a 12 filas `{estacion, tc}` con tc en min), `pce` (%), `cambioMin`,
+`reduccionSmed` (%) y `cambiosTurno`. Takt = tiempo neto por día ÷ demanda por día. Presets: `guia` (M8 §1: 450 min y 2,400 por
+semana en 5 días → 480 por día, **0.9375** min = **56.25** s frente a 67.5 s con 2,000), `ej1` (2 turnos de 420 min, 6 días y 5,040
+piezas → **60** s), `ej3` (25 min, 50 % y 3 cambios → **37.5** min por turno), `ej4` (PCE 27.3 % → **15.36** s de valor agregado y
+**40.89** s de desperdicio) y `excel` (plantilla «Takt Time»: 435 min netos y 480 por día → **54.375** s, pitch de 50 unidades de
+45.3125 min y seis estaciones con 4.25 min de contenido, **5** operadores mínimos y eficiencia de balanceo de **78.7 %**). Salidas:
+`takt`, `neto`, `demanda-dia`, `por-hora` y, según lo capturado, `takt-anterior`, `cambio-takt`, `va-takt`, `desperdicio-takt`,
+`ahorro-cambio`, `ahorro-turno`, `pitch`, `contenido`, `operadores`, `eficiencia`, `exceden` y `lenta`. Tablas: «Del tiempo disponible
+al takt», «Takt con la demanda anterior y la actual» y «Estaciones frente al takt». Semáforos: «Takt», «Cambio de demanda», «Cambio de
+modelo (SMED)», «PCE y takt», «Cumplimiento del takt» (crítico si alguna estación excede el takt), «Balanceo» y «Operadores mínimos».
+Gráficas: `estaciones` y `balance`. La guía trae el takt, el PCE × takt y el SMED en párrafos; la plantilla, el balanceo y el pitch:
+el laboratorio reúne todo.
+
+### LAB 22 · OEE (`lab22-oee.js`)
+Entradas: `modo` (`periodos|factores`); con `periodos`, la tabla `periodos` (1 a 14 filas `{periodo, plan, paros, ciclo, prod, buenas}`:
+minutos planificados y de paros, ciclo ideal en min por unidad, unidades producidas y buenas); con `factores`, `disp`, `rend` y `cal`
+(%); y el simulador `mejoraFactor` (`""|A|P|Q`) con `mejoraValor` (%). Disponibilidad = (plan − paros) ÷ plan; rendimiento = ciclo
+ideal × producidas ÷ (plan − paros); calidad = buenas ÷ producidas; el total suma los periodos y pondera el ciclo ideal por las
+unidades producidas. Presets: `guia` (M8: 90 × 85 × 96 = **73.44 %**), `guia-turno` (480 min, 48 de paros, ciclo de 0.9375 min, 391
+producidas y 375 buenas → **73.24 %**; la guía redondea los factores), `excel` (plantilla «OEE»: cinco días de 450 min →
+**75.76 %**), `ej5` (88 × 91 × 97 = 77.68 %; la guía no imprime el resultado: clave en el Apéndice C) y `examen` (90 × 85 × 68 =
+**52.02 %**, con la simulación de llevar la calidad a 80 %). Salidas: `oee`, `disp`, `rend`, `cal`, `debil`, `mayor-perdida` y, según el
+caso, `productivo` (min, solo con periodos), `oee-futuro` y `ganancia` (con simulación). Tablas: «Cascada de pérdidas» y «OEE por
+periodo» (con dos o más periodos). Semáforos: «OEE frente a la referencia» (85 % es clase mundial según la guía; 40 a 60 % en plantas que
+no han trabajado el tema), «Rendimiento» (crítico si pasa de 100 %), «Factor más débil», «Mayor pérdida» (pueden no coincidir),
+«Variación entre periodos» y «Mejora simulada». Gráficas: `cascada`, `factores` (con la referencia de Nakajima: 90 × 95 × 99) y
+`periodos`. La guía toma el takt como ciclo ideal de su ejemplo; con el ciclo de diseño del equipo, el rendimiento cambiaría.
+
+### LAB 23 · Diseño factorial 2² (`lab23-doe.js`)
+Entradas: `respuesta` (texto con unidades), `objetivo` (`min|max`), `factores` (tabla fija de 2 filas `{nombre, bajo, alto}`: A y B),
+`corridas` (tabla fija de 4 filas en el orden (1), a, b, ab con `y1`…`y5` para las réplicas; con una sola réplica solo hay efectos, sin
+prueba), `alfa` (0.001 a 0.2; 0.05 por omisión), `predA` y `predB` (valores de los factores para la predicción). Efecto = promedio con
+el factor en nivel alto − promedio con el factor en nivel bajo (tabla de signos; AB usa el producto de los signos); SCE = Σ (nᵢ − 1) sᵢ²,
+gl = N − 4, error estándar del efecto = ½ √(CME × Σ 1/nᵢ), t, valor p con t de Student de dos colas y SC = N × efecto² ÷ 4 (solo en
+diseños balanceados). Presets: `guia` (M9 §4, dos réplicas: efectos **−0.90 / −0.40 / −0.10**, gl 4, t −9 / −4 / −1, p 0.0008 / 0.0161 /
+0.3739, margen **±0.278**; predicción de 1.0846 mΩ con 173 N y 7 mm), `excel` (plantilla «DOE 2x2», tres réplicas: efectos 22.0 / 7.97 /
+4.0, gl 8, SC 1,452 / 190.4 / 48), `ej2` (una réplica: 12, 18, 14, 22 → **7 / 3 / 1**, sin prueba), `ej3` (15, 22, 19, 30 → B = **6**;
+clave en el Apéndice C) e `interaccion` (variante didáctica con datos inventados: efectos 1 / −1 / −19). **Diferencia con la guía:**
+esta escribe 0.05 como «error estándar de cada efecto» y ±0.14 de margen; eso es el error estándar del coeficiente (efecto ÷ 2). Para
+el efecto como diferencia de promedios corresponden **0.10** y **±0.278**; el estadístico t es el mismo y las conclusiones no cambian.
+Salidas: `efecto-a`, `efecto-b`, `efecto-ab`, `gl`, `mejor`, `prediccion` y, con réplicas, `se` y `margen` (y `r2` si el diseño es
+balanceado). Tablas: «Corridas y promedios», «Efectos y prueba t» (o «Efectos (sin prueba: no hay error estimado)») y «Descomposición de
+la variación» (solo balanceado). Semáforos: «Efecto de A», «Efecto de B», «Interacción AB», «Réplicas», «Mejor combinación» y
+«Predicción» (o «Predicción fuera de rango»). Gráficas: `interaccion` y `efectos` (|t| frente al t crítico, o |efecto| sin prueba).
+
 ## 5. Cómo agregar un laboratorio nuevo
 
 1. Copia `labs/_plantilla.js` a `labs/labNN-nombre.js` y completa los campos.
@@ -339,10 +406,15 @@ Estos ids son fijos; puedes **añadir** entradas, nunca renombrar ni quitar esta
 | 17 | `criterio` (`guia`\|`excel`) · `modos` = filas `{paso, modo, efecto, causa, s, o, d}` · `mejoraFila` (`"1"`…`"20"` o vacío) · `sNueva` · `oNueva` · `dNueva` |
 | 18 | `unidad` · `nombre1`…`nombre6` · `datos1`…`datos6` number[] · `alfa` · `comparacion` (`tukey`\|`lsd`) |
 | 19 | `herramienta` (`regresion`\|`chi`\|`ic`) · `alfa` · regresión: `nombreX` · `unidadX` · `nombreY` · `unidadY` · `datosX` number[] · `datosY` number[] · `xPred` · `yObjetivo` · chi: `numCols` (`"2"`…`"5"`) · `nombresCols` (nombres separados por comas) · `observadas` = filas `{categoria, c1, c2, c3, c4, c5}` · IC: `icN` · `icMedia` · `icS` · `icUnidad` |
+| 20 | `etapas` = filas `{etapa, tc, clase, inv, espera, fty}` (`clase`: `VA`\|`SVA`\|`Desperdicio`; `fty` en %) · `demanda` · `disponible` · `mejoraFila` (`""`\|`"1"`…`"12"`) · `esperaNueva` |
+| 21 | `minTurno` · `turnos` · `descansos` · `paros` · `demanda` · `periodo` (`dia`\|`semana`) · `diasSemana` · `demandaAnterior` · `contenedor` · `estaciones` = filas `{estacion, tc}` · `pce` · `cambioMin` · `reduccionSmed` · `cambiosTurno` |
+| 22 | `modo` (`periodos`\|`factores`) · `periodos` = filas `{periodo, plan, paros, ciclo, prod, buenas}` · `disp` · `rend` · `cal` · `mejoraFactor` (`""`\|`A`\|`P`\|`Q`) · `mejoraValor` |
+| 23 | `respuesta` · `objetivo` (`min`\|`max`) · `factores` = 2 filas `{nombre, bajo, alto}` (la letra A o B es columna fija) · `corridas` = 4 filas `{y1, y2, y3, y4, y5}` en el orden (1), a, b, ab (el nombre y los niveles son columnas fijas) · `alfa` · `predA` · `predB` |
 
 Presets obligatorios (ids): 01 `guia`,`rechazos`,`fuerza`,`torque` · 02 `guia`,`tres-sigma`,`seis-sigma`,`fuerza`,`torque` ·
 03 `arneses`,`guia-ej2` · 04 `guia`,`excel`,`empaque`,`lineas-ab` (+ ejercicios del M1) · 05 `guia`,`excel` · 06 `libro`,`excel` ·
 07 `libro`,`excel` · 08 `guia`,`inconsistente` · 09 `libro`,`excel` · 10 `guia`,`excel`,`credito` · 11 `guia`,`excel` ·
 12 `guia`,`excel`,`sesgo` · 13 `guia`,`ej2`,`ej4`,`excel` · 14 `guia`,`excel` · 15 `guia`,`tickets`,`excel`,`hoja` ·
 16 `guia`,`excel`,`persona` · 17 `guia`,`empaque`,`excel` · 18 `guia`,`minimo`,`excel`,`sinDiferencia` · 19 `reg-plantilla`,`reg-curva`,
-`chi-guia`,`chi-plantilla`,`chi-torque`,`chi-2x2`,`ic-torque`,`ic-examen`.
+`chi-guia`,`chi-plantilla`,`chi-torque`,`chi-2x2`,`ic-torque`,`ic-examen` · 20 `guia`,`excel` · 21 `guia`,`ej1`,`ej3`,`ej4`,`excel` ·
+22 `guia`,`guia-turno`,`excel`,`ej5`,`examen` · 23 `guia`,`excel`,`ej2`,`ej3`,`interaccion`.

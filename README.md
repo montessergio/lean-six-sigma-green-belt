@@ -19,10 +19,10 @@ para material rodante ferroviario** (300 DPMO → 162 DPMO).
 | **S2** Definir: proyecto, VOC, CTQ, mapeo y equipo (4 h) | definir | disponible | M2, M3A, M3B | 05 Project Charter · 06 Árbol CTQ · 07 Matriz de selección ponderada · 08 AHP · 09 SIPOC |
 | **S3** Medir: proceso, datos y sistema de medición (4 h) | medir | disponible | M4, M5 | 10 PCE y desperdicios · 11 Tamaño de muestra · 12 Gauge R&R · 13 Cp y Cpk · 14 Hoja de verificación |
 | **S4** Analizar: causas raíz e inferencia (4 h) | analizar | disponible | M6, M7 | 15 Pareto · 16 Ishikawa y 5 Porqués · 17 AMEF y RPN · 18 ANOVA · 19 Regresión, chi-cuadrada e IC |
-| **S5** Mejorar: Lean y diseño de experimentos | mejorar | planeada | M8, M9 | 20 VSM · 21 Takt time · 22 OEE · 23 Diseño 2² |
+| **S5** Mejorar: Lean y diseño de experimentos (4 h) | mejorar | disponible | M8, M9 | 20 Mapa de flujo de valor (VSM) · 21 Takt time y balanceo · 22 OEE · 23 Diseño de experimentos 2² |
 | **S6** Controlar, integrar y sostener | controlar | planeada | M10, M11, M12 | 24 Plan de control · 25 Carta X̄-R · 26 Carta u |
 
-Las sesiones «planeadas» ya tienen su lugar en el índice, su ficha y sus laboratorios previstos; se completan con el
+La sesión «planeada» (S6) ya tiene su lugar en el índice, su ficha y sus laboratorios previstos; se completa con el
 mismo patrón (ver [Cómo agregar contenido](#cómo-agregar-contenido)). El libro y las plantillas de Excel **no** se
 publican en este repositorio.
 
