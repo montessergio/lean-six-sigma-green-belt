@@ -19,7 +19,7 @@
  */
 import { COLOR } from '../js/core/config.js';
 import { corto, entero, num, plural } from '../js/core/format.js';
-import { cartaXR, constantesXR, leerSubgrupos, limitesXR, resumenSubgrupos, subgruposDeResumen } from '../js/lib/controlar.js';
+import { cartaXR, constantesXR, leerSubgrupos, limitesXR, resumenSubgrupos, subgruposDeResumen, textoSenales } from '../js/lib/controlar.js';
 
 const XB = 'X̄'; // X̄: media de un subgrupo
 const GRAN = 'X̄̄'; // X̄̄: gran promedio, como en la plantilla
@@ -93,12 +93,6 @@ const supuestoDe = (n) => ({
   detalle: `Constantes para n = ${n}: A₂ = ${constantesXR(n).A2}, D₃ = ${constantesXR(n).D3}, D₄ = ${constantesXR(n).D4}.`,
 });
 
-/** Texto corto de las reglas que disparó un punto: «regla 1, sobre el LSC» · «regla 3, abajo de la línea central». */
-const textoSenales = (senales, valor, lim) => {
-  const reglas = `${senales.length > 1 ? 'reglas' : 'regla'} ${senales.join(' y ')}`;
-  if (senales.includes(1)) return `${reglas}, ${valor > lim.lsc ? 'sobre el LSC' : 'bajo el LIC'}`;
-  return `${reglas}, ${valor > lim.cl ? 'arriba' : 'abajo'} de la línea central`;
-};
 const mayuscula = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 
 /* ------------------------------------------------------------------ gráficas ------------------------------------------------------------------ */

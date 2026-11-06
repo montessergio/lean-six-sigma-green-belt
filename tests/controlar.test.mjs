@@ -6,8 +6,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  CONSTANTES_XR, REGLAS_CONTROL, cartaXR, constantesXR, leerSubgrupos, limitesXR, modosAmef, normalizarNombre, reaccionSoloDescarta, resumenPlan, resumenSubgrupos, senalesControl,
-  subgruposDeResumen,
+  CONSTANTES_XR, REGLAS_CONTROL, cartaU, cartaXR, constantesXR, leerSubgrupos, limitesXR, modosAmef, normalizarNombre, reaccionSoloDescarta, resumenPeriodos, resumenPlan,
+  resumenSubgrupos, senalesControl, subgruposDeResumen,
 } from '../js/lib/controlar.js';
 
 const cerca = (a, b, tol = 1e-9, msg = '') => assert.ok(Math.abs(a - b) <= tol, `${msg} ${a} ≠ ${b} (tol ${tol})`);
@@ -437,4 +437,176 @@ test('leerSubgrupos: números de subgrupo escritos a mano; lo que no se entiende
   assert.deepEqual(leerSubgrupos(''), { indices: [], ignoradas: [] });
   assert.deepEqual(leerSubgrupos(undefined), { indices: [], ignoradas: [] });
   assert.deepEqual(leerSubgrupos(12), { indices: [12], ignoradas: [] }, 'un número suelto también vale');
+});
+
+/* ------------------------------------------------------------ CARTA u ------------------------------------------------------------ */
+// Hoja «Carta u» de la plantilla: 25 periodos con defectos (c) y unidades (n); el 17 (26 defectos en 40 unidades) es la señal.
+const EXCEL_C = [14, 13, 12, 10, 11, 16, 7, 17, 11, 18, 16, 15, 16, 13, 16, 13, 26, 15, 17, 14, 14, 12, 10, 14, 13];
+const EXCEL_N = [44, 42, 43, 37, 42, 42, 34, 39, 37, 44, 45, 43, 43, 44, 39, 41, 40, 34, 38, 41, 42, 44, 35, 44, 40];
+const filasU = (c, n) => c.map((defectos, i) => ({ defectos, unidades: n[i] }));
+const periodosExcel = () => resumenPeriodos(filasU(EXCEL_C, EXCEL_N), 1).periodos;
+// Guía M10 §3: 16 semanas de ~2,000 arneses con 5 oportunidades. La guía publica la carta solo como imagen: estas cuentas semanales son
+// una reconstrucción didáctica que respeta lo que sí dice el texto (25 defectos en las 8 semanas de «antes» = 312.5 DPMO, 13 en las de «después»
+// = 162.5 DPMO y ninguna semana fuera de límites en su propia fase).
+const GUIA_U_ANTES = [3, 4, 2, 5, 3, 4, 2, 2];
+const GUIA_U_DESPUES = [2, 1, 2, 1, 2, 2, 1, 2];
+const periodosGuiaU = () => resumenPeriodos([...GUIA_U_ANTES, ...GUIA_U_DESPUES].map((defectos) => ({ defectos, unidades: 2000 })), 5).periodos;
+const conSenal = (puntos) => puntos.filter((p) => p.senales.length).map((p) => [p.indice, p.senales]);
+
+test('resumenPeriodos: n = unidades × oportunidades; filas vacías se ignoran y las que no valen se cuentan como inválidas', () => {
+  const r = resumenPeriodos([
+    { defectos: 14, unidades: 44 }, {}, { defectos: 3, unidades: 2000 }, { defectos: 5 }, { unidades: 100 }, { defectos: 1.5, unidades: 10 }, { defectos: -1, unidades: 10 },
+    { defectos: 2, unidades: 0 }, { defectos: 0, unidades: 50 }, undefined,
+  ], 5);
+  assert.deepEqual(r.periodos, [
+    { indice: 1, c: 14, unidades: 44, n: 220 },
+    { indice: 3, c: 3, unidades: 2000, n: 10000 },
+    { indice: 9, c: 0, unidades: 50, n: 250 },
+  ]);
+  assert.equal(r.invalidas, 5, 'defectos sin unidades, unidades sin defectos, defectos no enteros, negativos y unidades en cero');
+  // Una oportunidad por unidad (la plantilla): n son las unidades.
+  assert.equal(resumenPeriodos([{ defectos: 14, unidades: 44 }], 1).periodos[0].n, 44);
+  // Oportunidades inválidas: ninguna fila vale.
+  for (const opp of [0, -2, NaN, null]) assert.equal(resumenPeriodos([{ defectos: 1, unidades: 10 }], opp).invalidas, 1, String(opp));
+  assert.deepEqual(resumenPeriodos(undefined), { periodos: [], invalidas: 0 });
+});
+
+test('cartaU con la hoja «Carta u» (25 periodos): ū 0.34710, límites distintos en cada periodo y el 17 (u = 0.65) sobre su LSC 0.62656', () => {
+  const c = cartaU(periodosExcel(), { reglas: [1] });
+  assert.equal(c.valido, true);
+  assert.equal(c.total, 25);
+  assert.equal(c.usados, 25);
+  assert.equal(c.corte, null);
+  assert.equal(c.dado, false);
+  assert.equal(c.final.fases.length, 1);
+  cerca(c.final.fases[0].ubar, 0.3470993117010816, 1e-12);
+  assert.equal(c.final.fases[0].c, 353);
+  assert.equal(c.final.fases[0].n, 1017);
+  const p = c.final.puntos;
+  cerca(p[16].u, 0.65, 1e-12);
+  cerca(p[16].lsc, 0.6265583339793817, 1e-12);
+  cerca(p[16].lic, 0.06764028942278161, 1e-12);
+  cerca(p[0].lsc, 0.6135530346705911, 1e-12, 'n = 44');
+  cerca(p[0].lic, 0.08064558873157207, 1e-12);
+  cerca(p[6].lsc, 0.6502151799230098, 1e-12, 'n = 34: límites más anchos');
+  assert.ok(p[6].lsc > p[0].lsc, 'menos unidades, límites más anchos');
+  assert.deepEqual(conSenal(p), [[17, [1]]], 'la plantilla cuenta 1 punto fuera: el periodo 17');
+  assert.deepEqual(c.final.puntos, c.primera.puntos, 'sin excluir nada la pasada final es la primera');
+  // Con las tres reglas no aparece nada más en estos datos.
+  assert.deepEqual(conSenal(cartaU(periodosExcel(), {}).final.puntos), [[17, [1]]]);
+});
+
+test('cartaU: excluir el 17 recalcula ū (0.33470); el punto excluido no cuenta y ya no queda ninguna señal', () => {
+  const c = cartaU(periodosExcel(), { excluir: [17] });
+  cerca(c.final.fases[0].ubar, 0.33469805527123847, 1e-12);
+  assert.equal(c.final.fases[0].usados, 24);
+  assert.equal(c.final.fases[0].c, 327);
+  assert.equal(c.usados, 24);
+  assert.deepEqual(c.excluidos, [17]);
+  assert.deepEqual(conSenal(c.primera.puntos), [[17, [1]]], 'la primera pasada sí lo marca');
+  assert.deepEqual(conSenal(c.final.puntos), []);
+  assert.equal(c.final.puntos[16].excluido, true);
+  assert.equal(c.final.puntos[0].excluido, false);
+  cerca(c.primera.fases[0].ubar, 0.3470993117010816, 1e-12);
+});
+
+test('cartaU: dos fases desde la fila 13 → cada una con su ū (160 ÷ 492 y 193 ÷ 525); la fase la decide el número de fila', () => {
+  const c = cartaU(periodosExcel(), { desde: 13 });
+  assert.equal(c.corte, 13);
+  assert.deepEqual(c.final.fases.map((f) => [f.id, f.desde, f.hasta, f.usados, f.c, f.n]), [[1, 1, 12, 12, 160, 492], [2, 13, 25, 13, 193, 525]]);
+  cerca(c.final.fases[0].ubar, 0.3252032520325203, 1e-12);
+  cerca(c.final.fases[1].ubar, 0.3676190476190476, 1e-12);
+  assert.deepEqual(c.final.puntos.map((p) => p.fase), [...Array(12).fill(1), ...Array(13).fill(2)]);
+  cerca(c.final.puntos[11].cl, 0.3252032520325203, 1e-12);
+  cerca(c.final.puntos[12].cl, 0.3676190476190476, 1e-12);
+  assert.deepEqual(conSenal(c.final.puntos), [], 'con la línea central de su fase el 17 ya no sale');
+});
+
+test('cartaU con la guía M10 §3 (reconstrucción): dos fases desde la semana 9 → 312.5 y 162.5 DPMO, LSC 842.8 y 544.9, ninguna semana fuera', () => {
+  assert.equal(GUIA_U_ANTES.reduce((a, b) => a + b, 0), 25);
+  assert.equal(GUIA_U_DESPUES.reduce((a, b) => a + b, 0), 13);
+  const c = cartaU(periodosGuiaU(), { desde: 9 });
+  assert.equal(c.corte, 9);
+  const [f1, f2] = c.final.fases;
+  cerca(f1.ubar * 1e6, 312.5, 1e-9);
+  cerca(f2.ubar * 1e6, 162.5, 1e-9);
+  assert.deepEqual([f1.desde, f1.hasta, f2.desde, f2.hasta], [1, 8, 9, 16]);
+  assert.deepEqual([f1.n, f2.n], [80000, 80000]);
+  cerca(c.final.puntos[0].lsc * 1e6, 842.8300858899106, 1e-6);
+  cerca(c.final.puntos[8].lsc * 1e6, 544.9264635194588, 1e-6);
+  cerca(c.final.puntos[0].lic, 0, 1e-15, 'con tan pocos defectos el LIC calculado es negativo y se corta en 0');
+  cerca(c.final.puntos[8].lic, 0, 1e-15);
+  assert.deepEqual(conSenal(c.final.puntos), [], 'la mejora se sostiene: ninguna semana sale de su fase');
+  assert.deepEqual(c.final.puntos.map((p) => Math.round(p.u * 1e6)), [300, 400, 200, 500, 300, 400, 200, 200, 200, 100, 200, 100, 200, 200, 100, 200]);
+  // Reducción de la línea central: 48 % (la guía cita 46 % porque compara con los 300 DPMO de una sola semana del M1).
+  cerca((f1.ubar - f2.ubar) / f1.ubar, 0.48, 1e-12);
+});
+
+test('cartaU con la guía: una sola línea central (237.5 DPMO, LSC 699.8) deja las semanas 7 a 16 bajo ella y la regla 3 marca la 15 y la 16', () => {
+  const c = cartaU(periodosGuiaU(), {});
+  assert.equal(c.corte, null);
+  assert.equal(c.final.fases.length, 1);
+  cerca(c.final.fases[0].ubar * 1e6, 237.5, 1e-9);
+  cerca(c.final.puntos[0].lsc * 1e6, 699.8310502226732, 1e-6);
+  assert.deepEqual(conSenal(c.final.puntos), [[15, [3]], [16, [3]]]);
+  // Con solo la regla 1 (como la plantilla de Excel) el error de extender la línea central de «antes» pasa desapercibido.
+  assert.deepEqual(conSenal(cartaU(periodosGuiaU(), { reglas: [1] }).final.puntos), []);
+});
+
+test('cartaU con el ejercicio 2 de la guía (ū = 0.006, n = 7,200, 12 defectos): LSC 0.00874, LIC 0.00326 y u = 0.00167 bajo el LIC (regla 1, en la dirección buena)', () => {
+  const c = cartaU(resumenPeriodos([{ defectos: 12, unidades: 1800 }], 4).periodos, { dado: 0.006 });
+  assert.equal(c.valido, true);
+  assert.equal(c.dado, true);
+  const p = c.final.puntos[0];
+  assert.equal(p.n, 7200);
+  cerca(p.cl, 0.006, 1e-15);
+  cerca(p.lsc, 0.00873861278752583, 1e-12);
+  cerca(p.lic, 0.0032613872124741695, 1e-12);
+  cerca(p.u, 0.0016666666666666668, 1e-12);
+  cerca(p.sigma, 0.0009128709291752768, 1e-12);
+  assert.deepEqual(p.senales, [1]);
+  assert.ok(p.u < p.lic, 'por debajo del LIC: fuera de control, pero en la dirección deseable');
+  // Con un ū dado no hay fases ni ū calculado: el 'desde' se ignora.
+  assert.equal(cartaU(resumenPeriodos([{ defectos: 12, unidades: 1800 }, { defectos: 14, unidades: 1800 }], 4).periodos, { dado: 0.006, desde: 2 }).corte, null);
+});
+
+test('cartaU: el LIC nunca es negativo y un ū cero no rompe nada', () => {
+  const c = cartaU(resumenPeriodos([0, 1, 0, 1].map((defectos) => ({ defectos, unidades: 10 })), 1).periodos, {});
+  cerca(c.final.fases[0].ubar, 0.05, 1e-15, '2 defectos en 40 unidades');
+  cerca(c.final.puntos[0].lsc, 0.26213203435596426, 1e-12, '0.05 + 3·√(0.05 ÷ 10)');
+  assert.equal(c.final.puntos[0].lic, 0, '0.05 − 0.212 sería negativo');
+  const cero = cartaU(resumenPeriodos([0, 0, 0].map((defectos) => ({ defectos, unidades: 10 })), 1).periodos, {});
+  assert.equal(cero.valido, true);
+  assert.equal(cero.final.fases[0].ubar, 0);
+  assert.deepEqual(conSenal(cero.final.puntos), []);
+});
+
+test('cartaU: el número de fila de la segunda fase se ignora si no deja al menos un periodo en cada fase', () => {
+  for (const desde of [1, 0, -3, 2.5, 26, 100, NaN, undefined, '9']) assert.equal(cartaU(periodosExcel(), { desde }).corte, null, String(desde));
+  assert.equal(cartaU(periodosExcel(), { desde: 2 }).corte, 2);
+  assert.equal(cartaU(periodosExcel(), { desde: 25 }).corte, 25);
+  // Filas sin datos entre medio: las fases se separan por número de fila.
+  const hueco = resumenPeriodos([{ defectos: 1, unidades: 10 }, { defectos: 2, unidades: 10 }, {}, {}, { defectos: 1, unidades: 10 }, { defectos: 3, unidades: 10 }], 1).periodos;
+  assert.deepEqual(hueco.map((p) => p.indice), [1, 2, 5, 6]);
+  const c = cartaU(hueco, { desde: 4 });
+  assert.equal(c.corte, 4);
+  assert.deepEqual(c.final.fases.map((f) => [f.desde, f.hasta]), [[1, 2], [5, 6]]);
+  assert.equal(cartaU(hueco, { desde: 7 }).corte, null, 'no hay periodos desde la fila 7');
+});
+
+test('cartaU: datos inválidos → valido falso con el motivo; los periodos por excluir que no existen se avisan', () => {
+  assert.deepEqual({ ...cartaU([], {}) }, { valido: false, motivo: 'datos' });
+  assert.deepEqual({ ...cartaU(undefined) }, { valido: false, motivo: 'datos' });
+  for (const dado of [0, -1, Infinity]) assert.deepEqual({ ...cartaU(periodosExcel(), { dado }) }, { valido: false, motivo: 'dado' }, String(dado));
+  assert.equal(cartaU(periodosExcel(), { dado: NaN }).valido, true, 'un ū vacío (NaN) significa «calcularlo con los datos»');
+  const todos = cartaU(periodosExcel(), { excluir: Array.from({ length: 25 }, (_, i) => i + 1) });
+  assert.equal(todos.valido, false);
+  assert.equal(todos.motivo, 'todos-excluidos');
+  const faseVacia = cartaU(periodosExcel(), { desde: 13, excluir: Array.from({ length: 12 }, (_, i) => i + 1) });
+  assert.equal(faseVacia.valido, false);
+  assert.equal(faseVacia.motivo, 'fase-excluida');
+  const raros = cartaU(periodosExcel(), { excluir: [17, 99, 100] });
+  assert.equal(raros.valido, true);
+  assert.deepEqual(raros.sinEncontrar, [99, 100]);
+  assert.deepEqual(raros.excluidos, [17]);
 });

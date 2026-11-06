@@ -340,6 +340,16 @@ export function cartaXR(subgrupos, { n, excluir = [], reglas = [1, 2, 3] } = {})
 }
 
 /**
+ * Texto corto de las reglas que disparó un punto, para semáforos, tablas y etiquetas: «regla 1, sobre el LSC» · «reglas 2 y 3, arriba de
+ * la línea central». `lim` = { cl, lsc, lic } del punto.
+ */
+export function textoSenales(senales, valor, lim) {
+  const reglas = `${senales.length > 1 ? 'reglas' : 'regla'} ${senales.join(' y ')}`;
+  if (senales.includes(1)) return `${reglas}, ${valor > lim.lsc ? 'sobre el LSC' : 'bajo el LIC'}`;
+  return `${reglas}, ${valor > lim.cl ? 'arriba' : 'abajo'} de la línea central`;
+}
+
+/**
  * Lee a mano una lista de números de subgrupo («12», «12, 17», «3 5;8»). Devuelve los enteros ≥ 1 sin repetir y, aparte, lo que
  * no se pudo entender (letras, decimales, ceros), para avisarlo en lugar de callarlo.
  */
@@ -352,4 +362,94 @@ export function leerSubgrupos(textoLista) {
     } else ignoradas.push(parte);
   }
   return { indices, ignoradas };
+}
+
+/* ============================================================ CARTA u (LAB 26) ============================================================ */
+
+/**
+ * Periodos de una carta u a partir de la tabla de captura. `filas` = [{ defectos, unidades }]; el área de oportunidad de cada
+ * periodo es n = unidades × oportunidades por unidad (con una oportunidad por unidad, n son las unidades de la plantilla «Carta u»;
+ * con 5, las «oportunidades de la semana» de la guía, M10 §3). Una fila vale si tiene defectos (un entero ≥ 0) y unidades (> 0);
+ * una fila con algo escrito pero que no cumple se cuenta en `invalidas`, y una fila vacía se ignora. `indice` es el número de fila.
+ */
+export function resumenPeriodos(filas, oportunidades = 1) {
+  const periodos = [];
+  let invalidas = 0;
+  const opp = finito(oportunidades) && oportunidades > 0 ? oportunidades : NaN;
+  (filas ?? []).forEach((f, i) => {
+    if (!finito(f?.defectos) && !finito(f?.unidades)) return;
+    if (!finito(f.defectos) || !finito(f.unidades) || !Number.isInteger(f.defectos) || f.defectos < 0 || f.unidades <= 0 || !Number.isFinite(opp)) {
+      invalidas += 1;
+      return;
+    }
+    periodos.push({ indice: i + 1, c: f.defectos, unidades: f.unidades, n: f.unidades * opp });
+  });
+  return { periodos, invalidas };
+}
+
+/**
+ * Carta u (defectos por unidad, con el tamaño de la muestra variable; guía M10 §3 y plantilla «Carta u»):
+ *   ū = Σc ÷ Σn      LSC = ū + 3·√(ū/n)      LIC = máx[0, ū − 3·√(ū/n)]
+ * Cada periodo tiene sus propios límites porque n cambia. `periodos` = [{ indice, c, n }] (de resumenPeriodos). Opciones:
+ *   desde    número de fila donde empieza la segunda fase: un cambio deliberado del proceso (la mejora) exige una nueva línea
+ *            central y nuevos límites a partir de ahí, no extender la anterior (guía M10 §3, «Errores comunes»). Debe ser un entero
+ *            de 2 al último periodo y dejar al menos un periodo en cada fase; si no, se ignora y `corte` queda en null.
+ *   excluir  índices de periodos con causa especial ya identificada y corregida; salen del cálculo de ū, no de la gráfica.
+ *   dado     ū conocido (histórico, en defectos por oportunidad), como en el ejercicio 2 de la guía: sustituye al calculado y las
+ *            fases no aplican.
+ *   reglas   cuáles de las reglas 1 a 3 aplicar (por omisión las tres; la plantilla de Excel solo marca los puntos fuera de límites).
+ * Devuelve `primera` (todos los periodos) y `final` (sin los excluidos); cada una con `puntos` = { indice, c, n, u, fase, cl, lsc, lic,
+ * sigma, excluido, senales } y `fases` = { id, desde, hasta, usados, c, n, ubar }. Las reglas 2 y 3 miran solo puntos de la misma fase y
+ * saltan los excluidos. valido: false con `motivo` 'datos' | 'dado' | 'todos-excluidos' | 'fase-excluida' si no se puede calcular.
+ */
+export function cartaU(periodos, { desde = NaN, excluir = [], dado = NaN, reglas = [1, 2, 3] } = {}) {
+  const completos = (periodos ?? []).filter((p) => p && finito(p.c) && finito(p.n) && p.c >= 0 && p.n > 0);
+  if (!completos.length) return { valido: false, motivo: 'datos' };
+  const hayDado = dado !== undefined && dado !== null && !Number.isNaN(dado);
+  if (hayDado && !(finito(dado) && dado > 0)) return { valido: false, motivo: 'dado' };
+  const ultimo = Math.max(...completos.map((p) => p.indice));
+  const quitar = new Set(excluir);
+  const existentes = new Set(completos.map((p) => p.indice));
+  const sinEncontrar = [...quitar].filter((i) => !existentes.has(i)).sort((a, b) => a - b);
+
+  let corte = null;
+  if (!hayDado && Number.isInteger(desde) && desde >= 2 && desde <= ultimo
+    && completos.some((p) => p.indice < desde) && completos.some((p) => p.indice >= desde)) corte = desde;
+  const faseDe = (p) => (corte !== null && p.indice >= corte ? 2 : 1);
+  const ids = corte !== null ? [1, 2] : [1];
+
+  const evaluar = (marcados) => {
+    const fases = [];
+    for (const id of ids) {
+      const todos = completos.filter((p) => faseDe(p) === id);
+      const usados = todos.filter((p) => !marcados.has(p.indice));
+      if (!usados.length) return null;
+      const c = usados.reduce((s, p) => s + p.c, 0);
+      const n = usados.reduce((s, p) => s + p.n, 0);
+      fases.push({ id, desde: todos[0].indice, hasta: todos[todos.length - 1].indice, usados: usados.length, c, n, ubar: hayDado ? dado : c / n });
+    }
+    const puntos = completos.map((p) => {
+      const f = fases[faseDe(p) - 1];
+      const sigma = Math.sqrt(f.ubar / p.n);
+      return { indice: p.indice, c: p.c, n: p.n, u: p.c / p.n, fase: f.id, cl: f.ubar, lsc: f.ubar + 3 * sigma, lic: Math.max(0, f.ubar - 3 * sigma), sigma, excluido: marcados.has(p.indice), senales: [] };
+    });
+    const senales = senalesControl(puntos.map((p) => ({ x: p.u, cl: p.cl, lsc: p.lsc, lic: p.lic, fase: p.fase, excluido: p.excluido })), { reglas });
+    puntos.forEach((p, i) => { p.senales = senales[i]; });
+    return { puntos, fases };
+  };
+
+  const primera = evaluar(new Set());
+  const final = evaluar(quitar);
+  if (!final) return { valido: false, motivo: completos.every((p) => quitar.has(p.indice)) ? 'todos-excluidos' : 'fase-excluida', sinEncontrar };
+  return {
+    valido: true,
+    total: completos.length,
+    usados: completos.filter((p) => !quitar.has(p.indice)).length,
+    excluidos: completos.filter((p) => quitar.has(p.indice)).map((p) => p.indice),
+    sinEncontrar,
+    dado: hayDado,
+    corte,
+    primera,
+    final,
+  };
 }
