@@ -1,0 +1,947 @@
+{
+  "id": "m10",
+  "titulo": "M10 · Control estadístico de procesos",
+  "slides": [
+    {
+      "id": "m10-bisagra",
+      "etiqueta": "M10 · DE LA MEJORA A LA SOSTENIBILIDAD",
+      "titulo": "Controlar: que la mejora se sostenga sin que nadie la vigile",
+      "subtitulo": "Las tres herramientas que separan una mejora temporal de un cambio permanente.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Con la fuerza mínima de 173 N y el pelado de 7 mm estandarizados, queda la pregunta más importante del proyecto: ¿seguirá funcionando dentro de seis meses, cuando el Green Belt ya esté en otro proyecto?"
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {"etiqueta": "CARTAS DE CONTROL", "texto": "Separan la variación normal de un problema real con un criterio objetivo."},
+            {"etiqueta": "PLAN DE CONTROL", "texto": "Documenta qué se mide, cada cuánto, quién responde y qué hacer ante una señal.", "estilo": "acento"},
+            {"etiqueta": "ESTANDARIZACIÓN", "texto": "Instrucciones, capacitación y auditorías: nada depende de la memoria de una persona."}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "El módulo cierra con una cifra honesta: el DPMO bajó de 300 a 162, no a los menos de 100 prometidos. La lección está en cómo se interpreta ese resultado."
+        }
+      ]
+    },
+    {
+      "id": "m10-variacion",
+      "etiqueta": "M10 · VARIACIÓN COMÚN Y ESPECIAL",
+      "titulo": "Dos tipos de variación, dos respuestas distintas",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "CAUSA COMÚN",
+              "texto": "Fluctuaciones naturales e inevitables de material, vibración o temperatura ambiente, que juntas producen la campana del módulo 5. Reducirla exige cambiar el proceso, como en los módulos 8 y 9."
+            },
+            {
+              "etiqueta": "CAUSA ESPECIAL",
+              "texto": "Viene de un evento identificable y evitable: un cambio de material sin verificar, un ajuste incorrecto, una avería. Se investiga y se elimina; no se «ajusta».",
+              "estilo": "acento"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Walter Shewhart creó las cartas de control en los Laboratorios Bell, en la década de 1920, para distinguir ambos tipos con un criterio objetivo."
+        },
+        {
+          "tipo": "nota",
+          "texto": "Un proceso «bajo control estadístico» no tiene cero variación, que no existe: toda su variación es de causa común, previsible dentro de límites conocidos."
+        }
+      ]
+    },
+    {
+      "id": "m10-xr-idea",
+      "etiqueta": "M10 · CARTAS X̄ Y R",
+      "titulo": "Dos cartas que se leen juntas: primero la R, luego la X̄",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Con datos continuos recolectados en subgrupos (varias piezas seguidas, medidas juntas), la carta R vigila la variación dentro de cada subgrupo y la carta X̄ vigila cómo se mueve el promedio entre subgrupos."
+        },
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1],
+          "izq": [
+            {
+              "tipo": "formula",
+              "etiqueta": "CARTA X̄",
+              "tex": "LSC=\\bar{\\bar{X}}+A_2\\bar{R}\\qquad LIC=\\bar{\\bar{X}}-A_2\\bar{R}",
+              "texto": "LSC = X̿ + A₂R̄ · LIC = X̿ − A₂R̄",
+              "nota": "X̿ es el promedio de las medias de los subgrupos"
+            }
+          ],
+          "der": [
+            {
+              "tipo": "formula",
+              "etiqueta": "CARTA R",
+              "tex": "LSC=D_4\\bar{R}\\qquad LIC=D_3\\bar{R}",
+              "texto": "LSC = D₄R̄ · LIC = D₃R̄",
+              "nota": "R̄ es el promedio de los rangos"
+            }
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "El orden importa: los límites de la X̄ se calculan a partir del rango promedio. Si la carta R está fuera de control, los límites de la X̄ no son confiables y se revisan primero."
+        }
+      ]
+    },
+    {
+      "id": "m10-xr-constantes",
+      "etiqueta": "M10 · CONSTANTES DE LAS CARTAS",
+      "titulo": "A₂, D₃ y D₄ dependen del tamaño del subgrupo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Con subgrupos de 5 la guía usa A₂ = 0.577, D₃ = 0 y D₄ = 2.114. Para otros tamaños, la tabla estándar de constantes (la misma que usa el LAB 25) da:"
+        },
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1],
+          "izq": [
+            {
+              "tipo": "tabla",
+              "columnas": ["n", {"t": "A₂", "num": true}, {"t": "D₃", "num": true}, {"t": "D₄", "num": true}],
+              "filas": [["2", "1.880", "0", "3.267"], ["3", "1.023", "0", "2.574"], ["4", "0.729", "0", "2.282"], ["5", "0.577", "0", "2.114"]],
+              "resaltar": [2, 3]
+            }
+          ],
+          "der": [
+            {
+              "tipo": "tabla",
+              "columnas": ["n", {"t": "A₂", "num": true}, {"t": "D₃", "num": true}, {"t": "D₄", "num": true}],
+              "filas": [
+                ["6", "0.483", "0", "2.004"],
+                ["7", "0.419", "0.076", "1.924"],
+                ["8", "0.373", "0.136", "1.864"],
+                ["9", "0.337", "0.184", "1.816"],
+                ["10", "0.308", "0.223", "1.777"]
+              ]
+            }
+          ]
+        },
+        {"tipo": "nota", "texto": "Resaltados: n = 5 (caso de la guía) y n = 4 (ejercicio 4). Hasta n = 6, D₃ = 0: el límite inferior de la carta R se corta en 0."}
+      ]
+    },
+    {
+      "id": "m10-xr-datos",
+      "etiqueta": "M10 · CARTA X̄-R APLICADA",
+      "titulo": "Quince subgrupos de cinco mediciones de fuerza de engarzado",
+      "bloques": [
+        {"tipo": "texto", "texto": "Con el poka-yoke y la instrucción actualizada ya en operación, el equipo midió 15 subgrupos de 5 piezas."},
+        {
+          "tipo": "columnas",
+          "proporcion": [1, 1],
+          "izq": [
+            {
+              "tipo": "tabla",
+              "columnas": ["Subgrupo", {"t": "Media (N)", "num": true}, {"t": "Rango (N)", "num": true}],
+              "filas": [
+                ["1", "176.10", "1.9"],
+                ["2", "176.26", "3.7"],
+                ["3", "176.52", "2.3"],
+                ["4", "175.12", "4.1"],
+                ["5", "175.58", "3.3"],
+                ["6", "175.48", "4.2"],
+                ["7", "175.62", "4.1"],
+                ["8", "176.28", "2.7"]
+              ]
+            }
+          ],
+          "der": [
+            {
+              "tipo": "tabla",
+              "columnas": ["Subgrupo", {"t": "Media (N)", "num": true}, {"t": "Rango (N)", "num": true}],
+              "filas": [
+                ["9", "176.62", "4.2"],
+                ["10", "176.76", "5.7"],
+                ["11", "176.50", "3.1"],
+                ["12", "171.54 †", "2.8"],
+                ["13", "175.90", "2.2"],
+                ["14", "176.40", "3.9"],
+                ["15", "176.28", "5.2"]
+              ],
+              "resaltar": [3],
+              "pie": "† Excede el límite inferior."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m10-xr-limites",
+      "etiqueta": "M10 · PRIMERA PASADA",
+      "titulo": "Con los 15 subgrupos, la R está en control y la X̄ marca el subgrupo 12",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            {"valor": "175.80 N", "etiqueta": "X̿", "nota": "promedio de las 15 medias", "color": "teal"},
+            {"valor": "3.56 N", "etiqueta": "R̄", "nota": "promedio de los 15 rangos", "color": "azul"},
+            {"valor": "173.74 a 177.85 N", "etiqueta": "Límites de la X̄", "nota": "175.80 ± 0.577 × 3.56", "color": "ambar"},
+            {"valor": "0 a 7.53 N", "etiqueta": "Límites de la R", "nota": "0 × R̄ y 2.114 × 3.56", "color": "verde"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Ningún rango supera 7.53 N (el mayor es 5.7 N): la carta R está en control y los límites de la X̄ son confiables. La media del subgrupo 12, 171.54 N, cae bajo el LIC de 173.74 N: dispara la Regla 1."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab25",
+          "texto": "Abrir LAB 25 con los 15 subgrupos, sin excluir ninguno →",
+          "valores": {
+            "modo": "resumen",
+            "n": "5",
+            "mediciones": [{}, {}, {}, {}, {}],
+            "resumen": [
+              {"media": 176.1, "rango": 1.9},
+              {"media": 176.26, "rango": 3.7},
+              {"media": 176.52, "rango": 2.3},
+              {"media": 175.12, "rango": 4.1},
+              {"media": 175.58, "rango": 3.3},
+              {"media": 175.48, "rango": 4.2},
+              {"media": 175.62, "rango": 4.1},
+              {"media": 176.28, "rango": 2.7},
+              {"media": 176.62, "rango": 4.2},
+              {"media": 176.76, "rango": 5.7},
+              {"media": 176.5, "rango": 3.1},
+              {"media": 171.54, "rango": 2.8},
+              {"media": 175.9, "rango": 2.2},
+              {"media": 176.4, "rango": 3.9},
+              {"media": 176.28, "rango": 5.2}
+            ],
+            "gran": null,
+            "rbar": null,
+            "excluir": "",
+            "reglas": "tres"
+          }
+        },
+        {"tipo": "nota", "texto": "La guía muestra estas cartas solo como imagen: los límites de la primera pasada los calcula el laboratorio.", "tenue": true}
+      ]
+    },
+    {
+      "id": "m10-reglas",
+      "etiqueta": "M10 · REGLAS DE DETECCIÓN",
+      "titulo": "Tres reglas simples detectan la mayoría de las causas especiales",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Regla", "Señal de causa especial"],
+          "filas": [
+            ["1", "Un punto cae fuera de los límites de control (±3σ)."],
+            ["2", "Dos de tres puntos consecutivos caen más allá de 2σ, del mismo lado de la línea central."],
+            ["3", "Nueve puntos consecutivos caen del mismo lado de la línea central (tendencia sostenida)."]
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "La Regla 1 es la señal más simple. La Regla 3 detecta una tendencia sostenida, como un cambio gradual de material o el desgaste de una herramienta, aunque ningún punto cruce los límites."
+        },
+        {"tipo": "texto", "texto": "Cada σ es un tercio de la distancia entre la línea central y el límite de control: σ = (LSC − línea central) ÷ 3."},
+        {
+          "tipo": "nota",
+          "texto": "Una señal dice que algo fue estadísticamente distinto, no que fue malo. Si es en la dirección buena, también se investiga, pero para estandarizarlo."
+        }
+      ]
+    },
+    {
+      "id": "m10-causa-especial",
+      "etiqueta": "M10 · CAUSA ESPECIAL",
+      "titulo": "El subgrupo 12: un cambio de rollo sin verificar",
+      "bloques": [
+        {
+          "tipo": "pasos",
+          "columnas": 4,
+          "pasos": [
+            {"texto": "Señal", "sub": "Regla 1: la media de 171.54 N cae bajo el LIC"},
+            {"texto": "5 Porqués", "sub": "el mismo método del módulo 6"},
+            {"texto": "Causa", "sub": "cambio de rollo de terminales sin verificar la certificación del lote"},
+            {"texto": "Acción", "sub": "corregir y recalcular sin el subgrupo 12"}
+          ]
+        },
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            {"valor": "176.10 N", "etiqueta": "X̿", "nota": "con los 14 subgrupos restantes", "color": "teal"},
+            {"valor": "3.61 N", "etiqueta": "R̄", "color": "azul"},
+            {"valor": "174.02 a 178.19 N", "etiqueta": "Límites de la X̄", "nota": "más ajustados que los de la primera pasada", "color": "ambar"}
+          ]
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab25",
+          "texto": "Abrir LAB 25 con el subgrupo 12 excluido →",
+          "valores": {
+            "modo": "resumen",
+            "n": "5",
+            "mediciones": [{}, {}, {}, {}, {}],
+            "resumen": [
+              {"media": 176.1, "rango": 1.9},
+              {"media": 176.26, "rango": 3.7},
+              {"media": 176.52, "rango": 2.3},
+              {"media": 175.12, "rango": 4.1},
+              {"media": 175.58, "rango": 3.3},
+              {"media": 175.48, "rango": 4.2},
+              {"media": 175.62, "rango": 4.1},
+              {"media": 176.28, "rango": 2.7},
+              {"media": 176.62, "rango": 4.2},
+              {"media": 176.76, "rango": 5.7},
+              {"media": 176.5, "rango": 3.1},
+              {"media": 171.54, "rango": 2.8},
+              {"media": 175.9, "rango": 2.2},
+              {"media": 176.4, "rango": 3.9},
+              {"media": 176.28, "rango": 5.2}
+            ],
+            "gran": null,
+            "rbar": null,
+            "excluir": "12",
+            "reglas": "tres"
+          }
+        },
+        {
+          "tipo": "nota",
+          "texto": "Excluir un punto solo corresponde cuando su causa ya se identificó y se corrigió. Quitarlo sin causa solo estrecha los límites y esconde variación real."
+        }
+      ]
+    },
+    {"tipo": "lab", "lab": "lab25"},
+    {
+      "id": "m10-xr-excel",
+      "etiqueta": "M10 · PLANTILLA «CARTA X-R»",
+      "titulo": "La plantilla de Excel: 25 subgrupos de 5 y un punto fuera",
+      "bloques": [
+        {"tipo": "texto", "texto": "La plantilla trae otros datos que los de la guía: 25 subgrupos de 5 mediciones de fuerza."},
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            {"valor": "170.12 N", "etiqueta": "X̿", "color": "teal"},
+            {"valor": "2.756 N", "etiqueta": "R̄", "color": "azul"},
+            {"valor": "168.53 a 171.71 N", "etiqueta": "Límites de la X̄", "color": "ambar"},
+            {"valor": "0 a 5.83 N", "etiqueta": "Límites de la R", "color": "verde"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "El subgrupo 17 (media 174.4 N) cae sobre el LSC y la carta R no marca nada. Una vez corregida su causa, sin ese subgrupo los límites de la X̄ pasan a 168.33 y 171.56 N."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab25",
+          "texto": "Abrir LAB 25 con los datos de la plantilla →",
+          "valores": {
+            "modo": "mediciones",
+            "n": "5",
+            "mediciones": [
+              {"x1": 169.7, "x2": 170.6, "x3": 169.7, "x4": 169.6, "x5": 168.9},
+              {"x1": 169.7, "x2": 171.3, "x3": 170.5, "x4": 171.2, "x5": 170.3},
+              {"x1": 170.5, "x2": 170.2, "x3": 168, "x4": 171, "x5": 170.6},
+              {"x1": 170.6, "x2": 168, "x3": 167.9, "x4": 168.9, "x5": 169.4},
+              {"x1": 170.4, "x2": 169.9, "x3": 170.6, "x4": 169.2, "x5": 170.4},
+              {"x1": 170.5, "x2": 169.2, "x3": 172.1, "x4": 170.7, "x5": 171.4},
+              {"x1": 169.3, "x2": 169.1, "x3": 169.6, "x4": 169.9, "x5": 170.8},
+              {"x1": 170.3, "x2": 169.5, "x3": 168.9, "x4": 169.4, "x5": 171.5},
+              {"x1": 169, "x2": 170.3, "x3": 170.5, "x4": 168.2, "x5": 170.1},
+              {"x1": 171.6, "x2": 167.6, "x3": 169.6, "x4": 169.9, "x5": 169},
+              {"x1": 170.6, "x2": 169.9, "x3": 168.2, "x4": 171, "x5": 170.8},
+              {"x1": 171.1, "x2": 171.7, "x3": 170.4, "x4": 170.1, "x5": 168.4},
+              {"x1": 170.7, "x2": 169.3, "x3": 169.5, "x4": 168.5, "x5": 168.8},
+              {"x1": 169.4, "x2": 171.5, "x3": 167.6, "x4": 168.3, "x5": 170.3},
+              {"x1": 171.7, "x2": 170.7, "x3": 167.7, "x4": 167, "x5": 170.4},
+              {"x1": 169.1, "x2": 168.7, "x3": 171.2, "x4": 171.3, "x5": 170.2},
+              {"x1": 173.9, "x2": 174.1, "x3": 175.5, "x4": 174.3, "x5": 174.2},
+              {"x1": 170.7, "x2": 168.1, "x3": 171.5, "x4": 171.1, "x5": 170.6},
+              {"x1": 167.6, "x2": 169.2, "x3": 171, "x4": 167.8, "x5": 169.8},
+              {"x1": 171.2, "x2": 168.4, "x3": 171.9, "x4": 170.7, "x5": 169.8},
+              {"x1": 170.4, "x2": 170.8, "x3": 170.1, "x4": 171.4, "x5": 169.2},
+              {"x1": 169.5, "x2": 171.3, "x3": 170, "x4": 168.9, "x5": 171.1},
+              {"x1": 171.8, "x2": 169.5, "x3": 168.3, "x4": 169.8, "x5": 169.8},
+              {"x1": 169.6, "x2": 171.7, "x3": 168.8, "x4": 171.5, "x5": 168.5},
+              {"x1": 169.1, "x2": 170.8, "x3": 171.4, "x4": 171, "x5": 170.4}
+            ],
+            "resumen": [{}, {}, {}, {}, {}],
+            "gran": null,
+            "rbar": null,
+            "excluir": "",
+            "reglas": "una"
+          }
+        },
+        {"tipo": "nota", "texto": "La plantilla solo aplica la Regla 1; el laboratorio también aplica las reglas 2 y 3.", "tenue": true}
+      ]
+    },
+    {
+      "id": "m10-u-idea",
+      "etiqueta": "M10 · CARTA U",
+      "titulo": "Cuando lo que se cuenta son defectos, la carta u vigila el DPMO",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El indicador del goal statement del módulo 2 es el DPMO, una métrica de atributo. Una carta u (defectos por unidad) lo monitorea semana a semana y, a diferencia de otras cartas de atributo, permite que el tamaño de la muestra varíe de un punto a otro."
+        },
+        {
+          "tipo": "formula",
+          "etiqueta": "LÍMITES DE LA CARTA u",
+          "tex": "LSC=\\bar{u}+3\\sqrt{\\bar{u}/n}\\qquad LIC=\\max\\left[0,\\ \\bar{u}-3\\sqrt{\\bar{u}/n}\\right]",
+          "texto": "LSC = ū + 3√(ū/n) · LIC = máx[0, ū − 3√(ū/n)]",
+          "nota": "ū es el promedio de defectos por unidad y n, el número de oportunidades del periodo (unidades × 5)"
+        },
+        {
+          "tipo": "nota",
+          "texto": "Como n cambia de un periodo a otro, los límites también: la banda se ensancha en las semanas con menos oportunidades. Con pocos defectos esperados, el límite inferior se corta en 0."
+        }
+      ]
+    },
+    {
+      "id": "m10-u-fases",
+      "etiqueta": "M10 · CARTA U: DOS FASES",
+      "titulo": "Un cambio deliberado exige una línea central nueva",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {"etiqueta": "CAUSA ESPECIAL · SUBGRUPO 12", "texto": "Un evento no previsto: se investiga, se corrige y se excluye el punto."},
+            {
+              "etiqueta": "MEJORA DELIBERADA · SEMANA 9",
+              "texto": "El poka-yoke y la instrucción nueva cambiaron el proceso a propósito: se recalculan la línea central y los límites desde la semana 9.",
+              "estilo": "acento"
+            }
+          ]
+        },
+        {
+          "tipo": "metricas",
+          "columnas": 2,
+          "items": [
+            {"valor": "312.5 DPMO", "etiqueta": "Semanas 1 a 8", "nota": "línea central de «antes»", "color": "azul"},
+            {"valor": "162.5 DPMO", "etiqueta": "Semanas 9 a 16", "nota": "línea central de «después»", "color": "teal"}
+          ]
+        },
+        {"tipo": "texto", "texto": "Ninguna semana sale de los límites de su propia fase: la mejora se sostiene semana tras semana y no fue una semana afortunada."},
+        {
+          "tipo": "abrirLab",
+          "lab": "lab26",
+          "texto": "Abrir LAB 26 con las 16 semanas y la línea nueva desde la 9 →",
+          "valores": {
+            "escala": "dpmo",
+            "oportunidades": 5,
+            "periodos": [
+              {"defectos": 3, "unidades": 2000},
+              {"defectos": 4, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 5, "unidades": 2000},
+              {"defectos": 3, "unidades": 2000},
+              {"defectos": 4, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 1, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 1, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 1, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000}
+            ],
+            "centro": "datos",
+            "ubarDado": null,
+            "desde": 9,
+            "excluir": "",
+            "reglas": "tres"
+          }
+        },
+        {
+          "tipo": "nota",
+          "texto": "La guía publica esta carta como imagen y no da los conteos semanales. Los del laboratorio son una reconstrucción didáctica con los mismos totales: 25 defectos antes y 13 después.",
+          "tenue": true
+        }
+      ]
+    },
+    {
+      "id": "m10-u-una-linea",
+      "etiqueta": "M10 · EL ERROR DE UNA SOLA LÍNEA",
+      "titulo": "Extender la línea de «antes» convierte la mejora en una falsa alarma",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["", "Una sola línea central", "Dos fases (desde la semana 9)"],
+          "filas": [["Línea central (DPMO)", "237.5", "312.5 y 162.5"], ["LSC (DPMO)", "699.8", "842.8 y 544.9"], ["Periodos con señal", "Semanas 15 y 16 (Regla 3)", "Ninguno"]],
+          "resaltar": [2]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Con una sola línea de 237.5 DPMO, desde la semana 7 todos los puntos quedan bajo ella: la Regla 3 marca las semanas 15 y 16 como causa especial. Es la propia mejora, vista con la línea equivocada."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab26",
+          "texto": "Abrir LAB 26 con una sola línea central →",
+          "valores": {
+            "escala": "dpmo",
+            "oportunidades": 5,
+            "periodos": [
+              {"defectos": 3, "unidades": 2000},
+              {"defectos": 4, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 5, "unidades": 2000},
+              {"defectos": 3, "unidades": 2000},
+              {"defectos": 4, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 1, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 1, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000},
+              {"defectos": 1, "unidades": 2000},
+              {"defectos": 2, "unidades": 2000}
+            ],
+            "centro": "datos",
+            "ubarDado": null,
+            "desde": null,
+            "excluir": "",
+            "reglas": "tres"
+          }
+        }
+      ]
+    },
+    {
+      "id": "m10-u-excel",
+      "etiqueta": "M10 · PLANTILLA «CARTA U»",
+      "titulo": "La plantilla: 25 periodos de tamaños distintos y un punto fuera",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            {"valor": "0.347", "etiqueta": "ū", "nota": "353 defectos ÷ 1,017 unidades", "color": "teal"},
+            {"valor": "0.611 a 0.650", "etiqueta": "LSC", "nota": "cambia con n (de 34 a 45 unidades)", "color": "ambar"},
+            {"valor": "Periodo 17", "etiqueta": "Señal", "nota": "u = 0.65 sobre su LSC de 0.627", "color": "verde"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Sin el periodo 17, una vez corregida su causa, ū baja a 0.335 y no queda ninguna señal. Con n distinto en cada periodo, cada punto se compara con su propio límite."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab26",
+          "texto": "Abrir LAB 26 con los 25 periodos de la plantilla →",
+          "valores": {
+            "escala": "u",
+            "oportunidades": 1,
+            "periodos": [
+              {"defectos": 14, "unidades": 44},
+              {"defectos": 13, "unidades": 42},
+              {"defectos": 12, "unidades": 43},
+              {"defectos": 10, "unidades": 37},
+              {"defectos": 11, "unidades": 42},
+              {"defectos": 16, "unidades": 42},
+              {"defectos": 7, "unidades": 34},
+              {"defectos": 17, "unidades": 39},
+              {"defectos": 11, "unidades": 37},
+              {"defectos": 18, "unidades": 44},
+              {"defectos": 16, "unidades": 45},
+              {"defectos": 15, "unidades": 43},
+              {"defectos": 16, "unidades": 43},
+              {"defectos": 13, "unidades": 44},
+              {"defectos": 16, "unidades": 39},
+              {"defectos": 13, "unidades": 41},
+              {"defectos": 26, "unidades": 40},
+              {"defectos": 15, "unidades": 34},
+              {"defectos": 17, "unidades": 38},
+              {"defectos": 14, "unidades": 41},
+              {"defectos": 14, "unidades": 42},
+              {"defectos": 12, "unidades": 44},
+              {"defectos": 10, "unidades": 35},
+              {"defectos": 14, "unidades": 44},
+              {"defectos": 13, "unidades": 40}
+            ],
+            "centro": "datos",
+            "ubarDado": null,
+            "desde": null,
+            "excluir": "",
+            "reglas": "una"
+          }
+        },
+        {"tipo": "nota", "texto": "La plantilla solo aplica la Regla 1; el laboratorio también aplica las reglas 2 y 3.", "tenue": true}
+      ]
+    },
+    {"tipo": "lab", "lab": "lab26"},
+    {
+      "id": "m10-plan-idea",
+      "etiqueta": "M10 · PLAN DE CONTROL",
+      "titulo": "El documento vivo que convierte todo lo anterior en rutina",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Dice qué se mide, cómo, con qué frecuencia, quién responde y qué hacer si el proceso se sale de control. Es la versión definitiva del plan de recolección de datos del módulo 4, ahora con límites de control reales y un plan de reacción explícito."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "REACCIÓN QUE CIERRA EL CICLO",
+              "texto": "Encontrar y eliminar la causa: 5 Porqués, ajuste del proceso, corrección en el origen.",
+              "estilo": "acento"
+            },
+            {
+              "etiqueta": "REACCIÓN «CORREGIR Y OLVIDAR»",
+              "texto": "Desechar la pieza mala y seguir produciendo. El síntoma se repite sin fin y la fase Controlar no se cierra nunca."
+            }
+          ]
+        },
+        {"tipo": "nota", "texto": "La reacción debe apuntar siempre a encontrar y eliminar la causa, no solo a descartar el síntoma."}
+      ]
+    },
+    {
+      "id": "m10-plan-tabla",
+      "etiqueta": "M10 · EL PLAN DE LA LÍNEA DE ARNESES",
+      "titulo": "Cuatro características, cuatro planes de reacción",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Característica", "Especificación", "Método y frecuencia", "Responsable", "Si sale de control"],
+          "filas": [
+            [
+              "Fuerza de engarzado (poka-yoke)",
+              "≥ 173 N",
+              "Sensor de fuerza, 100 %, cada ciclo",
+              "Operador de línea",
+              "Tres rechazos seguidos: detener la línea y avisar a mantenimiento"
+            ],
+            [
+              "Fuerza de engarzado (estadístico)",
+              "LIC 174.02 / LSC 178.19",
+              "Carta X̄-R, un subgrupo (n = 5) por turno",
+              "Green Belt o supervisor",
+              "Punto fuera: 5 Porqués antes de continuar"
+            ],
+            ["Longitud de pelado", "7 mm ± 0.5 mm", "Calibrador digital, una muestra por turno", "Operador de línea", "Ajustar la guía de pelado"],
+            ["Continuidad eléctrica", "0 fallas por lote", "Probador de continuidad, 100 %", "Operador de línea", "Retener la unidad; no liberar el lote"]
+          ]
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab24",
+          "texto": "Abrir LAB 24 con este plan y el AMEF del caso →",
+          "valores": {
+            "amef": [
+              {"modo": "Fuerza de engarzado insuficiente", "s": 8, "o": 6, "d": 4},
+              {"modo": "Conector mal asentado", "s": 9, "o": 2, "d": 3},
+              {"modo": "Etiqueta ilegible o mal ubicada", "s": 3, "o": 7, "d": 2}
+            ],
+            "plan": [
+              {
+                "op": "",
+                "caracteristica": "Fuerza de engarzado (poka-yoke)",
+                "tipo": "",
+                "clasificacion": "",
+                "especificacion": "≥ 173 N",
+                "medicion": "Sensor de fuerza",
+                "muestra": "100 %",
+                "frecuencia": "Cada ciclo",
+                "metodo": "Poka-yoke (sensor automático)",
+                "reaccion": "Si el sensor rechaza 3 piezas consecutivas, detener línea y notificar a mantenimiento",
+                "responsable": "Operador de línea",
+                "ref": "Fuerza de engarzado insuficiente"
+              },
+              {
+                "op": "",
+                "caracteristica": "Fuerza de engarzado (estadístico)",
+                "tipo": "",
+                "clasificacion": "",
+                "especificacion": "LIC 174.02 / LSC 178.19 (recalculados)",
+                "medicion": "Fuerza de engarzado, en N",
+                "muestra": "1 subgrupo (n = 5)",
+                "frecuencia": "Por turno",
+                "metodo": "Carta X̄-R",
+                "reaccion": "Si un punto sale de control, aplicar 5 Porqués antes de continuar",
+                "responsable": "Green Belt / supervisor de calidad",
+                "ref": "Fuerza de engarzado insuficiente"
+              },
+              {
+                "op": "",
+                "caracteristica": "Longitud de pelado",
+                "tipo": "",
+                "clasificacion": "",
+                "especificacion": "7 mm ± 0.5 mm",
+                "medicion": "Calibrador digital",
+                "muestra": "1 muestra",
+                "frecuencia": "Por turno",
+                "metodo": "Verificación por muestreo",
+                "reaccion": "Ajustar la guía de pelado si se detecta desviación",
+                "responsable": "Operador de línea",
+                "ref": ""
+              },
+              {
+                "op": "",
+                "caracteristica": "Continuidad eléctrica",
+                "tipo": "",
+                "clasificacion": "",
+                "especificacion": "0 fallas por lote",
+                "medicion": "Probador de continuidad",
+                "muestra": "100 %",
+                "frecuencia": "Cada unidad",
+                "metodo": "Prueba al 100 %",
+                "reaccion": "Retener la unidad; no liberar el lote",
+                "responsable": "Operador de línea",
+                "ref": "Fuerza de engarzado insuficiente"
+              }
+            ],
+            "rpnAlto": 100
+          }
+        },
+        {"tipo": "nota", "texto": "El LAB 24 revisa el plan línea por línea: campos obligatorios, vínculo con el AMEF y tipo de reacción.", "tenue": true}
+      ]
+    },
+    {"tipo": "lab", "lab": "lab24"},
+    {
+      "id": "m10-plan-alternativas",
+      "etiqueta": "M10 · CUANDO NO HAY SUBGRUPOS",
+      "titulo": "Carta Z-MR y pre-control para volúmenes bajos y arranques",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "CARTA Z-MR",
+              "texto": "Para manufactura de bajo volumen o piezas a la medida, donde no se pueden formar subgrupos de 3 a 5 piezas. Estandariza cada medición (resta su media de referencia y divide entre su desviación estándar) y usa el rango móvil entre mediciones consecutivas. Permite graficar juntas piezas o especificaciones distintas."
+            },
+            {
+              "etiqueta": "PRE-CONTROL",
+              "texto": "Verifica un arranque antes de tener datos para una carta formal: tras un cambio de modelo o un ajuste de máquina se miden 5 piezas consecutivas; si las 5 caen en el 50 % central de la tolerancia, el proceso está listo para producir en volumen.",
+              "estilo": "acento"
+            }
+          ]
+        },
+        {"tipo": "nota", "texto": "El pre-control es una herramienta de arranque, no un sustituto del plan de control una vez que la producción está en régimen."}
+      ]
+    },
+    {
+      "id": "m10-plan-auditoria",
+      "etiqueta": "M10 · AUDITAR EL PLAN",
+      "titulo": "Un plan que nadie audita se degrada aunque siga vigente en el papel",
+      "bloques": [
+        {"tipo": "texto", "texto": "El plan de control no se da por sentado una vez firmado: conviene auditarlo cada 3 a 6 meses con tres preguntas simples."},
+        {
+          "tipo": "pasos",
+          "columnas": 3,
+          "pasos": [
+            {"texto": "¿Se mide lo que dice el plan?", "sub": "las mismas características"},
+            {"texto": "¿Con la frecuencia especificada?", "sub": "no solo cuando hay tiempo"},
+            {"texto": "¿Se aplica la reacción?", "sub": "o se volvió una formalidad que nadie ejecuta"}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "El equipo original, que aprendió el proceso, eventualmente rota o se disuelve. El plan es la memoria institucional que permite a un tercero sostener lo que ese equipo aprendió."
+        }
+      ]
+    },
+    {
+      "id": "m10-estandarizacion",
+      "etiqueta": "M10 · ESTANDARIZACIÓN Y TRANSFERENCIA",
+      "titulo": "Las cartas y el plan solo funcionan si hay quién los sostenga",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {"etiqueta": "INSTRUCCIÓN DE TRABAJO", "texto": "Actualizada, con el valor numérico de la fuerza de engarzado y del pelado."},
+            {"etiqueta": "CAPACITACIÓN", "texto": "Documentada, para cada turno y para el personal que se incorpore."},
+            {"etiqueta": "AUDITORÍAS 5S", "texto": "Las del módulo 8, que sostienen el orden en la estación de trabajo."}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "El paso final de todo proyecto Six Sigma es transferir la propiedad del proceso, del Green Belt al dueño del proceso, típicamente el supervisor de línea, que hereda el plan de control y la responsabilidad de mantenerlo."
+        },
+        {"tipo": "nota", "texto": "No es un trámite administrativo: sin un dueño claro, la mejora tiende a revertirse en cuanto el Green Belt pasa a otro proyecto."}
+      ]
+    },
+    {
+      "id": "m10-resultado",
+      "etiqueta": "M10 · RESULTADO DEL PROYECTO",
+      "titulo": "El DPMO bajó de 300 a 162: una mejora real que no llegó a la meta",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            {"valor": "300 DPMO", "etiqueta": "Antes", "nota": "3 defectos en 10,000 oportunidades", "color": "azul"},
+            {"valor": "162 DPMO", "etiqueta": "Después", "nota": "8 semanas tras la mejora", "color": "teal"},
+            {"valor": "−46 %", "etiqueta": "Reducción", "nota": "(300 − 162) ÷ 300", "color": "verde"},
+            {"valor": "< 100 DPMO", "etiqueta": "Meta del módulo 2", "nota": "no alcanzada", "color": "ambar"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "La continuidad eléctrica y el torque, las dos causas atacadas, casi desaparecen. El etiquetado y el conector mal asentado, fuera del alcance, siguen igual que antes: por eso no se llega a 100."
+        },
+        {
+          "tipo": "nota",
+          "texto": "No es una falla: es la razón por la que Six Sigma nunca es un evento único. Un nuevo Project Charter puede abrirse para el etiquetado, volviendo al módulo 2."
+        },
+        {
+          "tipo": "texto",
+          "texto": "La guía calcula el −46 % contra los 300 DPMO del módulo 1. Entre las líneas centrales de la carta u (312.5 y 162.5, conteos reconstruidos) la reducción es de 48 %.",
+          "tenue": true
+        }
+      ]
+    },
+    {
+      "id": "m10-kotter",
+      "etiqueta": "M10 · KOTTER, PASOS 7 Y 8",
+      "titulo": "No cantar victoria y anclar el cambio en la cultura",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "7 · CONSOLIDAR, SIN CANTAR VICTORIA",
+              "texto": "Declarar el éxito antes de tiempo detiene el cambio. El cierre honesto del proyecto, 162 DPMO y no menos de 100, reconoce el progreso real sin fingir haber terminado."
+            },
+            {
+              "etiqueta": "8 · ANCLAR EN LA CULTURA",
+              "texto": "Un cambio que no queda en instrucciones de trabajo, capacitación y auditorías se revierte en silencio. Las cartas, el plan de control y la transferencia de propiedad son la forma concreta de anclarlo.",
+              "estilo": "acento"
+            }
+          ]
+        },
+        {"tipo": "nota", "texto": "El módulo 12 retoma los ocho pasos de Kotter completos, con un momento del caso de los arneses para cada uno."}
+      ]
+    },
+    {
+      "id": "m10-software",
+      "etiqueta": "M10 · SOFTWARE ESTADÍSTICO",
+      "titulo": "En Minitab y JMP, las cartas se actualizan solas",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "EN MINITAB",
+              "items": [
+                "Carta X̄-R: Estadísticas > Cartas de control > Variables para subgrupos > X-barra-R.",
+                "Carta u: Estadísticas > Cartas de control > Atributos > U.",
+                "Recalcula los límites al excluir un subgrupo o dividir el periodo en fases."
+              ]
+            },
+            {"etiqueta": "EN JMP", "items": ["Analizar > Calidad y Proceso > Carta de Control.", "La misma función, con las mismas opciones de fases y exclusión."]}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "El valor real del software no es solo el cálculo, sino que las nuevas mediciones se agregan a la misma carta sin recalcular nada a mano: el uso previsto de una carta en producción real, y no en un ejercicio que se construye una sola vez."
+        }
+      ]
+    },
+    {
+      "id": "m10-ejercicios-a",
+      "etiqueta": "M10 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "1",
+              "titulo": "Calcular límites de control X̄-R",
+              "texto": "Con n = 5, X̿ = 50.0 y R̄ = 4.0 (A₂ = 0.577, D₃ = 0, D₄ = 2.114), calcula los cuatro límites de control.",
+              "verificacion": "La guía responde: X̄: 52.31 y 47.69; R: 8.46 y 0. La R se revisa primero: con un rango sobre 8.46, los límites de la X̄ no son confiables.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab25",
+              "numeroLab": "25",
+              "valores": {"modo": "limites", "n": "5", "mediciones": [{}, {}, {}, {}, {}], "resumen": [{}, {}, {}, {}, {}], "gran": 50, "rbar": 4, "excluir": "", "reglas": "tres"}
+            },
+            {
+              "numero": "2",
+              "titulo": "Un punto fuera de control… en la dirección buena",
+              "texto": "Con ū = 0.006 histórico y n = 7,200 (1,800 unidades × 4 oportunidades), una semana registra 12 defectos. Calcula los límites y evalúa el punto.",
+              "verificacion": "La guía responde: LSC = 0.00874, LIC = 0.00326, u = 0.00167. Bajo el LIC: «fuera de control» en la dirección deseable; se investiga para estandarizar lo que se hizo distinto.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "lab": "lab26",
+              "numeroLab": "26",
+              "valores": {
+                "escala": "u",
+                "oportunidades": 4,
+                "periodos": [{"defectos": 12, "unidades": 1800}],
+                "centro": "dado",
+                "ubarDado": 0.006,
+                "desde": null,
+                "excluir": "",
+                "reglas": "tres"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m10-ejercicios-b",
+      "etiqueta": "M10 · EJERCICIOS",
+      "titulo": "Practica con los ejercicios de la guía (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "numero": "3",
+              "titulo": "Identificar la regla disparada",
+              "texto": "Los últimos nueve subgrupos consecutivos de una carta caen todos por encima de la línea central, aunque ninguno cruza individualmente los límites de control. ¿Qué regla se dispara y qué debe hacer el equipo?",
+              "verificacion": "La guía responde: la Regla 3, que detecta una tendencia sostenida aunque ningún punto cruce ±3σ. Hay que investigarla como una causa especial genuina (cambio gradual de material, desgaste de herramienta) sin esperar a que un punto cruce el límite.",
+              "etiquetaVerificacion": "Comparar con la guía",
+              "etiqueta": "Con lápiz y papel"
+            },
+            {
+              "numero": "4",
+              "titulo": "Sin resolver: límites con subgrupos de 4",
+              "texto": "Un proceso reporta, sobre subgrupos de tamaño 4, X̄ = 75.0 y R̄ = 6.0. Con A₂ = 0.729, calcula el LSC y el LIC de la carta X̄.",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.",
+              "etiquetaVerificacion": "Clave en el libro",
+              "lab": "lab25",
+              "numeroLab": "25",
+              "valores": {"modo": "limites", "n": "4", "mediciones": [{}, {}, {}, {}, {}], "resumen": [{}, {}, {}, {}, {}], "gran": 75, "rbar": 6, "excluir": "", "reglas": "tres"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m10-errores",
+      "etiqueta": "M10 · ERRORES COMUNES",
+      "titulo": "Cinco errores que conviene evitar",
+      "bloques": [
+        {
+          "tipo": "lista",
+          "items": [
+            "**Confiar en los límites de la X̄ sin revisar antes la carta R.** Los límites de la X̄ salen de R̄: si la R está fuera de control, no son confiables.",
+            "**Recalcular los límites con un subgrupo de causa especial ya corregida.** Lo correcto, como con el subgrupo 12, es excluirlo y recalcular con los demás.",
+            "**Extender la línea central de «antes» a las semanas de «después».** Un cambio deliberado del proceso exige una línea central nueva.",
+            "**Diseñar una reacción de «corregir y desechar» sin atacar la causa.** El síntoma se repite sin fin y la fase Controlar no cierra.",
+            "**Declarar el proyecto un fracaso por no alcanzar la meta exacta.** 162 frente a 100 DPMO es una mejora real (−46 %) y el punto de partida del siguiente proyecto."
+          ],
+          "ordenada": true
+        }
+      ]
+    }
+  ]
+}
