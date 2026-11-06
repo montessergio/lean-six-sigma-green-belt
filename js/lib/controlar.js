@@ -160,3 +160,196 @@ export function resumenPlan(lineas, modos = [], { rpnAlto = RPN_ALTO } = {}) {
     soloDescartan: filas.filter((f) => f.soloDescarta),
   };
 }
+
+/* ============================================================ CARTAS DE CONTROL (LAB 25 y 26) ============================================================ */
+
+/** Constantes de la carta X̄-R para subgrupos de n = 2 a 10 (guía M10 §2 y hoja «Carta X-R»). */
+export const CONSTANTES_XR = Object.freeze({
+  2: Object.freeze({ A2: 1.88, D3: 0, D4: 3.267 }),
+  3: Object.freeze({ A2: 1.023, D3: 0, D4: 2.574 }),
+  4: Object.freeze({ A2: 0.729, D3: 0, D4: 2.282 }),
+  5: Object.freeze({ A2: 0.577, D3: 0, D4: 2.114 }),
+  6: Object.freeze({ A2: 0.483, D3: 0, D4: 2.004 }),
+  7: Object.freeze({ A2: 0.419, D3: 0.076, D4: 1.924 }),
+  8: Object.freeze({ A2: 0.373, D3: 0.136, D4: 1.864 }),
+  9: Object.freeze({ A2: 0.337, D3: 0.184, D4: 1.816 }),
+  10: Object.freeze({ A2: 0.308, D3: 0.223, D4: 1.777 }),
+});
+
+/** Constantes del tamaño de subgrupo n (entero de 2 a 10), o null si no hay. */
+export const constantesXR = (n) => (Number.isInteger(n) ? CONSTANTES_XR[n] ?? null : null);
+
+/** Las tres reglas de causas especiales de la guía (M10 §2). */
+export const REGLAS_CONTROL = Object.freeze([
+  Object.freeze({ id: 1, texto: 'Un punto cae fuera de los límites de control (±3σ)' }),
+  Object.freeze({ id: 2, texto: 'Dos de tres puntos consecutivos caen más allá de 2σ, del mismo lado de la línea central' }),
+  Object.freeze({ id: 3, texto: 'Nueve puntos consecutivos caen del mismo lado de la línea central (tendencia sostenida)' }),
+]);
+
+const promedio = (lista) => lista.reduce((a, b) => a + b, 0) / lista.length;
+const ladoDe = (x, cl) => (x > cl ? 1 : x < cl ? -1 : 0);
+
+/**
+ * Reglas de causas especiales sobre una serie de puntos. `puntos` = [{ x, cl, lsc, lic, fase, excluido }] en el orden de la
+ * carta; devuelve un arreglo paralelo con los números de regla que dispara cada punto (vacío si ninguno).
+ *   Regla 1  x fuera de [lic, lsc].
+ *   Regla 2  dos de tres puntos consecutivos más allá de 2σ del mismo lado de la línea central; se marca el punto que completa
+ *            el patrón (el segundo o el tercero). σ = (lsc − cl) ÷ 3 de cada punto, así sirve para límites que varían (carta u).
+ *   Regla 3  nueve puntos consecutivos del mismo lado de la línea central; se marcan el noveno y los que siguen en la racha.
+ *            Un punto exactamente sobre la línea central la interrumpe.
+ * Las reglas 2 y 3 solo miran puntos de la misma `fase` (otra línea central, otra serie) y saltan los `excluido` (causa
+ * especial ya corregida); los excluidos tampoco disparan nada. `reglas` elige cuáles se aplican (por omisión, las tres).
+ */
+export function senalesControl(puntos, { reglas = [1, 2, 3] } = {}) {
+  const activas = new Set(reglas);
+  const salida = (puntos ?? []).map(() => []);
+  const validos = (puntos ?? []).map((p, i) => (p && !p.excluido && finito(p.x) && finito(p.cl) && finito(p.lsc) ? i : -1)).filter((i) => i >= 0);
+  if (activas.has(1)) {
+    validos.forEach((i) => {
+      const p = puntos[i];
+      if (p.x > p.lsc || (finito(p.lic) && p.x < p.lic)) salida[i].push(1);
+    });
+  }
+  const grupos = new Map();
+  validos.forEach((i) => {
+    const f = puntos[i].fase ?? 0;
+    if (!grupos.has(f)) grupos.set(f, []);
+    grupos.get(f).push(i);
+  });
+  const sigma = (i) => (puntos[i].lsc - puntos[i].cl) / 3;
+  const arriba2 = (i) => puntos[i].x > puntos[i].cl + 2 * sigma(i);
+  const abajo2 = (i) => puntos[i].x < puntos[i].cl - 2 * sigma(i);
+  for (const idx of grupos.values()) {
+    idx.forEach((i, k) => {
+      if (activas.has(2)) {
+        for (const zona of [arriba2, abajo2]) {
+          if (zona(i) && ((k >= 1 && zona(idx[k - 1])) || (k >= 2 && zona(idx[k - 2])))) {
+            salida[i].push(2);
+            break;
+          }
+        }
+      }
+      if (activas.has(3) && k >= 8) {
+        const lados = idx.slice(k - 8, k + 1).map((j) => ladoDe(puntos[j].x, puntos[j].cl));
+        if (lados.every((l) => l === 1) || lados.every((l) => l === -1)) salida[i].push(3);
+      }
+    });
+  }
+  return salida.map((s) => [...new Set(s)].sort((a, b) => a - b));
+}
+
+/**
+ * Límites de las cartas X̄ y R a partir del gran promedio y del rango promedio (guía M10 §2 y ejercicios 1 y 4):
+ *   X̄: LSC = X̿ + A₂R̄ · LIC = X̿ − A₂R̄      R: LSC = D₄R̄ · LIC = D₃R̄
+ * `sigmaX` y `sigmaR` son un tercio de la distancia de la línea central al límite superior (sirven para las zonas de 1σ y 2σ).
+ * Devuelve null si falta algo, el rango promedio es negativo o n no es un entero de 2 a 10.
+ */
+export function limitesXR(gran, rbar, n) {
+  const c = constantesXR(n);
+  if (!c || !finito(gran) || !finito(rbar) || rbar < 0) return null;
+  return {
+    n, ...c, xbb: gran, rb: rbar,
+    lscX: gran + c.A2 * rbar, licX: gran - c.A2 * rbar, lscR: c.D4 * rbar, licR: c.D3 * rbar,
+    sigmaX: (c.A2 * rbar) / 3, sigmaR: ((c.D4 - 1) * rbar) / 3,
+  };
+}
+
+/**
+ * Media y rango de cada subgrupo a partir de las mediciones (hoja «Carta X-R»). `filas` = [{ x1, x2, …, x10 }]: solo cuentan las
+ * primeras n columnas y una fila vale si las n tienen número (como la hoja); una fila con algo escrito pero sin las n
+ * mediciones se cuenta en `incompletas`, y una fila vacía se ignora. `indice` es el número de fila (1, 2, …).
+ */
+export function resumenSubgrupos(filas, n) {
+  const subgrupos = [];
+  let incompletas = 0;
+  (filas ?? []).forEach((f, i) => {
+    const todas = Array.from({ length: 10 }, (_, j) => f?.[`x${j + 1}`]);
+    if (!todas.some(finito)) return;
+    const valores = todas.slice(0, Number.isInteger(n) ? n : 0);
+    if (!valores.length || !valores.every(finito)) {
+      incompletas += 1;
+      return;
+    }
+    subgrupos.push({ indice: i + 1, media: promedio(valores), rango: Math.max(...valores) - Math.min(...valores) });
+  });
+  return { subgrupos, incompletas };
+}
+
+/**
+ * Subgrupos que ya traen su media y su rango (guía M10 §2: tabla de 15 subgrupos). `filas` = [{ media, rango }]; una fila con
+ * solo uno de los dos números, o con un rango negativo, se cuenta en `incompletas`; una fila vacía se ignora.
+ */
+export function subgruposDeResumen(filas) {
+  const subgrupos = [];
+  let incompletas = 0;
+  (filas ?? []).forEach((f, i) => {
+    if (!finito(f?.media) && !finito(f?.rango)) return;
+    if (!finito(f.media) || !finito(f.rango) || f.rango < 0) {
+      incompletas += 1;
+      return;
+    }
+    subgrupos.push({ indice: i + 1, media: f.media, rango: f.rango });
+  });
+  return { subgrupos, incompletas };
+}
+
+/**
+ * Cartas X̄ y R completas. `subgrupos` = [{ indice, media, rango }] (de resumenSubgrupos o subgruposDeResumen); `excluir` = índices
+ * de subgrupos con causa especial ya identificada y corregida, que se quitan del cálculo de los límites (guía M10 §2: el
+ * subgrupo 12). Devuelve:
+ *   primera  límites con todos los subgrupos, y sus señales: es la «primera pasada», la que encuentra la causa especial;
+ *   final    límites sin los excluidos, y las señales de todos los puntos con esos límites (los excluidos se dibujan pero no
+ *            cuentan en nada); es igual a la primera si no se excluye nada;
+ *   cada punto = { indice, media, rango, excluido, senalesX, senalesR } con los números de regla disparados;
+ *   rEnControl  la carta R no tiene señales: solo entonces los límites de X̄ son confiables (guía M10 §2).
+ */
+export function cartaXR(subgrupos, { n, excluir = [], reglas = [1, 2, 3] } = {}) {
+  const constantes = constantesXR(n);
+  if (!constantes) return { valido: false, motivo: 'n' };
+  const completos = (subgrupos ?? []).filter((s) => finito(s?.media) && finito(s?.rango) && s.rango >= 0);
+  if (!completos.length) return { valido: false, motivo: 'datos' };
+  const quitar = new Set(excluir);
+  const existentes = new Set(completos.map((s) => s.indice));
+  const sinEncontrar = [...quitar].filter((i) => !existentes.has(i)).sort((a, b) => a - b);
+  const incluidos = completos.filter((s) => !quitar.has(s.indice));
+  if (!incluidos.length) return { valido: false, motivo: 'todos-excluidos', sinEncontrar };
+
+  const evaluar = (limites, marcados) => {
+    const px = completos.map((s) => ({ x: s.media, cl: limites.xbb, lsc: limites.lscX, lic: limites.licX, excluido: marcados.has(s.indice) }));
+    const pr = completos.map((s) => ({ x: s.rango, cl: limites.rb, lsc: limites.lscR, lic: limites.licR, excluido: marcados.has(s.indice) }));
+    const sx = senalesControl(px, { reglas });
+    const sr = senalesControl(pr, { reglas });
+    return completos.map((s, i) => ({ indice: s.indice, media: s.media, rango: s.rango, excluido: marcados.has(s.indice), senalesX: sx[i], senalesR: sr[i] }));
+  };
+  const lim = (lista) => limitesXR(promedio(lista.map((s) => s.media)), promedio(lista.map((s) => s.rango)), n);
+  const limitesPrimera = lim(completos);
+  const limitesFinal = lim(incluidos);
+  const puntosFinal = evaluar(limitesFinal, quitar);
+  return {
+    valido: true,
+    n,
+    constantes,
+    total: completos.length,
+    usados: incluidos.length,
+    excluidos: completos.filter((s) => quitar.has(s.indice)).map((s) => s.indice),
+    sinEncontrar,
+    primera: { limites: limitesPrimera, puntos: evaluar(limitesPrimera, new Set()) },
+    final: { limites: limitesFinal, puntos: puntosFinal },
+    rEnControl: puntosFinal.every((p) => p.excluido || p.senalesR.length === 0),
+  };
+}
+
+/**
+ * Lee a mano una lista de números de subgrupo («12», «12, 17», «3 5;8»). Devuelve los enteros ≥ 1 sin repetir y, aparte, lo que
+ * no se pudo entender (letras, decimales, ceros), para avisarlo en lugar de callarlo.
+ */
+export function leerSubgrupos(textoLista) {
+  const indices = [];
+  const ignoradas = [];
+  for (const parte of texto(textoLista).split(/[\s,;]+/).filter(Boolean)) {
+    if (/^\d+$/.test(parte) && Number(parte) >= 1) {
+      if (!indices.includes(Number(parte))) indices.push(Number(parte));
+    } else ignoradas.push(parte);
+  }
+  return { indices, ignoradas };
+}
