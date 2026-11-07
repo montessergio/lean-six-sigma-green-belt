@@ -1,0 +1,364 @@
+{
+  "id": "m12",
+  "titulo": "M12 · Sostenibilidad y gestión del cambio",
+  "slides": [
+    {
+      "id": "m12-bisagra",
+      "etiqueta": "M12 · SOSTENIBILIDAD Y GESTIÓN DEL CAMBIO",
+      "titulo": "Un proyecto técnicamente exitoso puede deshacerse en unos meses",
+      "subtitulo": "La parte técnica puede estar perfecta y el cambio aun así no sostenerse.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El proyecto de los arneses cerró técnicamente en el módulo 10: causa raíz confirmada, solución implementada y proceso bajo control estadístico. Aun así, puede deshacerse si nadie gestiona el cambio organizacional que lo rodea."
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "PRIMERO: LA DIMENSIÓN HUMANA",
+              "texto": "Por qué fracasan las mejoras y cómo sostenerlas con el modelo de 8 pasos de Kotter.",
+              "estilo": "acento"
+            },
+            {"etiqueta": "DESPUÉS: MIRAR ATRÁS", "texto": "Los diez módulos anteriores vistos como un solo caso, de principio a fin, y hacia dónde seguir."}
+          ]
+        },
+        {"tipo": "nota", "texto": "Es el último módulo de la guía."}
+      ]
+    },
+    {
+      "id": "m12-fracasos",
+      "etiqueta": "M12 · POR QUÉ FRACASAN LAS MEJORAS",
+      "titulo": "Más de la mitad de los proyectos no sostiene sus resultados, y casi nunca por la estadística",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Estudios sugieren que más de la mitad de los proyectos Six Sigma no logra sostener los resultados que prometía. Un estudio global con 201 expertos en Lean Six Sigma, de manufactura y servicios, identificó las causas más frecuentes:"
+        },
+        {
+          "tipo": "lista",
+          "items": [
+            "Falta de compromiso de la alta dirección.",
+            "Resistencia al cambio.",
+            "Reconocimiento y recompensas inadecuados.",
+            "Monitoreo y control inconsistente del proyecto.",
+            "Comunicación deficiente."
+          ],
+          "ordenada": true
+        },
+        {
+          "tipo": "nota",
+          "texto": "Los proyectos se cancelan con más frecuencia en Medir y Analizar que al final: el desgaste organizacional empieza mucho antes de Mejorar o Controlar."
+        },
+        {
+          "tipo": "texto",
+          "texto": "Igual que la causa raíz de un defecto casi nunca es «el operador se equivocó» (módulo 6), la de un proyecto que no se sostiene casi nunca es «el análisis estuvo mal»: es organizacional.",
+          "tenue": true
+        }
+      ]
+    },
+    {
+      "id": "m12-kotter-modelo",
+      "etiqueta": "M12 · EL MODELO DE KOTTER",
+      "titulo": "Ocho pasos en tres momentos, alineados con las fases de DMAIC",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "John Kotter, profesor de Harvard, estudió durante décadas por qué las organizaciones tienen éxito o fracasan al implementar cambios, y organizó sus hallazgos en ocho pasos agrupados en tres momentos."
+        },
+        {
+          "tipo": "tabla",
+          "columnas": ["Momento", "Pasos", "Fase DMAIC afín"],
+          "filas": [
+            ["Crear el clima para el cambio", "1. Crear sentido de urgencia · 2. Formar una coalición guía · 3. Desarrollar una visión y estrategia", "Definir"],
+            ["Involucrar a toda la organización", "4. Comunicar la visión · 5. Empoderar la acción · 6. Generar victorias tempranas", "Medir, Analizar y Mejorar"],
+            ["Implementar y sostener el cambio", "7. Consolidar logros y generar más cambio · 8. Anclar los nuevos enfoques en la cultura", "Controlar"]
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "El proyecto de los arneses ya aplicó los ocho pasos sin nombrarlos. Las dos diapositivas siguientes muestran el momento del caso en que ocurrió cada uno."
+        }
+      ]
+    },
+    {
+      "id": "m12-kotter-a",
+      "etiqueta": "M12 · KOTTER EN EL CASO (PASOS 1 A 4)",
+      "titulo": "Urgencia, coalición, visión y comunicación en los arneses",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Paso de Kotter", "Momento del caso"],
+          "filas": [
+            [
+              "1. Crear sentido de urgencia",
+              "El problem statement del módulo 2: un DPMO muy por encima del estándar y dos incidencias de falla externa reportadas por el cliente."
+            ],
+            ["2. Formar una coalición guía", "El equipo multidisciplinario del módulo 3B: Green Belt, operadores y mantenimiento."],
+            [
+              "3. Desarrollar una visión y estrategia",
+              "El goal statement (de 300 a menos de 100 DPMO en 4 meses) y el árbol CTQ definieron adónde llegar; el SIPOC y el plan de recolección de datos, cómo llegar."
+            ],
+            [
+              "4. Comunicar la visión",
+              "El Project Charter, documento vivo revisado por el Champion, y las auditorías 5S mensuales (módulo 8), que hacen visible el estándar en la estación de trabajo."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m12-kotter-b",
+      "etiqueta": "M12 · KOTTER EN EL CASO (PASOS 5 A 8)",
+      "titulo": "Empoderar, ganar pronto, consolidar y anclar",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Paso de Kotter", "Momento del caso"],
+          "filas": [
+            [
+              "5. Empoderar la acción",
+              "La solución C del módulo 9 (instrucción actualizada, capacitación reforzada, control de cambios) removió la barrera, la falta de una especificación numérica clara, que impedía a los operadores hacer bien su trabajo por su cuenta."
+            ],
+            ["6. Generar victorias tempranas", "La reducción de 300 a 162 DPMO, visible y medible al cierre del módulo 10."],
+            [
+              "7. Consolidar logros y generar más cambio",
+              "El cierre honesto del módulo 10 (162 DPMO, no 100) usa la credibilidad de la primera victoria para proponer un segundo proyecto sobre el etiquetado, en vez de declarar una victoria prematura."
+            ],
+            ["8. Anclar los nuevos enfoques en la cultura", "El plan de control con sus auditorías 5S: sin él, la mejora no sobrevive a la primera rotación de personal."]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m12-sintesis",
+      "etiqueta": "M12 · SÍNTESIS",
+      "titulo": "El proyecto de principio a fin: una sola cadena de evidencia",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Fase", "Módulos", "Hallazgo o decisión clave"],
+          "filas": [
+            ["Definir", "1–3", "Problem y goal statement (300 → < 100 DPMO en 4 meses); CTQ de continuidad: 0 fallas por lote; arneses elegido sobre 2 alternativas"],
+            ["Medir", "4–5", "PCE = 27.3 %; Gauge R&R del torque aceptable (7.0 %); Cpk = 1.42"],
+            [
+              "Analizar",
+              "6–7",
+              "Pareto: continuidad = 40 % de los defectos; causa raíz procesal (5 Porqués); ANOVA: hay diferencia entre turnos (p < 0.001); fuerza mínima de 173 N (regresión)"
+            ],
+            ["Mejorar", "8–9", "VSM: buffer de 15 min; poka-yoke e instrucción actualizada; DOE: pelado óptimo de 7 mm"],
+            ["Controlar", "10", "Cartas X̄-R detectan y corrigen una causa especial; plan de control formalizado; DPMO final: 162 (−46 %)"]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m12-encadenamiento",
+      "etiqueta": "M12 · SÍNTESIS",
+      "titulo": "Cada fila depende de la anterior",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {"etiqueta": "SIN EL CTQ DEL MÓDULO 2", "texto": "No habría un umbral que perseguir en la regresión del módulo 7."},
+            {"etiqueta": "SIN EL PARETO DEL MÓDULO 6", "texto": "No habría una causa que priorizar en el DOE del módulo 9."},
+            {"etiqueta": "SIN EL PLAN DE RECOLECCIÓN DEL MÓDULO 4", "texto": "No habría datos confiables en ningún punto posterior."}
+          ]
+        },
+        {"tipo": "texto", "texto": "Ese encadenamiento, y no cualquier herramienta individual, es lo que distingue a Six Sigma de la simple intuición de mejora."}
+      ]
+    },
+    {
+      "id": "m12-ejercicio",
+      "etiqueta": "M12 · EJERCICIO",
+      "titulo": "Medir si el cambio se sostiene",
+      "bloques": [
+        {
+          "tipo": "formula",
+          "etiqueta": "CUMPLIMIENTO",
+          "tex": "\\text{Cumplimiento}=\\dfrac{\\text{semanas con el estándar cumplido}}{\\text{semanas auditadas}}\\times 100",
+          "texto": "Cumplimiento = semanas con el estándar cumplido ÷ semanas auditadas × 100"
+        },
+        {"tipo": "texto", "texto": "Ejemplo inventado: si en 10 semanas auditadas el estándar se cumplió en 7, el cumplimiento es 7 ÷ 10 = 70 %."},
+        {
+          "tipo": "ejercicios",
+          "columnas": 1,
+          "items": [
+            {
+              "numero": "1",
+              "titulo": "Sin resolver: cumplimiento y pasos de Kotter",
+              "texto": "Un equipo audita el cumplimiento de un nuevo estándar durante 12 semanas; en 9 de ellas se siguió correctamente. ¿Qué porcentaje de cumplimiento es? Según Kotter, ¿qué paso necesitaría reforzarse?",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.",
+              "etiquetaVerificacion": "Clave en el libro",
+              "etiqueta": "Con calculadora"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m12-checklist-a",
+      "etiqueta": "M12 · CHECKLIST DE COMPETENCIAS (1 DE 3)",
+      "titulo": "Antes de darte por certificado: Definir y Medir",
+      "subtitulo": "Veinticuatro competencias por fase de DMAIC. Entre paréntesis, el módulo donde se desarrolla.",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "DEFINIR · PUEDO…",
+              "items": [
+                "Redactar un Project Charter completo con sus seis elementos esenciales (M2).",
+                "Construir un árbol VOC→CTQ que traduzca una necesidad del cliente en una especificación medible (M2).",
+                "Aplicar una matriz de priorización ponderada para elegir entre procesos candidatos (M2)."
+              ]
+            },
+            {
+              "etiqueta": "MEDIR · PUEDO…",
+              "items": [
+                "Construir un SIPOC de un proceso, real o hipotético (M3A).",
+                "Distinguir datos continuos de discretos y elegir el muestreo apropiado (M4).",
+                "Escribir una definición operacional que elimine la ambigüedad del juicio individual (M4).",
+                "Calcular la eficiencia del ciclo del proceso, el PCE (M4).",
+                "Interpretar un Gauge R&R y decidir si el sistema de medición es aceptable (M5).",
+                "Calcular e interpretar Cp y Cpk, y explicar la diferencia con Pp y Ppk (M5)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m12-checklist-b",
+      "etiqueta": "M12 · CHECKLIST DE COMPETENCIAS (2 DE 3)",
+      "titulo": "Antes de darte por certificado: Analizar",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "ANALIZAR · CAUSAS · PUEDO…",
+              "items": [
+                "Construir e interpretar un diagrama de Pareto (M6).",
+                "Construir un diagrama de Ishikawa con las 6M (M6).",
+                "Aplicar los 5 Porqués sin detenerse en una causa personal en lugar de procesal (M6).",
+                "Construir un AMEF y calcular el RPN, distinguiendo modo de falla de efecto (M6)."
+              ]
+            },
+            {
+              "etiqueta": "ANALIZAR · PRUEBAS · PUEDO…",
+              "items": [
+                "Plantear una hipótesis nula y alternativa, e interpretar un valor p correctamente (M7).",
+                "Aplicar e interpretar un ANOVA de un factor (M7).",
+                "Interpretar un coeficiente de correlación y una regresión lineal simple, incluyendo R² (M7).",
+                "Explicar cuándo usar chi-cuadrada y una prueba de proporción, y qué es el poder estadístico (M7)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m12-checklist-c",
+      "etiqueta": "M12 · CHECKLIST DE COMPETENCIAS (3 DE 3)",
+      "titulo": "Antes de darte por certificado: Mejorar y Controlar",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "MEJORAR · PUEDO…",
+              "items": [
+                "Generar y evaluar soluciones con una matriz de selección ponderada (M9).",
+                "Explicar la lógica de un diseño de experimentos factorial y calcular un efecto principal (M9).",
+                "Distinguir un poka-yoke de prevención de uno de detección (M8).",
+                "Calcular el OEE y relacionarlo con las herramientas Lean de la guía (M8)."
+              ]
+            },
+            {
+              "etiqueta": "CONTROLAR · PUEDO…",
+              "items": [
+                "Interpretar una carta de control X̄-R y distinguir causa común de causa especial (M10).",
+                "Documentar un plan de control completo y explicar cómo auditarlo (M10).",
+                "Aplicar el modelo de 8 pasos de Kotter para sostener un cambio en el tiempo (M12)."
+              ],
+              "estilo": "acento"
+            }
+          ]
+        },
+        {"tipo": "nota", "texto": "Si alguna quedó en duda, esa es la sección de la guía a la que vale la pena regresar antes de considerar el temario dominado."}
+      ]
+    },
+    {
+      "id": "m12-ia",
+      "etiqueta": "M12 · UNA NOTA FINAL",
+      "titulo": "La inteligencia artificial acelera el trabajo, pero no ejerce el liderazgo",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 2,
+          "tarjetas": [
+            {
+              "etiqueta": "PUEDE",
+              "items": [
+                "Acelerar la recolección de datos.",
+                "Sugerir patrones en un Pareto o en un Ishikawa.",
+                "Redactar un primer borrador de un Project Charter o de un plan de control."
+              ]
+            },
+            {
+              "etiqueta": "NO PUEDE",
+              "items": [
+                "Estar en la planta cuando un operador explica, fuera de cualquier formulario, por qué evita cierto paso del proceso.",
+                "Cargar la responsabilidad de decidir qué causa raíz es la correcta cuando los datos son ambiguos."
+              ],
+              "estilo": "acento"
+            }
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Kotter enseña que sostener un cambio depende de la cultura, la confianza y el liderazgo: tres cosas que ninguna herramienta, por sofisticada que sea, puede ejercer en lugar del Green Belt."
+        }
+      ]
+    },
+    {
+      "id": "m12-siguiente",
+      "etiqueta": "M12 · HACIA DÓNDE SEGUIR",
+      "titulo": "Terminar la guía es empezar a aplicarla",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {
+              "etiqueta": "DOCUMENTA CADA PROYECTO",
+              "texto": "Charter, datos, análisis y resultados en un portafolio: la mejor evidencia de experiencia práctica de un Green Belt recién formado."
+            },
+            {
+              "etiqueta": "EL SIGUIENTE NIVEL",
+              "texto": "La certificación Black Belt profundiza en el diseño de experimentos multifactorial y suma la responsabilidad de liderar y formar a otros Green Belts."
+            },
+            {
+              "etiqueta": "FUERA DE LA MANUFACTURA",
+              "texto": "El mismo SIPOC, Ishikawa y carta de control aplican, sin cambiar una fórmula, a un proceso administrativo, un servicio o un trámite universitario."
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Para empezar hoy: elige un proceso real de tu trabajo, tu escuela o tu vida diaria y escribe en dos o tres líneas su problem statement (módulo 2)."
+        },
+        {
+          "tipo": "nota",
+          "texto": "El proyecto de los arneses terminó con 162 DPMO, no con 100. Six Sigma no promete procesos perfectos: promete una manera disciplinada, honesta y basada en datos de hacerlos mejores, un proyecto a la vez."
+        }
+      ]
+    }
+  ]
+}
