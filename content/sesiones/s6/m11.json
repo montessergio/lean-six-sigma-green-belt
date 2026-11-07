@@ -1,0 +1,465 @@
+{
+  "id": "m11",
+  "titulo": "M11 · Caso integrador: la línea de arneses de principio a fin",
+  "slides": [
+    {
+      "id": "m11-bisagra",
+      "etiqueta": "M11 · CASO INTEGRADOR",
+      "titulo": "Diez módulos, un solo hilo conductor",
+      "subtitulo": "Cada fase heredó una decisión de la anterior.",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Los módulos anteriores presentaron las herramientas una a la vez, y eso puede hacer que DMAIC parezca una lista de veinte técnicas sueltas. No lo es: este módulo no agrega herramientas, recorre el proyecto de los arneses de un tirón."
+        },
+        {
+          "tipo": "pasos",
+          "columnas": 5,
+          "pasos": [
+            {"texto": "Definir", "sub": "módulos 1 a 3B"},
+            {"texto": "Medir", "sub": "módulos 4 y 5"},
+            {"texto": "Analizar", "sub": "módulos 6 y 7"},
+            {"texto": "Mejorar", "sub": "módulos 8 y 9"},
+            {"texto": "Controlar", "sub": "módulo 10"}
+          ]
+        },
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {"etiqueta": "RECONSTRUIR", "texto": "El proyecto como una sola narrativa, en el orden en que se usaron las herramientas."},
+            {"etiqueta": "IDENTIFICAR", "texto": "Qué módulo y qué herramienta corresponde a una situación dada."},
+            {"etiqueta": "DIAGNOSTICAR", "texto": "Ante una falla o una duda, qué herramienta resolvería.", "estilo": "acento"}
+          ]
+        },
+        {
+          "tipo": "nota",
+          "texto": "Nadie te va a preguntar «¿qué es un AMEF?»: te van a poner enfrente un proceso que falla y tendrás que decidir con qué herramienta empezar."
+        }
+      ]
+    },
+    {
+      "id": "m11-definir",
+      "etiqueta": "M11 · DEFINIR (MÓDULOS 1 A 3B)",
+      "titulo": "Definir: una tasa de defectos se volvió un proyecto",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            {"valor": "300 DPMO", "etiqueta": "Línea base", "nota": "3 defectos en 2,000 arneses × 5 oportunidades", "color": "azul"},
+            {"valor": "< 100 DPMO", "etiqueta": "Meta SMART", "nota": "en 4 meses", "color": "teal"},
+            {"valor": "0 fallas por lote", "etiqueta": "CTQ de continuidad", "nota": "derivado de la voz del cliente", "color": "verde"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "El módulo 1 tradujo la cifra a un lenguaje común. El módulo 2 la convirtió en un Project Charter, con un problem statement sin culpas ni soluciones disfrazadas y una meta SMART. El módulo 3A mapeó el proceso con un SIPOC y ordenó las causas candidatas con un diagrama de afinidad y un árbol."
+        },
+        {
+          "tipo": "nota",
+          "texto": "El problem statement ya hacía, sin que nadie lo dijera, el primer paso de Kotter: crear urgencia. Y Tuckman avisó que el equipo, con el Green Belt, dos operadores y mantenimiento, todavía tenía que atravesar su propio conflicto."
+        }
+      ]
+    },
+    {
+      "id": "m11-medir",
+      "etiqueta": "M11 · MEDIR (MÓDULOS 4 Y 5)",
+      "titulo": "Medir: antes de confiar en un dato, validar cómo se mide",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            {"valor": "27.3 %", "etiqueta": "PCE", "nota": "15 min de valor agregado sobre 55 de lead time", "color": "ambar"},
+            {"valor": "7.0 %", "etiqueta": "Gauge R&R del torque", "nota": "sistema de medición aceptable", "color": "teal"},
+            {"valor": "1.47 / 1.42", "etiqueta": "Cp / Cpk del torque", "nota": "proceso capaz, algo descentrado", "color": "verde"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "El módulo 4 clasificó los cinco pasos del proceso como valor agregado o desperdicio y diseñó el plan de recolección con definiciones operacionales explícitas. El módulo 5 validó el sistema de medición antes de usar un solo dato: ese 7.0 % le dio al equipo permiso para confiar en la estadística descriptiva y en el Cpk."
+        },
+        {
+          "tipo": "nota",
+          "texto": "El Gauge R&R se hizo sobre la llave de torque, que era lo que el equipo usaba entonces. Las preguntas de integración vuelven sobre esa decisión."
+        }
+      ]
+    },
+    {
+      "id": "m11-analizar",
+      "etiqueta": "M11 · ANALIZAR (MÓDULOS 6 Y 7)",
+      "titulo": "Analizar: de un defecto frecuente a una causa confirmada con datos",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 4,
+          "items": [
+            {"valor": "40 %", "etiqueta": "Continuidad eléctrica", "nota": "de los defectos del Pareto", "color": "azul"},
+            {"valor": "192", "etiqueta": "RPN más alto", "nota": "de tres modos de falla", "color": "ambar"},
+            {"valor": "p < 0.001", "etiqueta": "ANOVA entre turnos", "nota": "el turno 3 opera con menos fuerza", "color": "teal"},
+            {"valor": "−0.088 mΩ", "etiqueta": "Por cada newton", "nota": "regresión: más fuerza, menos resistencia", "color": "verde"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "El Pareto concentró la atención. El Ishikawa y los 5 Porqués llegaron a una causa raíz procesal: la instrucción de trabajo no especificaba un valor numérico de fuerza de engarzado. El AMEF la priorizó con números y el módulo 7 la puso a prueba con datos, cerrando el círculo entre causa raíz y defecto observado."
+        }
+      ]
+    },
+    {
+      "id": "m11-mejorar",
+      "etiqueta": "M11 · MEJORAR (MÓDULOS 8 Y 9)",
+      "titulo": "Mejorar: dos soluciones que no competían y un factor que nadie había estudiado",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            {"valor": "15 min", "etiqueta": "Buffer del VSM", "nota": "entre engarzado y ensamble", "color": "ambar"},
+            {"valor": "C + A", "etiqueta": "Soluciones elegidas", "nota": "instrucción con capacitación y poka-yoke", "color": "teal"},
+            {"valor": "173 N · 7 mm", "etiqueta": "Parámetros del DOE", "nota": "fuerza mínima y longitud de pelado", "color": "verde"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "El VSM ubicó el buffer y el módulo 8 ofreció cuatro herramientas contra el desperdicio: 5S, poka-yoke, Kanban y SMED. El módulo 9 generó cuatro soluciones con brainstorming estructurado y las comparó con una matriz de selección: C y A quedaron al frente y se implementaron las dos."
+        },
+        {
+          "tipo": "nota",
+          "texto": "Antes de fijar el punto de ajuste del sensor, un factorial 2² mostró que la fuerza y el pelado, un factor nunca estudiado, afectaban la resistencia de forma independiente, sin interacción relevante."
+        }
+      ]
+    },
+    {
+      "id": "m11-controlar",
+      "etiqueta": "M11 · CONTROLAR (MÓDULO 10)",
+      "titulo": "Controlar: un resultado honesto, 162 DPMO y no menos de 100",
+      "bloques": [
+        {
+          "tipo": "metricas",
+          "columnas": 3,
+          "items": [
+            {"valor": "300 → 162", "etiqueta": "DPMO", "nota": "−46 %, sin llegar a la meta", "color": "azul"},
+            {"valor": "Subgrupo 12", "etiqueta": "Causa especial", "nota": "detectada por la carta X̄-R y corregida con 5 Porqués", "color": "ambar"},
+            {"valor": "Supervisor", "etiqueta": "Dueño del proceso", "nota": "hereda el plan de control", "color": "teal"}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Con el poka-yoke en 173 N y el pelado en 7 mm, las cartas X̄-R vigilaron la fuerza de engarzado y una carta u siguió el DPMO semanal. No se llegó a 100 porque el etiquetado y el conector mal asentado, fuera del alcance, siguen ocurriendo igual que antes."
+        },
+        {
+          "tipo": "abrirLab",
+          "lab": "lab25",
+          "texto": "Abrir LAB 25 con las cartas del subgrupo 12 →",
+          "valores": {
+            "modo": "resumen",
+            "n": "5",
+            "mediciones": [{}, {}, {}, {}, {}],
+            "resumen": [
+              {"media": 176.1, "rango": 1.9},
+              {"media": 176.26, "rango": 3.7},
+              {"media": 176.52, "rango": 2.3},
+              {"media": 175.12, "rango": 4.1},
+              {"media": 175.58, "rango": 3.3},
+              {"media": 175.48, "rango": 4.2},
+              {"media": 175.62, "rango": 4.1},
+              {"media": 176.28, "rango": 2.7},
+              {"media": 176.62, "rango": 4.2},
+              {"media": 176.76, "rango": 5.7},
+              {"media": 176.5, "rango": 3.1},
+              {"media": 171.54, "rango": 2.8},
+              {"media": 175.9, "rango": 2.2},
+              {"media": 176.4, "rango": 3.9},
+              {"media": 176.28, "rango": 5.2}
+            ],
+            "gran": null,
+            "rbar": null,
+            "excluir": "12",
+            "reglas": "tres"
+          }
+        }
+      ]
+    },
+    {
+      "id": "m11-integracion-a",
+      "etiqueta": "M11 · PREGUNTAS DE INTEGRACIÓN (1 DE 5)",
+      "titulo": "Medir bien antes de interpretar",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "titulo": "¿Por qué se validó la medición del torque (módulo 5) y no la de la fuerza de engarzado, la causa raíz (módulo 6)?",
+              "verificacion": "Se validó lo que el equipo usaba entonces; no sabía aún que la fuerza sería la causa raíz. Ya identificada, un Green Belt riguroso exigiría un Gauge R&R también sobre ella, antes de confiar en el AMEF, el ANOVA y el DOE.",
+              "etiquetaVerificacion": "Ver respuesta",
+              "etiqueta": "Módulos 5 y 6"
+            },
+            {
+              "titulo": "¿Cómo se relaciona el sesgo del observador (módulo 4) con validar el sistema de medición (módulo 5)?",
+              "verificacion": "El sesgo del observador es variación humana; el Gauge R&R mide cuánta variación, humana o del instrumento, hay antes de atribuirla al proceso. Un operador que redondea hacia el lado aceptable es, para el módulo 5, mala reproducibilidad: el mismo problema con dos vocabularios.",
+              "etiquetaVerificacion": "Ver respuesta",
+              "etiqueta": "Módulos 4 y 5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m11-integracion-b",
+      "etiqueta": "M11 · PREGUNTAS DE INTEGRACIÓN (2 DE 5)",
+      "titulo": "La misma herramienta, otra pregunta",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "titulo": "El diagrama de afinidad se usó en el módulo 3A para causas y en el 9 para soluciones. ¿Qué cambia?",
+              "verificacion": "El mecanismo es idéntico: agrupar ideas en familias. Cambia la pregunta: en el 3A, causas posibles de un problema sin confirmar («¿por qué pasa esto?»); en el 9, soluciones para una causa ya confirmada («¿qué hacemos al respecto?»).",
+              "etiquetaVerificacion": "Ver respuesta",
+              "etiqueta": "Módulos 3A y 9"
+            },
+            {
+              "titulo": "La matriz de priorización aparece en el módulo 2 y en el 9 con el mismo cálculo. ¿Por qué no es la misma?",
+              "verificacion": "Porque los criterios responden preguntas distintas. La del 2 decide qué proyecto merece los recursos (impacto de negocio, alineación, factibilidad); la del 9, qué solución implementar en un proyecto ya aprobado (impacto en la causa raíz, costo, velocidad, riesgo).",
+              "etiquetaVerificacion": "Ver respuesta",
+              "etiqueta": "Módulos 2 y 9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m11-integracion-c",
+      "etiqueta": "M11 · PREGUNTAS DE INTEGRACIÓN (3 DE 5)",
+      "titulo": "Factibilidad y significancia, con medida",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "titulo": "¿Cómo conecta la advertencia AHP del módulo 2 sobre la factibilidad con implementar C ya y A en paralelo (módulo 9)?",
+              "verificacion": "Es la misma lección. El módulo 2 advierte no elegir el proyecto más fácil sobre el de mayor impacto; el 9 elige C y A por su impacto y usa la factibilidad solo para ordenar la implementación: filtro de secuencia, no de selección.",
+              "etiquetaVerificacion": "Ver respuesta",
+              "etiqueta": "Módulos 2 y 9"
+            },
+            {
+              "titulo": "El módulo 0 dice que un valor p pequeño no implica un efecto grande. Fuera del módulo 7, ¿dónde importa esa distinción?",
+              "verificacion": "En el módulo 9, al interpretar el DOE: que fuerza y pelado sean significativos no dice si moverlos más justifica el costo de ajustar la prensa. Hay que preguntar si el efecto es real y, además, lo bastante grande para actuar.",
+              "etiquetaVerificacion": "Ver respuesta",
+              "etiqueta": "Módulos 0, 7 y 9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m11-integracion-d",
+      "etiqueta": "M11 · PREGUNTAS DE INTEGRACIÓN (4 DE 5)",
+      "titulo": "Lo cualitativo y lo cuantitativo; el ritmo y la eficiencia",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "titulo": "¿Cómo se conectan el RPN más alto del AMEF (continuidad) con el hallazgo del DOE (fuerza y pelado significativos)?",
+              "verificacion": "Son la misma causa raíz vista con dos herramientas. El AMEF prioriza con el juicio experto del equipo; el DOE confirma con datos, con una magnitud (−0.90 mΩ) y una prueba formal. El AMEF dijo por dónde empezar; el DOE, que valía la pena.",
+              "etiquetaVerificacion": "Ver respuesta",
+              "etiqueta": "Módulos 6 y 9"
+            },
+            {
+              "titulo": "El takt time (módulo 8) y el PCE (módulo 4) se citan mutuamente. ¿Cómo se complementan?",
+              "verificacion": "El takt time fija el ritmo; el PCE mide la eficiencia del flujo. Se puede cumplir el takt trabajando más rápido, que es insostenible, o subiendo el PCE al eliminar desperdicio: el Kanban bajó el lead time de 55 a 44 minutos sin exigir más velocidad.",
+              "etiquetaVerificacion": "Ver respuesta",
+              "etiqueta": "Módulos 4 y 8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m11-integracion-e",
+      "etiqueta": "M11 · PREGUNTAS DE INTEGRACIÓN (5 DE 5)",
+      "titulo": "La dimensión humana estaba desde el principio",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 2,
+          "items": [
+            {
+              "titulo": "¿Cómo se relaciona el plan de control (módulo 10) con el modelo de Tuckman (módulo 3B)?",
+              "verificacion": "Un plan que nadie audita se degrada porque el equipo original, que llegó al desempeño, se disuelve o rota. El plan es la memoria institucional: un tercero que nunca vivió la formación ni el conflicto puede sostener el proceso igual.",
+              "etiquetaVerificacion": "Ver respuesta",
+              "etiqueta": "Módulos 3B y 10"
+            },
+            {
+              "titulo": "El módulo 12 dice que los proyectos fracasan sobre todo por razones organizacionales. ¿Qué notas de los módulos 4 y 9 ya lo anticipaban?",
+              "verificacion": "La nota sobre la resistencia a la medición y «el dato que incomoda» (módulo 4), y las de «no inventado aquí» y la resistencia de los expertos (módulo 9). El módulo 12 las formaliza con Kotter: lo técnico puede estar perfecto y aun así tropezar con la reacción humana.",
+              "etiquetaVerificacion": "Ver respuesta",
+              "etiqueta": "Módulos 4, 9 y 12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m11-escenarios-a",
+      "etiqueta": "M11 · SI ESTO FALLARA… (1 DE 2)",
+      "titulo": "¿Qué herramienta usarías? Decide antes de ver la respuesta",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 3,
+          "items": [
+            {
+              "titulo": "El sensor rechaza piezas buenas",
+              "texto": "El sensor poka-yoke del engarzado empieza a rechazar piezas buenas con más frecuencia de lo normal.",
+              "verificacion": "Gauge R&R sobre el propio sensor (módulo 5): validar si el sistema de medición se descalibró.",
+              "etiquetaVerificacion": "Ver herramienta",
+              "etiqueta": "Escenario 1"
+            },
+            {
+              "titulo": "Alguien nuevo no entiende la prioridad",
+              "texto": "Un integrante nuevo se une al equipo y no entiende por qué se priorizó este proyecto sobre otros.",
+              "verificacion": "Project Charter y problem statement (módulo 2).",
+              "etiquetaVerificacion": "Ver herramienta",
+              "etiqueta": "Escenario 2"
+            },
+            {
+              "titulo": "El DPMO vuelve a subir",
+              "texto": "El DPMO empieza a subir de nuevo tres meses después del cierre del proyecto.",
+              "verificacion": "Carta de control y plan de control (módulo 10): revisar si un punto salió de control y aplicar el plan de reacción.",
+              "etiquetaVerificacion": "Ver herramienta",
+              "etiqueta": "Escenario 3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m11-escenarios-b",
+      "etiqueta": "M11 · SI ESTO FALLARA… (2 DE 2)",
+      "titulo": "Tres escenarios más, de tres fases distintas",
+      "bloques": [
+        {
+          "tipo": "ejercicios",
+          "columnas": 3,
+          "items": [
+            {
+              "titulo": "Dos variables que podrían interactuar",
+              "texto": "El equipo sospecha que dos variables de proceso interactúan, pero solo ha probado un factor a la vez.",
+              "verificacion": "Diseño factorial completo / DOE (módulo 9).",
+              "etiquetaVerificacion": "Ver herramienta",
+              "etiqueta": "Escenario 4"
+            },
+            {
+              "titulo": "La estación siempre desordenada",
+              "texto": "Los operadores reportan que la estación de trabajo siempre está desordenada al iniciar el turno.",
+              "verificacion": "5S (módulo 8).",
+              "etiquetaVerificacion": "Ver herramienta",
+              "etiqueta": "Escenario 5"
+            },
+            {
+              "titulo": "Veinte ideas de causas",
+              "texto": "El equipo tiene veinte ideas de posibles causas y no sabe por dónde empezar a investigar.",
+              "verificacion": "Diagrama de Ishikawa (6M) y diagrama de Pareto (módulo 6).",
+              "etiquetaVerificacion": "Ver herramienta",
+              "etiqueta": "Escenario 6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m11-patron",
+      "etiqueta": "M11 · EL PATRÓN",
+      "titulo": "La fase de DMAIC en la que ocurre el problema acota las herramientas",
+      "bloques": [
+        {
+          "tipo": "rejilla",
+          "columnas": 3,
+          "tarjetas": [
+            {"etiqueta": "UN SÍNTOMA DESPUÉS DEL CIERRE", "texto": "Casi siempre apunta a Controlar: cartas de control y plan de reacción.", "estilo": "acento"},
+            {"etiqueta": "UNA DUDA SOBRE POR QUÉ", "texto": "Apunta a Analizar: Pareto, Ishikawa, AMEF y las pruebas estadísticas del módulo 7."},
+            {"etiqueta": "UNA DUDA SOBRE QUÉ HACER", "texto": "Apunta a Mejorar: las herramientas Lean, la matriz de selección y el diseño de experimentos."}
+          ]
+        },
+        {
+          "tipo": "texto",
+          "texto": "Ante cualquier duda de «qué hago ahora» en un proyecto real, identificar en qué fase de DMAIC estás reduce de inmediato el conjunto de herramientas candidatas."
+        },
+        {"tipo": "nota", "texto": "Es la habilidad que un Green Belt necesita en el trabajo: decidir con qué herramienta empezar, no recitar su definición."}
+      ]
+    },
+    {
+      "id": "m11-siguiente",
+      "etiqueta": "M11 · REFLEXIÓN",
+      "titulo": "El siguiente proyecto: ¿etiquetado o conector mal asentado?",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El proyecto dejó pendientes los dos defectos. El Pareto y el AMEF del módulo 6 dan información distinta para decidir cuál atacar primero:"
+        },
+        {
+          "tipo": "tabla",
+          "columnas": [
+            "Defecto pendiente",
+            {"t": "Defectos (Pareto, 8 semanas)", "num": true},
+            {"t": "Severidad", "num": true},
+            {"t": "Ocurrencia", "num": true},
+            {"t": "Detección", "num": true},
+            {"t": "RPN", "num": true}
+          ],
+          "filas": [["Etiquetado", "7 de 25 (28 %)", "3", "7", "2", "42"], ["Conector mal asentado", "3 de 25 (12 %)", "9", "2", "3", "54"]]
+        },
+        {
+          "tipo": "ejercicios",
+          "columnas": 1,
+          "items": [
+            {
+              "titulo": "Tu decisión",
+              "texto": "¿Cuál atacarías primero y qué más querrías saber antes de decidir?",
+              "verificacion": "La guía deja la pregunta abierta. Lectura de los datos del caso: el etiquetado es más frecuente; el conector tiene mayor severidad (9, una desconexión en servicio) y mayor RPN. Antes de decidir convendría saber cuánto cuesta cada tipo de defecto (el costo de la mala calidad, módulo 1) y qué tan costoso es corregir cada causa.",
+              "etiquetaVerificacion": "Ver una lectura de los datos",
+              "etiqueta": "Pregunta de reflexión de la guía"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m11-ejercicio",
+      "etiqueta": "M11 · EJERCICIO",
+      "titulo": "Calcular un porcentaje de reducción",
+      "bloques": [
+        {
+          "tipo": "formula",
+          "etiqueta": "REDUCCIÓN PORCENTUAL",
+          "tex": "\\text{Reducción}=\\dfrac{\\text{DPMO antes}-\\text{DPMO después}}{\\text{DPMO antes}}",
+          "texto": "Reducción = (DPMO antes − DPMO después) ÷ DPMO antes"
+        },
+        {"tipo": "texto", "texto": "Con el caso: (300 − 162) ÷ 300 = 138 ÷ 300 = 46 %."},
+        {"tipo": "nota", "texto": "Cuidado: 162 ÷ 300 = 54 % es la parte del DPMO original que queda, no lo que se redujo."},
+        {
+          "tipo": "ejercicios",
+          "columnas": 1,
+          "items": [
+            {
+              "numero": "1",
+              "titulo": "Sin resolver: comparar con el caso de los arneses",
+              "texto": "Si un proyecto reduce el DPMO de 450 a 180, ¿qué porcentaje de reducción logró? ¿Superó el 46 % de reducción del caso de los arneses?",
+              "verificacion": "Compara tu resultado con la clave del Apéndice C del libro.",
+              "etiquetaVerificacion": "Clave en el libro",
+              "etiqueta": "Con calculadora"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
