@@ -125,6 +125,9 @@ Los **ids de entrada y de presets** de esta tabla son el contrato con el conteni
 | 21 | `lab21-takt.js` | M8 | takt time (tiempo neto, demanda por día o por semana, pitch), cambio frente a la demanda anterior, balanceo de estaciones, PCE × takt y ahorro del SMED |
 | 22 | `lab22-oee.js` | M8 | OEE por periodos o por factores, cascada de pérdidas con su herramienta Lean, factor más débil frente a mayor pérdida y simulador de mejora |
 | 23 | `lab23-doe.js` | M9 | diseño factorial 2² con réplicas: efectos por la tabla de signos, error estándar, t, p, suma de cuadrados, mejor combinación y predicción |
+| 24 | `lab24-plan-control.js` | M10 | plan de control línea por línea (ocho campos, clasificación y plan de reacción) cruzado con el AMEF: cobertura de los modos importantes |
+| 25 | `lab25-carta-xr.js` | M10 | carta de control X̄-R: límites con A₂, D₃ y D₄ (n = 2 a 10), reglas de causas especiales, subgrupos excluidos y primera pasada frente a límites finales |
+| 26 | `lab26-carta-u.js` | M10 | carta u con tamaño de muestra variable: DPMO o defectos por unidad, límites por periodo, dos fases con línea central nueva y reglas 1 a 3 |
 
 ### LAB 02 · Distribución normal (`lab02-distribucion-normal.js`)
 Entradas: `mu` (numero, 50), `sigma` (numero >0, 4), `lsl` (numero, 38), `usl` (numero, 62),
@@ -374,6 +377,65 @@ balanceado). Tablas: «Corridas y promedios», «Efectos y prueba t» (o «Efect
 la variación» (solo balanceado). Semáforos: «Efecto de A», «Efecto de B», «Interacción AB», «Réplicas», «Mejor combinación» y
 «Predicción» (o «Predicción fuera de rango»). Gráficas: `interaccion` y `efectos` (|t| frente al t crítico, o |efecto| sin prueba).
 
+### LAB 24 · Plan de control (`lab24-plan-control.js`)
+Entradas: `amef` (tabla de 1 a 20 filas `{modo, s, o, d}`: el AMEF resumido, como en el LAB 17), `plan` (tabla de 1 a 20 filas `{op,
+caracteristica, tipo, clasificacion, especificacion, medicion, muestra, frecuencia, metodo, reaccion, responsable, ref}`; `tipo` =
+`Producto|Proceso`, `clasificacion` = `Crítica|Significativa|Estándar` y `ref` = el nombre del modo del AMEF que la línea previene o
+detecta, sin importar acentos ni mayúsculas) y `rpnAlto` (1 a 1,000; 100 por omisión). Una línea está **completa** si tiene los ocho
+campos (característica, especificación, técnica de medición, muestra, frecuencia, método de control, plan de reacción y responsable);
+queda en **«Revisar clasificación (RPN alto)»** si el modo que cita tiene RPN ≥ `rpnAlto` y no está clasificada como Crítica ni
+Significativa. Un modo es **importante** si su RPN ≥ `rpnAlto` o su severidad ≥ 9, y queda «sin control» si ninguna línea lo cita. El plan de
+reacción se revisa por palabras clave («desechar la pieza y seguir produciendo»); solo orienta. Presets: `guia` (M10 §4: cuatro líneas con
+el método y la frecuencia separados y el AMEF de la guía con RPN 192 · 54 · 42: **1 de 4** completa = 25 %, tres por clasificar y el
+**conector mal asentado** (S = 9, RPN 54) sin control), `excel` (plantilla «Plan de Control»: cinco líneas, **4 de 5 = 80 %**, tres críticas
+y cuatro con RPN ≥ 100; la del etiquetado, RPN 120, está como Estándar y pide revisar la clasificación) y `corregir-olvidar` (la guía con la
+reacción del poka-yoke reducida a «desechar la pieza mala y seguir produciendo»). Salidas: `lineas`, `completas`, `criticas`, `rpn-alto`,
+`sin-ligar` y `sin-control`. Tablas: «El plan, línea por línea» y «Cobertura del AMEF». Semáforos: «Completitud», «Clasificación», «Vínculo
+con el AMEF» (o «Líneas sin modo de falla»), «Cobertura del AMEF» (crítico si queda sin control un modo con RPN alto) y «Plan de reacción».
+Gráfica: `cobertura` (RPN de cada modo, con los que tienen línea de control y los importantes que no). **Diferencias:** la guía junta el
+método y la frecuencia en una columna (aquí van separados, con el mismo contenido) y no clasifica las características ni las liga al AMEF;
+la plantilla usa RPN ≥ 100 mientras la guía llama «acción requerida» a más de 100; la regla de severidad ≥ 9 es una referencia didáctica
+del LAB 17 que la plantilla no aplica. Un plan «completo» puede ser un mal plan: el laboratorio no sabe si la especificación o la frecuencia son
+las adecuadas.
+
+### LAB 25 · Carta de control X̄-R (`lab25-carta-xr.js`)
+Entradas: `modo` (`resumen|mediciones|limites`), `n` (tamaño del subgrupo, 2 a 10; 5 por omisión), `mediciones` (tabla de 2 a 30 filas
+`{x1…x10}`: solo cuentan los subgrupos con sus n mediciones y las columnas siguen a `n`), `resumen` (tabla de 2 a 30 filas `{media,
+rango}`), `gran` y `rbar` (solo con `modo: 'limites'`), `excluir` (números de subgrupo separados por comas, con su causa especial ya
+corregida; `12` por omisión) y `reglas` (`tres|una`). X̿ = promedio de las medias y R̄ = promedio de los rangos; carta X̄: LSC y LIC =
+X̿ ± A₂R̄; carta R: LSC = D₄R̄ y LIC = D₃R̄ (constantes para n = 2 a 10; D₃ = 0 hasta n = 6). Los subgrupos excluidos salen del cálculo de
+los límites pero siguen en la gráfica. Reglas: 1 (fuera de ±3σ), 2 (dos de tres más allá de 2σ) y 3 (nueve seguidos del mismo lado de la línea
+central); `una` = solo la regla 1, como la plantilla. Presets: `guia` (M10 §2: 15 subgrupos de n = 5, fuerza de engarzado en N; en la primera
+pasada X̿ 175.797, R̄ 3.560, LSC 177.851 y LIC 173.743, y el subgrupo **12** sale bajo el LIC; sin él, 14 subgrupos con X̿ **176.101**, R̄
+**3.614**, LSC **178.187**, LIC **174.016**, LSC de R **7.641**, LIC de R 0 y ninguna señal), `excel` (plantilla «Carta X-R»: 25 subgrupos de cinco
+mediciones, X̿ **170.122**, R̄ **2.756**, LSC 171.713 y LIC 168.532, LSC de R 5.826; el subgrupo **17** sobre el LSC, con la regla 1 sola, como la
+hoja), `ej1` (X̿ 50, R̄ 4, n = 5 → **52.308 / 47.692 / 8.456 / 0**), `ej4` (X̿ 75, R̄ 6, n = 4 → **79.374 / 70.626 / 13.692 / 0**) y `examen5`
+(X̿ 60, R̄ 5, n = 5 → **62.885 / 57.115 / 10.570 / 0**). Salidas: `subgrupos`, `gran`, `rbar`, `lsc-x`, `lic-x`, `lsc-r`, `lic-r`, `senales-x` y
+`senales-r` (con `limites`, solo `gran`, `rbar` y los cuatro límites). Tablas: «Límites de control», «Subgrupo por subgrupo» y, si hay subgrupos
+excluidos, «Primera pasada frente a límites finales». Semáforos: «Carta R (dispersión)» (se lee primero), «Carta X̄ (centro)», «Subgrupos
+excluidos», «Reglas 2 y 3 (no aplicadas)», «Número de subgrupos» (la plantilla pide de 20 a 25 para límites definitivos) y, con `limites`,
+«Límites de la carta X̄» y «Límite inferior de la carta R». Gráficas: `carta-r` y `carta-x`. **Diferencias:** la guía publica la media y el
+rango de cada subgrupo, no las mediciones; la plantilla trae las mediciones y solo cuenta los puntos fuera de límites.
+
+### LAB 26 · Carta de control u (`lab26-carta-u.js`)
+Entradas: `escala` (`dpmo|u`), `oportunidades` (por unidad; 5 por omisión), `periodos` (tabla de 1 a 30 filas `{defectos, unidades}`; el
+área de oportunidad es n = unidades × oportunidades y puede cambiar de un periodo a otro), `centro` (`datos|dado`), `ubarDado` (ū
+histórico en la escala elegida; solo con `dado`), `desde` (fila donde empieza la segunda fase; 9 por omisión y vacío = una sola línea central),
+`excluir` (periodos que salen del cálculo, no de la gráfica) y `reglas` (`tres|una`). ū = Σc ÷ Σn de cada fase; los límites de cada
+periodo son ū ± 3√(ū/n), con el LIC cortado en 0, así que cambian con n. Presets: `guia` (M10 §3: 16 semanas en dos fases desde la 9, ū
+**312.5 → 162.5 DPMO** con 25 y 13 defectos en 80,000 oportunidades por fase, −48 % en la línea central, LSC 842.8 y 544.9, LIC 0 y sin
+señales; los conteos semanales son una **reconstrucción**, porque la guía publica la carta solo como imagen, coherente con esos totales),
+`guia-una-linea` (los mismos datos con una sola línea central: ū **237.5** y LSC 699.8; la regla 3 marca las semanas **15 y 16**, que son el
+efecto de la mejora y no una causa especial por corregir), `excel` (plantilla «Carta u»: 25 periodos con n entre 34 y 45, ū **0.347** = 353 ÷
+1,017, LSC de 0.611 a 0.650 y LIC de 0.0440 a 0.0836; el periodo **17** sobre el LSC, con la regla 1 sola, como la hoja) y `ej2` (ū histórico 0.006,
+n = 7,200 y 12 defectos → u **0.00167**, LSC **0.00874** y LIC **0.00326**: señal bajo el LIC, la «dirección deseable»). Salidas: `periodos`,
+`ubar`, `lsc`, `lic`, `senales` y, según el caso, `ubar2`, `lsc2`, `lic2` y `cambio` (dos fases) o `u` (con ū histórico). Tablas: «Límites de
+control», «Periodo por periodo» y, con dos fases, «Una línea central frente a dos fases». Semáforos: «Carta u (estabilidad)», «Línea central
+nueva», «Reglas 2 y 3 (no aplicadas)», «Límite inferior (LIC)» y «Número de periodos». Gráfica: `carta-u`. **Diferencias:** la guía llama «DPU»
+al 0.006 del ejercicio 2 pero lo usa por oportunidad (las 7,200 son oportunidades), así que aquí se rotula «defectos por unidad u oportunidad»;
+el −48 % compara las líneas centrales de la carta (312.5 → 162.5) y el −46 % del caso compara la línea base de 300 DPMO con 162; la plantilla solo
+aplica la regla 1.
+
 ## 5. Cómo agregar un laboratorio nuevo
 
 1. Copia `labs/_plantilla.js` a `labs/labNN-nombre.js` y completa los campos.
@@ -410,6 +472,9 @@ Estos ids son fijos; puedes **añadir** entradas, nunca renombrar ni quitar esta
 | 21 | `minTurno` · `turnos` · `descansos` · `paros` · `demanda` · `periodo` (`dia`\|`semana`) · `diasSemana` · `demandaAnterior` · `contenedor` · `estaciones` = filas `{estacion, tc}` · `pce` · `cambioMin` · `reduccionSmed` · `cambiosTurno` |
 | 22 | `modo` (`periodos`\|`factores`) · `periodos` = filas `{periodo, plan, paros, ciclo, prod, buenas}` · `disp` · `rend` · `cal` · `mejoraFactor` (`""`\|`A`\|`P`\|`Q`) · `mejoraValor` |
 | 23 | `respuesta` · `objetivo` (`min`\|`max`) · `factores` = 2 filas `{nombre, bajo, alto}` (la letra A o B es columna fija) · `corridas` = 4 filas `{y1, y2, y3, y4, y5}` en el orden (1), a, b, ab (el nombre y los niveles son columnas fijas) · `alfa` · `predA` · `predB` |
+| 24 | `amef` = filas `{modo, s, o, d}` · `plan` = filas `{op, caracteristica, tipo, clasificacion, especificacion, medicion, muestra, frecuencia, metodo, reaccion, responsable, ref}` (`tipo`: `Producto`\|`Proceso`; `clasificacion`: `Crítica`\|`Significativa`\|`Estándar`) · `rpnAlto` |
+| 25 | `modo` (`resumen`\|`mediciones`\|`limites`) · `n` (`"2"`…`"10"`) · `mediciones` = filas `{x1…x10}` · `resumen` = filas `{media, rango}` · `gran` · `rbar` · `excluir` (números separados por comas) · `reglas` (`tres`\|`una`) |
+| 26 | `escala` (`dpmo`\|`u`) · `oportunidades` · `periodos` = filas `{defectos, unidades}` · `centro` (`datos`\|`dado`) · `ubarDado` · `desde` · `excluir` (números separados por comas) · `reglas` (`tres`\|`una`) |
 
 Presets obligatorios (ids): 01 `guia`,`rechazos`,`fuerza`,`torque` · 02 `guia`,`tres-sigma`,`seis-sigma`,`fuerza`,`torque` ·
 03 `arneses`,`guia-ej2` · 04 `guia`,`excel`,`empaque`,`lineas-ab` (+ ejercicios del M1) · 05 `guia`,`excel` · 06 `libro`,`excel` ·
@@ -417,4 +482,5 @@ Presets obligatorios (ids): 01 `guia`,`rechazos`,`fuerza`,`torque` · 02 `guia`,
 12 `guia`,`excel`,`sesgo` · 13 `guia`,`ej2`,`ej4`,`excel` · 14 `guia`,`excel` · 15 `guia`,`tickets`,`excel`,`hoja` ·
 16 `guia`,`excel`,`persona` · 17 `guia`,`empaque`,`excel` · 18 `guia`,`minimo`,`excel`,`sinDiferencia` · 19 `reg-plantilla`,`reg-curva`,
 `chi-guia`,`chi-plantilla`,`chi-torque`,`chi-2x2`,`ic-torque`,`ic-examen` · 20 `guia`,`excel` · 21 `guia`,`ej1`,`ej3`,`ej4`,`excel` ·
-22 `guia`,`guia-turno`,`excel`,`ej5`,`examen` · 23 `guia`,`excel`,`ej2`,`ej3`,`interaccion`.
+22 `guia`,`guia-turno`,`excel`,`ej5`,`examen` · 23 `guia`,`excel`,`ej2`,`ej3`,`interaccion` · 24 `guia`,`excel`,`corregir-olvidar` ·
+25 `guia`,`excel`,`ej1`,`ej4`,`examen5` · 26 `guia`,`guia-una-linea`,`excel`,`ej2`.
