@@ -1,7 +1,7 @@
 {
   "id": "s6",
   "numero": 6,
-  "estado": "planeada",
+  "estado": "disponible",
   "titulo": "Controlar, integrar y sostener",
   "fase": "controlar",
   "duracion": "3 h",
@@ -14,7 +14,7 @@
     "curso": "LEAN SIX SIGMA GREEN BELT",
     "lineas": [
       "Guía de estudio para estudiantes de Ingeniería Industrial",
-      "Sesión planeada: estructura lista para completarse"
+      "3 laboratorios interactivos con el caso de la línea de arneses"
     ],
     "sello": {
       "arriba": "CASO APLICADO",
@@ -44,19 +44,19 @@
       "id": "lab24",
       "numero": "24",
       "nombre": "Plan de control",
-      "estado": "planeada"
+      "archivo": "lab24-plan-control.js"
     },
     {
       "id": "lab25",
       "numero": "25",
       "nombre": "Carta de control X̄-R",
-      "estado": "planeada"
+      "archivo": "lab25-carta-xr.js"
     },
     {
       "id": "lab26",
       "numero": "26",
       "nombre": "Carta de control u",
-      "estado": "planeada"
+      "archivo": "lab26-carta-u.js"
     }
   ],
   "slides": [
@@ -64,44 +64,16 @@
       "tipo": "portada"
     },
     {
-      "id": "plan",
-      "etiqueta": "SESIÓN 6 · CONTROLAR",
-      "titulo": "Esta sesión está planeada",
-      "subtitulo": "3 h · 3 laboratorios",
-      "bloques": [
-        {
-          "tipo": "planeada",
-          "nota": "Esta sesión ya tiene su lugar en la ruta DMAIC y su estructura lista. Se completará con el mismo patrón que las sesiones 1 y 2: teoría condensada, laboratorios, ejercicios vinculados y cierre. Mientras tanto, el libro y las plantillas de Excel cubren estos módulos completos.",
-          "modulos": [
-            {
-              "id": "M10",
-              "titulo": "Control estadístico de procesos"
-            },
-            {
-              "id": "M11",
-              "titulo": "Caso integrador: la línea de arneses de principio a fin"
-            },
-            {
-              "id": "M12",
-              "titulo": "Sostenibilidad y gestión del cambio"
-            }
-          ],
-          "labs": [
-            {
-              "id": "LAB 24",
-              "titulo": "Plan de control"
-            },
-            {
-              "id": "LAB 25",
-              "titulo": "Carta de control X̄-R"
-            },
-            {
-              "id": "LAB 26",
-              "titulo": "Carta de control u"
-            }
-          ]
-        }
-      ]
+      "incluir": "m10.json"
+    },
+    {
+      "incluir": "m11.json"
+    },
+    {
+      "incluir": "m12.json"
+    },
+    {
+      "incluir": "cierre.json"
     }
   ]
 }

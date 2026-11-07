@@ -1,0 +1,154 @@
+{
+  "id": "cierre",
+  "titulo": "Cierre de la sesión 6",
+  "slides": [
+    {
+      "id": "cierre",
+      "etiqueta": "SESIÓN 6 · CIERRE",
+      "titulo": "Lo que te llevas de esta sesión",
+      "bloques": [
+        {
+          "tipo": "cierre",
+          "puntos": [
+            "La carta X̄-R separa variación común de causas especiales: primero se lee la R, luego la X̄; el subgrupo 12 salió de límites.",
+            "La carta u vigila defectos por unidad con n variable; tras un cambio deliberado, línea central nueva, no la de «antes».",
+            "El plan de control vuelve rutina la mejora: qué se mide, cuándo, quién y cómo se reacciona; se audita cada 3 a 6 meses.",
+            "El caso cerró en 162 DPMO (−46 %), no en menos de 100: una mejora real que abre un segundo proyecto, sobre el etiquetado.",
+            "Un proyecto es una cadena de decisiones heredadas: la fase de DMAIC donde aparece el problema acota las herramientas.",
+            "Según estudios, más de la mitad de los proyectos no sostiene sus resultados, casi siempre por causas organizacionales; los pasos de Kotter ya estaban en el caso."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m10a",
+      "etiqueta": "SESIÓN 6 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 10 (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Cartas de control X̄-R y control estadístico de procesos",
+          "items": [
+            "ASQ. «What is Statistical Process Control?». asq.org.",
+            "Quality Gurus. «Xbar R Control Chart». qualitygurus.com (2023).",
+            "SPC for Excel (B. McNeese). «Xbar-R Charts: Part 1». spcforexcel.com (2024).",
+            "Engineering LibreTexts. «13.2: SPC – Basic Control Charts». eng.libretexts.org (2022).",
+            "TUM School of Management. «Control Limits: X-bar & R-Charts». courses.edx.org.",
+            "Six Sigma Study Guide. «X Bar R Control Charts for Process Stability». sixsigmastudyguide.com (2024)."
+          ]
+        },
+        {
+          "tipo": "referencias",
+          "titulo": "Carta u",
+          "items": [
+            "SigmaDesk. «SPC Control Charts for Attributes: np, p, c & u Charts Guide». sigmadesk.app (2026).",
+            "Quality Gurus. «u Control Chart». qualitygurus.com (2023).",
+            "SixSigma.us. «U-Chart: Monitoring Defects per Unit for Quality Control». 6sigma.us (2025)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m10b",
+      "etiqueta": "SESIÓN 6 · REFERENCIAS",
+      "titulo": "Para profundizar: módulo 10 (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Plan de control",
+          "items": [
+            "SixSigma.us. «Control Plan in Lean Six Sigma. Key Elements and Strategies». 6sigma.us (2025).",
+            "SixSigma DSI. «Six Sigma Control Plan: Blueprint for Sustained Process Excellence». sixsigmadsi.com (2025).",
+            "Transformance Advisors. «Six Sigma Control Plan». transformanceadvisors.com (2025).",
+            "Learn Lean Sigma. «Guide: Control Plan». learnleansigma.com (2025).",
+            "Lean 6 Sigma Hub. «How to Create a Control Plan: Step-by-Step Guide». lean6sigmahub.com (2025).",
+            "Adobe Business Blog. «Control plan (Six Sigma) — definition and example». business.adobe.com."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m11-m12a",
+      "etiqueta": "SESIÓN 6 · REFERENCIAS",
+      "titulo": "Para profundizar: módulos 11 y 12 (1 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Aprendizaje basado en casos (módulo 11)",
+          "items": [
+            "Gaspe, G.M.S. & Hathiringe Dona, I.P. «Using Case-Based Learning to Enhance Students' Performance in Mechanical Engineering Undergraduates». SAGE Journals (2025).",
+            "Frontiers in Education. «Future Skills for Industry 4.0 Integration and Innovative Learning for Continuing Engineering Education». frontiersin.org (2024)."
+          ]
+        },
+        {
+          "tipo": "referencias",
+          "titulo": "Por qué fracasan los proyectos (módulo 12)",
+          "items": [
+            "Antony, J. et al. «A Global Study Into the Reasons for Lean Six Sigma Project Failures». Heriot-Watt Research Portal (2020).",
+            "SixSigma.us. «Avoid Six Sigma Failures: A Guide to Prevention & Profitability». 6sigma.us (2025)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "referencias-m11-m12b",
+      "etiqueta": "SESIÓN 6 · REFERENCIAS",
+      "titulo": "Para profundizar: módulos 11 y 12 (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "referencias",
+          "titulo": "Kotter y gestión del cambio (módulo 12)",
+          "items": [
+            "SixSigma.us. «Kotter’s 8 Step Change Model in Six Sigma: A Comprehensive Guide». 6sigma.us (2025).",
+            "Prosci. «Kotter’s Change Management Theory Explanation and Applications». prosci.com (2026).",
+            "itSM Solutions. «Kotter Change Management: How to Apply the 8 Steps Successfully». itsm.tools (2026).",
+            "National Library of Medicine (PMC). «A Change-Management Approach to Closing Care Gaps in a Federally Qualified Health Center» (tenets y pasos del modelo de Kotter). ncbi.nlm.nih.gov."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acronimos-a",
+      "etiqueta": "SESIÓN 6 · REFERENCIA RÁPIDA",
+      "titulo": "Lista rápida de acrónimos (1 de 2)",
+      "bloques": [
+        {"tipo": "texto", "texto": "Referencia veloz de los acrónimos que aparecen a lo largo de la guía, con el módulo donde se introduce cada uno."},
+        {
+          "tipo": "tabla",
+          "columnas": ["Acrónimo", "Significado", "Módulo"],
+          "filas": [
+            ["DMAIC", "Definir, Medir, Analizar, Mejorar, Controlar", "1"],
+            ["DPMO", "Defectos Por Millón de Oportunidades", "1"],
+            ["COPQ", "Costo de la Mala Calidad", "1"],
+            ["VOC", "Voz del Cliente", "2"],
+            ["CTQ", "Críticos para la Calidad", "2"],
+            ["SIPOC", "Proveedores, Entradas, Proceso, Salidas, Clientes", "3A"],
+            ["VSM", "Mapa de Flujo de Valor", "8"],
+            ["SMED", "Cambio de herramental en menos de 10 minutos", "8"]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acronimos-b",
+      "etiqueta": "SESIÓN 6 · REFERENCIA RÁPIDA",
+      "titulo": "Lista rápida de acrónimos (2 de 2)",
+      "bloques": [
+        {
+          "tipo": "tabla",
+          "columnas": ["Acrónimo", "Significado", "Módulo"],
+          "filas": [
+            ["RPN", "Número de Prioridad de Riesgo", "6"],
+            ["DOE", "Diseño de Experimentos", "9"],
+            ["OFAT", "Un factor a la vez", "9"],
+            ["MSA", "Análisis del Sistema de Medición", "5"],
+            ["GRR (Gauge R&R)", "Repetibilidad y Reproducibilidad del instrumento", "5"],
+            ["PCE", "Eficiencia del Ciclo del Proceso", "4"],
+            ["Takt Time", "Ritmo de producción requerido para cumplir la demanda del cliente", "8"]
+          ]
+        },
+        {"tipo": "nota", "texto": "El Glosario de la guía da la definición completa de cada concepto y su aplicación al caso de los arneses."}
+      ]
+    }
+  ]
+}
