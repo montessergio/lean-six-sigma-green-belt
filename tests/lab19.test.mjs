@@ -357,18 +357,18 @@ test('LAB19 regresión: las tres gráficas (dispersión con bandas, residuos y p
 /* Chi-cuadrada de independencia                                       */
 /* ------------------------------------------------------------------ */
 
-test('LAB19 chi-cuadrada: fallas de la guía (2, 2 y 6 en 5,340) → χ² = 3.20, gl = 2, p = 0.2017, esperados de 3.33', async () => {
+test('LAB19 chi-cuadrada: fallas de la guía (2, 2 y 6 en 5,333 · 5,333 · 5,334) → χ² = 3.20, gl = 2, p = 0.2018, esperados de 3.33', async () => {
   const r = await lab('chi-guia');
-  assert.equal(texto(r, 'chi2'), '3.20'); // 3.2020 (la guía solo suma la fila de fallas: 3.2000)
+  assert.equal(texto(r, 'chi2'), '3.20'); // 3.2008 (la guía solo suma la fila de fallas: 3.1988)
   assert.equal(nota(r, 'chi2'), 'gl = 2 · crítico 5.991 (α = 0.05)'); // chi2.ppf(0.95, 2) = 5.9915
-  assert.equal(texto(r, 'p'), '0.2017'); // 0.20169
+  assert.equal(texto(r, 'p'), '0.2018'); // 0.20182
   assert.equal(nota(r, 'p'), 'p ≥ α (α = 0.05)');
-  assert.equal(texto(r, 'V'), '0.014'); // 0.014138
+  assert.equal(texto(r, 'V'), '0.014'); // 0.014144
   assert.equal(nota(r, 'V'), 'efecto muy pequeño');
   assert.equal(texto(r, 'minE'), '3.33');
   assert.equal(nota(r, 'minE'), '3 de 6 celdas con esperado < 5');
   assert.equal(color(r, 'minE'), 'ambar');
-  assert.equal(texto(r, 'N'), '16,020 · 2 × 3');
+  assert.equal(texto(r, 'N'), '16,000 · 2 × 3');
   assert.equal(nota(r, 'N'), 'gl = (2 − 1)(3 − 1) = 2');
   assert.equal(salida(r.resultado, 'yates'), undefined, 'Yates y Fisher solo en tablas 2 × 2');
   assert.equal(salida(r.resultado, 'fisher'), undefined);
@@ -376,24 +376,24 @@ test('LAB19 chi-cuadrada: fallas de la guía (2, 2 y 6 en 5,340) → χ² = 3.20
 
   assert.deepEqual(filas(r, 'Frecuencias observadas, con totales'), [
     ['Falla de continuidad', '2', '2', '6', '10'],
-    ['Sin falla', '5,338', '5,338', '5,334', '16,010'],
-    ['Total columna', '5,340', '5,340', '5,340', '16,020'],
+    ['Sin falla', '5,331', '5,331', '5,328', '15,990'],
+    ['Total columna', '5,333', '5,333', '5,334', '16,000'],
   ]);
   assert.deepEqual(filas(r, /^Frecuencias esperadas/), [
-    ['Falla de continuidad', '3.33 *', '3.33 *', '3.33 *'], // 10 × 5,340 / 16,020 = 3.3333
-    ['Sin falla', '5,336.67', '5,336.67', '5,336.67'],
+    ['Falla de continuidad', '3.33 *', '3.33 *', '3.33 *'], // 10 × 5,333 / 16,000 = 3.3331 (3.3338 en el Turno 3)
+    ['Sin falla', '5,329.67', '5,329.67', '5,330.67'],
   ]);
-  assert.deepEqual(filas(r, /^Contribución a χ²/)[0], ['Falla de continuidad', '0.533 (z −0.73)', '0.533 (z −0.73)', '2.133 (z +1.46)', '3.200']);
-  assert.equal(filas(r, /^Contribución a χ²/)[2][4], '3.202'); // 3.2020
+  assert.deepEqual(filas(r, /^Contribución a χ²/)[0], ['Falla de continuidad', '0.533 (z −0.73)', '0.533 (z −0.73)', '2.132 (z +1.46)', '3.199']);
+  assert.equal(filas(r, /^Contribución a χ²/)[2][4], '3.201'); // 3.2008
   assert.equal(semaforo(r.resultado, 'Frecuencias esperadas').estado, 'atencion');
   assert.equal(semaforo(r.resultado, 'Poder de la prueba').estado, 'atencion');
-  assert.match(semaforo(r.resultado, 'Poder de la prueba').texto, /Solo hay 10 eventos de «Falla de continuidad» repartidos en 16,020 unidades/);
+  assert.match(semaforo(r.resultado, 'Poder de la prueba').texto, /Solo hay 10 eventos de «Falla de continuidad» repartidos en 16,000 unidades/);
   assert.match(semaforo(r.resultado, 'Conclusión de la prueba').texto, /Como p ≥ α \(0\.05\), no hay evidencia de asociación/);
   assert.deepEqual(ids(r), ['distribucion', 'contribuciones', 'tasas']);
-  // Wilson (proportion_confint, 95 %): 2/5340 → [0.0103 %, 0.1365 %] y 6/5340 → [0.0515 %, 0.2449 %]
+  // Wilson (binomtest.proportion_ci, 95 %): 2/5333 → [0.0103 %, 0.1366 %] y 6/5334 → [0.0516 %, 0.2452 %]
   const W = filas(r, /^Proporción de «Falla de continuidad»/);
-  assert.deepEqual(W[0], ['Turno 1', '2', '5,340', '0.037 %', '0.010 % a 0.14 %']);
-  assert.deepEqual(W[2], ['Turno 3', '6', '5,340', '0.11 %', '0.052 % a 0.24 %']);
+  assert.deepEqual(W[0], ['Turno 1', '2', '5,333', '0.038 %', '0.010 % a 0.14 %']); // 2 / 5,333 = 0.03750 %
+  assert.deepEqual(W[2], ['Turno 3', '6', '5,334', '0.11 %', '0.052 % a 0.25 %']);
 });
 
 test('LAB19 chi-cuadrada: plantilla Excel (285/15, 280/20, 262/38) → χ² = 13.09, p = 0.0014, V = 0.121', async () => {
@@ -435,25 +435,25 @@ test('LAB19 chi-cuadrada: torque contra el resto por turno (derivado del LAB 14)
   assert.equal(filas(r, 'Frecuencias observadas, con totales')[0].slice(1).join(' '), '6 8 21 35');
 });
 
-test('LAB19 chi-cuadrada: tabla 2 × 2 de la guía (turnos 1 y 3) → Pearson 2.00, Yates 1.126, Fisher 0.2889', async () => {
+test('LAB19 chi-cuadrada: tabla 2 × 2 de la guía (turnos 1 y 3) → Pearson 2.00, Yates 1.125, Fisher 0.2889', async () => {
   const r = await lab('chi-2x2');
-  assert.equal(texto(r, 'chi2'), '2.00'); // 2.0015
+  assert.equal(texto(r, 'chi2'), '2.00'); // 2.0008
   assert.equal(nota(r, 'chi2'), 'gl = 1 · crítico 3.841 (α = 0.05)');
-  assert.equal(texto(r, 'p'), '0.1571'); // 0.15714
-  assert.equal(texto(r, 'V'), '0.014'); // 0.013690
+  assert.equal(texto(r, 'p'), '0.1572'); // 0.15722
+  assert.equal(texto(r, 'V'), '0.014'); // 0.013695
   assert.equal(texto(r, 'minE'), '4.00');
   assert.equal(nota(r, 'minE'), '2 de 4 celdas con esperado < 5');
-  assert.equal(texto(r, 'N'), '10,680 · 2 × 2');
-  assert.equal(texto(r, 'yates'), '1.126'); // 1.1258
-  assert.equal(nota(r, 'yates'), 'p = 0.2887'); // 0.28866
+  assert.equal(texto(r, 'N'), '10,667 · 2 × 2');
+  assert.equal(texto(r, 'yates'), '1.125'); // 1.1253
+  assert.equal(nota(r, 'yates'), 'p = 0.2888'); // 0.28878
   assert.equal(texto(r, 'fisher'), '0.2889'); // 0.28888
   assert.equal(nota(r, 'fisher'), 'valor p exacto, dos colas');
   assert.deepEqual(filas(r, 'Tabla 2 × 2: Pearson, Yates y Fisher'), [
-    ['χ² de Pearson', '2.001', '1', '0.1571', 'No rechaza H₀'],
-    ['χ² con corrección de Yates', '1.126', '1', '0.2887', 'No rechaza H₀'],
+    ['χ² de Pearson', '2.001', '1', '0.1572', 'No rechaza H₀'],
+    ['χ² con corrección de Yates', '1.125', '1', '0.2888', 'No rechaza H₀'],
     ['Exacta de Fisher', '—', '—', '0.2889', 'No rechaza H₀'],
   ]);
-  assert.match(semaforo(r.resultado, 'Yates y Fisher').texto, /Pearson p = 0\.1571, con corrección de Yates p = 0\.2887 y exacta de Fisher p = 0\.2889/);
+  assert.match(semaforo(r.resultado, 'Yates y Fisher').texto, /Pearson p = 0\.1572, con corrección de Yates p = 0\.2888 y exacta de Fisher p = 0\.2889/);
 });
 
 test('LAB19 chi-cuadrada: otras tablas 2 × 2 contra SciPy (esperados grandes: las tres pruebas coinciden en rechazar)', async () => {

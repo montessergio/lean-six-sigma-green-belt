@@ -166,7 +166,7 @@ export function balancearEstaciones(filas, takt = NaN) {
   };
 }
 
-/** Lectura de la guía (M8, ej. 4): del takt, la parte de valor agregado es PCE × takt y el resto es desperdicio. `pce` va en 0–1. */
+/** Lectura de la guía (M8 §1): del takt, la parte de valor agregado es PCE × takt y el resto es desperdicio. `pce` va en 0–1. */
 export function valorEnTakt(pce, takt) {
   if (!(pce >= 0 && pce <= 1 && takt > 0)) return { va: NaN, desperdicio: NaN };
   const va = pce * takt;

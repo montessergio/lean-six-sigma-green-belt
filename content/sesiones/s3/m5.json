@@ -158,7 +158,7 @@
             { "valor": "6.18 N", "etiqueta": "Rango de promedios por pieza (Rp)", "nota": "alimenta la variación de pieza (PV)", "color": "violeta" }
           ]
         },
-        { "tipo": "nota", "texto": "La guía escribe X̄diff = 0.40, redondeado. Con 0.40 el AV saldría alrededor de 1.03; con el valor exacto, 0.395, sale el 1.02 de la guía." }
+        { "tipo": "nota", "texto": "Arrastra los decimales: con X̄diff redondeado a 0.40 el AV saldría alrededor de 1.03; con el valor exacto, 0.395, sale 1.02." }
       ]
     },
     {
@@ -276,7 +276,7 @@
             ["< 1.00", "No capaz: genera piezas fuera de especificación"],
             ["1.00 – 1.33", "Capacidad marginal"],
             ["1.33 – 1.67", "Capaz: mínimo aceptado en la mayoría de la manufactura"],
-            ["≥ 1.67", "Alta capacidad: típico para características de seguridad"],
+            ["1.67 – 2.00", "Alta capacidad: típico para características de seguridad"],
             ["≥ 2.00", "Capacidad de clase mundial (nivel Six Sigma)"]
           ],
           "resaltar": [2]

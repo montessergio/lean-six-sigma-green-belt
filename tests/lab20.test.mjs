@@ -1,6 +1,6 @@
 /**
- * Pruebas del LAB 20 (mapa de flujo de valor). Los valores esperados salen de la guía (M8 §1: lead time de 55 min, PCE de
- * 27.3 %, estado futuro con Kanban de 44 min y 34.1 %), de la plantilla Excel «VSM» (takt de 0.9375 min, esperas de
+ * Pruebas del LAB 20 (mapa de flujo de valor). Los valores esperados salen de la guía (M8 §1 y ejercicio 4: lead time de 55 min, PCE de
+ * 27.3 %, estado futuro con Kanban de 44 min y 34.1 %, 11 min menos de desperdicio), de la plantilla Excel «VSM» (takt de 0.9375 min, esperas de
  * inventario × takt, lead time de 481.575 min) o de cuentas hechas aparte y escritas como constantes; no del propio código.
  */
 import test from 'node:test';
@@ -41,7 +41,7 @@ test('LAB20: guía M8 §1 → lead time 55 min, VA 15 min, esperas 38 min y PCE 
   assert.deepEqual(activas(r), ['PCE > 25 %']);
 });
 
-test('LAB20: guía M8 §1 → con Kanban (buffer de 15 a 4 min) esperas 27, lead time 44 y PCE 34.1 %', async () => {
+test('LAB20: guía M8 §1 y ejercicio 4 → con Kanban (buffer de 15 a 4 min) esperas 27, lead time 44 (−11 min) y PCE 34.1 %', async () => {
   const r = await ejecutar(ARCHIVO, 'guia');
   assert.equal(texto(r, 'lead-futuro'), '44 min');
   assert.equal(nota(r, 'lead-futuro'), '−11 min (−20.0 %)');
@@ -52,6 +52,9 @@ test('LAB20: guía M8 §1 → con Kanban (buffer de 15 a 4 min) esperas 27, lead
   assert.deepEqual(celdas(t.filas[1]), ['Esperas (min)', '38', '27', '−11']);
   assert.deepEqual(celdas(t.filas[2]), ['Valor agregado (min)', '15', '15', '0']);
   assert.deepEqual(celdas(t.filas[3]), ['PCE', '27.3 %', '34.1 %', '+6.8 pts']);
+  // ejercicio 4: desperdicio = lead time − valor agregado → 55 − 15 = 40 min y 44 − 15 = 29 min: 11 min eliminados
+  const [lead0, lead1, va0, va1] = [celdas(t.filas[0])[1], celdas(t.filas[0])[2], celdas(t.filas[2])[1], celdas(t.filas[2])[2]].map(Number);
+  assert.deepEqual([lead0 - va0, lead1 - va1, lead0 - va0 - (lead1 - va1)], [40, 29, 11]);
   assert.equal(t.pie, 'Esperas futuras = 38 − 15 + 4 = 27 min.');
   const s = semaforo(r.resultado, 'Estado futuro');
   assert.match(s.texto, /pasa de 15 min a 4 min/);

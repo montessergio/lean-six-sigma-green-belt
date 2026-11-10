@@ -104,7 +104,7 @@ export default function lab12(ctx = {}) {
     ...(guia?.piezas?.length
       ? [{
         id: 'guia', etiqueta: 'Guía M5 §4: fuerza de asentamiento (10 × 3 × 2)',
-        ayuda: 'Tres operadores miden diez piezas dos veces: R̄ 0.303, EV 1.38, AV 1.02, R&R 1.72, PV 10.02, TV 10.16. %GRR 16.9 % y ndc 8: aceptable condicionalmente. La guía redondea X̄diff a 0.40; con el valor exacto (0.395) sale su AV de 1.02.',
+        ayuda: 'Tres operadores miden diez piezas dos veces: R̄ 0.303, EV 1.38, AV 1.02, R&R 1.72, PV 10.02, TV 10.16. %GRR 16.9 % y ndc 8: aceptable condicionalmente. Las medias de los operadores son 50.39, 50.70 y 50.305, así que X̄diff = 0.395; si lo redondeas a 0.40, el AV sube a cerca de 1.03.',
         valores: { ...diseno, unidad: guia.unidad ?? 'N', mediciones: filasGuia },
       }]
       : []),

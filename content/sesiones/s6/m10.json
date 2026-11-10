@@ -394,7 +394,7 @@
           "etiqueta": "LÍMITES DE LA CARTA u",
           "tex": "LSC=\\bar{u}+3\\sqrt{\\bar{u}/n}\\qquad LIC=\\max\\left[0,\\ \\bar{u}-3\\sqrt{\\bar{u}/n}\\right]",
           "texto": "LSC = ū + 3√(ū/n) · LIC = máx[0, ū − 3√(ū/n)]",
-          "nota": "ū es el promedio de defectos por unidad y n, el número de oportunidades del periodo (unidades × 5)"
+          "nota": "ū es el promedio de defectos por oportunidad y n, las oportunidades del periodo (unidades × 5). En DPMO la dispersión es 3√(10⁶ · ū ÷ n): con ū ≈ 312 y n = 10,000 vale ≈ 530 (LSC ≈ 842, LIC = 0)"
         },
         {
           "tipo": "nota",

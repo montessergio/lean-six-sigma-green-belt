@@ -532,9 +532,9 @@ test('Chi-cuadrada: plantilla Excel (285/15, 280/20, 262/38) → χ² = 13.09, g
   assert.equal(r.esperadas[1][0].toFixed(2), '24.33');
 });
 
-test('Chi-cuadrada: fallas de continuidad de la guía M7 §5 (2 · 2 · 6 de 5,340) → χ² ≈ 3.20, p ≈ 0.20, no se rechaza H₀; esperados 3.33 < 5', () => {
-  const r = A.chiCuadrada([[2, 2, 6], [5340 - 2, 5340 - 2, 5340 - 6]]);
-  assert.equal(r.N, 16020);
+test('Chi-cuadrada: fallas de continuidad de la guía M7 §5 (2 · 2 · 6 de 5,333 · 5,333 · 5,334) → χ² ≈ 3.20, p ≈ 0.20, no se rechaza H₀; esperados 3.33 < 5', () => {
+  const r = A.chiCuadrada([[2, 2, 6], [5333 - 2, 5333 - 2, 5334 - 6]]);
+  assert.equal(r.N, 16000);
   assert.equal(r.gl, 2);
   assert.equal(r.chi2.toFixed(2), '3.20');
   assert.equal(r.p.toFixed(2), '0.20');
@@ -633,8 +633,8 @@ test('Regresión: `nivel` cambia el IC de la pendiente y los intervalos de la pr
 });
 
 for (const [x, n, confianza, bajo, alto] of [
-  [2, 5340, 0.95, 0.00010271614756587248, 0.0013646662366459186], // fallas del Turno 1 de la guía
-  [6, 5340, 0.95, 0.0005150524417934425, 0.0024493803436414193], // Turno 3
+  [2, 5333, 0.95, 0.00010285097883504907, 0.0013664560787568186], // fallas del Turno 1 de la guía
+  [6, 5334, 0.95, 0.0005156319143904919, 0.0024521330413326456], // Turno 3
   [15, 300, 0.95, 0.030531640629347285, 0.08084703347274416], // plantilla Excel, defectos del Turno 1
   [38, 300, 0.99, 0.08515773050715829, 0.18433180743196875],
   [0, 10, 0.95, 0, 0.27753279986288926],

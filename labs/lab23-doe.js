@@ -10,9 +10,10 @@
  *   t = efecto ÷ error estándar, valor p con t de Student de gl grados (dos colas); SC = N × efecto² ÷ 4; % de contribución = SC ÷ SC total.
  * Función pura de los datos capturados; la interfaz solo pinta lo que devuelve calcular().
  *
- * Diferencias con la guía y la plantilla: la guía escribe 0.05 como «error estándar de cada efecto», que es el del coeficiente (efecto ÷ 2);
- * el del efecto es 0.10 y el margen ±0.278 en lugar de ±0.14. Las tres conclusiones no cambian y el estadístico t es el mismo (−9, −4, −1).
- * La plantilla pide el mismo número de réplicas en las cuatro corridas; aquí se aceptan réplicas desiguales (efectos y prueba t sí, sumas de
+ * Ojo con el error estándar: 0.05 es el del coeficiente (efecto ÷ 2); el del efecto, una diferencia de promedios, es 0.10 y el margen ±0.278
+ * en lugar de ±0.14. Las tres conclusiones no cambian y el estadístico t es el mismo (−9, −4, −1). (El libro ya usa 0.10 y ±0.28 en la tabla
+ * de efectos, pero conserva 0.05 y ±0.14 en la fórmula del margen y en la fila de la interacción.)
+ * Diferencias con la plantilla: pide el mismo número de réplicas en las cuatro corridas; aquí se aceptan réplicas desiguales (efectos y prueba t sí, sumas de
  * cuadrados no) y también una sola réplica (solo efectos, sin prueba, como el ejercicio 2 de la guía). La predicción con 173 N y 7 mm la calcula el
  * laboratorio con el modelo de la plantilla; la guía solo decide esos valores.
  *
@@ -171,7 +172,7 @@ export default function lab23() {
     presets: [
       {
         id: 'guia', etiqueta: 'Guía M9: fuerza de engarzado y longitud de pelado (2 réplicas)',
-        ayuda: 'Las ocho corridas del módulo: resistencia de contacto en mΩ, a minimizar. Efectos de −0.90, −0.40 y −0.10. La guía da un error estándar de 0.05 mΩ y un margen de ±0.14; ese 0.05 es el del coeficiente (efecto ÷ 2): el del efecto es 0.10 y el margen ±0.278. Las conclusiones no cambian. La predicción con 173 N y 7 mm (la decisión de la guía) la calcula el laboratorio; la guía no da ese número.',
+        ayuda: 'Las ocho corridas del módulo: resistencia de contacto en mΩ, a minimizar. Efectos de −0.90, −0.40 y −0.10. El error estándar del efecto es 0.10 mΩ y el margen ±0.278; el 0.05 (y un margen de ±0.14) sería el del coeficiente, efecto ÷ 2. Las conclusiones no cambian. La predicción con 173 N y 7 mm (la decisión de la guía) la calcula el laboratorio; la guía no da ese número.',
         valores: { ...BASE },
       },
       {

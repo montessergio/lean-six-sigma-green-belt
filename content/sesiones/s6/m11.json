@@ -103,7 +103,7 @@
         },
         {
           "tipo": "texto",
-          "texto": "El Pareto concentró la atención. El Ishikawa y los 5 Porqués llegaron a una causa raíz procesal: la instrucción de trabajo no especificaba un valor numérico de fuerza de engarzado. El AMEF la priorizó con números y el módulo 7 la puso a prueba con datos, cerrando el círculo entre causa raíz y defecto observado."
+          "texto": "El Pareto concentró la atención en tres categorías (84 %). El etiquetado tuvo más defectos que el torque (7 frente a 4), pero se priorizó el torque por su impacto crítico en la funcionalidad del arnés y su relación directa con la unión. El Ishikawa y los 5 Porqués llegaron a una causa raíz procesal: la instrucción de trabajo no especificaba un valor numérico de fuerza de engarzado. El AMEF la priorizó con números y el módulo 7 la puso a prueba con datos, cerrando el círculo entre causa raíz y defecto observado."
         }
       ]
     },

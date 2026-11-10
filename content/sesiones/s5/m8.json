@@ -709,27 +709,25 @@
             },
             {
               "numero": "4",
-              "titulo": "Conectar takt time y PCE",
-              "texto": "La línea de arneses tiene un PCE de 27.3 % (módulo 4) y un takt de 56.25 s por unidad. ¿Cuánto de ese tiempo es valor agregado y cuánto es desperdicio?",
-              "verificacion": "La guía responde: valor agregado = 0.273 × 56.25 = 15.36 s; desperdicio = 56.25 − 15.36 = 40.89 s.",
+              "titulo": "PCE y lead time con Kanban",
+              "texto": "La línea de arneses tiene 15 min de valor agregado y 55 min de lead time (PCE de 27.3 %). Con Kanban el lead time baja a 44 min, sin cambiar el takt. ¿Cuál es el nuevo PCE y cuánto desperdicio se eliminó?",
+              "verificacion": "La guía responde: PCE = 15 ÷ 44 = 34.1 %; desperdicio de 40 min (55 − 15) a 29 min (44 − 15): 11 min menos.",
               "etiquetaVerificacion": "Comparar con la guía",
-              "lab": "lab21",
-              "numeroLab": "21",
+              "lab": "lab20",
+              "numeroLab": "20",
               "valores": {
-                "minTurno": 480,
-                "turnos": 1,
-                "descansos": 30,
-                "paros": 0,
-                "demanda": 2400,
-                "periodo": "semana",
-                "diasSemana": 5,
-                "demandaAnterior": null,
-                "contenedor": null,
-                "estaciones": [],
-                "pce": 27.3,
-                "cambioMin": null,
-                "reduccionSmed": null,
-                "cambiosTurno": null
+                "etapas": [
+                  {"etapa": "Corte y pelado", "tc": 3, "clase": "VA", "inv": null, "espera": null, "fty": null},
+                  {"etapa": "Engarzado de terminales", "tc": 4, "clase": "VA", "inv": null, "espera": 15, "fty": null},
+                  {"etapa": "Ensamble de conectores", "tc": 3, "clase": "VA", "inv": null, "espera": null, "fty": null},
+                  {"etapa": "Ruteo y amarre", "tc": 5, "clase": "VA", "inv": null, "espera": null, "fty": null},
+                  {"etapa": "Inspección final", "tc": 2, "clase": "SVA", "inv": null, "espera": null, "fty": null},
+                  {"etapa": "Resto de esperas y transporte", "tc": 0, "clase": "Desperdicio", "inv": null, "espera": 23, "fty": null}
+                ],
+                "demanda": null,
+                "disponible": null,
+                "mejoraFila": "2",
+                "esperaNueva": 4
               }
             }
           ]

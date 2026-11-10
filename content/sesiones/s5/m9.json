@@ -409,7 +409,7 @@
         },
         {
           "tipo": "nota",
-          "texto": "La guía escribe 0.05 y ±0.14: ese es el error estándar de cada coeficiente (efecto ÷ 2). Para los efectos como diferencia de promedios corresponden 0.10 y ±0.278. Las conclusiones no cambian."
+          "texto": "Ojo con el error estándar: un efecto es una diferencia de promedios y su error estándar es 0.10 mΩ. El 0.05 es el del coeficiente de la regresión (efecto ÷ 2) y daría un margen de ±0.14, la mitad del correcto. Con ±0.278 las conclusiones no cambian."
         }
       ]
     },

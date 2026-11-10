@@ -2,8 +2,8 @@
  * Verifica js/lib/medir.js (PCE, tamaño de muestra, Gauge R&R y capacidad).
  *
  * Los valores esperados NO salen del propio código: se calcularon aparte con Python (NumPy/SciPy) o a mano con las
- * fórmulas de la guía (M4 §1–4, M5 §4–5) y de las plantillas de Excel. Donde la guía redondea (p. ej. X̄diff = 0.40
- * en vez de 0.395) se anota la diferencia.
+ * fórmulas de la guía (M4 §1–4, M5 §4–5) y de las plantillas de Excel. Donde la guía redondea (p. ej. 162.5 DPMO → 162
+ * o el AV con X̄diff = 0.40 en vez de 0.395) se anota la diferencia.
  * Ejecutar:  node --test
  */
 import { test } from 'node:test';
@@ -265,7 +265,7 @@ test('Gauge R&R de la guía (M5 §4): 10 piezas × 3 operadores × 2 repeticione
   assert.deepEqual([r.operadores, r.piezas, r.repeticiones], [3, 10, 2]);
   cerca(r.rBarra, 0.3033, 1e-4, 'R̄');
   cerca(r.ev, 1.3832, 1e-4, 'EV');
-  // La guía escribe X̄diff = 0.40 (redondeado); el valor exacto es 0.395 y es el que reproduce AV = 1.02.
+  // X̄diff exacto = 0.395 (medias 50.39, 50.70 y 50.305): es el que reproduce AV = 1.02; con 0.40 saldría 1.035.
   cerca(r.xDiff, 0.395, 1e-9, 'X̄diff');
   cerca(r.av, 1.0207, 1e-4, 'AV');
   cerca(r.rr, 1.7190, 1e-3, 'R&R');

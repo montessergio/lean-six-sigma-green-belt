@@ -427,9 +427,9 @@
   },
 
   "chi": {
-    "_fuente": "Guía M7 §5 (fallas de continuidad eléctrica de ocho semanas: 2, 2 y 6 en 5,340 arneses por turno) · plantilla Excel «Chi-cuadrada» (285/15, 280/20 y 262/38). El ejemplo «Torque contra el resto» se deriva de la hoja de verificación del Excel (LAB 14) agrupando las otras cinco categorías, como sugiere la plantilla cuando hay celdas con esperado menor que 5.",
+    "_fuente": "Guía M7 §5 (fallas de continuidad eléctrica de ocho semanas: 2, 2 y 6 en 5,333, 5,333 y 5,334 arneses por turno, 16,000 en total) · plantilla Excel «Chi-cuadrada» (285/15, 280/20 y 262/38). El ejemplo «Torque contra el resto» se deriva de la hoja de verificación del Excel (LAB 14) agrupando las otras cinco categorías, como sugiere la plantilla cuando hay celdas con esperado menor que 5.",
     "estratos": ["Turno 1", "Turno 2", "Turno 3"],
-    "guia": { "unidadesPorTurno": 5340, "fallas": [2, 2, 6] },
+    "guia": { "unidadesPorTurno": [5333, 5333, 5334], "fallas": [2, 2, 6] },
     "excel": {
       "filas": [
         { "categoria": "Conforme", "conteos": [285, 280, 262] },

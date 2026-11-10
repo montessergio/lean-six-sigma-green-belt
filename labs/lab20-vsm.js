@@ -2,7 +2,7 @@
  * LAB 20 · Mapa de flujo de valor (VSM)
  *
  * Guía: M8 §1 («Mapa de Flujo de Valor: ver el desperdicio de punta a punta», con la línea de tiempo de la línea de arneses y
- * el estado futuro con Kanban) · plantilla Excel «VSM».
+ * el estado futuro con Kanban), ejercicio 4 (PCE y lead time con Kanban) · plantilla Excel «VSM».
  *   El VSM suma al diagrama de flujo los datos de cada etapa y la línea de tiempo del pie del mapa: tiempo de ciclo arriba
  *   (valor agregado o no) y esperas abajo (los triángulos de inventario). Lead time = Σ tiempos de ciclo + Σ esperas;
  *   PCE = tiempo de valor agregado ÷ lead time. La plantilla convierte el inventario en tiempo con el takt
@@ -16,7 +16,7 @@
  * proceso con su disponibilidad, su tiempo de cambio de modelo y su tamaño de lote; este laboratorio no la incluye
  * (el LAB 22 trata la disponibilidad con el OEE).
  *
- * Presets: la línea de tiempo de la guía (lead time 55 min, PCE 27.3 % → 44 min y 34.1 % con Kanban) y los cinco procesos de
+ * Presets: la línea de tiempo de la guía y su ejercicio 4 (lead time 55 min, PCE 27.3 % → 44 min y 34.1 % con Kanban) y los cinco procesos de
  * la plantilla (takt de 0.9375 min).
  */
 import { CLASES_VSM, aplicarEspera, resumenVsm, taktTime } from '../js/lib/mejorar.js';
@@ -101,7 +101,7 @@ export default function lab20() {
     ],
     presets: [
       {
-        id: 'guia', etiqueta: 'Guía M8 §1: línea de arneses (55 min → 44 min)',
+        id: 'guia', etiqueta: 'Guía M8 §1 y ejercicio 4: línea de arneses (55 min → 44 min)',
         ayuda: 'Cinco etapas y las esperas y transportes (38 min, 15 de ellos en el buffer entre el engarzado y el ensamble). La guía no ubica los otros 23 min: se agrupan al final. Con Kanban el buffer baja a 4 min.',
         valores: { etapas: FILAS_GUIA, demanda: NaN, disponible: NaN, mejoraFila: '2', esperaNueva: 4 },
       },

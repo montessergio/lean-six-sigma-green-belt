@@ -15,7 +15,7 @@
             "AMEF: RPN = S × O × D; una severidad de 9 o 10 se revisa aunque el RPN sea bajo.",
             "Se rechaza H₀ cuando p < α. El valor p dice si hay diferencia; el intervalo de confianza, qué tan grande es.",
             "El ANOVA compara tres o más medias a la vez; la regresión lleva la causa a un umbral (≥ 173 N). Correlación no es causalidad.",
-            "La chi-cuadrada con 10 fallas en 16,020 unidades tiene poco poder: no rechazar H₀ no prueba que sea cierta."
+            "La chi-cuadrada con 10 fallas en 16,000 unidades tiene poco poder: no rechazar H₀ no prueba que sea cierta."
           ]
         }
       ]

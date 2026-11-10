@@ -231,7 +231,7 @@ export default function lab26() {
     },
     {
       id: 'ej2', etiqueta: `Guía M10, ejercicio 2: ${UB} = 0.006, n = 7,200 y 12 defectos`,
-      ayuda: `Con un ${UB} histórico de 0.006 y una semana de 1,800 unidades con 4 oportunidades cada una (n = 7,200) que registra 12 defectos: LSC = 0.00874 y LIC = 0.00326. Con u = 12 ÷ 7,200 = 0.00167 el punto cae bajo el LIC: «fuera de control» en la dirección deseable. La guía llama «DPU» a 0.006 pero lo usa como defectos por oportunidad (n = 7,200 son las oportunidades).`,
+      ayuda: `Con un ${UB} histórico de 0.006 y una semana de 1,800 unidades con 4 oportunidades cada una (n = 7,200) que registra 12 defectos: LSC = 0.00874 y LIC = 0.00326. Con u = 12 ÷ 7,200 = 0.00167 el punto cae bajo el LIC: «fuera de control» en la dirección deseable. Es un ū por oportunidad (DPO): las 7,200 son oportunidades, no unidades.`,
       valores: { ...BASE, oportunidades: 4, periodos: [{ defectos: 12, unidades: 1800 }], centro: 'dado', ubarDado: 0.006 },
     },
   ];

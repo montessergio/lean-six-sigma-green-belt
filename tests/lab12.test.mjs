@@ -38,7 +38,7 @@ test('LAB12 guía M5 §4 (10 piezas × 3 operadores × 2 repeticiones): %GRR 16.
   // paso a paso (guía): R̄ 0.3033, EV 1.3832, AV 1.0207, R&R 1.719, PV 10.017, TV 10.1634
   assert.equal(paso(r, 'R̄'), '0.3033');
   assert.equal(paso(r, 'EV'), '1.3832');
-  assert.equal(paso(r, 'X̄diff'), '0.395'); // la guía lo redondea a 0.40; con 0.40 el AV sería 1.035 y no su 1.02
+  assert.equal(paso(r, 'X̄diff'), '0.395'); // exacto (medias 50.39, 50.70 y 50.305); redondeado a 0.40 el AV sería 1.035 y no 1.02
   assert.equal(paso(r, 'AV'), '1.0207');
   assert.equal(paso(r, 'R&R'), '1.719');
   assert.equal(paso(r, 'Rp'), '6.1833');

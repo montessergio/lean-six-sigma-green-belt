@@ -301,7 +301,7 @@ pares), `xPred` (valor de X a predecir) y `yObjetivo` (valor de Y del que se qui
 (`2`…`5`), `nombresCols` (texto, nombres separados por comas) y `observadas` (tabla: `categoria` y `c1`…`c5`; las filas y columnas
 sin conteos se ignoran). **Intervalo de confianza de una media:** `icN`, `icMedia`, `icS` y `icUnidad`. Presets: `reg-plantilla`
 (plantilla: 12 pares de fuerza y resistencia, r = −0.994), `reg-curva` (Y = X², r = 0 con una relación perfecta), `chi-guia` (M7 §5:
-2, 2 y 6 fallas en 5,340 arneses por turno, χ² = **3.20**, gl 2, p = 0.2017), `chi-plantilla` (900 unidades, χ² = 13.09),
+2, 2 y 6 fallas en 5,333, 5,333 y 5,334 arneses, 16,000 en total, χ² = **3.20**, gl 2, p = 0.2018), `chi-plantilla` (900 unidades, χ² = 13.09),
 `chi-torque` (derivado del LAB 14: torque contra el resto), `chi-2x2` (derivado: turnos 1 y 3 en 2 × 2, con Yates y Fisher),
 `ic-torque` (M7 §1: diez torques del M5, IC 95 % de **1.334 a 1.376** con z) e `ic-examen` (n = 16, x̄ = 50, s = 8). Salidas
 de la regresión: r, R², ecuación, pendiente, p, s, n, predicción y X para el Y objetivo (con bandas de confianza y de predicción);
@@ -318,9 +318,9 @@ muestra aleatoria (intervalo).
 Entradas: `etapas` (tabla de 1 a 12 filas `{etapa, tc, clase, inv, espera, fty}`: tiempo de ciclo en min, `clase` = `VA|SVA|Desperdicio`,
 inventario en unidades y espera en min después de la etapa, y FTY en %), `demanda` (unidades por día), `disponible` (min netos por
 día), `mejoraFila` (`""` o `"1"`…`"12"`) y `esperaNueva` (min). La espera de una fila es la capturada o, si falta y hay inventario y
-takt, inventario × takt (plantilla «VSM»); si hay ambas, manda la capturada. Presets: `guia` (M8 §1: seis filas, lead time **55** min,
+takt, inventario × takt (plantilla «VSM»); si hay ambas, manda la capturada. Presets: `guia` (M8 §1 y ejercicio 4: seis filas, lead time **55** min,
 valor agregado **15**, PCE **27.3 %**; el buffer de 15 min entre engarzado y ensamble baja a 4 min con Kanban → lead time **44** min y
-PCE **34.1 %**) y `excel` (plantilla: cinco procesos con inventario y FTY, takt 450 ÷ 480 = 0.9375 min, lead time 481.575 min, PCE
+PCE **34.1 %**; el tiempo sin valor agregado pasa de 40 a 29 min, **11** min menos) y `excel` (plantilla: cinco procesos con inventario y FTY, takt 450 ÷ 480 = 0.9375 min, lead time 481.575 min, PCE
 0.72 %, RTY 89.4 %, 510 unidades en proceso). Salidas: `lead`, `va`, `esperas`, `pce`, `sva`, `cuello`, `mayor-espera`, `lead-futuro`,
 `pce-futuro` y, con takt, `takt`, `rty` e `inventario`. Tablas: «El mapa, etapa por etapa» y «Estado actual y estado futuro (…)».
 Semáforos: «PCE frente a las referencias» (5 % de los VSM reales según la guía y 25 % de los procesos ya mejorados con Lean), «Mayor
@@ -335,8 +335,8 @@ Entradas: `minTurno`, `turnos`, `descansos` y `paros` (min por turno; `paros` = 
 por contenedor, para el pitch), `estaciones` (tabla de 0 a 12 filas `{estacion, tc}` con tc en min), `pce` (%), `cambioMin`,
 `reduccionSmed` (%) y `cambiosTurno`. Takt = tiempo neto por día ÷ demanda por día. Presets: `guia` (M8 §1: 450 min y 2,400 por
 semana en 5 días → 480 por día, **0.9375** min = **56.25** s frente a 67.5 s con 2,000), `ej1` (2 turnos de 420 min, 6 días y 5,040
-piezas → **60** s), `ej3` (25 min, 50 % y 3 cambios → **37.5** min por turno), `ej4` (PCE 27.3 % → **15.36** s de valor agregado y
-**40.89** s de desperdicio) y `excel` (plantilla «Takt Time»: 435 min netos y 480 por día → **54.375** s, pitch de 50 unidades de
+piezas → **60** s), `ej3` (25 min, 50 % y 3 cambios → **37.5** min por turno), `pce` (PCE 27.3 % → **15.36** s de valor agregado y
+**40.89** s de desperdicio: lectura de §1, aproximada) y `excel` (plantilla «Takt Time»: 435 min netos y 480 por día → **54.375** s, pitch de 50 unidades de
 45.3125 min y seis estaciones con 4.25 min de contenido, **5** operadores mínimos y eficiencia de balanceo de **78.7 %**). Salidas:
 `takt`, `neto`, `demanda-dia`, `por-hora` y, según lo capturado, `takt-anterior`, `cambio-takt`, `va-takt`, `desperdicio-takt`,
 `ahorro-cambio`, `ahorro-turno`, `pitch`, `contenido`, `operadores`, `eficiencia`, `exceden` y `lenta`. Tablas: «Del tiempo disponible
@@ -369,9 +369,10 @@ gl = N − 4, error estándar del efecto = ½ √(CME × Σ 1/nᵢ), t, valor p 
 diseños balanceados). Presets: `guia` (M9 §4, dos réplicas: efectos **−0.90 / −0.40 / −0.10**, gl 4, t −9 / −4 / −1, p 0.0008 / 0.0161 /
 0.3739, margen **±0.278**; predicción de 1.0846 mΩ con 173 N y 7 mm), `excel` (plantilla «DOE 2x2», tres réplicas: efectos 22.0 / 7.97 /
 4.0, gl 8, SC 1,452 / 190.4 / 48), `ej2` (una réplica: 12, 18, 14, 22 → **7 / 3 / 1**, sin prueba), `ej3` (15, 22, 19, 30 → B = **6**;
-clave en el Apéndice C) e `interaccion` (variante didáctica con datos inventados: efectos 1 / −1 / −19). **Diferencia con la guía:**
-esta escribe 0.05 como «error estándar de cada efecto» y ±0.14 de margen; eso es el error estándar del coeficiente (efecto ÷ 2). Para
-el efecto como diferencia de promedios corresponden **0.10** y **±0.278**; el estadístico t es el mismo y las conclusiones no cambian.
+clave en el Apéndice C) e `interaccion` (variante didáctica con datos inventados: efectos 1 / −1 / −19). **Ojo con el error estándar:**
+0.05 y ±0.14 son los del coeficiente (efecto ÷ 2). Para el efecto como diferencia de promedios corresponden **0.10** y **±0.278**; el
+estadístico t es el mismo y las conclusiones no cambian. El libro ya usa 0.10 y ±0.28 en la tabla de efectos, pero conserva 0.05 y ±0.14
+en la fórmula del margen y en la fila de la interacción (pendiente de corregir allí).
 Salidas: `efecto-a`, `efecto-b`, `efecto-ab`, `gl`, `mejor`, `prediccion` y, con réplicas, `se` y `margen` (y `r2` si el diseño es
 balanceado). Tablas: «Corridas y promedios», «Efectos y prueba t» (o «Efectos (sin prueba: no hay error estimado)») y «Descomposición de
 la variación» (solo balanceado). Semáforos: «Efecto de A», «Efecto de B», «Interacción AB», «Réplicas», «Mejor combinación» y
@@ -431,8 +432,8 @@ efecto de la mejora y no una causa especial por corregir), `excel` (plantilla «
 n = 7,200 y 12 defectos → u **0.00167**, LSC **0.00874** y LIC **0.00326**: señal bajo el LIC, la «dirección deseable»). Salidas: `periodos`,
 `ubar`, `lsc`, `lic`, `senales` y, según el caso, `ubar2`, `lsc2`, `lic2` y `cambio` (dos fases) o `u` (con ū histórico). Tablas: «Límites de
 control», «Periodo por periodo» y, con dos fases, «Una línea central frente a dos fases». Semáforos: «Carta u (estabilidad)», «Línea central
-nueva», «Reglas 2 y 3 (no aplicadas)», «Límite inferior (LIC)» y «Número de periodos». Gráfica: `carta-u`. **Diferencias:** la guía llama «DPU»
-al 0.006 del ejercicio 2 pero lo usa por oportunidad (las 7,200 son oportunidades), así que aquí se rotula «defectos por unidad u oportunidad»;
+nueva», «Reglas 2 y 3 (no aplicadas)», «Límite inferior (LIC)» y «Número de periodos». Gráfica: `carta-u`. **Diferencias:** el 0.006 del
+ejercicio 2 es un ū por oportunidad (DPO; las 7,200 son oportunidades), así que aquí se rotula «defectos por unidad u oportunidad»;
 el −48 % compara las líneas centrales de la carta (312.5 → 162.5) y el −46 % del caso compara la línea base de 300 DPMO con 162; la plantilla solo
 aplica la regla 1.
 
@@ -481,6 +482,6 @@ Presets obligatorios (ids): 01 `guia`,`rechazos`,`fuerza`,`torque` · 02 `guia`,
 07 `libro`,`excel` · 08 `guia`,`inconsistente` · 09 `libro`,`excel` · 10 `guia`,`excel`,`credito` · 11 `guia`,`excel` ·
 12 `guia`,`excel`,`sesgo` · 13 `guia`,`ej2`,`ej4`,`excel` · 14 `guia`,`excel` · 15 `guia`,`tickets`,`excel`,`hoja` ·
 16 `guia`,`excel`,`persona` · 17 `guia`,`empaque`,`excel` · 18 `guia`,`minimo`,`excel`,`sinDiferencia` · 19 `reg-plantilla`,`reg-curva`,
-`chi-guia`,`chi-plantilla`,`chi-torque`,`chi-2x2`,`ic-torque`,`ic-examen` · 20 `guia`,`excel` · 21 `guia`,`ej1`,`ej3`,`ej4`,`excel` ·
+`chi-guia`,`chi-plantilla`,`chi-torque`,`chi-2x2`,`ic-torque`,`ic-examen` · 20 `guia`,`excel` · 21 `guia`,`ej1`,`ej3`,`pce`,`excel` ·
 22 `guia`,`guia-turno`,`excel`,`ej5`,`examen` · 23 `guia`,`excel`,`ej2`,`ej3`,`interaccion` · 24 `guia`,`excel`,`corregir-olvidar` ·
 25 `guia`,`excel`,`ej1`,`ej4`,`examen5` · 26 `guia`,`guia-una-linea`,`excel`,`ej2`.

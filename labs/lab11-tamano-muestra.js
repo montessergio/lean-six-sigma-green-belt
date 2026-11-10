@@ -109,7 +109,7 @@ export default function lab11(ctx = {}) {
       'Si exiges la mitad del margen de error, ¿cuántas veces crece la muestra? Compruébalo en la tabla de sensibilidad y explica por qué no es una relación lineal.',
       '¿Cuántas mediciones por turno y cuántas en total puedes pagar en tiempo y dinero? ¿Qué margen de error alcanzas con ese presupuesto?',
       '¿Por qué conviene p = 50 % cuando no tienes una estimación previa? ¿Cuándo sería un desperdicio usarlo?',
-      'La guía usa la fórmula de la media (sección A) para «detectar una diferencia de 0.02 N·m». ¿Qué cambia al usar la sección C con 80 % de potencia, y cuál de las dos responde de verdad a «¿difieren los turnos?»?',
+      'La guía usa la fórmula de la media (sección A) para estimar el torque promedio con un margen de ±0.02 N·m. Si en cambio quisieras saber si dos turnos difieren en 0.02 N·m, ¿qué cambia al usar la sección C con 80 % de potencia?',
     ],
 
     calcular(e) {

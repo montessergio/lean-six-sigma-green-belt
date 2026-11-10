@@ -1,20 +1,20 @@
 /**
  * LAB 21 · Takt time y balanceo de estaciones
  *
- * Guía: M8 §1 («Takt Time: el ritmo del cliente» y su conexión con el PCE), §5 (SMED) y ejercicios 1, 3 y 4 · plantilla Excel «Takt Time».
+ * Guía: M8 §1 («Takt Time: el ritmo del cliente» y su conexión con el PCE), §5 (SMED) y ejercicios 1 y 3 · plantilla Excel «Takt Time».
  *   Takt = tiempo neto disponible ÷ demanda del cliente. El tiempo neto es el de los turnos menos los descansos y las juntas, 5S
  *   y mantenimiento planeado de cada turno. Una estación sigue el ritmo del cliente si su tiempo de ciclo no pasa del takt.
  *   Balancear es repartir el contenido de trabajo para acercar todas las estaciones al takt sin rebasarlo: la plantilla calcula
  *   los operadores mínimos (⌈contenido ÷ takt⌉) y la eficiencia de balanceo (contenido ÷ (n × tiempo de ciclo máximo)).
  *   Opcionales: la demanda anterior (la guía compara 67.5 s con 56.25 s), el pitch (takt × cantidad por contenedor), el reparto
- *   del takt con el PCE (ej. 4) y el tiempo que libera el SMED en el cambio de modelo (ej. 3).
+ *   del takt con el PCE (lectura de §1) y el tiempo que libera el SMED en el cambio de modelo (ej. 3).
  * Función pura de los datos capturados; la interfaz solo pinta lo que devuelve calcular().
  *
  * Diferencias con la plantilla: añade la demanda semanal, la comparación con la demanda anterior, la holgura de cada estación en
  * segundos y las dos cifras de la guía (PCE × takt y SMED), que la plantilla no trae.
  *
  * Presets: la línea de arneses de la guía (450 min y 2,400 piezas por semana: 56.25 s frente a 67.5 s), el ejercicio 1 (60 s),
- * el ejercicio 3 (37.5 min por turno), el ejercicio 4 (15.36 s de valor agregado) y las seis estaciones de la plantilla (54.375 s).
+ * el ejercicio 3 (37.5 min por turno), el reparto del takt con el PCE de §1 (15.36 s de valor agregado) y las seis estaciones de la plantilla (54.375 s).
  */
 import { ahorroSmed, balancearEstaciones, demandaDiaria, ritmoCliente, tiempoNeto, valorEnTakt } from '../js/lib/mejorar.js';
 import { corto, entero, pct, plural } from '../js/core/format.js';
@@ -59,7 +59,7 @@ const SUPUESTO = {
     'El takt supone una demanda estable y un día de trabajo típico: si la demanda o los turnos cambian, el takt cambia y la línea debe poder moverse con él. ' +
     'Los tiempos de ciclo son por unidad y de cada estación, medidos y no de diseño; el lead time de punta a punta se estudia con el VSM (LAB 20). ' +
     'Los operadores mínimos y la eficiencia de balanceo suponen que el trabajo se puede repartir sin límite entre las estaciones, lo que en la práctica frenan las herramientas, la secuencia y las habilidades. ' +
-    'PCE × takt (ejercicio 4 de la guía) es una lectura aproximada: reparte el takt con la proporción del PCE, que se define sobre el lead time.',
+    'PCE × takt (lectura de la sección 1 de la guía) es una lectura aproximada: reparte el takt con la proporción del PCE, que se define sobre el lead time. El ejercicio 4 del módulo 8 calcula el PCE donde corresponde, sobre el lead time del flujo (LAB 20).',
 };
 
 const recorta = (texto, n = 30) => (texto.length > n ? `${texto.slice(0, n - 1)}…` : texto);
@@ -99,7 +99,7 @@ export default function lab21() {
         ayuda: 'Una fila por estación. Con el takt verás cuáles lo cumplen y con la más lenta, qué tan balanceada está la línea.',
       },
       { tipo: 'seccion', etiqueta: 'Opcional · PCE y cambio de modelo' },
-      { id: 'pce', tipo: 'numero', etiqueta: 'PCE de la línea (%)', valor: NaN, min: 0, max: 100, marcador: 'p. ej. 27.3', ayuda: 'Eficiencia del ciclo del proceso, del VSM (LAB 20). Reparte el takt en valor agregado y desperdicio, como el ejercicio 4 de la guía.' },
+      { id: 'pce', tipo: 'numero', etiqueta: 'PCE de la línea (%)', valor: NaN, min: 0, max: 100, marcador: 'p. ej. 27.3', ayuda: 'Eficiencia del ciclo del proceso, del VSM (LAB 20). Reparte el takt en valor agregado y desperdicio, como lo plantea la sección 1 de la guía.' },
       { id: 'cambioMin', tipo: 'numero', etiqueta: 'Tiempo del cambio de modelo (min)', valor: NaN, min: 0, marcador: 'p. ej. 25' },
       { id: 'reduccionSmed', tipo: 'numero', etiqueta: 'Reducción con SMED (%)', valor: NaN, min: 0, max: 100, marcador: 'p. ej. 50', ayuda: 'La guía toma 50 % como la reducción típica más conservadora.' },
       { id: 'cambiosTurno', tipo: 'numero', etiqueta: 'Cambios de modelo por turno', valor: NaN, min: 0, marcador: 'p. ej. 3' },
@@ -121,8 +121,8 @@ export default function lab21() {
         valores: { ...BASE, cambioMin: 25, reduccionSmed: 50, cambiosTurno: 3 },
       },
       {
-        id: 'ej4', etiqueta: 'Guía M8 ej. 4: takt de 56.25 s y PCE de 27.3 %',
-        ayuda: 'Con el takt de la línea de arneses y el PCE del módulo 4, 15.36 s de cada takt son valor agregado y 40.89 s son desperdicio.',
+        id: 'pce', etiqueta: 'Guía M8 §1: takt de 56.25 s y PCE de 27.3 %',
+        ayuda: 'Con el takt de la línea de arneses y el PCE del módulo 4, 15.36 s de cada takt son valor agregado y 40.89 s son desperdicio. Es una lectura aproximada: el PCE se define sobre el lead time (ejercicio 4, en el LAB 20).',
         valores: { ...BASE, pce: 27.3 },
       },
       {

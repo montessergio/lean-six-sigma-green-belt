@@ -50,7 +50,7 @@ test('Gauge R&R (Sesión 3): 60 lecturas en formato largo, con las medias de ope
   };
   assert.ok(Math.abs(media('A') - 50.39) < 1e-9);
   assert.ok(Math.abs(media('B') - 50.7) < 1e-9);
-  assert.ok(Math.abs(media('C') - 50.305) < 1e-9); // la guía redondea a 50.31
+  assert.ok(Math.abs(media('C') - 50.305) < 1e-9); // 50.305 exacto (la guía ya lo escribe así)
 });
 
 test('Capacidad (Sesión 3): 50 fuerzas de engarzado de la plantilla, media 181.948 N y ningún valor bajo el LSL de 173 N', () => {

@@ -175,7 +175,7 @@
             { "etiqueta": "DISCRETOS (DE ATRIBUTO)", "texto": "Son conteos o categorías que no admiten subdivisión con sentido: pasa / no pasa, número de defectos, tipo de falla." }
           ]
         },
-        { "tipo": "nota", "texto": "Si el dato puede recolectarse de las dos formas, prefiere el continuo: aporta más información por observación y, en general, requiere una muestra menor para llegar a la misma conclusión." },
+        { "tipo": "nota", "texto": "Si el dato puede recolectarse de las dos formas, prefiere el continuo: aporta más información por observación y, como verás en el módulo 7, en general requiere una muestra menor para llegar a la misma conclusión." },
         { "tipo": "texto", "texto": "En la línea de arneses, el torque de terminal y la fuerza de asentamiento del conector se prestan a datos continuos; la continuidad eléctrica, el etiquetado y el ruteo son inherentemente pasa / no pasa." }
       ]
     },
@@ -305,8 +305,8 @@
           "columnas": ["Verificación", "Definición operacional", "Tipo de dato", "Muestreo"],
           "filas": [
             ["Continuidad eléctrica", "Circuito cerrado en las 12 posiciones del conector, con probador calibrado", "Discreto", "100 % de la producción"],
-            ["Torque de terminales", "Valor en N·m registrado por la llave calibrada en cada terminal", "Continuo", "5 arneses por turno (estratificado)"],
-            ["Asentamiento del conector", "Fuerza de extracción en N, con dinamómetro, sobre el mínimo del plano", "Continuo", "5 arneses por turno (estratificado)"],
+            ["Torque de terminales", "Valor en N·m registrado por la llave calibrada en cada terminal", "Continuo", "12 arneses por turno (estratificado)"],
+            ["Asentamiento del conector", "Fuerza de extracción en N, con dinamómetro, sobre el mínimo del plano", "Continuo", "12 arneses por turno (estratificado)"],
             ["Colocación de etiquetado", "Etiqueta legible, en la posición del plano, sin dobleces", "Discreto", "100 % de la producción"],
             ["Ruteo del cableado", "Cableado sujeto en los 6 puntos de amarre del plano, sin cruces", "Discreto", "100 % de la producción"]
           ],

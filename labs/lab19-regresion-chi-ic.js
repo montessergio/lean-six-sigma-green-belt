@@ -22,7 +22,7 @@
  * estandarizados y las tasas con intervalo de Wilson.
  *
  * Presets: la plantilla (12 pares; la guía publica su recta a partir de diez pares que solo aparecen en una figura), una
- * relación curva inventada (r = 0), la chi-cuadrada de la guía (2, 2 y 6 fallas en 5,340 arneses por turno), la de la
+ * relación curva inventada (r = 0), la chi-cuadrada de la guía (2, 2 y 6 fallas en 5,333, 5,333 y 5,334 arneses), la de la
  * plantilla, dos derivados (torque contra el resto, tomado del LAB 14, y turnos 1 y 3 de la guía en 2 × 2) y el torque del
  * Módulo 5 y el ejemplo del examen para el intervalo de confianza.
  */
@@ -158,7 +158,7 @@ const SUPUESTO_CHI = {
 };
 
 const PREGUNTAS_CHI = [
-  'Con los datos de la guía (2, 2 y 6 fallas en 5,340 arneses por turno) la chi-cuadrada no encuentra diferencia entre turnos. ¿Quiere decir que los tres turnos fallan igual? Mira los intervalos de las tasas y el aviso sobre los esperados menores que 5.',
+  'Con los datos de la guía (2, 2 y 6 fallas en unos 5,333 arneses por turno) la chi-cuadrada no encuentra diferencia entre turnos. ¿Quiere decir que los tres turnos fallan igual? Mira los intervalos de las tasas y el aviso sobre los esperados menores que 5.',
   'Multiplica por 4 todos los conteos de la guía (las proporciones no cambian): ¿qué pasa con χ² y con el valor p? ¿Qué te enseña eso sobre el poder de la prueba cuando hay pocos eventos?',
   'Compara este resultado con el ANOVA del LAB 18 sobre los mismos turnos (p < 0.001). ¿Por qué no se contradicen? ¿Por qué conviene medir un dato continuo cuando se puede?',
   'En el ejemplo de la plantilla (285 · 15, 280 · 20 y 262 · 38), ¿qué celda aporta más a χ²? ¿Qué te dice V de Cramér que no te dice el valor p?',
@@ -1025,14 +1025,15 @@ export default function lab19(ctx = {}) {
   const chiCaso = caso.chi ?? {};
   const estratos = chiCaso.estratos?.length >= 3 ? chiCaso.estratos : ['Turno 1', 'Turno 2', 'Turno 3'];
   const fallas = chiCaso.guia?.fallas ?? [2, 2, 6];
-  const porTurno = chiCaso.guia?.unidadesPorTurno ?? 5340;
+  const unidadesGuia = [].concat(chiCaso.guia?.unidadesPorTurno ?? [5333, 5333, 5334]); // un número (igual en todos) o una lista
+  const porTurno = fallas.map((_, j) => unidadesGuia[j] ?? unidadesGuia[unidadesGuia.length - 1]);
   const filasPlantilla = chiCaso.excel?.filas?.length ? chiCaso.excel.filas : [{ categoria: 'Conforme', conteos: [285, 280, 262] }, { categoria: 'Defecto', conteos: [15, 20, 38] }];
   // «Torque contra el resto»: la fila de torque de la hoja de verificación del LAB 14 contra la suma de las demás categorías.
   const hoja = caso.hojaVerificacion?.excel?.categorias ?? [];
   const filaTorque = hoja.find((c) => /^torque/i.test(c.categoria));
   const torque = filaTorque?.conteos?.slice(0, 3) ?? [6, 8, 21];
   const resto = filaTorque ? estratos.map((_, j) => hoja.filter((c) => c !== filaTorque).reduce((a, c) => a + (c.conteos?.[j] ?? 0), 0)) : [25, 22, 21];
-  const guiaFilas = [aFila('Falla de continuidad', fallas), aFila('Sin falla', fallas.map((f) => porTurno - f))];
+  const guiaFilas = [aFila('Falla de continuidad', fallas), aFila('Sin falla', fallas.map((f, j) => porTurno[j] - f))];
   const nombresTres = estratos.slice(0, 3).join(', ');
 
   const icCaso = caso.ic?.torque ?? {};
@@ -1051,8 +1052,8 @@ export default function lab19(ctx = {}) {
       valores: { ...base, herramienta: 'regresion', nombreX: 'X', unidadX: '', nombreY: 'Y', unidadY: '', datosX: CURVA_X, datosY: CURVA_X.map((v) => v * v), xPred: NaN, yObjetivo: NaN },
     },
     {
-      id: 'chi-guia', etiqueta: 'Guía M7 §5: fallas por turno (2, 2 y 6 en 5,340 arneses)', visibleSi: esChi,
-      ayuda: 'Las fallas de continuidad eléctrica de las ocho semanas: 2, 2 y 6 en 5,340 arneses por turno (16,020 en total). χ² = 3.20, gl = 2, p = 0.20: no se rechaza H₀ aunque el Turno 3 tenga el triple de fallas. Los esperados son 3.33 (menos de 5) y la prueba casi no tiene poder: no concluyas que los turnos fallan igual.',
+      id: 'chi-guia', etiqueta: 'Guía M7 §5: fallas por turno (2, 2 y 6 en 16,000 arneses)', visibleSi: esChi,
+      ayuda: 'Las fallas de continuidad eléctrica de las ocho semanas: 2, 2 y 6 en 5,333, 5,333 y 5,334 arneses (16,000 en total). χ² = 3.20, gl = 2, p = 0.20: no se rechaza H₀ aunque el Turno 3 tenga el triple de fallas. Los esperados son 3.33 (menos de 5) y la prueba casi no tiene poder: no concluyas que los turnos fallan igual.',
       valores: { ...base, herramienta: 'chi', numCols: '3', nombresCols: nombresTres, observadas: guiaFilas },
     },
     {
@@ -1067,8 +1068,8 @@ export default function lab19(ctx = {}) {
     },
     {
       id: 'chi-2x2', etiqueta: 'Derivado de la guía: turnos 1 y 3 en una tabla 2 × 2', visibleSi: esChi,
-      ayuda: 'Solo los turnos 1 y 3 de la guía (2 contra 6 fallas en 5,340 arneses cada uno). En una tabla 2 × 2 aparecen la corrección de Yates y la prueba exacta de Fisher; con esperados de 4.0 la chi-cuadrada ya no es confiable.',
-      valores: { ...base, herramienta: 'chi', numCols: '2', nombresCols: `${estratos[0]}, ${estratos[2]}`, observadas: [aFila('Falla de continuidad', [fallas[0], fallas[2]]), aFila('Sin falla', [porTurno - fallas[0], porTurno - fallas[2]])] },
+      ayuda: 'Solo los turnos 1 y 3 de la guía (2 contra 6 fallas en 5,333 y 5,334 arneses). En una tabla 2 × 2 aparecen la corrección de Yates y la prueba exacta de Fisher; con esperados de 4.0 la chi-cuadrada ya no es confiable.',
+      valores: { ...base, herramienta: 'chi', numCols: '2', nombresCols: `${estratos[0]}, ${estratos[2]}`, observadas: [aFila('Falla de continuidad', [fallas[0], fallas[2]]), aFila('Sin falla', [porTurno[0] - fallas[0], porTurno[2] - fallas[2]])] },
     },
     {
       id: 'ic-torque', etiqueta: 'Guía M7 §1: diez torques del Módulo 5', visibleSi: esIc,

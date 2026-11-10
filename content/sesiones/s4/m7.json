@@ -484,12 +484,12 @@
     {
       "id": "m7-chi-arneses",
       "etiqueta": "M7 · CHI-CUADRADA APLICADA",
-      "titulo": "10 fallas en 16,020 unidades: χ² = 3.20",
+      "titulo": "10 fallas en 16,000 unidades: χ² = 3.20",
       "bloques": [
         {
           "tipo": "tabla",
           "columnas": ["Turno", {"t": "Unidades producidas", "num": true}, {"t": "Fallas de continuidad", "num": true}, {"t": "Fallas esperadas bajo H₀", "num": true}],
-          "filas": [["Turno 1", "5,340", "2", "3.33"], ["Turno 2", "5,340", "2", "3.33"], ["Turno 3", "5,340", "6", "3.33"], ["Total", "16,020", "10", "10.00"]],
+          "filas": [["Turno 1", "5,333", "2", "3.33"], ["Turno 2", "5,333", "2", "3.33"], ["Turno 3", "5,334", "6", "3.33"], ["Total", "16,000", "10", "10.00"]],
           "resaltar": [2]
         },
         {
@@ -532,7 +532,7 @@
               "texto": "F(2, 12) = 14.22 y p < 0.001: detecta la diferencia con claridad.",
               "estilo": "acento"
             },
-            {"etiqueta": "DATO DE ATRIBUTO · CHI-CUADRADA", "titulo": "10 fallas en 16,020 unidades", "texto": "χ² = 3.20, menor que 5.99: no alcanza para rechazar H₀."}
+            {"etiqueta": "DATO DE ATRIBUTO · CHI-CUADRADA", "titulo": "10 fallas en 16,000 unidades", "texto": "χ² = 3.20, menor que 5.99: no alcanza para rechazar H₀."}
           ]
         },
         {
@@ -559,7 +559,7 @@
             ["ANOVA", "Los turnos difieren", "F(2, 12) = 14.22 · p < 0.001; Turno 3: 165 N frente a 174–175 N"],
             ["Correlación", "Fuerza y resistencia se mueven juntas", "r = −0.99"],
             ["Regresión", "Fuerza mínima para 1.2 mΩ", "173 N; el Turno 3 queda por debajo"],
-            ["Chi-cuadrada", "Poco poder con datos de atributo", "χ² = 3.20 < 5.99; 10 fallas en 16,020 unidades"]
+            ["Chi-cuadrada", "Poco poder con datos de atributo", "χ² = 3.20 < 5.99; 10 fallas en 16,000 unidades"]
           ]
         },
         {

@@ -226,7 +226,7 @@ test('balancearEstaciones: sin takt, filas vacías y descartadas', () => {
   assert.ok(Number.isNaN(balancearEstaciones([]).eficiencia));
 });
 
-test('valorEnTakt (ej. 4 de la guía): PCE 27.3 % y takt 56.25 s dejan 15.36 s de valor agregado', () => {
+test('valorEnTakt (lectura de la guía, M8 §1): PCE 27.3 % y takt 56.25 s dejan 15.36 s de valor agregado', () => {
   const r = valorEnTakt(0.273, 56.25);
   cerca(r.va, 15.35625, 1e-9);
   cerca(r.desperdicio, 40.89375, 1e-9);
@@ -389,7 +389,7 @@ test('factorial2x2: ejemplo de la guía (2 réplicas) → efectos −0.9, −0.4
   cerca(r.sce, 0.08, 1e-12);
   cerca(r.cme, 0.02, 1e-12);
   cerca(r.sp, Math.sqrt(0.02), 1e-12);
-  cerca(r.se, 0.1, 1e-12, 'error estándar del EFECTO (la guía escribe 0.05, que es el del coeficiente)');
+  cerca(r.se, 0.1, 1e-12, 'error estándar del EFECTO (0.05 sería el del coeficiente)');
   assert.equal(r.prueba, true);
   cerca(r.tcrit, 2.7764451052, 1e-7);
   cerca(r.margen, 0.2776445105, 1e-7);
@@ -400,7 +400,7 @@ test('factorial2x2: ejemplo de la guía (2 réplicas) → efectos −0.9, −0.4
   cerca(AB.efecto, -0.1, 1e-12);
   cerca(A.coef, -0.45, 1e-12);
   cerca(B.coef, -0.2, 1e-12);
-  cerca(AB.coef, -0.05, 1e-12, 'coeficiente = efecto ÷ 2 (el 0.05 de la guía)');
+  cerca(AB.coef, -0.05, 1e-12, 'coeficiente = efecto ÷ 2 (el 0.05)');
   cerca(A.t, -9, 1e-9);
   cerca(B.t, -4, 1e-9);
   cerca(AB.t, -1, 1e-9);
