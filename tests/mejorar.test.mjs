@@ -7,7 +7,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   ahorroSmed, aplicarEspera, balancearEstaciones, cascadaOee, demandaDiaria, factorial2x2, factorMasDebil, factoresPeriodo, mayorPerdida, mejorCorrida,
-  oee, predecir2x2, resumenOee, resumenVsm, ritmoCliente, simularMejora, taktTime, tiempoNeto, valorEnTakt,
+  oee, predecir2x2, resumenOee, resumenVsm, ritmoCliente, simularMejora, taktTime, tiempoNeto,
 } from '../js/lib/mejorar.js';
 
 const cerca = (a, b, tol = 1e-9, msg = '') => assert.ok(Math.abs(a - b) <= tol, `${msg} ${a} ≠ ${b} (tol ${tol})`);
@@ -224,16 +224,6 @@ test('balancearEstaciones: sin takt, filas vacías y descartadas', () => {
   assert.equal(balancearEstaciones([]).valido, false);
   assert.equal(balancearEstaciones(undefined).valido, false);
   assert.ok(Number.isNaN(balancearEstaciones([]).eficiencia));
-});
-
-test('valorEnTakt (lectura de la guía, M8 §1): PCE 27.3 % y takt 56.25 s dejan 15.36 s de valor agregado', () => {
-  const r = valorEnTakt(0.273, 56.25);
-  cerca(r.va, 15.35625, 1e-9);
-  cerca(r.desperdicio, 40.89375, 1e-9);
-  cerca(r.va + r.desperdicio, 56.25, 1e-12);
-  assert.ok(Number.isNaN(valorEnTakt(1.2, 56.25).va));
-  assert.ok(Number.isNaN(valorEnTakt(0.3, NaN).va));
-  assert.equal(valorEnTakt(0, 60).va, 0);
 });
 
 test('ahorroSmed (ej. 3 de la guía): 25 min con 50 % y 3 cambios por turno liberan 37.5 min', () => {

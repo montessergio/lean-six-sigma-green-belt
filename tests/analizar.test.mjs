@@ -541,7 +541,7 @@ test('Chi-cuadrada: fallas de continuidad de la guía M7 §5 (2 · 2 · 6 de 5,3
   assert.equal(r.critico.toFixed(2), '5.99');
   assert.equal(r.significativo, false);
   assert.equal(r.esperadas[0][0].toFixed(2), '3.33');
-  // la guía no lo dice, pero las tres celdas de fallas esperan 3.33 < 5: la aproximación chi-cuadrada es dudosa
+  // las tres celdas de fallas esperan 3.33 < 5: la aproximación chi-cuadrada es dudosa (la nota de la guía en M7 lo advierte y apunta a una prueba exacta)
   assert.equal(r.bajas, 3);
 });
 

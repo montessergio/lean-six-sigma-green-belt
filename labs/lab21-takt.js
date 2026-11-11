@@ -1,22 +1,22 @@
 /**
  * LAB 21 · Takt time y balanceo de estaciones
  *
- * Guía: M8 §1 («Takt Time: el ritmo del cliente» y su conexión con el PCE), §5 (SMED) y ejercicios 1 y 3 · plantilla Excel «Takt Time».
+ * Guía: M8 §1 («Takt Time: el ritmo del cliente»), §5 (SMED) y ejercicios 1 y 3 · plantilla Excel «Takt Time».
  *   Takt = tiempo neto disponible ÷ demanda del cliente. El tiempo neto es el de los turnos menos los descansos y las juntas, 5S
  *   y mantenimiento planeado de cada turno. Una estación sigue el ritmo del cliente si su tiempo de ciclo no pasa del takt.
  *   Balancear es repartir el contenido de trabajo para acercar todas las estaciones al takt sin rebasarlo: la plantilla calcula
  *   los operadores mínimos (⌈contenido ÷ takt⌉) y la eficiencia de balanceo (contenido ÷ (n × tiempo de ciclo máximo)).
- *   Opcionales: la demanda anterior (la guía compara 67.5 s con 56.25 s), el pitch (takt × cantidad por contenedor), el reparto
- *   del takt con el PCE (lectura de §1) y el tiempo que libera el SMED en el cambio de modelo (ej. 3).
+ *   Opcionales: la demanda anterior (la guía compara 67.5 s con 56.25 s), el pitch (takt × cantidad por contenedor) y el tiempo
+ *   que libera el SMED en el cambio de modelo (ej. 3).
  * Función pura de los datos capturados; la interfaz solo pinta lo que devuelve calcular().
  *
  * Diferencias con la plantilla: añade la demanda semanal, la comparación con la demanda anterior, la holgura de cada estación en
- * segundos y las dos cifras de la guía (PCE × takt y SMED), que la plantilla no trae.
+ * segundos y la cifra del SMED de la guía, que la plantilla no trae.
  *
  * Presets: la línea de arneses de la guía (450 min y 2,400 piezas por semana: 56.25 s frente a 67.5 s), el ejercicio 1 (60 s),
- * el ejercicio 3 (37.5 min por turno), el reparto del takt con el PCE de §1 (15.36 s de valor agregado) y las seis estaciones de la plantilla (54.375 s).
+ * el ejercicio 3 (37.5 min por turno) y las seis estaciones de la plantilla (54.375 s).
  */
-import { ahorroSmed, balancearEstaciones, demandaDiaria, ritmoCliente, tiempoNeto, valorEnTakt } from '../js/lib/mejorar.js';
+import { ahorroSmed, balancearEstaciones, demandaDiaria, ritmoCliente, tiempoNeto } from '../js/lib/mejorar.js';
 import { corto, entero, pct, plural } from '../js/core/format.js';
 import { COLOR } from '../js/core/config.js';
 import { etiquetaH, lineaH, trazaBarras } from '../js/lib/graficas.js';
@@ -39,7 +39,7 @@ const BASE = {
   minTurno: 480, turnos: 1, descansos: 30, paros: 0,
   demanda: 2400, periodo: 'semana', diasSemana: 5, demandaAnterior: NaN, contenedor: NaN,
   estaciones: [],
-  pce: NaN, cambioMin: NaN, reduccionSmed: NaN, cambiosTurno: NaN,
+  cambioMin: NaN, reduccionSmed: NaN, cambiosTurno: NaN,
 };
 
 const UMBRAL = {
@@ -58,8 +58,7 @@ const SUPUESTO = {
   texto:
     'El takt supone una demanda estable y un día de trabajo típico: si la demanda o los turnos cambian, el takt cambia y la línea debe poder moverse con él. ' +
     'Los tiempos de ciclo son por unidad y de cada estación, medidos y no de diseño; el lead time de punta a punta se estudia con el VSM (LAB 20). ' +
-    'Los operadores mínimos y la eficiencia de balanceo suponen que el trabajo se puede repartir sin límite entre las estaciones, lo que en la práctica frenan las herramientas, la secuencia y las habilidades. ' +
-    'PCE × takt (lectura de la sección 1 de la guía) es una lectura aproximada: reparte el takt con la proporción del PCE, que se define sobre el lead time. El ejercicio 4 del módulo 8 calcula el PCE donde corresponde, sobre el lead time del flujo (LAB 20).',
+    'Los operadores mínimos y la eficiencia de balanceo suponen que el trabajo se puede repartir sin límite entre las estaciones, lo que en la práctica frenan las herramientas, la secuencia y las habilidades.',
 };
 
 const recorta = (texto, n = 30) => (texto.length > n ? `${texto.slice(0, n - 1)}…` : texto);
@@ -98,8 +97,7 @@ export default function lab21() {
         filas: BASE.estaciones, filaNueva: { estacion: '', tc: NaN }, minFilas: 0, maxFilas: MAX_ESTACIONES,
         ayuda: 'Una fila por estación. Con el takt verás cuáles lo cumplen y con la más lenta, qué tan balanceada está la línea.',
       },
-      { tipo: 'seccion', etiqueta: 'Opcional · PCE y cambio de modelo' },
-      { id: 'pce', tipo: 'numero', etiqueta: 'PCE de la línea (%)', valor: NaN, min: 0, max: 100, marcador: 'p. ej. 27.3', ayuda: 'Eficiencia del ciclo del proceso, del VSM (LAB 20). Reparte el takt en valor agregado y desperdicio, como lo plantea la sección 1 de la guía.' },
+      { tipo: 'seccion', etiqueta: 'Opcional · cambio de modelo (SMED)' },
       { id: 'cambioMin', tipo: 'numero', etiqueta: 'Tiempo del cambio de modelo (min)', valor: NaN, min: 0, marcador: 'p. ej. 25' },
       { id: 'reduccionSmed', tipo: 'numero', etiqueta: 'Reducción con SMED (%)', valor: NaN, min: 0, max: 100, marcador: 'p. ej. 50', ayuda: 'La guía toma 50 % como la reducción típica más conservadora.' },
       { id: 'cambiosTurno', tipo: 'numero', etiqueta: 'Cambios de modelo por turno', valor: NaN, min: 0, marcador: 'p. ej. 3' },
@@ -119,11 +117,6 @@ export default function lab21() {
         id: 'ej3', etiqueta: 'Guía M8 ej. 3: SMED de 25 min con 3 cambios por turno',
         ayuda: 'Un cambio de modelo de 25 min baja 50 % con SMED y ocurre 3 veces por turno: libera 37.5 min por turno.',
         valores: { ...BASE, cambioMin: 25, reduccionSmed: 50, cambiosTurno: 3 },
-      },
-      {
-        id: 'pce', etiqueta: 'Guía M8 §1: takt de 56.25 s y PCE de 27.3 %',
-        ayuda: 'Con el takt de la línea de arneses y el PCE del módulo 4, 15.36 s de cada takt son valor agregado y 40.89 s son desperdicio. Es una lectura aproximada: el PCE se define sobre el lead time (ejercicio 4, en el LAB 20).',
-        valores: { ...BASE, pce: 27.3 },
       },
       {
         id: 'excel', etiqueta: 'Plantilla Excel «Takt Time»: seis estaciones (54.375 s)',
@@ -168,10 +161,6 @@ export default function lab21() {
         else if (hayTakt) anterior = ritmoCliente({ neto, demanda: diaAnterior });
       }
       if (finito(e.contenedor) && !(e.contenedor > 0)) aviso.push('La cantidad por contenedor debe ser mayor que cero para calcular el pitch.');
-      const hayPce = finito(e.pce);
-      if (hayPce && !(e.pce >= 0 && e.pce <= 100)) aviso.push('El PCE debe estar entre 0 y 100 %.');
-      const vt = hayPce && hayTakt && e.pce >= 0 && e.pce <= 100 ? valorEnTakt(e.pce / 100, ritmo.segundos) : null;
-      if (hayPce && e.pce >= 0 && e.pce <= 100 && !hayTakt) aviso.push('Para repartir el takt con el PCE falta el takt (tiempo disponible y demanda).');
       if ([e.cambioMin, e.reduccionSmed, e.cambiosTurno].some(finito) && !haySmed) {
         aviso.push('Para el SMED captura el tiempo del cambio (mayor que cero), la reducción (de 0 a 100 %) y los cambios por turno (0 o más).');
       }
@@ -201,12 +190,6 @@ export default function lab21() {
           salidas.push(
             { id: 'takt-anterior', etiqueta: 'Takt con la demanda anterior', valor: `${corto(anterior.segundos, 3)} s`, nota: `${corto(anterior.takt, 5)} min · ${corto(diaAnterior, 2)} unidades por día` },
             { id: 'cambio-takt', etiqueta: 'Cambio del takt', valor: `${conSigno(dif)} s`, color: dif < 0 ? 'coral' : 'teal', nota: `${conSigno(dif / anterior.segundos * 100, 1)} % por unidad · demanda ${conSigno((dia / diaAnterior - 1) * 100, 1)} %` }
-          );
-        }
-        if (vt) {
-          salidas.push(
-            { id: 'va-takt', etiqueta: 'Valor agregado dentro del takt', valor: `${corto(vt.va, 2)} s`, color: 'teal', nota: `PCE ${corto(e.pce, 2)} % × ${corto(ritmo.segundos, 3)} s` },
-            { id: 'desperdicio-takt', etiqueta: 'Desperdicio dentro del takt', valor: `${corto(vt.desperdicio, 2)} s`, color: 'coral', nota: `${corto(ritmo.segundos, 3)} − ${corto(vt.va, 2)} s` }
           );
         }
       }
@@ -255,7 +238,7 @@ export default function lab21() {
           nombre: 'Cambio de demanda', estado: 'informativo',
           texto: igual
             ? `La demanda no cambia: el takt sigue en ${corto(ritmo.segundos, 3)} s por unidad.`
-            : `La demanda ${sube ? 'sube' : 'baja'} ${pct(Math.abs(dia / diaAnterior - 1), 1)} y el takt pasa de ${corto(anterior.segundos, 3)} s a ${corto(ritmo.segundos, 3)} s (${corto(dif, 3)} s ${sube ? 'menos' : 'más'} por unidad). ${sube ? 'Con los mismos turnos y el mismo personal, la línea debe producir más rápido: la guía propone subir el PCE eliminando desperdicio y no pedirle más velocidad a los operadores.' : 'La línea tiene más tiempo por unidad: revisa si conviene rebalancear con menos operadores o conservar la holgura.'}`,
+            : `La demanda ${sube ? 'sube' : 'baja'} ${pct(Math.abs(dia / diaAnterior - 1), 1)} y el takt pasa de ${corto(anterior.segundos, 3)} s a ${corto(ritmo.segundos, 3)} s (${corto(dif, 3)} s ${sube ? 'menos' : 'más'} por unidad). ${sube ? 'Con los mismos turnos y el mismo personal, la línea debe producir más rápido: la guía propone cerrar la brecha eliminando desperdicio, no acelerando el trabajo de valor agregado ni pidiéndole más velocidad a los operadores.' : 'La línea tiene más tiempo por unidad: revisa si conviene rebalancear con menos operadores o conservar la holgura.'}`,
         });
       }
       if (est.valido && hayTakt) {
@@ -282,12 +265,6 @@ export default function lab21() {
         semaforos.push({
           nombre: 'Operadores mínimos', estado: 'informativo',
           texto: `Con ${corto(est.contenido, 3)} min de contenido de trabajo y un takt de ${corto(t, 5)} min hacen falta al menos ${est.operadores} operadores si el trabajo se repartiera sin sobrantes. ${n > est.operadores ? `Hoy hay ${n} estaciones: existe margen para rebalancear, aunque repartir el trabajo sin sobrantes rara vez es posible.` : n === est.operadores ? 'Hoy hay justo ese número de estaciones.' : `Hoy hay solo ${n} estaciones: aunque el trabajo se repartiera perfecto no se alcanzaría el takt; hay que reducir contenido de trabajo o agregar capacidad.`}`,
-        });
-      }
-      if (vt) {
-        semaforos.push({
-          nombre: 'PCE y takt', estado: 'informativo',
-          texto: `De cada ${corto(ritmo.segundos, 3)} s del takt, ${corto(vt.va, 2)} s son valor agregado (PCE de ${corto(e.pce, 2)} %) y ${corto(vt.desperdicio, 2)} s son desperdicio: la oportunidad de mejora. Es la lectura de la guía; el PCE se define sobre el lead time del flujo, así que úsalo como proporción y no como medición.`,
         });
       }
       if (haySmed) {

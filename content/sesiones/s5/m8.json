@@ -287,7 +287,7 @@
         },
         {
           "tipo": "nota",
-          "texto": "La nueva demanda exige sacar cada unidad 11.25 s antes, sin más turnos ni personal. El takt dice qué tan rápido debe salir una unidad; el PCE, qué parte de ese tiempo agrega valor. Subir el PCE, eliminando desperdicio y no apurando a los operadores, cierra la brecha."
+          "texto": "La nueva demanda exige sacar cada unidad 11.25 s antes, sin más turnos ni personal. El takt dice cada cuánto debe salir una unidad; el PCE, qué parte del lead time agrega valor. Eliminar desperdicio, no apurar a los operadores, cierra la brecha y además sube el PCE."
         },
         {
           "tipo": "abrirLab",
@@ -304,7 +304,6 @@
             "demandaAnterior": 2000,
             "contenedor": null,
             "estaciones": [],
-            "pce": null,
             "cambioMin": null,
             "reduccionSmed": null,
             "cambiosTurno": null
@@ -353,7 +352,6 @@
               {"estacion": "Apriete y verificación", "tc": 0.9},
               {"estacion": "Prueba eléctrica", "tc": 0.6}
             ],
-            "pce": null,
             "cambioMin": null,
             "reduccionSmed": null,
             "cambiosTurno": null
@@ -655,7 +653,6 @@
                 "demandaAnterior": null,
                 "contenedor": null,
                 "estaciones": [],
-                "pce": null,
                 "cambioMin": null,
                 "reduccionSmed": null,
                 "cambiosTurno": null
@@ -701,7 +698,6 @@
                 "demandaAnterior": null,
                 "contenedor": null,
                 "estaciones": [],
-                "pce": null,
                 "cambioMin": 25,
                 "reduccionSmed": 50,
                 "cambiosTurno": 3

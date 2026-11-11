@@ -143,7 +143,7 @@ const umbralChi = (est = {}) => ({
   filas: [
     { rango: 'p < α', texto: 'se rechaza H₀: las variables no son independientes, hay asociación (por ejemplo, la proporción de fallas no es igual entre turnos). No dice cuál celda ni de cuánto: mira las contribuciones y los residuos estandarizados', activa: est.significativo === true },
     { rango: 'p ≥ α', texto: 'no hay evidencia de asociación. No prueba que las proporciones sean iguales; con pocos eventos la prueba casi no tiene poder (guía M7 §5)', activa: est.significativo === false },
-    { rango: 'Esperado < 5', texto: 'la aproximación chi-cuadrada pierde validez (plantilla «Chi-cuadrada»): agrupa categorías o reúne más datos; en una tabla 2 × 2 usa la prueba exacta de Fisher', activa: est.bajas === true },
+    { rango: 'Esperado < 5', texto: 'la aproximación chi-cuadrada pierde validez (plantilla «Chi-cuadrada»): agrupa categorías o reúne más datos; en una tabla 2 × 2 usa la prueba exacta de Fisher y en una mayor, una prueba exacta como la de Fisher–Freeman–Halton (el laboratorio no la calcula)', activa: est.bajas === true },
     { rango: 'V de Cramér', texto: 'tamaño del efecto de 0 a 1, que no depende del número de datos. Referencia didáctica (Cohen): 0.1, 0.3 y 0.5 son efecto pequeño, mediano y grande en tablas con una dimensión de 2; en tablas mayores esos umbrales se dividen entre √(menor dimensión − 1)' },
     { rango: 'Yates y Fisher', texto: 'solo en tablas 2 × 2: Yates resta 0.5 a cada |O − E| y es conservadora; Fisher calcula el valor p exacto y no necesita esperados grandes' },
   ],
@@ -439,7 +439,7 @@ function calcularChi(e) {
   semaforos.push(c.bajas > 0
     ? {
       nombre: 'Frecuencias esperadas', estado: 'atencion',
-      texto: `${plural(c.bajas, 'celda tiene', 'celdas tienen')} un esperado menor que ${MIN_ESPERADO_CHI} (mínimo ${num(c.minEsperado, 2)}): la aproximación chi-cuadrada pierde validez (plantilla «Chi-cuadrada»). Agrupa categorías, reúne más datos${es2x2 ? ' o apóyate en la prueba exacta de Fisher' : ''}.`,
+      texto: `${plural(c.bajas, 'celda tiene', 'celdas tienen')} un esperado menor que ${MIN_ESPERADO_CHI} (mínimo ${num(c.minEsperado, 2)}): la aproximación chi-cuadrada pierde validez (plantilla «Chi-cuadrada»). Agrupa categorías, reúne más datos${es2x2 ? ' o apóyate en la prueba exacta de Fisher' : ' o recurre a una prueba exacta para tablas mayores (Fisher–Freeman–Halton; este laboratorio no la calcula)'}.`,
     }
     : { nombre: 'Frecuencias esperadas', estado: 'cumple', texto: `Todas las celdas tienen un esperado de ${MIN_ESPERADO_CHI} o más (mínimo ${num(c.minEsperado, 2)}): la aproximación chi-cuadrada es razonable.` });
   const matizV = sig && c.cramerV < umbralesV(dfMin)[0]
@@ -472,7 +472,7 @@ function calcularChi(e) {
     ...SUPUESTO_CHI,
     estado: c.bajas > 0 ? 'atencion' : 'informativo',
     detalle: c.bajas > 0
-      ? `${c.bajas} de ${c.celdas} celdas esperadas son menores que ${MIN_ESPERADO_CHI}: el valor p de la chi-cuadrada es solo aproximado. Agrupa categorías o usa la exacta de Fisher en 2 × 2.`
+      ? `${c.bajas} de ${c.celdas} celdas esperadas son menores que ${MIN_ESPERADO_CHI}: el valor p de la chi-cuadrada es solo aproximado. Agrupa categorías o usa una prueba exacta (Fisher en 2 × 2; Fisher–Freeman–Halton en tablas mayores, que el laboratorio no calcula).`
       : 'Frecuencias esperadas suficientes. Falta lo que no se ve en la tabla: que cada unidad se haya contado una sola vez.',
   };
 

@@ -498,7 +498,7 @@
         },
         {
           "tipo": "nota",
-          "texto": "Las frecuencias esperadas (3.33) son menores que 5, el mínimo que suele pedirse para fiarse de la aproximación. El LAB 19 lo señala y, en tablas de 2 × 2, calcula también Yates y Fisher."
+          "texto": "Las esperadas (3.33) son menores que 5, el mínimo habitual: la aproximación es dudosa y en 2 × 3 correspondería una prueba exacta (Fisher–Freeman–Halton). El LAB 19 avisa; en 2 × 2 calcula Yates y Fisher."
         },
         {
           "tipo": "abrirLab",

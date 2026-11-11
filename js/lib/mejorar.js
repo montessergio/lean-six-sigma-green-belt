@@ -166,13 +166,6 @@ export function balancearEstaciones(filas, takt = NaN) {
   };
 }
 
-/** Lectura de la guía (M8 §1): del takt, la parte de valor agregado es PCE × takt y el resto es desperdicio. `pce` va en 0–1. */
-export function valorEnTakt(pce, takt) {
-  if (!(pce >= 0 && pce <= 1 && takt > 0)) return { va: NaN, desperdicio: NaN };
-  const va = pce * takt;
-  return { va, desperdicio: takt - va };
-}
-
 /**
  * SMED: el cambio de modelo más corto libera tiempo de producción. Ahorro por cambio = cambio × reducción (en %); por turno =
  * ahorro por cambio × cambios por turno (guía M8, ej. 3). NaN si falta un dato o la reducción sale de 0–100.

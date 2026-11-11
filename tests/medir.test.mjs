@@ -2,8 +2,8 @@
  * Verifica js/lib/medir.js (PCE, tamaño de muestra, Gauge R&R y capacidad).
  *
  * Los valores esperados NO salen del propio código: se calcularon aparte con Python (NumPy/SciPy) o a mano con las
- * fórmulas de la guía (M4 §1–4, M5 §4–5) y de las plantillas de Excel. Donde la guía redondea (p. ej. 162.5 DPMO → 162
- * o el AV con X̄diff = 0.40 en vez de 0.395) se anota la diferencia.
+ * fórmulas de la guía (M4 §1–4, M5 §4–5) y de las plantillas de Excel. Donde la guía redondea (p. ej. 162.5 DPMO → 162)
+ * se anota la diferencia.
  * Ejecutar:  node --test
  */
 import { test } from 'node:test';

@@ -1,6 +1,6 @@
 /**
  * Pruebas del LAB 21 (takt time y balanceo de estaciones). Los valores esperados salen de la guía (M8 §1: 450 min ÷ 480 =
- * 0.9375 min = 56.25 s frente a 67.5 s; ejercicio 1: 60 s; ejercicio 3: 37.5 min por turno; §1 con el PCE: 15.36 s y 40.89 s),
+ * 0.9375 min = 56.25 s frente a 67.5 s; ejercicio 1: 60 s; ejercicio 3: 37.5 min por turno),
  * de la plantilla Excel «Takt Time» (435 min netos, takt de 0.90625 min = 54.375 s, 5 operadores, eficiencia de 78.7 %)
  * o de cuentas hechas aparte y escritas como constantes; no del propio código.
  */
@@ -18,10 +18,10 @@ const tabla = (r, inicio) => r.resultado.tablas.find((t) => t.titulo.startsWith(
 const celdas = (fila) => fila.map((c) => (typeof c === 'object' ? c.texto : c));
 const grafica = (r, id) => r.resultado.graficas.find((g) => g.id === id);
 
-const ENTRADAS = ['cambioMin', 'cambiosTurno', 'contenedor', 'demanda', 'demandaAnterior', 'descansos', 'diasSemana', 'estaciones', 'minTurno', 'paros', 'pce', 'periodo', 'reduccionSmed', 'turnos'];
+const ENTRADAS = ['cambioMin', 'cambiosTurno', 'contenedor', 'demanda', 'demandaAnterior', 'descansos', 'diasSemana', 'estaciones', 'minTurno', 'paros', 'periodo', 'reduccionSmed', 'turnos'];
 
 test('LAB21: los presets son válidos y fijan todas las entradas', async () => {
-  for (const p of ['guia', 'ej1', 'ej3', 'pce', 'excel']) {
+  for (const p of ['guia', 'ej1', 'ej3', 'excel']) {
     const r = await ejecutar(ARCHIVO, p);
     assert.deepEqual(r.problemas, [], `preset ${p}`);
     const preset = r.def.presets.find((x) => x.id === p);
@@ -46,7 +46,7 @@ test('LAB21: guía M8 §1 → takt 0.9375 min = 56.25 s, antes 67.5 s (11.25 s m
   assert.equal(nota(r, 'takt-anterior'), '1.125 min · 400 unidades por día');
   assert.equal(texto(r, 'cambio-takt'), '−11.25 s');
   assert.equal(nota(r, 'cambio-takt'), '−16.7 % por unidad · demanda +20 %');
-  for (const id of ['pitch', 'contenido', 'operadores', 'eficiencia', 'lenta', 'va-takt', 'ahorro-turno']) assert.equal(salida(r.resultado, id), undefined, id);
+  for (const id of ['pitch', 'contenido', 'operadores', 'eficiencia', 'lenta', 'ahorro-turno']) assert.equal(salida(r.resultado, id), undefined, id);
   assert.match(semaforo(r.resultado, 'Cambio de demanda').texto, /sube 20\.0 % y el takt pasa de 67\.5 s a 56\.25 s \(11\.25 s menos por unidad\)/);
   assert.equal(r.resultado.graficas.length, 0, 'sin estaciones no hay gráficas');
   const t = tabla(r, 'Takt con la demanda anterior');
@@ -77,15 +77,6 @@ test('LAB21: ejercicio 3 → SMED de 25 min al 50 % con 3 cambios libera 37.5 mi
   const sinTakt = await ejecutar(ARCHIVO, 'ej3', { minTurno: NaN, demanda: NaN });
   assert.equal(texto(sinTakt, 'ahorro-turno'), '37.5 min', 'el SMED no necesita el takt');
   assert.equal(nota(sinTakt, 'ahorro-turno'), '12.5 × 3 cambios');
-});
-
-test('LAB21: lectura de §1 → PCE 27.3 % × takt 56.25 s = 15.36 s de valor agregado y 40.89 s de desperdicio', async () => {
-  const r = await ejecutar(ARCHIVO, 'pce');
-  assert.equal(texto(r, 'va-takt'), '15.36 s');
-  assert.equal(nota(r, 'va-takt'), 'PCE 27.3 % × 56.25 s');
-  assert.equal(texto(r, 'desperdicio-takt'), '40.89 s');
-  assert.match(semaforo(r.resultado, 'PCE y takt').texto, /15\.36 s son valor agregado \(PCE de 27\.3 %\) y 40\.89 s son desperdicio/);
-  assert.match(semaforo(r.resultado, 'PCE y takt').texto, /lead time/, 'avisa que el PCE se define sobre el lead time');
 });
 
 test('LAB21: plantilla Excel → 435 min netos, takt 0.90625 min = 54.375 s, 5 operadores y eficiencia 78.7 %', async () => {
@@ -193,8 +184,6 @@ test('LAB21: avisos de captura incompleta o inválida', async () => {
   assert.match(avisos(await ejecutar(ARCHIVO, 'guia', { turnos: 0 })), /Para el takt captura los minutos por turno y los turnos por día/);
   assert.match(avisos(await ejecutar(ARCHIVO, 'guia', { demandaAnterior: 0 })), /La demanda anterior debe ser mayor que cero/);
   assert.match(avisos(await ejecutar(ARCHIVO, 'excel', { contenedor: -5 })), /La cantidad por contenedor debe ser mayor que cero/);
-  assert.match(avisos(await ejecutar(ARCHIVO, 'pce', { pce: 120 })), /El PCE debe estar entre 0 y 100 %/);
-  assert.match(avisos(await ejecutar(ARCHIVO, 'pce', { demanda: NaN })), /Para repartir el takt con el PCE falta el takt/);
   assert.match(avisos(await ejecutar(ARCHIVO, 'ej3', { reduccionSmed: 150 })), /Para el SMED captura el tiempo del cambio/);
   assert.match(avisos(await ejecutar(ARCHIVO, 'ej3', { cambiosTurno: NaN })), /Para el SMED captura el tiempo del cambio/);
   const filas = await ejecutar(ARCHIVO, 'excel', { estaciones: [{ estacion: 'A', tc: 0.5 }, { estacion: 'Sin tiempo', tc: NaN }, { estacion: 'Cero', tc: 0 }] });
