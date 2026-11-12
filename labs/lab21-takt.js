@@ -14,7 +14,7 @@
  * segundos y la cifra del SMED de la guía, que la plantilla no trae.
  *
  * Presets: la línea de arneses de la guía (450 min y 2,400 piezas por semana: 56.25 s frente a 67.5 s), el ejercicio 1 (60 s),
- * el ejercicio 3 (37.5 min por turno) y las seis estaciones de la plantilla (54.375 s).
+ * el ejercicio 3 (37.5 min por turno) y las seis estaciones de la plantilla (56.25 s, el mismo takt de la guía).
  */
 import { ahorroSmed, balancearEstaciones, demandaDiaria, ritmoCliente, tiempoNeto } from '../js/lib/mejorar.js';
 import { corto, entero, pct, plural } from '../js/core/format.js';
@@ -119,9 +119,9 @@ export default function lab21() {
         valores: { ...BASE, cambioMin: 25, reduccionSmed: 50, cambiosTurno: 3 },
       },
       {
-        id: 'excel', etiqueta: 'Plantilla Excel «Takt Time»: seis estaciones (54.375 s)',
-        ayuda: '480 min por turno con 30 de descanso y 15 de juntas, 5S y mantenimiento (435 min netos) y 480 unidades por día; contenedores de 50 unidades.',
-        valores: { ...BASE, paros: 15, demanda: 480, periodo: 'dia', contenedor: 50, estaciones: EST_EXCEL },
+        id: 'excel', etiqueta: 'Plantilla Excel «Takt Time»: seis estaciones (56.25 s)',
+        ayuda: '480 min por turno con 30 de descanso (450 min netos, como en la guía) y 480 unidades por día; contenedores de 50 unidades.',
+        valores: { ...BASE, demanda: 480, periodo: 'dia', contenedor: 50, estaciones: EST_EXCEL },
       },
     ],
     umbral: UMBRAL,

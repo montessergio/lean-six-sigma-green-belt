@@ -172,19 +172,19 @@ test('LAB19 regresión: predicción, intervalo de la recta, intervalo de predicc
   assert.equal(texto(r, 'pred'), '1.376 mΩ'); // 1.37592
   assert.match(nota(r, 'pred'), /con Fuerza de engarzado = 170\.00 N · predicción de 95 %: 1\.190 a 1\.561$/); // [1.19035, 1.56149]
   assert.equal(color(r, 'pred'), 'teal');
-  assert.equal(texto(r, 'xobj'), '168.52 N'); // (1.5 − 15.66204) / −0.084036 = 168.5235
+  assert.equal(texto(r, 'xobj'), '172.09 N'); // (1.2 − 15.66204) / −0.084036 = 172.0934: el Y objetivo de la plantilla es 1.2
   const P = 'Predicción y objetivo';
   assert.equal(valorDe(r, P, 'Ŷ esperado'), '1.376 mΩ');
   assert.equal(valorDe(r, P, 'IC de 95 % de la recta (respuesta media)'), '1.322 a 1.430'); // [1.32212, 1.42973]
   assert.equal(valorDe(r, P, 'Intervalo de predicción de 95 % (una unidad nueva)'), '1.190 a 1.561');
   assert.equal(valorDe(r, P, 'Posición frente al rango observado'), 'dentro');
-  assert.equal(valorDe(r, P, 'Fuerza de engarzado necesaria para ese objetivo'), '168.52 N');
+  assert.equal(valorDe(r, P, 'Fuerza de engarzado necesaria para ese objetivo'), '172.09 N');
   const cota = semaforo(r.resultado, 'Interpolación');
   assert.equal(cota.estado, 'cumple');
   assert.match(cota.texto, /dentro del rango observado \(160\.00 a 185\.00 N\)/);
 
-  // la guía pide Y = 1.2 mΩ: X = 172.0934 con la plantilla (la guía, con su propia ecuación, redondea a 173 N)
-  assert.equal(texto(await lab('reg-plantilla', { yObjetivo: 1.2 }), 'xobj'), '172.09 N');
+  // la guía pide Y = 1.2 mΩ: X = 172.0934 con la plantilla (la guía, con su propia ecuación, redondea a 173 N); con 1.5 mΩ: 168.5235
+  assert.equal(texto(await lab('reg-plantilla', { yObjetivo: 1.5 }), 'xobj'), '168.52 N');
   // los extremos del rango: Ŷ(160) = 2.21628 y Ŷ(185) = 0.11538
   assert.equal(texto(await lab('reg-plantilla', { xPred: 160 }), 'pred'), '2.216 mΩ');
   assert.equal(texto(await lab('reg-plantilla', { xPred: 185 }), 'pred'), '0.115 mΩ');

@@ -318,18 +318,18 @@
       "bloques": [
         {
           "tipo": "texto",
-          "texto": "Con el takt fijado, cada estación debe terminar su trabajo en ese tiempo o menos. El laboratorio, siguiendo la plantilla de Excel, añade tres cálculos para repartir el trabajo. Su ejemplo: 435 min netos, 480 unidades por día y seis estaciones."
+          "texto": "Con el takt fijado, cada estación debe terminar su trabajo en ese tiempo o menos. El laboratorio, siguiendo la plantilla de Excel, añade tres cálculos para repartir el trabajo. Su ejemplo: 450 min netos, 480 unidades por día y seis estaciones."
         },
         {
           "tipo": "rejilla",
           "columnas": 3,
           "tarjetas": [
-            {"etiqueta": "OPERADORES MÍNIMOS", "texto": "Contenido de trabajo ÷ takt, redondeado hacia arriba. Con 4.25 min y un takt de 0.906 min: 5 operadores."},
+            {"etiqueta": "OPERADORES MÍNIMOS", "texto": "Contenido de trabajo ÷ takt, redondeado hacia arriba. Con 4.25 min y un takt de 0.9375 min: 5 operadores."},
             {"etiqueta": "EFICIENCIA DE BALANCEO", "texto": "Contenido de trabajo ÷ (estaciones × ciclo de la más lenta): 4.25 ÷ (6 × 0.9) = 78.7 %."},
-            {"etiqueta": "PITCH", "texto": "Unidades por contenedor × takt: cada cuánto se mueve un contenedor. Con 50 unidades, 45.3 min."}
+            {"etiqueta": "PITCH", "texto": "Unidades por contenedor × takt: cada cuánto se mueve un contenedor. Con 50 unidades, 46.9 min."}
           ]
         },
-        {"tipo": "nota", "texto": "La estación más lenta, «Apriete y verificación», usa 99.3 % del takt: cumple, pero con apenas 0.375 s de holgura por unidad."},
+        {"tipo": "nota", "texto": "La estación más lenta, «Apriete y verificación», usa 96 % del takt: cumple, con 2.25 s de holgura por unidad."},
         {
           "tipo": "abrirLab",
           "lab": "lab21",
@@ -338,7 +338,7 @@
             "minTurno": 480,
             "turnos": 1,
             "descansos": 30,
-            "paros": 15,
+            "paros": 0,
             "demanda": 480,
             "periodo": "dia",
             "diasSemana": 5,

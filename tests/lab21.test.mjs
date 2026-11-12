@@ -1,7 +1,7 @@
 /**
  * Pruebas del LAB 21 (takt time y balanceo de estaciones). Los valores esperados salen de la guía (M8 §1: 450 min ÷ 480 =
  * 0.9375 min = 56.25 s frente a 67.5 s; ejercicio 1: 60 s; ejercicio 3: 37.5 min por turno),
- * de la plantilla Excel «Takt Time» (435 min netos, takt de 0.90625 min = 54.375 s, 5 operadores, eficiencia de 78.7 %)
+ * de la plantilla Excel «Takt Time» (450 min netos, takt de 0.9375 min = 56.25 s, 5 operadores, eficiencia de 78.7 %)
  * o de cuentas hechas aparte y escritas como constantes; no del propio código.
  */
 import test from 'node:test';
@@ -79,16 +79,16 @@ test('LAB21: ejercicio 3 → SMED de 25 min al 50 % con 3 cambios libera 37.5 mi
   assert.equal(nota(sinTakt, 'ahorro-turno'), '12.5 × 3 cambios');
 });
 
-test('LAB21: plantilla Excel → 435 min netos, takt 0.90625 min = 54.375 s, 5 operadores y eficiencia 78.7 %', async () => {
+test('LAB21: plantilla Excel → 450 min netos, takt 0.9375 min = 56.25 s, 5 operadores y eficiencia 78.7 %', async () => {
   const r = await ejecutar(ARCHIVO, 'excel');
-  assert.equal(texto(r, 'takt'), '0.90625 min');
-  assert.equal(nota(r, 'takt'), '54.375 s por unidad · 435 min ÷ 480 unidades');
-  assert.equal(texto(r, 'neto'), '435 min por día');
-  assert.equal(nota(r, 'neto'), '1 turno × (480 − 30 − 15) min');
+  assert.equal(texto(r, 'takt'), '0.9375 min');
+  assert.equal(nota(r, 'takt'), '56.25 s por unidad · 450 min ÷ 480 unidades');
+  assert.equal(texto(r, 'neto'), '450 min por día');
+  assert.equal(nota(r, 'neto'), '1 turno × (480 − 30 − 0) min');
   assert.equal(salida(r.resultado, 'demanda-dia'), undefined, 'la demanda ya es diaria');
-  assert.equal(texto(r, 'por-hora'), '66.21'); // 66.2069
-  assert.equal(texto(r, 'pitch'), '45.3125 min');
-  assert.equal(nota(r, 'pitch'), '50 unidades × 0.90625 min');
+  assert.equal(texto(r, 'por-hora'), '64'); // 480 ÷ (450 ÷ 60)
+  assert.equal(texto(r, 'pitch'), '46.875 min');
+  assert.equal(nota(r, 'pitch'), '50 unidades × 0.9375 min');
   assert.equal(texto(r, 'contenido'), '4.25 min');
   assert.equal(nota(r, 'contenido'), 'por unidad, en 6 estaciones');
   assert.equal(texto(r, 'operadores'), '5');
@@ -97,37 +97,37 @@ test('LAB21: plantilla Excel → 435 min netos, takt 0.90625 min = 54.375 s, 5 o
   assert.equal(texto(r, 'exceden'), '0');
   assert.equal(salida(r.resultado, 'exceden').color, 'teal');
   assert.equal(texto(r, 'lenta'), 'Apriete y verificación');
-  assert.equal(nota(r, 'lenta'), '0.9 min por unidad · 99.3 % del takt · capacidad de 483 unidades por día'); // 435 ÷ 0.9 = 483.3
+  assert.equal(nota(r, 'lenta'), '0.9 min por unidad · 96.0 % del takt · capacidad de 500 unidades por día'); // 450 ÷ 0.9 = 500
   const sem = semaforo(r.resultado, 'Cumplimiento del takt');
   assert.equal(sem.estado, 'cumple');
-  assert.match(sem.texto, /usa 99\.3 % del takt y le quedan 0\.375 s de holgura/);
+  assert.match(sem.texto, /usa 96\.0 % del takt y le quedan 2\.25 s de holgura/);
   assert.match(semaforo(r.resultado, 'Operadores mínimos').texto, /al menos 5 operadores.*Hoy hay 6 estaciones/);
   assert.match(semaforo(r.resultado, 'Balanceo').texto, /de los 5\.4 min por unidad que ocupan las 6 estaciones, 1\.15 min son espera \(eficiencia de 78\.7 %\)/);
   assert.deepEqual(activas(r), ['Takt', 'Ciclo ≤ takt', 'Operadores', 'Eficiencia']);
   const t = tabla(r, 'Estaciones frente al takt');
-  assert.deepEqual(t.filas.map(celdas).slice(0, 2), [['Corte y pelado', '0.4', '44.1 %', 'OK', '+30.375'], ['Crimpado', '0.7', '77.2 %', 'OK', '+12.375']]);
-  assert.deepEqual(celdas(t.filas[4]), ['Apriete y verificación', '0.9', '99.3 %', 'OK', '+0.375']);
+  assert.deepEqual(t.filas.map(celdas).slice(0, 2), [['Corte y pelado', '0.4', '42.7 %', 'OK', '+32.25'], ['Crimpado', '0.7', '74.7 %', 'OK', '+14.25']]);
+  assert.deepEqual(celdas(t.filas[4]), ['Apriete y verificación', '0.9', '96.0 %', 'OK', '+2.25']);
   assert.deepEqual(celdas(t.filas[6]), ['Contenido total', '4.25', '', '', '']);
-  assert.match(t.pie, /⌈4\.25 ÷ 0\.90625⌉ = 5/);
+  assert.match(t.pie, /⌈4\.25 ÷ 0\.9375⌉ = 5/);
   const paso = tabla(r, 'Del tiempo disponible');
-  assert.deepEqual(paso.filas.map(celdas).map((f) => f[1]), ['480', '30', '15', '435', '1', '435', '480', '0.90625', '54.375']);
+  assert.deepEqual(paso.filas.map(celdas).map((f) => f[1]), ['480', '30', '0', '450', '1', '450', '480', '0.9375', '56.25']);
 });
 
-test('LAB21: demanda de 600 por día → takt 0.725 min y tres estaciones exceden', async () => {
+test('LAB21: demanda de 600 por día → takt 0.75 min y tres estaciones exceden', async () => {
   const r = await ejecutar(ARCHIVO, 'excel', { demanda: 600 });
-  assert.equal(texto(r, 'takt'), '0.725 min'); // 435 ÷ 600
-  assert.equal(nota(r, 'takt'), '43.5 s por unidad · 435 min ÷ 600 unidades');
+  assert.equal(texto(r, 'takt'), '0.75 min'); // 450 ÷ 600
+  assert.equal(nota(r, 'takt'), '45 s por unidad · 450 min ÷ 600 unidades');
   assert.equal(texto(r, 'exceden'), '3', 'Ensamble A (0.85), Ensamble B (0.8) y Apriete y verificación (0.9)');
   assert.equal(salida(r.resultado, 'exceden').color, 'coral');
-  assert.equal(texto(r, 'operadores'), '6'); // ⌈4.25 ÷ 0.725⌉ = ⌈5.86⌉
+  assert.equal(texto(r, 'operadores'), '6'); // ⌈4.25 ÷ 0.75⌉ = ⌈5.67⌉
   const sem = semaforo(r.resultado, 'Cumplimiento del takt');
   assert.equal(sem.estado, 'critico');
-  assert.match(sem.texto, /3 estaciones con tiempo de ciclo mayor que el takt de 0\.725 min: «Ensamble A» \(0\.85 min\), «Ensamble B» \(0\.8 min\), «Apriete y verificación» \(0\.9 min\)/);
-  assert.match(sem.texto, /como máximo 483 unidades por día frente a las 600 que se piden/);
+  assert.match(sem.texto, /3 estaciones con tiempo de ciclo mayor que el takt de 0\.75 min: «Ensamble A» \(0\.85 min\), «Ensamble B» \(0\.8 min\), «Apriete y verificación» \(0\.9 min\)/);
+  assert.match(sem.texto, /como máximo 500 unidades por día frente a las 600 que se piden/);
   const t = tabla(r, 'Estaciones frente al takt');
   assert.equal(t.filas[4][3].texto, 'Excede takt');
   assert.equal(t.filas[4][3].estado, 'critico');
-  assert.equal(celdas(t.filas[4])[4], '−10.5', 'holgura = (0.725 − 0.9) × 60');
+  assert.equal(celdas(t.filas[4])[4], '−9', 'holgura = (0.75 − 0.9) × 60');
   assert.ok(activas(r).includes('Ciclo > takt'));
   const g = grafica(r, 'estaciones');
   assert.deepEqual(g.datos[0].marker.color, [COLOR.teal, COLOR.teal, COLOR.coral, COLOR.coral, COLOR.coral, COLOR.teal], 'las barras que exceden van en otro color');
@@ -135,10 +135,10 @@ test('LAB21: demanda de 600 por día → takt 0.725 min y tres estaciones excede
 
 test('LAB21: más estaciones que operadores y al revés', async () => {
   const pocas = await ejecutar(ARCHIVO, 'excel', { estaciones: [{ estacion: 'A', tc: 1.2 }, { estacion: 'B', tc: 1.1 }] });
-  assert.equal(texto(pocas, 'operadores'), '3'); // ⌈2.3 ÷ 0.90625⌉
+  assert.equal(texto(pocas, 'operadores'), '3'); // ⌈2.3 ÷ 0.9375⌉
   assert.match(semaforo(pocas.resultado, 'Operadores mínimos').texto, /Hoy hay solo 2 estaciones: aunque el trabajo se repartiera perfecto no se alcanzaría el takt/);
   const justo = await ejecutar(ARCHIVO, 'excel', { demanda: 540, estaciones: [{ estacion: 'A', tc: 0.4 }, { estacion: 'B', tc: 0.4 }] });
-  assert.equal(texto(justo, 'takt'), '0.80556 min'); // 435 ÷ 540
+  assert.equal(texto(justo, 'takt'), '0.83333 min'); // 450 ÷ 540
   assert.equal(texto(justo, 'operadores'), '1');
   assert.equal(texto(justo, 'eficiencia'), '100.0 %');
   assert.match(semaforo(justo.resultado, 'Balanceo').texto, /perfectamente balanceada/);
@@ -163,8 +163,8 @@ test('LAB21: las estaciones sin takt dan contenido, eficiencia y la más lenta',
 
 test('LAB21: demanda anterior sobre la plantilla y demanda a la baja', async () => {
   const r = await ejecutar(ARCHIVO, 'excel', { demandaAnterior: 400 });
-  assert.equal(texto(r, 'takt-anterior'), '65.25 s'); // 435 ÷ 400 = 1.0875 min
-  assert.equal(texto(r, 'cambio-takt'), '−10.875 s');
+  assert.equal(texto(r, 'takt-anterior'), '67.5 s'); // 450 ÷ 400 = 1.125 min, la comparación de la guía
+  assert.equal(texto(r, 'cambio-takt'), '−11.25 s');
   assert.equal(nota(r, 'cambio-takt'), '−16.7 % por unidad · demanda +20 %');
   const baja = await ejecutar(ARCHIVO, 'guia', { demandaAnterior: 3000 });
   assert.equal(texto(baja, 'takt-anterior'), '45 s'); // 450 ÷ 600 = 0.75 min
@@ -207,10 +207,10 @@ test('LAB21: las gráficas llevan línea de takt, colores por cumplimiento y dat
   assert.equal(g.datos[0].y.length, 6);
   assert.deepEqual(g.datos[0].y, [0.4, 0.7, 0.85, 0.8, 0.9, 0.6]);
   assert.equal(g.layout.shapes.length, 1);
-  assert.equal(g.layout.shapes[0].y0, 0.90625, 'la línea horizontal está en el takt');
+  assert.equal(g.layout.shapes[0].y0, 0.9375, 'la línea horizontal está en el takt');
   assert.ok(g.layout.yaxis.range[1] > 0.9, 'el eje deja ver la barra más alta');
   assert.equal(g.respaldo.filas.length, 6);
-  assert.deepEqual(g.respaldo.filas[4], ['5. Apriete y verificación', '0.9', '99.3 %']);
+  assert.deepEqual(g.respaldo.filas[4], ['5. Apriete y verificación', '0.9', '96.0 %']);
   const b = grafica(r, 'balance');
   assert.equal(b.datos.length, 2);
   assert.equal(b.layout.barmode, 'stack');

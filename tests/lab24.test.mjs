@@ -1,7 +1,7 @@
 /**
  * Pruebas del LAB 24 (plan de control). Los valores esperados salen de la guía (M10 §4: cuatro líneas, AMEF de la guía M6 con RPN
- * 192 · 54 · 42), de la plantilla Excel «Plan de Control» (5 líneas, 4 completas = 80 %, 3 críticas, 4 con RPN ≥ 100, 0 no ligadas; la
- * línea 4 con «Revisar clasificación (RPN alto)») y de la lógica de la hoja; no del propio código.
+ * 192 · 54 · 42), de la plantilla Excel «Plan de Control» (5 líneas completas = 100 %, 3 críticas, 4 con RPN ≥ 100, 0 no ligadas; el
+ * etiquetado, RPN 120, ya viene como Significativa) y de la lógica de la hoja; no del propio código.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -83,11 +83,12 @@ test('LAB24: guía → al clasificar las líneas como pide la plantilla, las cua
   assert.match(clasif.texto, /Las 3 líneas con RPN ≥ 100 están clasificadas como Crítica o Significativa/);
 });
 
-test('LAB24: plantilla Excel → 4 de 5 completas (80 %), 3 críticas, 4 con RPN ≥ 100 y 0 sin ligar por nombre', async () => {
+test('LAB24: plantilla Excel → 5 de 5 completas (100 %), 3 críticas, 4 con RPN ≥ 100 y 0 sin ligar por nombre', async () => {
   const r = await ejecutar(ARCHIVO, 'excel');
   assert.equal(texto(r, 'lineas'), '5');
-  assert.equal(texto(r, 'completas'), '4 de 5');
-  assert.equal(nota(r, 'completas'), '80 % · 1 por clasificar');
+  assert.equal(texto(r, 'completas'), '5 de 5');
+  assert.equal(nota(r, 'completas'), '100 %');
+  assert.equal(salida(r.resultado, 'completas').color, 'verde');
   assert.equal(texto(r, 'criticas'), '3');
   assert.equal(texto(r, 'rpn-alto'), '4');
   assert.equal(nota(r, 'sin-ligar'), '1 sin referencia · 0 con un nombre que no está en el AMEF', 'la hoja cuenta 0 «no está en el AMEF»: la prueba eléctrica final no cita nada');
@@ -95,19 +96,37 @@ test('LAB24: plantilla Excel → 4 de 5 completas (80 %), 3 críticas, 4 con RPN
   assert.equal(salida(r.resultado, 'sin-control').color, 'verde');
   assert.equal(nota(r, 'sin-control'), 'de 3 modos del AMEF, todos los importantes tienen línea');
   const clasif = semaforo(r.resultado, 'Clasificación');
-  assert.equal(clasif.estado, 'atencion');
-  assert.match(clasif.texto, /^«Etiqueta correcta para el tablero» \(RPN 120\): el AMEF la ubica en RPN ≥ 100 pero no está clasificada como Crítica ni Significativa\./);
+  assert.equal(clasif.estado, 'cumple');
+  assert.match(clasif.texto, /Las 4 líneas con RPN ≥ 100 están clasificadas como Crítica o Significativa/);
   assert.equal(semaforo(r.resultado, 'Cobertura del AMEF').estado, 'cumple');
   const t = tabla(r, 'El plan, línea por línea');
   assert.deepEqual(t.filas.map((f) => celdas(f)), [
     ['1', 'Fuerza de retención del conector', 'Crítica', 'Torque bajo', '240', 'Completo'],
     ['2', 'Verificación del instrumento', 'Crítica', 'Torque bajo', '240', 'Completo'],
     ['3', 'Fuerza de jalón del crimpado', 'Significativa', 'Terminal mal crimpada', '180', 'Completo'],
-    ['4', 'Etiqueta correcta para el tablero', 'Estándar', 'Etiqueta incorrecta', '120', 'Revisar clasificación (RPN alto)'],
+    ['4', 'Etiqueta correcta para el tablero', 'Significativa', 'Etiqueta incorrecta', '120', 'Completo'],
     ['5', 'Continuidad y aislamiento', 'Crítica', '—', '—', 'Completo'],
   ]);
+  assert.deepEqual(t.filas.map((f) => f[5].estado), ['cumple', 'cumple', 'cumple', 'cumple', 'cumple']);
+  assert.deepEqual(t.resaltar, [], 'ninguna línea pide atención');
+});
+
+test('LAB24: plantilla Excel con el etiquetado como Estándar → 4 de 5 (80 %) y «Revisar clasificación (RPN alto)»', async () => {
+  const base = (await ejecutar(ARCHIVO, 'excel')).estado.plan;
+  const plan = base.map((l) => (l.caracteristica.startsWith('Etiqueta') ? { ...l, clasificacion: 'Estándar' } : l));
+  const r = await ejecutar(ARCHIVO, 'excel', { plan });
+  assert.equal(texto(r, 'completas'), '4 de 5');
+  assert.equal(nota(r, 'completas'), '80 % · 1 por clasificar');
+  assert.equal(salida(r.resultado, 'completas').color, 'ambar');
+  const clasif = semaforo(r.resultado, 'Clasificación');
+  assert.equal(clasif.estado, 'atencion');
+  assert.match(clasif.texto, /^«Etiqueta correcta para el tablero» \(RPN 120\): el AMEF la ubica en RPN ≥ 100 pero no está clasificada como Crítica ni Significativa\./);
+  const t = tabla(r, 'El plan, línea por línea');
+  assert.deepEqual(celdas(t.filas[3]), ['4', 'Etiqueta correcta para el tablero', 'Estándar', 'Etiqueta incorrecta', '120', 'Revisar clasificación (RPN alto)']);
   assert.deepEqual(t.filas.map((f) => f[5].estado), ['cumple', 'cumple', 'cumple', 'atencion', 'cumple']);
   assert.deepEqual(t.resaltar, [3]);
+  // Con un umbral de 200 el RPN 120 ya no obliga a reclasificar.
+  assert.equal(texto(await ejecutar(ARCHIVO, 'excel', { plan, rpnAlto: 200 }), 'completas'), '5 de 5');
 });
 
 test('LAB24: «corregir y olvidar» en el poka-yoke enciende el semáforo del plan de reacción', async () => {
@@ -128,8 +147,8 @@ test('LAB24: falta de campos → «Incompleto: falta …» en la tabla, semáfor
   const base = (await ejecutar(ARCHIVO, 'excel')).estado.plan;
   const plan = base.map((l, i) => (i === 0 ? { ...l, especificacion: '', reaccion: '' } : i === 2 ? { ...l, responsable: '' } : l));
   const r = await ejecutar(ARCHIVO, 'excel', { plan });
-  assert.equal(texto(r, 'completas'), '2 de 5');
-  assert.equal(nota(r, 'completas'), '40 % · 2 incompletas · 1 por clasificar');
+  assert.equal(texto(r, 'completas'), '3 de 5');
+  assert.equal(nota(r, 'completas'), '60 % · 2 incompletas');
   assert.equal(salida(r.resultado, 'completas').color, 'ambar');
   const c = semaforo(r.resultado, 'Completitud');
   assert.equal(c.estado, 'atencion');
@@ -137,7 +156,7 @@ test('LAB24: falta de campos → «Incompleto: falta …» en la tabla, semáfor
   const t = tabla(r, 'El plan, línea por línea');
   assert.equal(celdas(t.filas[0])[5], 'Incompleto: falta especificación, reacción');
   assert.equal(t.filas[0][5].estado, 'critico');
-  assert.deepEqual(t.resaltar, [0, 2, 3]);
+  assert.deepEqual(t.resaltar, [0, 2]);
 });
 
 test('LAB24: una referencia que no está en el AMEF se avisa; sin acentos ni mayúsculas sí se reconoce', async () => {
@@ -199,11 +218,12 @@ test('LAB24: filas del AMEF con datos inválidos se ignoran con aviso, y sin AME
   assert.match(avisos(r), /Modos del AMEF con el mismo nombre: 1\. Solo cuenta el primero\./);
   assert.equal(texto(r, 'rpn-alto'), '2', 'solo las dos líneas del torque tienen modo');
   assert.equal(nota(r, 'sin-ligar'), '1 sin referencia · 2 con un nombre que no está en el AMEF');
-  const sin = await ejecutar(ARCHIVO, 'excel', { amef: [] });
+  const estandar = (await ejecutar(ARCHIVO, 'excel')).estado.plan.map((l) => (l.caracteristica.startsWith('Etiqueta') ? { ...l, clasificacion: 'Estándar' } : l));
+  const sin = await ejecutar(ARCHIVO, 'excel', { amef: [], plan: estandar });
   assert.deepEqual(sin.problemas, []);
   assert.equal(salida(sin.resultado, 'sin-control'), undefined);
   assert.equal(sin.resultado.graficas.length, 0);
-  assert.equal(texto(sin, 'completas'), '5 de 5', 'sin AMEF no hay RPN que obligue a reclasificar');
+  assert.equal(texto(sin, 'completas'), '5 de 5', 'sin AMEF no hay RPN que obligue a reclasificar, aunque el etiquetado sea Estándar');
   assert.equal(semaforo(sin.resultado, 'Vínculo con el AMEF').estado, 'informativo');
   assert.match(semaforo(sin.resultado, 'Vínculo con el AMEF').texto, /Captura el AMEF resumido/);
 });
@@ -237,7 +257,8 @@ test('LAB24: cada columna calculada de la tabla de captura muestra lo que dice l
   const col = (id) => spec.columnas.find((c) => c.id === id);
   const fila = (i) => r.estado.plan[i];
   assert.deepEqual([0, 1, 2, 3, 4].map((i) => col('rpn').texto(r.estado, fila(i), i)), ['240', '240', '180', '120', '']);
-  assert.deepEqual([0, 3].map((i) => col('estado').texto(r.estado, fila(i), i)), ['Completo', 'Revisar clasificación (RPN alto)']);
+  assert.deepEqual([0, 3].map((i) => col('estado').texto(r.estado, fila(i), i)), ['Completo', 'Completo']);
+  assert.equal(col('estado').texto(r.estado, { ...fila(3), clasificacion: 'Estándar' }, 3), 'Revisar clasificación (RPN alto)');
   const mala = { ...fila(0), ref: 'no existe', responsable: '' };
   assert.equal(col('rpn').texto(r.estado, mala, 0), 'no está en el AMEF');
   assert.equal(col('estado').texto(r.estado, mala, 0), 'Incompleto: falta responsable');

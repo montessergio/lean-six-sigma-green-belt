@@ -224,7 +224,7 @@ pieza, de 2 a 10, con una columna por operador y repetición: `A1 A2 A3 B1 B2 B3
 promedios y rangos con las constantes K1, K2 y K3 del AIAG. Presets: `guia` (10 × 3 × 2 N, %GRR **16.9 %**, ndc **8**), `excel` (5 ×
 3 × 2 N·m, 12.9 %, ndc 10) y `sesgo` (variante didáctica con 1.5 N de sesgo en el operador C; no está en la guía). Salidas: %GRR, ndc, %EV, %AV y %PV; la tabla «Cálculo paso a paso» muestra R̄, EV, AV, R&R, PV y TV. Semáforos: %GRR (< 10 % cumple · 10–30 % atención · > 30 % crítico), ndc ≥ 5, fuente dominante,
 operador con más variación, rangos frente a D4 × R̄ (referencia didáctica) y diseño del estudio. %Tolerancia = R&R ÷ tolerancia: las
-constantes ya traen el factor 5.15σ, así que no se multiplica por 6 (la plantilla Excel sí lo hace y sobrestima). Gráficas:
+constantes ya traen el factor 5.15σ, así que no se multiplica por 6 (la plantilla Excel, en su versión corregida, usa la misma fórmula). Gráficas:
 `componentes`, `promedios` (pieza × operador) y `rangos`.
 
 ### LAB 13 · Capacidad del proceso (`lab13-cp-cpk.js`)
@@ -335,8 +335,8 @@ Entradas: `minTurno`, `turnos`, `descansos` y `paros` (min por turno; `paros` = 
 por contenedor, para el pitch), `estaciones` (tabla de 0 a 12 filas `{estacion, tc}` con tc en min), `cambioMin`,
 `reduccionSmed` (%) y `cambiosTurno`. Takt = tiempo neto por día ÷ demanda por día. Presets: `guia` (M8 §1: 450 min y 2,400 por
 semana en 5 días → 480 por día, **0.9375** min = **56.25** s frente a 67.5 s con 2,000), `ej1` (2 turnos de 420 min, 6 días y 5,040
-piezas → **60** s), `ej3` (25 min, 50 % y 3 cambios → **37.5** min por turno) y `excel` (plantilla «Takt Time»: 435 min netos y 480 por día → **54.375** s, pitch de 50 unidades de
-45.3125 min y seis estaciones con 4.25 min de contenido, **5** operadores mínimos y eficiencia de balanceo de **78.7 %**). Salidas:
+piezas → **60** s), `ej3` (25 min, 50 % y 3 cambios → **37.5** min por turno) y `excel` (plantilla «Takt Time»: 450 min netos y 480 por día → **56.25** s, pitch de 50 unidades de
+46.875 min y seis estaciones con 4.25 min de contenido, **5** operadores mínimos y eficiencia de balanceo de **78.7 %**). Salidas:
 `takt`, `neto`, `demanda-dia`, `por-hora` y, según lo capturado, `takt-anterior`, `cambio-takt`,
 `ahorro-cambio`, `ahorro-turno`, `pitch`, `contenido`, `operadores`, `eficiencia`, `exceden` y `lenta`. Tablas: «Del tiempo disponible
 al takt», «Takt con la demanda anterior y la actual» y «Estaciones frente al takt». Semáforos: «Takt», «Cambio de demanda», «Cambio de
@@ -387,8 +387,8 @@ queda en **«Revisar clasificación (RPN alto)»** si el modo que cita tiene RPN
 Significativa. Un modo es **importante** si su RPN ≥ `rpnAlto` o su severidad ≥ 9, y queda «sin control» si ninguna línea lo cita. El plan de
 reacción se revisa por palabras clave («desechar la pieza y seguir produciendo»); solo orienta. Presets: `guia` (M10 §4: cuatro líneas con
 el método y la frecuencia separados y el AMEF de la guía con RPN 192 · 54 · 42: **1 de 4** completa = 25 %, tres por clasificar y el
-**conector mal asentado** (S = 9, RPN 54) sin control), `excel` (plantilla «Plan de Control»: cinco líneas, **4 de 5 = 80 %**, tres críticas
-y cuatro con RPN ≥ 100; la del etiquetado, RPN 120, está como Estándar y pide revisar la clasificación) y `corregir-olvidar` (la guía con la
+**conector mal asentado** (S = 9, RPN 54) sin control), `excel` (plantilla «Plan de Control»: cinco líneas, **5 de 5 = 100 %**, tres críticas
+y cuatro con RPN ≥ 100; el etiquetado, RPN 120, ya viene como Significativa: al ponerlo como Estándar pasa a «Revisar clasificación (RPN alto)») y `corregir-olvidar` (la guía con la
 reacción del poka-yoke reducida a «desechar la pieza mala y seguir produciendo»). Salidas: `lineas`, `completas`, `criticas`, `rpn-alto`,
 `sin-ligar` y `sin-control`. Tablas: «El plan, línea por línea» y «Cobertura del AMEF». Semáforos: «Completitud», «Clasificación», «Vínculo
 con el AMEF» (o «Líneas sin modo de falla»), «Cobertura del AMEF» (crítico si queda sin control un modo con RPN alto) y «Plan de reacción».

@@ -26,9 +26,11 @@ const PLAN_EXCEL = [
   L('Fuerza de retención del conector', 'Crítica', 'Torque bajo'),
   L('Verificación del instrumento', 'Crítica', 'Torque bajo'),
   L('Fuerza de jalón del crimpado', 'Significativa', 'Terminal mal crimpada'),
-  L('Etiqueta correcta para el tablero', 'Estándar', 'Etiqueta incorrecta'),
+  L('Etiqueta correcta para el tablero', 'Significativa', 'Etiqueta incorrecta'),
   L('Continuidad y aislamiento', 'Crítica', ''),
 ];
+// La misma hoja con el etiquetado (RPN 120) clasificado como Estándar: la línea debe pedir «Revisar clasificación».
+const PLAN_EXCEL_ESTANDAR = PLAN_EXCEL.map((l) => (l.caracteristica.startsWith('Etiqueta') ? { ...l, clasificacion: 'Estándar' } : l));
 
 test('normalizarNombre: sin acentos, minúsculas y espacios simples', () => {
   assert.equal(normalizarNombre('  Torque   BAJO '), 'torque bajo');
@@ -56,23 +58,33 @@ test('modosAmef: RPN = S × O × D, severidad ≥ 9, y descarta lo que no sea un
   assert.deepEqual(modosAmef(undefined), { modos: [], descartadas: 0, repetidos: 0 });
 });
 
-test('resumenPlan: la hoja «Plan de Control» → 5 líneas, 4 completas (80 %), 3 críticas, 4 con RPN ≥ 100 y 0 sin ligar', () => {
+test('resumenPlan: la hoja «Plan de Control» → 5 líneas completas (100 %), 3 críticas, 4 con RPN ≥ 100 y 0 sin ligar', () => {
   const { modos } = modosAmef(AMEF_EXCEL);
   const r = resumenPlan(PLAN_EXCEL, modos);
   assert.equal(r.nLineas, 5);
-  assert.equal(r.nCompletas, 4);
-  cerca(r.pctCompleto, 0.8);
+  assert.equal(r.nCompletas, 5);
+  cerca(r.pctCompleto, 1);
   assert.equal(r.nCriticas, 3);
   assert.equal(r.nRpnAlto, 4);
   assert.equal(r.nNoLigadas, 0);
   assert.equal(r.nSinRef, 1);
   assert.equal(r.nIncompletas, 0);
-  assert.equal(r.nReclasificar, 1);
-  assert.deepEqual(r.lineas.map((f) => f.estadoTexto), ['Completo', 'Completo', 'Completo', 'Revisar clasificación (RPN alto)', 'Completo']);
+  assert.equal(r.nReclasificar, 0);
+  assert.deepEqual(r.lineas.map((f) => f.estadoTexto), ['Completo', 'Completo', 'Completo', 'Completo', 'Completo']);
   assert.deepEqual(r.lineas.map((f) => (Number.isNaN(f.rpn) ? null : f.rpn)), [240, 240, 180, 120, null], 'RPN que trae la hoja: 240, 240, 180, 120 y vacío');
   assert.deepEqual(r.lineas.map((f) => f.refEstado), ['ligada', 'ligada', 'ligada', 'ligada', 'sin-ref']);
   assert.deepEqual(r.sinControl, [], 'los tres modos del AMEF tienen línea');
   assert.deepEqual(r.cobertura.map((c) => c.lineas), [[1, 2], [3], [4]]);
+});
+
+test('resumenPlan: con el etiquetado (RPN 120) como Estándar la línea pide «Revisar clasificación (RPN alto)» y la hoja queda en 4 de 5 (80 %)', () => {
+  const { modos } = modosAmef(AMEF_EXCEL);
+  const r = resumenPlan(PLAN_EXCEL_ESTANDAR, modos);
+  assert.equal(r.nCompletas, 4);
+  cerca(r.pctCompleto, 0.8);
+  assert.equal(r.nReclasificar, 1);
+  assert.equal(r.nIncompletas, 0);
+  assert.deepEqual(r.lineas.map((f) => f.estadoTexto), ['Completo', 'Completo', 'Completo', 'Revisar clasificación (RPN alto)', 'Completo']);
 });
 
 test('resumenPlan: «Incompleto: falta …» lista lo que falta, en el orden de la plantilla, y la característica también', () => {
@@ -120,11 +132,12 @@ test('resumenPlan: la referencia al AMEF no distingue acentos ni mayúsculas, y 
 
 test('resumenPlan: el umbral de RPN alto se puede mover (la plantilla usa 100; con 130 el RPN 120 deja de pedir clasificación)', () => {
   const { modos } = modosAmef(AMEF_EXCEL);
-  const con130 = resumenPlan(PLAN_EXCEL, modos, { rpnAlto: 130 });
+  assert.equal(resumenPlan(PLAN_EXCEL_ESTANDAR, modos).nReclasificar, 1, 'con el umbral de la hoja (100) la línea de RPN 120 sí pide clasificación');
+  const con130 = resumenPlan(PLAN_EXCEL_ESTANDAR, modos, { rpnAlto: 130 });
   assert.equal(con130.nRpnAlto, 3, '240, 240 y 180');
   assert.equal(con130.nReclasificar, 0);
   assert.equal(con130.nCompletas, 5);
-  const con241 = resumenPlan(PLAN_EXCEL, modos, { rpnAlto: 241 });
+  const con241 = resumenPlan(PLAN_EXCEL_ESTANDAR, modos, { rpnAlto: 241 });
   assert.equal(con241.nRpnAlto, 0);
   // Con S ≥ 9 el modo «Terminal mal crimpada» (RPN 180) sigue siendo importante aunque el umbral sea alto.
   assert.deepEqual(con241.cobertura.map((c) => c.importante), [false, true, false]);

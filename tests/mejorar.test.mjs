@@ -128,9 +128,9 @@ test('VSM: filas vacías se ignoran; negativos, FTY fuera de 0–100 y filas sol
 });
 
 /* ------------------------------------------------------------ Takt y balanceo ------------------------------------------------------------ */
-test('tiempoNeto: guía (450 min), plantilla (435 min) y turnos con descuentos por turno', () => {
+test('tiempoNeto: guía (450 min), con juntas y mantenimiento (435 min) y turnos con descuentos por turno', () => {
   assert.equal(tiempoNeto({ minTurno: 480, turnos: 1, descansos: 30, paros: 0 }), 450, 'guía M8 §1: 8 h con 30 min de descanso');
-  assert.equal(tiempoNeto({ minTurno: 480, turnos: 1, descansos: 30, paros: 15 }), 435, 'plantilla «Takt Time»');
+  assert.equal(tiempoNeto({ minTurno: 480, turnos: 1, descansos: 30, paros: 15 }), 435, '15 min de juntas, 5S y mantenimiento por turno');
   assert.equal(tiempoNeto({ minTurno: 420, turnos: 2 }), 840, 'ej. 1: 2 turnos de 7 h efectivas; los descuentos vacíos valen 0');
   assert.equal(tiempoNeto({ minTurno: 480, turnos: 2, descansos: 30, paros: 15 }), 870, 'los descuentos se restan en cada turno');
   assert.ok(Number.isNaN(tiempoNeto({ minTurno: NaN, turnos: 1 })));
@@ -151,7 +151,7 @@ test('demandaDiaria: reparte la demanda semanal entre los días de operación', 
   assert.ok(Number.isNaN(demandaDiaria(NaN, 'semana', 5)));
 });
 
-test('ritmoCliente: takt de la guía (56.25 s y 67.5 s), ej. 1 (60 s) y plantilla (54.375 s, pitch)', () => {
+test('ritmoCliente: takt de la guía (56.25 s y 67.5 s), ej. 1 (60 s), plantilla (56.25 s, pitch) y con juntas (54.375 s)', () => {
   const nuevo = ritmoCliente({ neto: 450, demanda: 480 });
   cerca(nuevo.takt, 0.9375, 1e-12);
   cerca(nuevo.segundos, 56.25, 1e-9);
@@ -164,11 +164,16 @@ test('ritmoCliente: takt de la guía (56.25 s y 67.5 s), ej. 1 (60 s) y plantill
   const ej1 = ritmoCliente({ neto: 840, demanda: 840 });
   cerca(ej1.takt, 1, 1e-12);
   cerca(ej1.segundos, 60, 1e-9);
-  const xl = ritmoCliente({ neto: 435, demanda: 480, contenedor: 50 });
-  cerca(xl.takt, 0.90625, 1e-12);
-  cerca(xl.segundos, 54.375, 1e-9);
-  cerca(xl.porHora, 66.2068965517, 1e-9);
-  cerca(xl.pitch, 45.3125, 1e-9);
+  const xl = ritmoCliente({ neto: 450, demanda: 480, contenedor: 50 });
+  cerca(xl.takt, 0.9375, 1e-12);
+  cerca(xl.segundos, 56.25, 1e-9);
+  cerca(xl.porHora, 64, 1e-9);
+  cerca(xl.pitch, 46.875, 1e-9);
+  const juntas = ritmoCliente({ neto: 435, demanda: 480, contenedor: 50 });
+  cerca(juntas.takt, 0.90625, 1e-12, '15 min de juntas por turno');
+  cerca(juntas.segundos, 54.375, 1e-9);
+  cerca(juntas.porHora, 66.2068965517, 1e-9);
+  cerca(juntas.pitch, 45.3125, 1e-9);
   const nada = ritmoCliente({ neto: 450, demanda: 0 });
   assert.ok(Number.isNaN(nada.takt) && Number.isNaN(nada.segundos) && Number.isNaN(nada.porHora) && Number.isNaN(nada.pitch));
 });
@@ -179,17 +184,17 @@ const ESTACIONES = [
 ];
 
 test('balancearEstaciones: plantilla (contenido 4.25, 5 operadores, eficiencia 78.7 %)', () => {
-  const r = balancearEstaciones(ESTACIONES, 0.90625);
+  const r = balancearEstaciones(ESTACIONES, 0.9375);
   assert.equal(r.valido, true);
   assert.equal(r.filas.length, 6);
   cerca(r.contenido, 4.25, 1e-12);
-  assert.equal(r.operadores, 5, '⌈4.25 ÷ 0.90625⌉ = ⌈4.69⌉');
+  assert.equal(r.operadores, 5, '⌈4.25 ÷ 0.9375⌉ = ⌈4.53⌉');
   cerca(r.eficiencia, 0.787037037037, 1e-9, '4.25 ÷ (6 × 0.9)');
   cerca(r.ocio, 1.15, 1e-9, '6 × 0.9 − 4.25');
   assert.equal(r.lenta.estacion, 'Apriete y verificación');
   assert.equal(r.exceden.length, 0);
-  cerca(r.filas[0].uso, 0.4413793103, 1e-9);
-  cerca(r.filas[4].uso, 0.9931034483, 1e-9);
+  cerca(r.filas[0].uso, 0.4266666667, 1e-9);
+  cerca(r.filas[4].uso, 0.96, 1e-9);
   assert.deepEqual(r.filas.map((f) => f.indice), [1, 2, 3, 4, 5, 6]);
 });
 

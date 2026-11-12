@@ -33,7 +33,7 @@ const SUPUESTO = {
   titulo: 'Supuesto estadístico',
   texto:
     'Aproximación normal y muestra aleatoria (o estratificada), con unidades independientes. σ y p son estimaciones previas —un histórico o un piloto—: si el proceso real varía más, la muestra calculada se queda corta. ' +
-    'La plantilla avisa que si σ viene de una muestra pequeña conviene «agregar 1 a 2 unidades de margen»; con t de Student el cálculo exacto lo confirma (referencia didáctica).',
+    'La plantilla avisa que si σ viene de una muestra pequeña conviene usar t y «sumar 2 a 3 unidades»; el cálculo con t de Student lo confirma (referencia didáctica).',
 };
 
 /** Todo lo que sale en las tres secciones, para que cada preset fije todas las entradas. */
@@ -172,7 +172,7 @@ export default function lab11(ctx = {}) {
             semaforos.push({
               nombre: 'A · σ de una muestra piloto', estado: 'informativo',
               texto: t.n > r.n && !r.corregida
-                ? `Si σ se estimó con una muestra pequeña, con t de Student el mínimo sube de ${entero(r.n)} a ${entero(t.n)} (referencia didáctica). La plantilla lo resume con una regla práctica: «agrega 1 a 2 unidades de margen».`
+                ? `Si σ se estimó con una muestra pequeña, con t de Student el mínimo sube de ${entero(r.n)} a ${entero(t.n)} (referencia didáctica). La plantilla lo resume con una regla práctica: «usa t (suma 2 a 3 unidades)».`
                 : `Con t de Student el mínimo sería ${entero(t.n)} (referencia didáctica; compara con el n que sale con Z).`,
             });
           }

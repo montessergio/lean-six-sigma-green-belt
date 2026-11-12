@@ -15,7 +15,7 @@
  *   produciendo» (la advertencia de la guía §4: el plan de reacción debe apuntar a la causa, no solo al síntoma).
  * Función pura de los datos capturados; la interfaz solo pinta lo que devuelve calcular().
  *
- * Presets: el plan de la guía M10 §4 (cuatro líneas), el de la plantilla (cinco líneas; 4 completas = 80 %), y el de la guía con
+ * Presets: el plan de la guía M10 §4 (cuatro líneas), el de la plantilla (cinco líneas, todas completas = 100 %), y el de la guía con
  * una reacción de «corregir y olvidar». La guía junta método y frecuencia en una columna; aquí se separaron sin cambiar su
  * contenido. Tampoco clasifica las características ni las liga al AMEF: esas dos columnas quedan para que las llenes tú
  * (la del AMEF, salvo en la guía, donde se ligaron a su modo de falla evidente).
@@ -74,7 +74,7 @@ const PLAN_EXCEL = [
     frecuencia: 'Inicio de turno y cambio de aplicador', metodo: 'Hoja de verificación', reaccion: 'Ajustar la prensa; retener y revisar las piezas desde la última verificación', responsable: 'Técnico de mantenimiento', ref: 'Terminal mal crimpada',
   }),
   linea({
-    op: '40', caracteristica: 'Etiqueta correcta para el tablero', tipo: 'Producto', clasificacion: 'Estándar', especificacion: '100 % correcta', medicion: 'Lectura / comparación con la orden', muestra: '100 %',
+    op: '40', caracteristica: 'Etiqueta correcta para el tablero', tipo: 'Producto', clasificacion: 'Significativa', especificacion: '100 % correcta', medicion: 'Lectura / comparación con la orden', muestra: '100 %',
     frecuencia: 'Cada arnés', metodo: 'Poka-yoke (lector)', reaccion: 'Segregar el arnés y corregir la etiqueta', responsable: 'Operador', ref: 'Etiqueta incorrecta',
   }),
   linea({
@@ -132,8 +132,8 @@ export default function lab24(ctx = {}) {
       valores: { amef: amefGuia, plan: PLAN_GUIA, rpnAlto: RPN_ALTO },
     },
     {
-      id: 'excel', etiqueta: 'Plantilla Excel «Plan de Control»: cinco líneas (80 % completo)',
-      ayuda: 'Las cinco líneas de la hoja con su AMEF de tres modos. Cuatro quedan completas; la del etiquetado tiene RPN 120 pero está clasificada como Estándar: «Revisar clasificación (RPN alto)». La prueba eléctrica final no cita ningún modo del AMEF.',
+      id: 'excel', etiqueta: 'Plantilla Excel «Plan de Control»: cinco líneas (100 % completo)',
+      ayuda: 'Las cinco líneas de la hoja con su AMEF de tres modos. Las cinco quedan completas: el etiquetado tiene RPN 120 y la hoja ya lo clasifica como Significativa. Cámbialo a Estándar para ver «Revisar clasificación (RPN alto)». La prueba eléctrica final no cita ningún modo del AMEF.',
       valores: { amef: amefExcel, plan: PLAN_EXCEL, rpnAlto: RPN_ALTO },
     },
     {

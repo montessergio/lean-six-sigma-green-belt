@@ -1020,7 +1020,7 @@ export default function lab19(ctx = {}) {
   const nombreY = regCaso.y?.nombre ?? 'Resistencia de contacto';
   const unidadY = regCaso.y?.unidad ?? 'mΩ';
   const xPred = regCaso.excel?.xPrediccion ?? 170;
-  const yObjetivo = regCaso.excel?.yObjetivo ?? 1.5;
+  const yObjetivo = regCaso.excel?.yObjetivo ?? 1.2;
 
   const chiCaso = caso.chi ?? {};
   const estratos = chiCaso.estratos?.length >= 3 ? chiCaso.estratos : ['Turno 1', 'Turno 2', 'Turno 3'];
@@ -1114,7 +1114,7 @@ export default function lab19(ctx = {}) {
       ayuda: 'Calcula el Y que espera la recta y sus intervalos. Fuera del rango de los datos es extrapolación y se avisa.',
     },
     {
-      id: 'yObjetivo', tipo: 'numero', etiqueta: 'Y objetivo', valor: yObjetivo, marcador: 'p. ej. 1.5', visibleSi: esRegresion,
+      id: 'yObjetivo', tipo: 'numero', etiqueta: 'Y objetivo', valor: yObjetivo, marcador: 'p. ej. 1.2', visibleSi: esRegresion,
       ayuda: 'Despeja la ecuación para ver qué X corresponde a ese Y. No es un intervalo: solo la recta puesta al revés.',
     },
     /* chi-cuadrada */

@@ -123,7 +123,7 @@ test('LAB11: referencia con t de Student (σ de una muestra piloto): 12 → 14 (
   assert.match(semaforo((await ejecutar(ARCHIVO, 'guia')).resultado, 'A · σ de una muestra piloto').texto, /sube de 12 a 14/);
   const ex = semaforo((await ejecutar(ARCHIVO, 'excel')).resultado, 'A · σ de una muestra piloto');
   assert.match(ex.texto, /sube de 35 a 38/);
-  assert.match(ex.texto, /agrega 1 a 2 unidades de margen/);
+  assert.match(ex.texto, /usa t \(suma 2 a 3 unidades\)/);
   assert.equal(ex.estado, 'informativo');
 });
 
